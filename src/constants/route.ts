@@ -1,0 +1,18 @@
+export default {
+  HOME: '/',
+  LOGIN: '/login',
+  OVERVIEW: '/overview',
+  CUSTOMERS: '/customers',
+  TRANSACTIONS: '/transactions',
+  REPORTS: '/reports',
+  SETTINGS: '/settings',
+  COMPLIANCE: '/compliance',
+  TASKS: '/tasks',
+  GENERAL: '/general',
+  ACCOUNTS: '/accounts',
+  DASHBOARD: '/dashboard',
+  EMPLOYEES: '/employees',
+  SYSTEM: '/system',
+  AUDIT_LOGS: '/audit-logs',
+  CUSTOMER_TASKS: '/customer-tasks',
+};
