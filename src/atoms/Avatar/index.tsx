@@ -1,17 +1,17 @@
 import { FC } from 'react';
-import { Avatar as AntAvatar, AvatarProps as AntAvatarProps } from 'antd';
-import { StyledAvatar } from './index.styled';
+import {
+  Avatar as MuiAvatar,
+  AvatarProps as MuiAvatarProps,
+} from '@mui/material';
 
-export interface AvatarProps extends Omit<AntAvatarProps, 'shape'> {
+export interface AvatarProps extends Omit<MuiAvatarProps, 'variant'> {
   variant?: 'circle' | 'square';
 }
 
 const Avatar: FC<AvatarProps> = ({ variant = 'circle', ...props }) => {
-  return (
-    <StyledAvatar $variant={variant}>
-      <AntAvatar shape={variant} {...props} />
-    </StyledAvatar>
-  );
+  const muiVariant = variant === 'square' ? 'rounded' : 'circular';
+
+  return <MuiAvatar variant={muiVariant} {...props} />;
 };
 
 export default Avatar;

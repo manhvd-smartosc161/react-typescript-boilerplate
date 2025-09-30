@@ -1,93 +1,219 @@
-# FE-Employee-App
+# React Typescript Atomic Design Boilerplate
 
+A modern React application boilerplate built with TypeScript, Material-UI, and following Atomic Design principles.
 
+## 📋 Description
 
-## Getting started
+This is a frontend web application boilerplate designed following the Atomic Design pattern, providing a solid foundation for building scalable React applications with features like dashboard, user authentication, and settings management.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## 🛠️ Technologies Used
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- **React 18.3.1** - UI Library
+- **TypeScript 4.4.2** - Type Safety
+- **Material-UI (MUI) 7.3** - Component Library
+- **React Router 6.30** - Routing
+- **Recoil 0.7.7** - State Management
+- **Axios** - HTTP Client
+- **Highcharts** - Data Visualization
+- **Styled Components** - CSS-in-JS
+- **CRACO** - Create React App Configuration Override
 
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+## 📁 Project Structure
 
 ```
-cd existing_repo
-git remote add origin https://git02.smartosc.com/thought-machine/tm-asset/fe-employee-app.git
-git branch -M main
-git push -uf origin main
+fe-employee-app/
+├── build/                    # Production build directory (created after build)
+│   ├── static/              # Optimized static assets
+│   └── index.html           # Entry HTML file
+│
+├── public/                   # Public static files directory
+│   ├── index.html           # HTML template
+│   ├── favicon.ico          # Website icon
+│   └── manifest.json        # PWA manifest
+│
+├── src/                      # Main source code
+│   │
+│   ├── apis/                # API layer - HTTP requests management
+│   │   ├── api.ts          # Axios instance and base config
+│   │   ├── auth.ts         # Authentication APIs
+│   │   └── index.ts        # Export all APIs
+│   │
+│   ├── assets/              # Static assets (images, icons, fonts)
+│   │   └── images/         # Images (logo, backgrounds, etc.)
+│   │
+│   ├── atoms/               # Atomic Design - Smallest components, cannot be broken down further
+│   │   ├── Avatar/         # User avatar display component
+│   │   ├── Button/         # Button component
+│   │   ├── Card/           # Card component
+│   │   ├── Icon/           # Icon component
+│   │   ├── Image/          # Image component
+│   │   ├── Text/           # Text component
+│   │   ├── Title/          # Title component
+│   │   └── index.ts        # Export all atoms
+│   │
+│   ├── molecules/           # Atomic Design - Combination of multiple atoms
+│   │   ├── Breadcrumb/     # Breadcrumb navigation component
+│   │   ├── StatCard/       # Statistics display component
+│   │   ├── UserProfile/    # User information component
+│   │   └── index.ts        # Export all molecules
+│   │
+│   ├── organisms/           # Atomic Design - Combination of multiple molecules and atoms
+│   │   ├── ChartCard/      # Chart container card component
+│   │   ├── DataTable/      # Data table component
+│   │   ├── Header/         # Page header component
+│   │   ├── Sidebar/        # Sidebar navigation component
+│   │   ├── StatsGrid/      # Statistics grid display component
+│   │   └── index.ts        # Export all organisms
+│   │
+│   ├── templates/           # Atomic Design - Layout templates
+│   │   ├── AppLayout/      # General app layout
+│   │   ├── DashboardTemplate/ # Template for dashboard pages
+│   │   └── index.ts        # Export all templates
+│   │
+│   ├── pages/               # Page components - Application pages
+│   │   ├── Home.tsx        # Home / Dashboard page
+│   │   ├── Login.tsx       # Login page
+│   │   ├── Settings.tsx    # Settings page
+│   │   └── NotFound.tsx    # 404 page
+│   │
+│   ├── router/              # Routing configuration
+│   │   ├── appRoutes.ts    # Route definitions
+│   │   └── index.tsx       # Router component with route guards
+│   │
+│   ├── store/               # State management (Recoil)
+│   │   ├── auth.ts         # Auth state atoms and selectors
+│   │   └── index.ts        # Export all stores
+│   │
+│   ├── hooks/               # Custom React hooks
+│   │   ├── useAuth.ts      # Authentication handling hook
+│   │   ├── useLocalStorage.ts # localStorage interaction hook
+│   │   ├── useDebounce.ts  # Input debounce hook
+│   │   ├── useApiCache.ts  # API response cache hook
+│   │   └── index.ts        # Export all hooks
+│   │
+│   ├── configs/             # Configuration files
+│   │   └── index.ts        # App configurations (API URL, etc.)
+│   │
+│   ├── constants/           # Constants and enums
+│   │   ├── route.ts        # Route constants
+│   │   └── index.ts        # Other constants
+│   │
+│   ├── styles/              # Global styles and theme
+│   │   ├── theme.ts        # MUI theme customization
+│   │   ├── color.ts        # Color palette
+│   │   └── index.ts        # Export styles
+│   │
+│   ├── types/               # TypeScript type definitions
+│   │   └── menu.ts         # Menu types
+│   │
+│   ├── utils/               # Utility functions
+│   │   └── cookie.ts       # Cookie utilities
+│   │
+│   ├── App.tsx             # Root App component
+│   ├── App.css             # App styles
+│   ├── index.tsx           # Entry point
+│   └── index.css           # Global CSS
+│
+├── craco.config.ts          # CRACO configuration (webpack override)
+├── tsconfig.json            # TypeScript configuration
+├── package.json             # Dependencies and scripts
+└── README.md               # Documentation (this file)
 ```
 
-## Integrate with your tools
+## 🎨 Atomic Design Pattern
 
-- [ ] [Set up project integrations](https://git02.smartosc.com/thought-machine/tm-asset/fe-employee-app/-/settings/integrations)
+This project follows the Atomic Design pattern for component organization:
 
-## Collaborate with your team
+1. **Atoms** (`src/atoms/`): Basic components (Button, Input, Text, Icon...)
+2. **Molecules** (`src/molecules/`): Combination of atoms (SearchBar, UserCard...)
+3. **Organisms** (`src/organisms/`): Complex UI parts (Header, Sidebar, Table...)
+4. **Templates** (`src/templates/`): Layout structures
+5. **Pages** (`src/pages/`): Complete pages
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+## 🚀 Installation and Running
 
-## Test and Deploy
+### Requirements
 
-Use the built-in continuous integration in GitLab.
+- Node.js >= 16.x
+- pnpm (or npm/yarn)
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+### Install dependencies
 
-***
+```bash
+pnpm install
+```
 
-# Editing this README
+### Run development server
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+```bash
+pnpm start
+```
 
-## Suggestions for a good README
+Application will run at: `http://localhost:3000`
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+### Build production
 
-## Name
-Choose a self-explaining name for your project.
+```bash
+pnpm run build
+```
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+Build will be created in the `build/` directory
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+### Build production (no source maps)
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+```bash
+pnpm run build:prod
+```
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+### Run production build locally
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+```bash
+pnpm run start:prod
+```
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### Analyze bundle size
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+```bash
+pnpm run analyze
+```
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+### Lint code
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+```bash
+pnpm run lint
+```
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+## 🔐 Authentication
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+The application has an authentication system with:
 
-## License
-For open source projects, say how it is licensed.
+- Public routes: `/login`, `/404`
+- Private routes: `/`, `/settings` (requires login)
+- Route guards automatically redirect when not authenticated
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+## 📦 Available Scripts
+
+| Script            | Description                          |
+| ----------------- | ------------------------------------ |
+| `pnpm start`      | Run development server               |
+| `pnpm build`      | Build production                     |
+| `pnpm build:prod` | Build production without source maps |
+| `pnpm start:prod` | Run production build locally         |
+| `pnpm test`       | Run tests                            |
+| `pnpm lint`       | Lint TypeScript files                |
+| `pnpm analyze`    | Analyze bundle size                  |
+
+## 🌐 Environment Variables
+
+Create `.env` file in root directory:
+
+```env
+REACT_APP_API_URL=your_api_url_here
+```
+
+## 📝 Code Style
+
+Project uses:
+
+- **ESLint** with Airbnb config
+- **Prettier** for code formatting

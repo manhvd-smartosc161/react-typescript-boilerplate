@@ -1,17 +1,28 @@
 import { FC, ReactNode } from 'react';
-import { Card as AntCard, CardProps as AntCardProps } from 'antd';
-import { StyledCard } from './index.styled';
+import { Card as MuiCard, CardProps as MuiCardProps } from '@mui/material';
 
-export interface CardProps extends Omit<AntCardProps, 'variant'> {
+export interface CardProps extends Omit<MuiCardProps, 'variant'> {
   children: ReactNode;
-  variant?: 'default' | 'bordered' | 'elevated';
+  variant?: 'default' | 'outlined' | 'elevated';
 }
 
 const Card: FC<CardProps> = ({ children, variant = 'default', ...props }) => {
+  const muiVariant: 'elevation' | 'outlined' =
+    variant === 'outlined' ? 'outlined' : 'elevation';
+  const elevation = variant === 'elevated' ? 4 : variant === 'default' ? 1 : 0;
+
   return (
-    <StyledCard $variant={variant}>
-      <AntCard {...props}>{children}</AntCard>
-    </StyledCard>
+    <MuiCard
+      variant={muiVariant}
+      elevation={elevation}
+      sx={{
+        padding: 2,
+        ...props.sx,
+      }}
+      {...props}
+    >
+      {children}
+    </MuiCard>
   );
 };
 

@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
-import { Card, Icon, Text } from '@src/atoms';
-import { CardContent, IconWrapper, StatValue } from './index.styled';
+import { Card, Box } from '@mui/material';
+import { Icon, Text } from '@src/atoms';
 
 export interface StatCardProps {
   title: string;
@@ -21,25 +21,67 @@ const StatCard: FC<StatCardProps> = ({
   suffix,
   loading = false,
 }) => {
+  const getColorValue = () => {
+    switch (color) {
+      case 'primary':
+        return '#1890ff';
+      case 'success':
+        return '#52c41a';
+      case 'warning':
+        return '#faad14';
+      case 'danger':
+        return '#ff4d4f';
+      case 'info':
+        return '#13c2c2';
+      default:
+        return '#1890ff';
+    }
+  };
+
   return (
-    <Card loading={loading} variant="elevated">
-      <CardContent>
+    <Card
+      elevation={3}
+      sx={{
+        padding: 2,
+        opacity: loading ? 0.6 : 1,
+      }}
+    >
+      <Box display="flex" alignItems="center" gap={2}>
         {icon && (
-          <IconWrapper $color={color}>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 48,
+              height: 48,
+              borderRadius: 1,
+              backgroundColor: `${getColorValue()}15`,
+              color: getColorValue(),
+              fontSize: 24,
+            }}
+          >
             <Icon size="large">{icon}</Icon>
-          </IconWrapper>
+          </Box>
         )}
-        <div>
-          <StatValue $color={color}>
+        <Box>
+          <Box
+            sx={{
+              fontSize: 24,
+              fontWeight: 600,
+              color: getColorValue(),
+              marginBottom: 0.5,
+            }}
+          >
             {prefix}
             {value}
             {suffix}
-          </StatValue>
+          </Box>
           <Text variant="body2" color="secondary">
             {title}
           </Text>
-        </div>
-      </CardContent>
+        </Box>
+      </Box>
     </Card>
   );
 };

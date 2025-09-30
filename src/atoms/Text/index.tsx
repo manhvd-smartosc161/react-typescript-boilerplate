@@ -1,22 +1,11 @@
 import { FC, ReactNode } from 'react';
-import { Typography } from 'antd';
-import { StyledText } from './index.styled';
+import { Typography, TypographyProps } from '@mui/material';
 
-const { Text: AntText } = Typography;
-
-export interface TextProps {
+export interface TextProps extends Omit<TypographyProps, 'variant'> {
   children: ReactNode;
   variant?: 'body1' | 'body2' | 'caption' | 'label';
-  color?:
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'warning'
-    | 'danger'
-    | 'default';
+  color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'default';
   weight?: 'normal' | 'medium' | 'semibold' | 'bold';
-  align?: 'left' | 'center' | 'right';
-  className?: string;
 }
 
 const Text: FC<TextProps> = ({
@@ -24,19 +13,51 @@ const Text: FC<TextProps> = ({
   variant = 'body1',
   color = 'default',
   weight = 'normal',
-  align = 'left',
-  className,
+  ...props
 }) => {
+  const muiVariant = variant === 'label' ? 'body2' : variant;
+
+  const getColor = () => {
+    switch (color) {
+      case 'primary':
+        return 'primary.main';
+      case 'secondary':
+        return 'text.secondary';
+      case 'success':
+        return 'success.main';
+      case 'warning':
+        return 'warning.main';
+      case 'error':
+        return 'error.main';
+      default:
+        return 'text.primary';
+    }
+  };
+
+  const getFontWeight = () => {
+    switch (weight) {
+      case 'medium':
+        return 500;
+      case 'semibold':
+        return 600;
+      case 'bold':
+        return 700;
+      default:
+        return 400;
+    }
+  };
+
   return (
-    <StyledText
-      $variant={variant}
-      $color={color}
-      $weight={weight}
-      $align={align}
-      className={className}
+    <Typography
+      variant={muiVariant}
+      sx={{
+        color: getColor(),
+        fontWeight: getFontWeight(),
+      }}
+      {...props}
     >
-      <AntText>{children}</AntText>
-    </StyledText>
+      {children}
+    </Typography>
   );
 };
 

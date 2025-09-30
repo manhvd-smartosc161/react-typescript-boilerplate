@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import { StyledIcon } from './index.styled';
+import { Box } from '@mui/material';
 
 export interface IconProps {
   children: ReactNode;
@@ -16,15 +16,37 @@ const Icon: FC<IconProps> = ({
   className,
   onClick,
 }) => {
+  const getSizeValue = () => {
+    switch (size) {
+      case 'small':
+        return '14px';
+      case 'large':
+        return '24px';
+      default:
+        return '18px';
+    }
+  };
+
   return (
-    <StyledIcon
-      $size={size}
-      $color={color}
+    <Box
+      component="span"
       className={className}
       onClick={onClick}
+      sx={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: getSizeValue(),
+        color: color || 'currentColor',
+        cursor: onClick ? 'pointer' : 'default',
+        '& svg': {
+          width: '1em',
+          height: '1em',
+        },
+      }}
     >
       {children}
-    </StyledIcon>
+    </Box>
   );
 };
 

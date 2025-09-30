@@ -1,11 +1,8 @@
 import { FC } from 'react';
-import { UserOutlined, SettingOutlined } from '@ant-design/icons';
-import { Avatar, Text, Button } from '@src/atoms';
-import {
-  UserProfileWrapper,
-  UserInfo,
-  SettingsButton,
-} from './index.styled';
+import { Box, IconButton } from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { Avatar, Text } from '@src/atoms';
 
 export interface UserProfileProps {
   name: string;
@@ -23,29 +20,35 @@ const UserProfile: FC<UserProfileProps> = ({
   collapsed = false,
 }) => {
   return (
-    <UserProfileWrapper $collapsed={collapsed}>
-      <Avatar size={40} src={avatarUrl} icon={<UserOutlined />} />
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 1.5,
+        padding: 2,
+        borderTop: '1px solid',
+        borderColor: 'divider',
+        backgroundColor: 'background.paper',
+        justifyContent: collapsed ? 'center' : 'flex-start',
+      }}
+    >
+      <Avatar src={avatarUrl}>{!avatarUrl && <PersonIcon />}</Avatar>
       {!collapsed && (
         <>
-          <UserInfo>
+          <Box sx={{ flex: 1, minWidth: 0 }}>
             <Text variant="body1" weight="semibold">
               {name}
             </Text>
             <Text variant="caption" color="secondary">
               {role}
             </Text>
-          </UserInfo>
-          <SettingsButton>
-            <Button
-              variant="ghost"
-              size="small"
-              icon={<SettingOutlined />}
-              onClick={onSettingsClick}
-            />
-          </SettingsButton>
+          </Box>
+          <IconButton size="small" onClick={onSettingsClick}>
+            <SettingsIcon fontSize="small" />
+          </IconButton>
         </>
       )}
-    </UserProfileWrapper>
+    </Box>
   );
 };
 

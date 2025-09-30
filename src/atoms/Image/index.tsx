@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Box } from '@mui/material';
 
 export interface ImageProps {
   src: string;
@@ -18,13 +19,16 @@ const Image: FC<ImageProps> = ({
   style,
 }) => {
   return (
-    <img
+    <Box
+      component="img"
       src={src}
       alt={alt}
-      width={width}
-      height={height}
       className={className}
-      style={style}
+      sx={{
+        width,
+        height,
+        ...style,
+      }}
     />
   );
 };

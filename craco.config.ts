@@ -11,6 +11,25 @@ module.exports = {
       '@utils': path.resolve(__dirname, 'src/utils'),
     },
     configure: (webpackConfig: any, { env }: { env: string }) => {
+      // Ignore source map warnings for styled-components
+      webpackConfig.module.rules = webpackConfig.module.rules.map(
+        (rule: any) => {
+          if (rule.loader && rule.loader.includes('source-map-loader')) {
+            return {
+              ...rule,
+              exclude: /node_modules/,
+            };
+          }
+          return rule;
+        },
+      );
+
+      // Suppress webpack warnings about missing source maps
+      webpackConfig.ignoreWarnings = [
+        /Failed to parse source map/,
+        /ENOENT: no such file or directory/,
+      ];
+
       if (env === 'production') {
         // Optimize bundle splitting
         webpackConfig.optimization = {
@@ -25,13 +44,7 @@ module.exports = {
                 chunks: 'all',
                 priority: 10,
               },
-              // Ant Design
-              antd: {
-                test: /[\\/]node_modules[\\/]antd[\\/]/,
-                name: 'antd',
-                chunks: 'all',
-                priority: 20,
-              },
+              // Removed Ant Design configuration
               // React libraries
               react: {
                 test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom)[\\/]/,
@@ -58,8 +71,7 @@ module.exports = {
           },
         };
 
-        // Enable tree shaking for Ant Design
-        webpackConfig.resolve.mainFields = ['module', 'main'];
+        // Removed Ant Design tree shaking configuration
       }
 
       return webpackConfig;
@@ -67,26 +79,7 @@ module.exports = {
   },
   babel: {
     plugins: [
-      // Enable tree shaking for Ant Design
-      [
-        'import',
-        {
-          libraryName: 'antd',
-          libraryDirectory: 'es',
-          style: true,
-        },
-        'antd',
-      ],
-      // Enable tree shaking for Ant Design icons
-      [
-        'import',
-        {
-          libraryName: '@ant-design/icons',
-          libraryDirectory: 'es/icons',
-          camel2DashComponentName: false,
-        },
-        '@ant-design/icons',
-      ],
+      // Removed Ant Design babel plugins
     ],
   },
 };

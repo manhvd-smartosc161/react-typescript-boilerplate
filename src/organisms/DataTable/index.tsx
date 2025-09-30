@@ -1,38 +1,63 @@
-import { FC } from 'react';
-import { Table, TableProps } from 'antd';
-import { Card } from '@src/atoms';
-import { StyledDataTable } from './index.styled';
+import { FC, ReactNode } from 'react';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { Card, Box } from '@mui/material';
 
-export interface DataTableProps<T = any> extends TableProps<T> {
-  variant?: 'default' | 'striped' | 'bordered';
+export interface DataTableProps {
+  columns: GridColDef[];
+  dataSource?: any[];
   cardTitle?: string;
-  cardExtra?: React.ReactNode;
+  cardExtra?: ReactNode;
+  pagination?: boolean;
+  loading?: boolean;
 }
 
 const DataTable: FC<DataTableProps> = ({
-  variant = 'default',
   cardTitle,
   cardExtra,
+  dataSource = [],
+  columns,
+  pagination = true,
+  loading = false,
   ...tableProps
 }) => {
   const table = (
-    <StyledDataTable $variant={variant}>
-      <Table
-        {...tableProps}
-        pagination={{
-          showSizeChanger: true,
-          showQuickJumper: true,
-          showTotal: (total, range) =>
-            `${range[0]}-${range[1]} of ${total} items`,
-          ...tableProps.pagination,
+    <Box sx={{ p: 1 }}>
+      <DataGrid
+        rows={dataSource}
+        columns={columns}
+        loading={loading}
+        pageSizeOptions={pagination ? [5, 10, 25] : []}
+        initialState={{
+          pagination: {
+            paginationModel: { pageSize: pagination ? 10 : 100 },
+          },
         }}
+        {...tableProps}
       />
-    </StyledDataTable>
+    </Box>
   );
 
   if (cardTitle || cardExtra) {
     return (
-      <Card title={cardTitle} extra={cardExtra}>
+      <Card>
+        {(cardTitle || cardExtra) && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 2,
+              p: 2,
+            }}
+          >
+            {cardTitle && (
+              <Box sx={{ fontSize: '1.25rem', fontWeight: 600 }}>
+                {cardTitle}
+              </Box>
+            )}
+            {cardExtra}
+          </Box>
+        )}
         {table}
       </Card>
     );

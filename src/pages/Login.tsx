@@ -1,8 +1,16 @@
 import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Input, Checkbox, message } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import {
+  Box,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Alert,
+  Snackbar,
+} from '@mui/material';
+import { Person, Lock } from '@mui/icons-material';
 import { Button, Title, Text } from '@src/atoms';
+import { useAuth } from '@src/hooks';
 import styled from 'styled-components';
 
 const LoginWrapper = styled.div`
@@ -16,31 +24,66 @@ const LoginWrapper = styled.div`
 
 const LoginCard = styled.div`
   width: 100%;
-  max-width: 400px;
-  padding: 40px;
+  max-width: 450px;
+  padding: 48px;
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
 `;
 
 const Logo = styled.div`
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 `;
 
 const Login: FC = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [remember, setRemember] = useState(true);
+  const [alert, setAlert] = useState<{
+    open: boolean;
+    message: string;
+    severity: 'success' | 'error';
+  }>({
+    open: false,
+    message: '',
+    severity: 'success',
+  });
 
-  const onFinish = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setLoading(true);
+
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      message.success('Login successful!');
-      navigate('/');
+      // Simulate API call delay
+      await new Promise((resolve) => setTimeout(resolve, 600));
+
+      // Use Recoil login - simplified, any credentials work
+      const success = login(username, password);
+
+      if (success) {
+        setAlert({
+          open: true,
+          message: '✅ Login successful! Redirecting...',
+          severity: 'success',
+        });
+        setTimeout(() => navigate('/'), 800);
+      } else {
+        setAlert({
+          open: true,
+          message: '❌ Please enter username and password!',
+          severity: 'error',
+        });
+      }
     } catch (error) {
-      message.error('Login failed!');
+      setAlert({
+        open: true,
+        message: '❌ Login failed! Please try again.',
+        severity: 'error',
+      });
     } finally {
       setLoading(false);
     }
@@ -50,59 +93,98 @@ const Login: FC = () => {
     <LoginWrapper>
       <LoginCard>
         <Logo>
-          <Title level={2}>SmartBank</Title>
-          <Text variant="body2" color="secondary">
-            Employee Management System
-          </Text>
+          <Title level={2}>Welcome!</Title>
+          <Box mt={1}>
+            <Text variant="caption" color="secondary">
+              Powered by Recoil State Management
+            </Text>
+          </Box>
         </Logo>
 
-        <Form
-          name="login"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          autoComplete="off"
-          layout="vertical"
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}
         >
-          <Form.Item
-            name="username"
-            rules={[{ required: true, message: 'Please input your username!' }]}
+          <TextField
+            fullWidth
+            label="Username"
+            variant="outlined"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            placeholder="Enter your username"
+            InputProps={{
+              startAdornment: (
+                <Person sx={{ mr: 1, color: 'text.secondary' }} />
+              ),
+            }}
+            size="medium"
+          />
+
+          <TextField
+            fullWidth
+            label="Password"
+            type="password"
+            variant="outlined"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            placeholder="Enter your password"
+            InputProps={{
+              startAdornment: <Lock sx={{ mr: 1, color: 'text.secondary' }} />,
+            }}
+            size="medium"
+          />
+
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={remember}
+                onChange={(e) => setRemember(e.target.checked)}
+              />
+            }
+            label="Remember me"
+          />
+
+          <Button
+            variant="primary"
+            type="submit"
+            loading={loading}
+            fullWidth
+            size="large"
+            sx={{ mt: 1 }}
           >
-            <Input
-              prefix={<UserOutlined />}
-              placeholder="Username"
-              size="large"
-            />
-          </Form.Item>
+            Log in
+          </Button>
 
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: 'Please input your password!' }]}
+          <Box
+            mt={2}
+            p={2}
+            bgcolor="#f5f7fa"
+            borderRadius="8px"
+            textAlign="center"
           >
-            <Input.Password
-              prefix={<LockOutlined />}
-              placeholder="Password"
-              size="large"
-            />
-          </Form.Item>
+            <Text variant="caption" color="secondary">
+              💡 Tip: Enter any username and password to login
+            </Text>
+          </Box>
+        </Box>
 
-          <Form.Item>
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
-          </Form.Item>
-
-          <Form.Item>
-            <Button
-              variant="primary"
-              htmlType="submit"
-              loading={loading}
-              block
-              size="large"
-            >
-              Log in
-            </Button>
-          </Form.Item>
-        </Form>
+        <Snackbar
+          open={alert.open}
+          autoHideDuration={3000}
+          onClose={() => setAlert({ ...alert, open: false })}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        >
+          <Alert
+            severity={alert.severity}
+            onClose={() => setAlert({ ...alert, open: false })}
+            sx={{ minWidth: '300px' }}
+          >
+            {alert.message}
+          </Alert>
+        </Snackbar>
       </LoginCard>
     </LoginWrapper>
   );

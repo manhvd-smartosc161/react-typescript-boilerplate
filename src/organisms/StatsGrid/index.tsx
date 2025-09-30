@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Row, Col } from 'antd';
+import { Grid } from '@mui/material';
 import { StatCard, StatCardProps } from '@src/molecules';
 
 export interface StatsGridProps {
@@ -15,16 +15,16 @@ export interface StatsGridProps {
 
 const StatsGrid: FC<StatsGridProps> = ({
   stats,
-  columns = { xs: 24, sm: 12, md: 12, lg: 6, xl: 6 },
+  columns = { xs: 12, sm: 6, md: 6, lg: 3, xl: 3 },
 }) => {
   return (
-    <Row gutter={[16, 16]}>
+    <Grid container spacing={2}>
       {stats.map((stat, index) => (
-        <Col key={index} {...columns}>
+        <Grid key={index} {...({ item: true, ...columns } as any)}>
           <StatCard {...stat} />
-        </Col>
+        </Grid>
       ))}
-    </Row>
+    </Grid>
   );
 };
 

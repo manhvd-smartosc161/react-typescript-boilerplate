@@ -1,5 +1,5 @@
 import { FC, ReactNode, Suspense } from 'react';
-import { Spin } from 'antd';
+import { CircularProgress, Box } from '@mui/material';
 import { Card } from '@src/atoms';
 
 export interface ChartCardProps {
@@ -14,15 +14,27 @@ const ChartCard: FC<ChartCardProps> = ({
   loading = false,
 }) => {
   return (
-    <Card title={title} loading={loading} variant="elevated">
+    <Card variant="elevated">
+      {title && (
+        <Box sx={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: 2 }}>
+          {title}
+        </Box>
+      )}
       <Suspense
         fallback={
-          <div style={{ textAlign: 'center', padding: '50px' }}>
-            <Spin size="large" />
-          </div>
+          <Box
+            sx={{
+              textAlign: 'center',
+              padding: '50px',
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <CircularProgress />
+          </Box>
         }
       >
-        {children}
+        {loading ? <CircularProgress /> : children}
       </Suspense>
     </Card>
   );
