@@ -1,11 +1,15 @@
-import Layout from '@containers/Layout';
-import CustomersContainer from '@containers/Customers';
+import { FC } from 'react';
+import { DashboardTemplate } from '@src/templates';
+import { Title, Card, Text } from '@src/atoms';
 
-const Customers = () => {
+const Customers: FC = () => {
   return (
-    <Layout>
-      <CustomersContainer />
-    </Layout>
+    <DashboardTemplate>
+      <Title level={2}>Customers Management</Title>
+      <Card>
+        <Text variant="body1">Customer management and CRM page.</Text>
+      </Card>
+    </DashboardTemplate>
   );
 };
 

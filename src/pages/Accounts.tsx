@@ -1,11 +1,15 @@
-import Layout from '@containers/Layout';
-import AccountsContainer from '@containers/Accounts';
+import { FC } from 'react';
+import { DashboardTemplate } from '@src/templates';
+import { Title, Card, Text } from '@src/atoms';
 
-const Accounts = () => {
+const Accounts: FC = () => {
   return (
-    <Layout>
-      <AccountsContainer />
-    </Layout>
+    <DashboardTemplate>
+      <Title level={2}>Accounts</Title>
+      <Card>
+        <Text variant="body1">Account management and information page.</Text>
+      </Card>
+    </DashboardTemplate>
   );
 };
 

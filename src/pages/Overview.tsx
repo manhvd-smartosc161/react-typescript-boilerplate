@@ -1,11 +1,17 @@
-import Layout from '@containers/Layout';
-import OverviewContainer from '@containers/Overview';
+import { FC } from 'react';
+import { DashboardTemplate } from '@src/templates';
+import { Title, Card, Text } from '@src/atoms';
 
-const Overview = () => {
+const Overview: FC = () => {
   return (
-    <Layout>
-      <OverviewContainer />
-    </Layout>
+    <DashboardTemplate>
+      <Title level={2}>Overview</Title>
+      <Card>
+        <Text variant="body1">
+          Overview page with system metrics and insights.
+        </Text>
+      </Card>
+    </DashboardTemplate>
   );
 };
 

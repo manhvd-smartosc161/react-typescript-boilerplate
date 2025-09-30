@@ -1,11 +1,15 @@
-import Layout from '@containers/Layout';
-import TransactionsContainer from '@containers/Transactions';
+import { FC } from 'react';
+import { DashboardTemplate } from '@src/templates';
+import { Title, Card, Text } from '@src/atoms';
 
-const Transactions = () => {
+const Transactions: FC = () => {
   return (
-    <Layout>
-      <TransactionsContainer />
-    </Layout>
+    <DashboardTemplate>
+      <Title level={2}>Transactions</Title>
+      <Card>
+        <Text variant="body1">Transaction history and management page.</Text>
+      </Card>
+    </DashboardTemplate>
   );
 };
 

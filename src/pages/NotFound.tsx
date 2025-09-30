@@ -1,8 +1,9 @@
-import React from 'react';
-import { Result, Button } from 'antd';
+import { FC } from 'react';
+import { Result } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@src/atoms';
 
-const NotFound: React.FC = () => {
+const NotFound: FC = () => {
   const navigate = useNavigate();
 
   return (
@@ -23,10 +24,13 @@ const NotFound: React.FC = () => {
           <div
             style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}
           >
-            <Button type="primary" onClick={() => navigate('/')}>
+            <Button variant="primary" onClick={() => navigate('/')}>
               Back Home
             </Button>
-            <Button onClick={() => window.location.reload()}>
+            <Button
+              variant="secondary"
+              onClick={() => window.location.reload()}
+            >
               Reload Page
             </Button>
           </div>

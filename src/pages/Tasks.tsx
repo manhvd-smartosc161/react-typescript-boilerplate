@@ -1,11 +1,15 @@
-import Layout from '@containers/Layout';
-import TasksContainer from '@containers/Tasks';
+import { FC } from 'react';
+import { DashboardTemplate } from '@src/templates';
+import { Title, Card, Text } from '@src/atoms';
 
-const Tasks = () => {
+const Tasks: FC = () => {
   return (
-    <Layout>
-      <TasksContainer />
-    </Layout>
+    <DashboardTemplate>
+      <Title level={2}>Tasks</Title>
+      <Card>
+        <Text variant="body1">Task management and tracking page.</Text>
+      </Card>
+    </DashboardTemplate>
   );
 };
 

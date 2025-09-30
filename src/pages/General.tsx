@@ -1,11 +1,15 @@
-import Layout from '@containers/Layout';
-import GeneralContainer from '@containers/General';
+import { FC } from 'react';
+import { DashboardTemplate } from '@src/templates';
+import { Title, Card, Text } from '@src/atoms';
 
-const General = () => {
+const General: FC = () => {
   return (
-    <Layout>
-      <GeneralContainer />
-    </Layout>
+    <DashboardTemplate>
+      <Title level={2}>General</Title>
+      <Card>
+        <Text variant="body1">General settings and information page.</Text>
+      </Card>
+    </DashboardTemplate>
   );
 };
 
