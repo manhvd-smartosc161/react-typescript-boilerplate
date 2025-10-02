@@ -8,7 +8,6 @@ import {
   Collapse,
   Divider,
 } from '@mui/material';
-// Removed Ant Design import - using MUI components instead
 import { useNavigate, useLocation } from 'react-router-dom';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -29,7 +28,6 @@ import {
   StyledExportSection,
 } from './index.styled';
 
-// Define menu item type inline
 interface MenuItem {
   key?: string;
   icon?: React.ReactNode;
@@ -101,12 +99,10 @@ const SidebarOrganism: FC<SidebarProps> = ({
 
   const renderMenuItems = (items: any[] = []) => {
     return items.map((item: any) => {
-      // Divider
       if (item.type === 'divider') {
         return <Divider key={item.key || Math.random()} sx={{ my: 1 }} />;
       }
 
-      // Group with children (nested menu)
       if (item.type === 'group' && item.children) {
         return (
           <Box key={item.key}>
@@ -174,7 +170,6 @@ const SidebarOrganism: FC<SidebarProps> = ({
         );
       }
 
-      // Flat menu item (single level)
       const isActive = location.pathname === item.key;
       return (
         <StyledListItemButton
@@ -191,7 +186,6 @@ const SidebarOrganism: FC<SidebarProps> = ({
 
   return (
     <StyledDrawer variant="permanent" $collapsed={collapsed}>
-      {/* Logo */}
       <StyledLogoSection>
         <ImageAtom width={36} height={36} src={logoImage} alt="Logo" />
         {!collapsed && (
@@ -201,12 +195,10 @@ const SidebarOrganism: FC<SidebarProps> = ({
         )}
       </StyledLogoSection>
 
-      {/* Menu */}
       <StyledMenuSection>
         <StyledList component="nav">{renderMenuItems(menuItems)}</StyledList>
       </StyledMenuSection>
 
-      {/* User Profile - Recoil Authentication */}
       {currentUser && (
         <StyledUserSection>
           <UserProfileMolecule

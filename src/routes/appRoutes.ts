@@ -2,7 +2,6 @@ import { lazy } from 'react';
 import routes from './route';
 import { LayoutType } from '@src/components/layouts';
 
-// Lazy load components for better performance
 const Home = lazy(() => import('@src/pages/Home'));
 const Login = lazy(() => import('@src/pages/Login'));
 const Settings = lazy(() => import('@src/pages/System'));
@@ -46,7 +45,6 @@ export default [
     isPrivate: false,
     layout: 'none',
   },
-  // Catch-all route must be last to avoid matching other routes
   {
     path: '*',
     component: NotFound,

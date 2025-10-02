@@ -7,7 +7,6 @@ export const StyledLayout = styled.div`
 `;
 
 export const StyledContent = styled.div`
-  /* Add any content-specific styles here */
   flex: 1;
   display: flex;
   flex-direction: column;

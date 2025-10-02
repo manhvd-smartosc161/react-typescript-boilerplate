@@ -73,7 +73,6 @@ const HeaderOrganism: FC<HeaderProps> = ({
           <BreadcrumbMolecule items={breadcrumbItems} />
         </StyledHeaderContent>
 
-        {/* User Profile Section - Recoil Authentication */}
         {currentUser && (
           <>
             <StyledUserProfileSection

@@ -1,4 +1,3 @@
-// Export all atoms
 export { default as AvatarAtom } from './Avatar';
 export { default as ButtonAtom } from './Button';
 export { default as CardAtom } from './Card';

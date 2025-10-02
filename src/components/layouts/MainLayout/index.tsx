@@ -1,8 +1,7 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { SidebarOrganism, HeaderOrganism } from '@src/components/organisms';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { SidebarOrganism, HeaderOrganism } from '@src/components/organisms';
 import { isAuthenticatedState } from '@src/store/auth';
 import {
   StyledMainContainer,
@@ -18,14 +17,12 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   const isAuthenticated = useRecoilValue(isAuthenticatedState);
   const navigate = useNavigate();
 
-  // Redirect to login if not authenticated
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login', { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
-  // Simple menu items for main layout
   const menuItems = [
     {
       key: '/',

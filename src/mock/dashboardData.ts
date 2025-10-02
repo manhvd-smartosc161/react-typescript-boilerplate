@@ -3,10 +3,8 @@ import GroupIcon from '@mui/icons-material/Group';
 import EventIcon from '@mui/icons-material/Event';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
-// Re-export user data
 export { mockUser, mockUsers } from './authData';
 
-// Mock stats data
 export const mockStats = [
   {
     title: 'Total Employees',
@@ -35,7 +33,6 @@ export const mockStats = [
   },
 ];
 
-// Mock employees data
 export const mockEmployees = [
   {
     id: 1,
@@ -135,7 +132,6 @@ export const mockEmployees = [
   },
 ];
 
-// Mock chart options
 export const mockChartOptions = {
   chart: {
     type: 'column',

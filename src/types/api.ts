@@ -1,4 +1,3 @@
-// Generic API response types
 export interface ApiResponse<T = any> {
   success: boolean;
   data: T;
@@ -29,7 +28,6 @@ export interface MutationResponse<T = any> {
   message: string;
 }
 
-// Common API query parameters
 export interface PaginationParams {
   page?: number;
   limit?: number;

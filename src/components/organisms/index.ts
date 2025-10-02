@@ -1,4 +1,3 @@
-// Export all organisms
 export { default as ChartCardOrganism } from './ChartCard';
 export { default as DataTableOrganism } from './DataTable';
 export { default as HeaderOrganism } from './Header';

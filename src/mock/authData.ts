@@ -1,4 +1,3 @@
-// Mock user data for authentication
 export const mockUser = {
   id: 1,
   username: 'user',
@@ -7,9 +6,10 @@ export const mockUser = {
   avatar: 'https://i.pravatar.cc/150?img=12',
   department: 'IT Department',
   position: 'Employee',
+  createdAt: '2024-01-01T00:00:00Z',
+  updatedAt: '2024-01-01T00:00:00Z',
 };
 
-// Mock users list for demo purposes
 export const mockUsers = [
   {
     id: 1,

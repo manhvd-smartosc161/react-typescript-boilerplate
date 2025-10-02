@@ -1,14 +1,11 @@
 import { ApiError } from '../api/ApiError';
 
-// Simple function to get error message
 export const getErrorMessage = (error: unknown): string => {
   if (error instanceof ApiError) {
-    // Prioritize message from server
     if (error.data?.message) {
       return error.data.message;
     }
 
-    // Fallback by status code
     switch (error.status) {
       case 401:
         return 'Authentication failed';

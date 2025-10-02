@@ -1,5 +1,4 @@
 import { FC, ReactNode } from 'react';
-// import { CircularProgress } from '@mui/material';
 import { CardAtom } from '@src/components/atoms';
 import { StyledChartTitle } from './index.styled';
 

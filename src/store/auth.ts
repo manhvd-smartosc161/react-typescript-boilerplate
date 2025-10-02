@@ -1,6 +1,5 @@
 import { atom, selector } from 'recoil';
 
-// User interface
 export interface User {
   id: number;
   username: string;
@@ -11,14 +10,12 @@ export interface User {
   position?: string;
 }
 
-// Auth state interface
 export interface AuthState {
   isAuthenticated: boolean;
   user: User | null;
   token: string | null;
 }
 
-// Load auth state from localStorage
 const loadAuthState = (): AuthState => {
   try {
     const savedAuth = localStorage.getItem('authState');
@@ -35,7 +32,6 @@ const loadAuthState = (): AuthState => {
   };
 };
 
-// Save auth state to localStorage
 export const saveAuthState = (state: AuthState) => {
   try {
     localStorage.setItem('authState', JSON.stringify(state));
@@ -44,13 +40,11 @@ export const saveAuthState = (state: AuthState) => {
   }
 };
 
-// Main auth atom
 export const authState = atom<AuthState>({
   key: 'authState',
   default: loadAuthState(),
 });
 
-// Selector for current user
 export const currentUserState = selector<User | null>({
   key: 'currentUserState',
   get: ({ get }) => {
@@ -59,7 +53,6 @@ export const currentUserState = selector<User | null>({
   },
 });
 
-// Selector for authentication status
 export const isAuthenticatedState = selector<boolean>({
   key: 'isAuthenticatedState',
   get: ({ get }) => {

@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { GridColDef } from '@mui/x-data-grid';
 import { DashboardTemplate } from '@src/components/templates';
 import {
   StatsGridOrganism,
@@ -12,7 +13,6 @@ import {
   ChartCardOrganism,
 } from '@src/components/organisms';
 import { ButtonAtom, CardAtom } from '@src/components/atoms';
-import { GridColDef } from '@mui/x-data-grid';
 import {
   mockStats,
   mockEmployees,
@@ -24,7 +24,6 @@ import { StyledChartSection, StyledTableSection } from './index.styled';
 const Home: FC = () => {
   const { data: currentUser, isLoading, error, refetch } = useCurrentUser();
 
-  // Use mock data and render icons
   const stats = useMemo(
     () =>
       mockStats.map((stat) => ({
@@ -34,13 +33,10 @@ const Home: FC = () => {
     [],
   );
 
-  // Use mock data for recent employees
   const recentEmployees = useMemo(() => mockEmployees, []);
 
-  // Use mock chart options
   const chartOptions = useMemo(() => mockChartOptions, []);
 
-  // Memoize table columns for MUI DataGrid
   const columns: GridColDef[] = useMemo(
     () => [
       {
@@ -95,7 +91,6 @@ const Home: FC = () => {
 
   return (
     <DashboardTemplate>
-      {/* Current User Demo */}
       <CardAtom sx={{ mb: 3, p: 3 }}>
         <Typography variant="h6" gutterBottom>
           User Information
@@ -142,17 +137,14 @@ const Home: FC = () => {
         )}
       </CardAtom>
 
-      {/* Statistics Cards */}
       <StatsGridOrganism stats={stats} />
 
-      {/* Employee Chart */}
       <StyledChartSection>
         <ChartCardOrganism>
           <HighchartsReact highcharts={Highcharts} options={chartOptions} />
         </ChartCardOrganism>
       </StyledChartSection>
 
-      {/* Recent Employees Table */}
       <StyledTableSection>
         <DataTableOrganism
           columns={columns}
