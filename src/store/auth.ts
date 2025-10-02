@@ -18,17 +18,6 @@ export interface AuthState {
   token: string | null;
 }
 
-// Mock user for demo (single user)
-export const mockUser: User = {
-  id: 1,
-  username: 'user',
-  email: 'user@company.com',
-  fullName: 'John Doe',
-  avatar: 'https://i.pravatar.cc/150?img=12',
-  department: 'IT Department',
-  position: 'Employee',
-};
-
 // Load auth state from localStorage
 const loadAuthState = (): AuthState => {
   try {

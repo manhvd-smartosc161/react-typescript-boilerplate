@@ -4,11 +4,14 @@ module.exports = {
   webpack: {
     alias: {
       '@src': path.resolve(__dirname, 'src'),
-      '@apis': path.resolve(__dirname, 'src/apis'),
+      '@api': path.resolve(__dirname, 'src/api'),
       '@components': path.resolve(__dirname, 'src/components'),
-      '@containers': path.resolve(__dirname, 'src/containers'),
+      '@config': path.resolve(__dirname, 'src/config'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),
+      '@store': path.resolve(__dirname, 'src/store'),
+      '@types': path.resolve(__dirname, 'src/types'),
       '@utils': path.resolve(__dirname, 'src/utils'),
+      '@assets': path.resolve(__dirname, 'src/assets'),
     },
     configure: (webpackConfig: any, { env }: { env: string }) => {
       // Ignore source map warnings for styled-components

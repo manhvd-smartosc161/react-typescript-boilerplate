@@ -1,0 +1,236 @@
+import { FC, useState, useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import {
+  Box,
+  List,
+  ListItemIcon,
+  ListItemText,
+  Collapse,
+  Divider,
+} from '@mui/material';
+// Removed Ant Design import - using MUI components instead
+import { useNavigate, useLocation } from 'react-router-dom';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import { UserProfileMolecule } from '@src/components/molecules';
+import { ButtonAtom, ImageAtom, TitleAtom } from '@src/components/atoms';
+import { currentUserState } from '@src/store/auth';
+import logoImage from '@src/assets/images/logo.png';
+import {
+  StyledDrawer,
+  StyledLogoSection,
+  StyledMenuSection,
+  StyledList,
+  StyledGroupLabel,
+  StyledListItemButton,
+  StyledSubMenuItemButton,
+  StyledUserSection,
+  StyledExportSection,
+} from './index.styled';
+
+// Define menu item type inline
+interface MenuItem {
+  key?: string;
+  icon?: React.ReactNode;
+  label?: string;
+  type?: string;
+  children?: MenuItem[];
+}
+
+export interface SidebarProps {
+  collapsed: boolean;
+  menuItems: MenuItem[];
+  onExport?: () => void;
+}
+
+const SidebarOrganism: FC<SidebarProps> = ({
+  collapsed,
+  menuItems,
+  onExport,
+}) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentUser = useRecoilValue(currentUserState);
+  const [openKeys, setOpenKeys] = useState<string[]>([]);
+
+  const findParentKey = (path: string, items: any[]): string | null => {
+    for (const group of items) {
+      if (group.type === 'group' && group.children) {
+        for (const item of group.children) {
+          if (item.key === path) {
+            return item.key as string;
+          }
+          if (item.children) {
+            const subItem = item.children.find(
+              (child: any) => child.key === path,
+            );
+            if (subItem) {
+              return item.key as string;
+            }
+          }
+        }
+      }
+    }
+    return null;
+  };
+
+  useEffect(() => {
+    const parentKey = findParentKey(location.pathname, menuItems || []);
+    if (parentKey) {
+      setOpenKeys((prev) => {
+        if (!prev.includes(parentKey)) {
+          return [...prev, parentKey];
+        }
+        return prev;
+      });
+    }
+  }, [location.pathname, menuItems]);
+
+  const handleMenuClick = (key: string) => {
+    if (key.startsWith('/')) {
+      navigate(key);
+    }
+  };
+
+  const handleToggleSubmenu = (key: string) => {
+    setOpenKeys((prev) =>
+      prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key],
+    );
+  };
+
+  const renderMenuItems = (items: any[] = []) => {
+    return items.map((item: any) => {
+      // Divider
+      if (item.type === 'divider') {
+        return <Divider key={item.key || Math.random()} sx={{ my: 1 }} />;
+      }
+
+      // Group with children (nested menu)
+      if (item.type === 'group' && item.children) {
+        return (
+          <Box key={item.key}>
+            {!collapsed && (
+              <StyledGroupLabel variant="caption">
+                {item.label}
+              </StyledGroupLabel>
+            )}
+            {item.children.map((childItem: any) => {
+              const hasChildren =
+                childItem.children && childItem.children.length > 0;
+              const isOpen = openKeys.includes(childItem.key);
+              const isActive = location.pathname === childItem.key;
+
+              if (hasChildren) {
+                return (
+                  <Box key={childItem.key}>
+                    <StyledListItemButton
+                      onClick={() => handleToggleSubmenu(childItem.key)}
+                    >
+                      <ListItemIcon sx={{ minWidth: 40 }}>
+                        {childItem.icon}
+                      </ListItemIcon>
+                      {!collapsed && (
+                        <>
+                          <ListItemText primary={childItem.label} />
+                          {isOpen ? <ExpandLess /> : <ExpandMore />}
+                        </>
+                      )}
+                    </StyledListItemButton>
+                    <Collapse in={isOpen && !collapsed} timeout="auto">
+                      <List component="div" disablePadding>
+                        {childItem.children.map((subItem: any) => (
+                          <StyledSubMenuItemButton
+                            key={subItem.key}
+                            onClick={() => handleMenuClick(subItem.key)}
+                            selected={location.pathname === subItem.key}
+                          >
+                            <ListItemIcon sx={{ minWidth: 40 }}>
+                              {subItem.icon}
+                            </ListItemIcon>
+                            <ListItemText primary={subItem.label} />
+                          </StyledSubMenuItemButton>
+                        ))}
+                      </List>
+                    </Collapse>
+                  </Box>
+                );
+              }
+
+              return (
+                <StyledListItemButton
+                  key={childItem.key}
+                  onClick={() => handleMenuClick(childItem.key)}
+                  selected={isActive}
+                >
+                  <ListItemIcon sx={{ minWidth: 40 }}>
+                    {childItem.icon}
+                  </ListItemIcon>
+                  {!collapsed && <ListItemText primary={childItem.label} />}
+                </StyledListItemButton>
+              );
+            })}
+          </Box>
+        );
+      }
+
+      // Flat menu item (single level)
+      const isActive = location.pathname === item.key;
+      return (
+        <StyledListItemButton
+          key={item.key}
+          onClick={() => handleMenuClick(item.key)}
+          selected={isActive}
+        >
+          <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
+          {!collapsed && <ListItemText primary={item.label} />}
+        </StyledListItemButton>
+      );
+    });
+  };
+
+  return (
+    <StyledDrawer variant="permanent" $collapsed={collapsed}>
+      {/* Logo */}
+      <StyledLogoSection>
+        <ImageAtom width={36} height={36} src={logoImage} alt="Logo" />
+        {!collapsed && (
+          <TitleAtom level={4} sx={{ marginLeft: 1, marginBottom: 0 }}>
+            Smart Logo
+          </TitleAtom>
+        )}
+      </StyledLogoSection>
+
+      {/* Menu */}
+      <StyledMenuSection>
+        <StyledList component="nav">{renderMenuItems(menuItems)}</StyledList>
+      </StyledMenuSection>
+
+      {/* User Profile - Recoil Authentication */}
+      {currentUser && (
+        <StyledUserSection>
+          <UserProfileMolecule
+            name={currentUser.fullName}
+            role={currentUser.department || 'Employee'}
+            avatarUrl={currentUser.avatar}
+            collapsed={collapsed}
+          />
+          {!collapsed && (
+            <StyledExportSection>
+              <ButtonAtom
+                variant="secondary"
+                fullWidth
+                icon={<FileDownloadIcon />}
+                onClick={onExport}
+              >
+                Export Data
+              </ButtonAtom>
+            </StyledExportSection>
+          )}
+        </StyledUserSection>
+      )}
+    </StyledDrawer>
+  );
+};
+
+export default SidebarOrganism;

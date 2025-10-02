@@ -18,9 +18,14 @@
     "jsx": "react-jsx",
     "paths": {
       "@src/*": ["*"],
-      "@apis/*": ["apis/*"],
+      "@api/*": ["api/*"],
       "@components/*": ["components/*"],
-      "@containers/*": ["containers/*"]
+      "@config/*": ["config/*"],
+      "@hooks/*": ["hooks/*"],
+      "@store/*": ["store/*"],
+      "@types/*": ["types/*"],
+      "@utils/*": ["utils/*"],
+      "@assets/*": ["assets/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "craco.config.js"],

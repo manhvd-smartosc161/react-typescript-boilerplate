@@ -5,15 +5,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-// Global error handler - redirect to 404 on any error
+// Global error handler - log errors for debugging
 window.addEventListener('error', (event) => {
   console.error('Global error caught:', event.error);
-  window.location.href = '/404';
+  // Don't automatically redirect to 404 as it can interfere with navigation
 });
 
 window.addEventListener('unhandledrejection', (event) => {
   console.error('Unhandled promise rejection:', event.reason);
-  window.location.href = '/404';
+  // Don't automatically redirect to 404 as it can interfere with navigation
 });
 
 const root = ReactDOM.createRoot(
