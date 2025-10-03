@@ -9,9 +9,11 @@ import {
   ControlledPasswordField,
 } from '@src/components/molecules';
 import { useLoginMutation } from '@src/hooks';
-import { loginSchema, LoginFormData } from '@src/schemas/authSchema';
+import { loginSchema } from '@src/schemas/authSchema';
+import { LoginFormData } from '@src/types';
 import { getAuthMessage, LOGIN_ERROR_CODE } from '@src/constants/auth';
 import { AuthError } from '@src/api/services/authService';
+import ROUTES from '@src/routes/route';
 import { StyledLoginForm } from './index.styled';
 
 const LoginForm: FC = () => {
@@ -30,7 +32,6 @@ const LoginForm: FC = () => {
     defaultValues: {
       email: '',
       password: '',
-      remember: false,
     },
   });
 
@@ -80,14 +81,14 @@ const LoginForm: FC = () => {
 
   return (
     <>
-      <Box sx={{ textAlign: 'center', mb: 4 }}>
+      <Box sx={{ textAlign: 'center', mb: 3 }}>
         <Typography
           variant="h4"
           component="h1"
           sx={{
             fontWeight: 600,
             color: '#333',
-            mb: 1,
+            mb: 0.5,
           }}
         >
           Sign in
@@ -105,7 +106,7 @@ const LoginForm: FC = () => {
           </Alert>
         )}
 
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: 2 }}>
           <ControlledTextField
             name="email"
             control={control}
@@ -144,7 +145,7 @@ const LoginForm: FC = () => {
           fullWidth
           size="large"
           sx={{
-            mb: 3,
+            mb: 2,
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             '&:hover': {
               background: 'linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)',
@@ -154,10 +155,10 @@ const LoginForm: FC = () => {
           Sign in
         </ButtonAtom>
 
-        <Box sx={{ textAlign: 'center' }}>
+        <Box sx={{ textAlign: 'center', mt: 1 }}>
           <TextAtom variant="body2" sx={{ color: 'text.secondary' }}>
             Create an account?{' '}
-            <TextLinkAtom variant="body2" href="/signup">
+            <TextLinkAtom variant="body2" to={ROUTES.SIGNUP}>
               Sign Up
             </TextLinkAtom>
           </TextAtom>

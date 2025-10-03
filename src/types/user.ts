@@ -36,13 +36,13 @@ export type UserRole = 'admin' | 'manager' | 'employee' | 'guest';
 export interface LoginCredentials {
   email: string;
   password: string;
-  remember?: boolean;
 }
 
 export interface RegisterData {
   email: string;
   password: string;
-  fullName: string;
+  name: string;
+  surname: string;
   department?: string;
   position?: string;
 }
