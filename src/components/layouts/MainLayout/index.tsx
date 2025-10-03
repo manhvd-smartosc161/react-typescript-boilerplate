@@ -3,6 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { SidebarOrganism, HeaderOrganism } from '@src/components/organisms';
 import { isAuthenticatedState } from '@src/store/auth';
+import ROUTES from '@src/routes/route';
 import {
   StyledMainContainer,
   StyledMainContent,
@@ -19,7 +20,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate('/login', { replace: true });
+      navigate(ROUTES.LOGIN, { replace: true });
     }
   }, [isAuthenticated, navigate]);
 

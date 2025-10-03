@@ -5,6 +5,7 @@ import { useSetRecoilState } from 'recoil';
 import { useQueryClient } from '@tanstack/react-query';
 import { authService } from '@src/api/services/authService';
 import { authState } from '@src/store/auth';
+import ROUTES from '@src/routes/route';
 
 export const useLogoutMutation = () => {
   const setAuthState = useSetRecoilState(authState);
@@ -26,7 +27,7 @@ export const useLogoutMutation = () => {
 
       queryClient.clear();
 
-      navigate('/login');
+      navigate(ROUTES.LOGIN);
       toast.success('Logout successful!');
     },
     onError: () => {
@@ -39,7 +40,7 @@ export const useLogoutMutation = () => {
       localStorage.removeItem('authState');
       queryClient.clear();
 
-      navigate('/login');
+      navigate(ROUTES.LOGIN);
       toast.success('Logout successful!');
     },
   });

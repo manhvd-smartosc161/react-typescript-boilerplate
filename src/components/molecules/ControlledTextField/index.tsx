@@ -42,6 +42,7 @@ const ControlledTextField = <TFieldValues extends FieldValues = FieldValues>({
   maxRows,
   ...inputProps
 }: ControlledTextFieldProps<TFieldValues>) => {
+  const formState = control._formState;
   return (
     <Controller
       name={name}
@@ -70,12 +71,14 @@ const ControlledTextField = <TFieldValues extends FieldValues = FieldValues>({
             startIcon={startIcon}
             endIcon={endIcon}
             error={!!fieldState.error}
+            autoComplete="off"
           />
-          {(fieldState.error?.message || helperText) && (
-            <FormHelperText>
-              {fieldState.error?.message || helperText}
-            </FormHelperText>
-          )}
+          {(fieldState.error?.message || helperText) &&
+            (fieldState.isTouched || formState.isSubmitted) && (
+              <FormHelperText>
+                {fieldState.error?.message || helperText}
+              </FormHelperText>
+            )}
         </FormControl>
       )}
     />
