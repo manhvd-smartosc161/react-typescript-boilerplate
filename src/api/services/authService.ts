@@ -31,7 +31,13 @@ export class AuthError extends Error {
 export interface RegisterRequest {
   email: string;
   password: string;
-  fullName: string;
+  name: string;
+  surname?: string;
+}
+
+export interface RegisterResponse {
+  token: string;
+  user: User;
 }
 
 export const authService = {
@@ -72,9 +78,38 @@ export const authService = {
     throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
   },
 
-  register: async (userData: RegisterRequest): Promise<LoginResponse> => {
-    const response = await apiClient.post('/auth/register', userData);
-    return response.data;
+  register: async (userData: RegisterRequest): Promise<RegisterResponse> => {
+    await new Promise((resolve) => setTimeout(resolve, 800));
+
+    if (userData.email === 'existing@company.com') {
+      throw new AuthError(1005);
+    }
+
+    if (
+      userData.email.includes('inactive') ||
+      userData.email.includes('deleted')
+    ) {
+      throw new AuthError(1006);
+    }
+
+    // Generate fake user data based on input
+    const newUserId = Date.now();
+    const fakeUsername = userData.email.split('@')[0];
+
+    return {
+      token: 'mock-jwt-token-' + newUserId,
+      user: {
+        id: newUserId,
+        username: fakeUsername,
+        email: userData.email,
+        fullName: `${userData.name}${userData.surname ? ` ${userData.surname}` : ''}`,
+        avatar: `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 50) + 1}`,
+        department: 'IT Department',
+        position: 'Employee',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      },
+    };
   },
 
   getCurrentUser: async (): Promise<LoginResponse['user']> => {
