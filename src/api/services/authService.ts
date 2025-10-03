@@ -1,5 +1,6 @@
 import { User } from '@src/types';
 import { mockUser } from '@src/mock/dashboardData';
+import { LOGIN_ERROR_CODE } from '@src/constants/auth';
 import apiClient from '../index';
 
 export interface LoginRequest {
@@ -12,6 +13,21 @@ export interface LoginResponse {
   user: User;
 }
 
+export interface AuthError {
+  code: number;
+  message: string;
+}
+
+export class AuthError extends Error {
+  public code: number;
+
+  constructor(code: number) {
+    super();
+    this.code = code;
+    this.name = 'AuthError';
+  }
+}
+
 export interface RegisterRequest {
   email: string;
   password: string;
@@ -22,7 +38,10 @@ export const authService = {
   login: async (credentials: LoginRequest): Promise<LoginResponse> => {
     await new Promise((resolve) => setTimeout(resolve, 600));
 
-    if (credentials.email.length >= 3 && credentials.password.length >= 6) {
+    if (
+      credentials.email === 'admin@gmail.com' &&
+      credentials.password === '12345678'
+    ) {
       return {
         token: 'mock-jwt-token-' + Date.now(),
         user: {
@@ -37,11 +56,20 @@ export const authService = {
           updatedAt: mockUser.updatedAt,
         },
       };
-    } else {
-      throw new Error(
-        'Email (minimum 3 characters) and password (minimum 6 characters) are required',
-      );
     }
+
+    if (credentials.email.includes('inactive')) {
+      throw new AuthError(LOGIN_ERROR_CODE.ACCOUNT_DEACTIVATED);
+    }
+
+    if (
+      credentials.email.includes('blocked') ||
+      credentials.email.includes('lock')
+    ) {
+      throw new AuthError(LOGIN_ERROR_CODE.ACCOUNT_BLOCKED);
+    }
+
+    throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
   },
 
   register: async (userData: RegisterRequest): Promise<LoginResponse> => {
