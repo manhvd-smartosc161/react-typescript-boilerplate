@@ -27,12 +27,6 @@ export const useLoginMutation = () => {
       toast.success('Login successful! Redirecting...');
       setTimeout(() => navigate('/'), 800);
     },
-    onError: (error) => {
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : 'Login failed! Please try again.';
-      toast.error(errorMessage);
-    },
+    onError: () => {},
   });
 };

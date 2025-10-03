@@ -42,10 +42,10 @@ const ControlledPasswordField = <
   size = 'medium',
   variant = 'outlined',
   showToggleVisibility = true,
-  autoComplete = 'current-password',
   ...inputProps
 }: ControlledPasswordFieldProps<TFieldValues>) => {
   const [showPassword, setShowPassword] = useState(false);
+  const formState = control._formState;
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -75,7 +75,7 @@ const ControlledPasswordField = <
             placeholder={placeholder}
             type={showPassword ? 'text' : 'password'}
             size={size}
-            autoComplete={autoComplete}
+            autoComplete="off"
             startIcon={startIcon}
             error={!!fieldState.error}
             endIcon={
@@ -93,11 +93,12 @@ const ControlledPasswordField = <
               ) : undefined
             }
           />
-          {(fieldState.error?.message || helperText) && (
-            <FormHelperText>
-              {fieldState.error?.message || helperText}
-            </FormHelperText>
-          )}
+          {(fieldState.error?.message || helperText) &&
+            (fieldState.isTouched || formState.isSubmitted) && (
+              <FormHelperText>
+                {fieldState.error?.message || helperText}
+              </FormHelperText>
+            )}
         </FormControl>
       )}
     />
