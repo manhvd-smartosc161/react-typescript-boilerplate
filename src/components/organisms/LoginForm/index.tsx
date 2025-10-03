@@ -43,7 +43,7 @@ const LoginForm: FC = () => {
           control={control}
           label="Email"
           placeholder="Enter your email"
-          type="email"
+          type="text"
           startIcon={<Person />}
           required
         />

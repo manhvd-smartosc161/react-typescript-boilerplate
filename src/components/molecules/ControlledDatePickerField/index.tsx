@@ -68,8 +68,7 @@ const ControlledDatePickerField = <
             size={size}
             startIcon={startIcon}
             endIcon={endIcon}
-            // Don't pass success prop when in FormControl - let FormControl handle error states
-            success={false}
+            error={!!fieldState.error}
             inputProps={{
               min: minDate,
               max: maxDate,

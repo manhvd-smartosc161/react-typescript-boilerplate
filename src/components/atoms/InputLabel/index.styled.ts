@@ -71,6 +71,9 @@ export const StyledInputLabel = styled(InputLabel)<StyledInputLabelProps>(({
     '&.Mui-error': {
       color: theme.palette.error.main,
     },
+    '.MuiFormControl-error &': {
+      color: theme.palette.error.main,
+    },
     '&.MuiFormLabel-root': {
       position: 'relative',
       transform: 'none',

@@ -30,6 +30,17 @@ export const StyledInput = styled(TextField)<StyledInputProps>(
           ? `${alpha(theme.palette.success.main, 0.25)} 0 0 0 0.2rem`
           : `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
       },
+      '&.Mui-error fieldset': {
+        borderColor: theme.palette.error.main,
+      },
+      '&.Mui-error:hover fieldset': {
+        borderColor: theme.palette.error.dark,
+      },
+      '&.Mui-error.Mui-focused fieldset': {
+        borderColor: theme.palette.error.main,
+        borderWidth: 2,
+        boxShadow: `${alpha(theme.palette.error.main, 0.25)} 0 0 0 0.2rem`,
+      },
       '& .MuiOutlinedInput-input': {
         padding: '12px 16px',
         fontSize: 16,
@@ -69,6 +80,15 @@ export const StyledInput = styled(TextField)<StyledInputProps>(
           ? theme.palette.success.main
           : theme.palette.primary.main,
       },
+      '&.Mui-error:before': {
+        borderBottomColor: theme.palette.error.main,
+      },
+      '&.Mui-error:after': {
+        borderBottomColor: theme.palette.error.main,
+      },
+      '&.Mui-error:hover:before': {
+        borderBottomColor: theme.palette.error.dark,
+      },
       '& .MuiFilledInput-input': {
         padding: '12px 16px',
         fontSize: 16,
@@ -106,6 +126,15 @@ export const StyledInput = styled(TextField)<StyledInputProps>(
         borderBottomColor: $success
           ? theme.palette.success.dark
           : theme.palette.primary.main,
+      },
+      '&.Mui-error:before': {
+        borderBottomColor: theme.palette.error.main,
+      },
+      '&.Mui-error:after': {
+        borderBottomColor: theme.palette.error.main,
+      },
+      '&.Mui-error:hover:before': {
+        borderBottomColor: theme.palette.error.dark,
       },
       '& .MuiInput-input': {
         padding: '12px 16px',

@@ -69,8 +69,7 @@ const ControlledTextField = <TFieldValues extends FieldValues = FieldValues>({
             maxRows={maxRows}
             startIcon={startIcon}
             endIcon={endIcon}
-            // Don't pass success prop when in FormControl - let FormControl handle error states
-            success={false}
+            error={!!fieldState.error}
           />
           {(fieldState.error?.message || helperText) && (
             <FormHelperText>

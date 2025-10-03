@@ -77,8 +77,7 @@ const ControlledPasswordField = <
             size={size}
             autoComplete={autoComplete}
             startIcon={startIcon}
-            // Don't pass success prop when in FormControl - let FormControl handle error states
-            success={false}
+            error={!!fieldState.error}
             endIcon={
               showToggleVisibility ? (
                 <InputAdornment position="end">

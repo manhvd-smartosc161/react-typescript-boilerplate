@@ -33,6 +33,17 @@ export const StyledDropdown = styled(Select)<StyledDropdownProps>(
           ? `${alpha(theme.palette.success.main, 0.25)} 0 0 0 0.2rem`
           : `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
       },
+      '&.Mui-error .MuiOutlinedInput-notchedOutline': {
+        borderColor: theme.palette.error.main,
+      },
+      '&.Mui-error:hover .MuiOutlinedInput-notchedOutline': {
+        borderColor: theme.palette.error.dark,
+      },
+      '&.Mui-error.Mui-focused .MuiOutlinedInput-notchedOutline': {
+        borderColor: theme.palette.error.main,
+        borderWidth: 2,
+        boxShadow: `${alpha(theme.palette.error.main, 0.25)} 0 0 0 0.2rem`,
+      },
       '& .MuiSelect-select': {
         padding: '12px 16px',
         fontSize: 16,
@@ -71,6 +82,15 @@ export const StyledDropdown = styled(Select)<StyledDropdownProps>(
         borderBottomColor: $success
           ? theme.palette.success.main
           : theme.palette.primary.main,
+      },
+      '&.Mui-error:before': {
+        borderBottomColor: theme.palette.error.main,
+      },
+      '&.Mui-error:after': {
+        borderBottomColor: theme.palette.error.main,
+      },
+      '&.Mui-error:hover:before': {
+        borderBottomColor: theme.palette.error.dark,
       },
       '& .MuiSelect-select': {
         padding: '12px 16px',

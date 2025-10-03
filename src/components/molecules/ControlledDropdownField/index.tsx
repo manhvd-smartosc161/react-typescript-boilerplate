@@ -71,8 +71,7 @@ const ControlledDropdownField = <
             endIcon={endIcon}
             size={size}
             multiple={multiple}
-            // Don't pass success prop when in FormControl - let FormControl handle error states
-            success={false}
+            error={!!fieldState.error}
           />
           {(fieldState.error?.message || helperText) && (
             <FormHelperText>
