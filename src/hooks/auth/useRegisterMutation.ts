@@ -27,12 +27,6 @@ export const useRegisterMutation = () => {
       toast.success('Registration successful! Redirecting...');
       setTimeout(() => navigate('/'), 800);
     },
-    onError: (error) => {
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : 'Registration failed! Please try again.';
-      toast.error(errorMessage);
-    },
+    onError: () => {},
   });
 };

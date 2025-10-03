@@ -4,6 +4,11 @@ export const LOGIN_ERROR_CODE = {
   ACCOUNT_BLOCKED: 1002,
 } as const;
 
+export const REGISTER_ERROR_CODE = {
+  EMAIL_EXISTS_ACTIVE: 1005,
+  EMAIL_EXISTS_INACTIVE: 1006,
+} as const;
+
 export const authKeys = {
   all: ['auth'] as const,
   user: () => [...authKeys.all, 'user'] as const,
