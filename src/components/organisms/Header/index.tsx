@@ -84,14 +84,13 @@ const HeaderOrganism: FC<HeaderProps> = ({
             >
               <StyledUserInfo>
                 <Typography variant="body2" fontWeight={600}>
-                  {currentUser?.fullName || 'Loading...'}
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  {currentUser?.department || 'Loading...'}
+                  {currentUser
+                    ? `${currentUser.surname} ${currentUser.name}`
+                    : 'Loading...'}
                 </Typography>
               </StyledUserInfo>
-              <StyledAvatar src={currentUser?.avatar}>
-                {!currentUser?.avatar && <PersonIcon />}
+              <StyledAvatar>
+                <PersonIcon />
               </StyledAvatar>
             </StyledUserProfileSection>
 
@@ -110,7 +109,7 @@ const HeaderOrganism: FC<HeaderProps> = ({
             >
               <StyledMenuHeader>
                 <Typography variant="subtitle2" fontWeight={600}>
-                  {currentUser?.fullName || 'Loading...'}
+                  {currentUser?.name || 'Loading...'}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
                   {currentUser?.email || 'Loading...'}
