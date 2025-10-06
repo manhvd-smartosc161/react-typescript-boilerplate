@@ -130,7 +130,7 @@ const RegisterForm: FC = () => {
           </Alert>
         )}
 
-        <Box sx={{ mb: 2 }}>
+        <Box>
           <ControlledTextField
             name="name"
             control={control}
@@ -141,7 +141,7 @@ const RegisterForm: FC = () => {
           />
         </Box>
 
-        <Box sx={{ mb: 2 }}>
+        <Box>
           <ControlledTextField
             name="surname"
             control={control}
@@ -151,7 +151,7 @@ const RegisterForm: FC = () => {
           />
         </Box>
 
-        <Box sx={{ mb: 2 }}>
+        <Box>
           <ControlledTextField
             name="email"
             control={control}
@@ -163,7 +163,7 @@ const RegisterForm: FC = () => {
           />
         </Box>
 
-        <Box sx={{ mb: 2 }}>
+        <Box>
           <ControlledPasswordField
             name="password"
             control={control}
@@ -174,7 +174,7 @@ const RegisterForm: FC = () => {
           />
         </Box>
 
-        <Box sx={{ mb: 2 }}>
+        <Box>
           <ControlledPasswordField
             name="confirmPassword"
             control={control}
@@ -185,7 +185,7 @@ const RegisterForm: FC = () => {
           />
         </Box>
 
-        <Box sx={{ mb: 2, display: 'flex', alignItems: 'flex-start' }}>
+        <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
           <ControlledCheckBoxField
             name="acceptTerms"
             control={control}

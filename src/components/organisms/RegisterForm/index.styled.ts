@@ -4,6 +4,7 @@ import { Box } from '@mui/material';
 export const StyledRegisterForm = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
+  gap: '2px',
 })) as typeof Box;
 
 export const StyledRegisterTip = styled(Box)(({ theme }) => ({
