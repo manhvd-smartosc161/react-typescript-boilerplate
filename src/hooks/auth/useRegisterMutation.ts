@@ -3,7 +3,8 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { authService, RegisterRequest } from '@src/api/services/authService';
-import { authState, saveAuthState } from '@src/store/auth';
+import { authState } from '@src/store/auth';
+import ROUTES from '@src/routes/route';
 
 export const useRegisterMutation = () => {
   const setAuthState = useSetRecoilState(authState);
@@ -15,17 +16,18 @@ export const useRegisterMutation = () => {
     },
     onSuccess: (data) => {
       const newAuthState = {
-        isAuthenticated: true,
+        isAuthenticated: false,
         user: data.user,
-        token: data.token,
+        token: null,
       };
 
       setAuthState(newAuthState);
 
-      saveAuthState(newAuthState);
+      toast.success('Redirecting to login page...');
 
-      toast.success('Registration successful! Redirecting...');
-      setTimeout(() => navigate('/'), 800);
+      setTimeout(() => {
+        navigate(ROUTES.LOGIN);
+      }, 1500);
     },
     onError: () => {},
   });

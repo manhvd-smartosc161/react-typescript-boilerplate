@@ -113,16 +113,10 @@ const Home: FC = () => {
                 User Information:
               </Typography>
               <Typography variant="body2">
-                <strong>Name:</strong> {currentUser.fullName}
+                <strong>Name:</strong> {currentUser.name}
               </Typography>
               <Typography variant="body2">
                 <strong>Email:</strong> {currentUser.email}
-              </Typography>
-              <Typography variant="body2">
-                <strong>Department:</strong> {currentUser.department}
-              </Typography>
-              <Typography variant="body2">
-                <strong>Position:</strong> {currentUser.position}
               </Typography>
             </Box>
             <ButtonAtom

@@ -3,11 +3,9 @@ import { atom, selector } from 'recoil';
 export interface User {
   id: number;
   username: string;
+  name: string;
   email: string;
-  fullName: string;
-  avatar?: string;
-  department?: string;
-  position?: string;
+  surname: string;
 }
 
 export interface AuthState {

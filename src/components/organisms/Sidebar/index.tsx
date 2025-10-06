@@ -202,9 +202,9 @@ const SidebarOrganism: FC<SidebarProps> = ({
       {currentUser && (
         <StyledUserSection>
           <UserProfileMolecule
-            name={currentUser.fullName}
-            role={currentUser.department || 'Employee'}
-            avatarUrl={currentUser.avatar}
+            name={currentUser.name}
+            role="Employee"
+            avatarUrl=""
             collapsed={collapsed}
           />
           {!collapsed && (

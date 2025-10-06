@@ -40,3 +40,11 @@ export const AUTH_MESSAGES = {
 export const getAuthMessage = (code: keyof typeof AUTH_MESSAGES): string => {
   return AUTH_MESSAGES[code];
 };
+
+// API Endpoints
+export const AUTH_ENDPOINT = {
+  LOGIN: '/auth/login',
+  REGISTER: '/auth/register',
+  LOGOUT: '/auth/logout',
+  ME: '/auth/me',
+} as const;

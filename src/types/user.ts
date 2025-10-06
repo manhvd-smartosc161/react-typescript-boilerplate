@@ -1,15 +1,9 @@
 export interface User {
   id: number;
   username: string;
+  name: string;
   email: string;
-  fullName: string;
-  avatar?: string;
-  department?: string;
-  position?: string;
-  phone?: string;
-  address?: string;
-  createdAt: string;
-  updatedAt: string;
+  surname: string;
 }
 
 export interface UserProfile extends User {
