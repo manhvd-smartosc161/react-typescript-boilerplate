@@ -1,6 +1,5 @@
 import { User } from '@src/types';
-import { mockUser } from '@src/mock/dashboardData';
-import { LOGIN_ERROR_CODE } from '@src/constants/auth';
+import { LOGIN_ERROR_CODE, AUTH_ENDPOINT } from '@src/constants';
 import { setCookie, getCookie } from '@src/utils/cookie';
 import apiClient from '../index';
 
@@ -37,7 +36,6 @@ export interface RegisterRequest {
 }
 
 export interface RegisterResponse {
-  token: string;
   user: User;
 }
 
@@ -61,94 +59,97 @@ export const tokenService = {
 
 export const authService = {
   login: async (credentials: LoginRequest): Promise<LoginResponse> => {
-    await new Promise((resolve) => setTimeout(resolve, 600));
+    try {
+      const response = await apiClient.post(AUTH_ENDPOINT.LOGIN, credentials);
 
-    if (
-      credentials.email === 'admin@gmail.com' &&
-      credentials.password === '12345678'
-    ) {
+      const responseData = response.data;
+      const token = responseData.accessToken;
+      const userData = responseData.user;
+
+      tokenService.saveToken(token);
+
       return {
-        token: 'mock-jwt-token-' + Date.now(),
+        token,
         user: {
-          id: mockUser.id,
-          username: mockUser.username,
-          email: mockUser.email,
-          fullName: mockUser.fullName,
-          avatar: mockUser.avatar,
-          department: mockUser.department,
-          position: mockUser.position,
-          createdAt: mockUser.createdAt,
-          updatedAt: mockUser.updatedAt,
+          id: userData.id,
+          username: userData.name,
+          name: userData.name,
+          email: userData.email,
+          surname: userData.surname,
         },
       };
-    }
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
+      }
+      if (error.response?.status === 403) {
+        throw new AuthError(LOGIN_ERROR_CODE.ACCOUNT_BLOCKED);
+      }
+      if (error.response?.status === 404) {
+        throw new AuthError(LOGIN_ERROR_CODE.ACCOUNT_DEACTIVATED);
+      }
 
-    if (credentials.email.includes('inactive')) {
-      throw new AuthError(LOGIN_ERROR_CODE.ACCOUNT_DEACTIVATED);
+      throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
     }
-
-    if (
-      credentials.email.includes('blocked') ||
-      credentials.email.includes('lock')
-    ) {
-      throw new AuthError(LOGIN_ERROR_CODE.ACCOUNT_BLOCKED);
-    }
-
-    throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
   },
 
   register: async (userData: RegisterRequest): Promise<RegisterResponse> => {
-    await new Promise((resolve) => setTimeout(resolve, 800));
-
-    if (userData.email === 'existing@company.com') {
-      throw new AuthError(1005);
-    }
-
-    if (
-      userData.email.includes('inactive') ||
-      userData.email.includes('deleted')
-    ) {
-      throw new AuthError(1006);
-    }
-
-    // Generate fake user data based on input
-    const newUserId = Date.now();
-    const fakeUsername = userData.email.split('@')[0];
-
-    return {
-      token: 'mock-jwt-token-' + newUserId,
-      user: {
-        id: newUserId,
-        username: fakeUsername,
+    try {
+      const dataToSend = {
         email: userData.email,
-        fullName: `${userData.name}${userData.surname ? ` ${userData.surname}` : ''}`,
-        avatar: `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 50) + 1}`,
-        department: 'IT Department',
-        position: 'Employee',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-    };
+        password: userData.password,
+        name: userData.name,
+        surname: userData.surname,
+      };
+
+      const response = await apiClient.post(AUTH_ENDPOINT.REGISTER, dataToSend);
+      const user = response.data;
+
+      return {
+        user: {
+          id: user.id,
+          username: user.name,
+          name: user.name,
+          email: user.email,
+          surname: user.surname,
+        },
+      };
+    } catch (error: any) {
+      if (error.response?.status === 400) {
+        throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
+      }
+      if (error.response?.status === 403) {
+        throw new AuthError(LOGIN_ERROR_CODE.ACCOUNT_BLOCKED);
+      }
+
+      throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
+    }
   },
 
   getCurrentUser: async (): Promise<LoginResponse['user']> => {
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    try {
+      const response = await apiClient.get(AUTH_ENDPOINT.ME);
 
-    return {
-      id: mockUser.id,
-      username: mockUser.username,
-      email: mockUser.email,
-      fullName: mockUser.fullName,
-      avatar: mockUser.avatar,
-      department: mockUser.department,
-      position: mockUser.position,
-      createdAt: mockUser.createdAt,
-      updatedAt: mockUser.updatedAt,
-    };
+      const userData = response.data;
+
+      return {
+        id: userData.id,
+        username: userData.name,
+        name: userData.name,
+        email: userData.email,
+        surname: userData.surname,
+      };
+    } catch (error) {
+      throw error;
+    }
   },
 
   logout: async (): Promise<void> => {
-    await apiClient.post('/auth/logout');
-    tokenService.removeToken();
+    try {
+      await apiClient.post(AUTH_ENDPOINT.LOGOUT);
+    } catch (error) {
+    } finally {
+      tokenService.removeToken();
+    }
   },
 };

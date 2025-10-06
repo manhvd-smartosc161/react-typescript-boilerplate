@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import camelCase from 'camelcase-keys';
+import { getCookie } from '@src/utils/cookie';
 import { ApiError } from './ApiError';
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -15,7 +16,7 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('authToken');
+    const token = getCookie('accessToken');
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -29,7 +30,7 @@ apiClient.interceptors.request.use(
 
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => {
-    const camelCasedData = camelCase(response.data, { deep: true });
+    const camelCasedData = camelCase(response.data.data, { deep: true });
 
     return {
       ...response,
