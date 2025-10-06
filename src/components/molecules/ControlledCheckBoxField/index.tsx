@@ -72,7 +72,8 @@ const ControlledCheckBoxField = <
               <Typography
                 variant="body2"
                 sx={{
-                  mt: 1,
+                  mt: -1,
+                  mb: 1,
                   color: fieldState.error?.message
                     ? 'error.main'
                     : 'text.secondary',
