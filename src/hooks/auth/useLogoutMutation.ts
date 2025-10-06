@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
 import { useQueryClient } from '@tanstack/react-query';
-import { authService } from '@src/api/services/authService';
-import { authState } from '@src/store/auth';
+import { useSetRecoilState } from 'recoil';
+import { authService, tokenService } from '@src/api/services/authService';
+import { authState, saveAuthState } from '@src/store/auth';
 import ROUTES from '@src/routes/route';
 
 export const useLogoutMutation = () => {
@@ -17,13 +17,16 @@ export const useLogoutMutation = () => {
       return authService.logout();
     },
     onSuccess: () => {
-      setAuthState({
+      const newAuthState = {
         isAuthenticated: false,
         user: null,
         token: null,
-      });
+      };
 
-      localStorage.removeItem('authState');
+      setAuthState(newAuthState);
+      saveAuthState(newAuthState);
+
+      tokenService.removeToken();
 
       queryClient.clear();
 
@@ -31,13 +34,17 @@ export const useLogoutMutation = () => {
       toast.success('Logout successful!');
     },
     onError: () => {
-      setAuthState({
+      const newAuthState = {
         isAuthenticated: false,
         user: null,
         token: null,
-      });
+      };
 
-      localStorage.removeItem('authState');
+      setAuthState(newAuthState);
+      saveAuthState(newAuthState);
+
+      tokenService.removeToken();
+
       queryClient.clear();
 
       navigate(ROUTES.LOGIN);
