@@ -1,6 +1,7 @@
 import { User } from '@src/types';
 import { mockUser } from '@src/mock/dashboardData';
 import { LOGIN_ERROR_CODE } from '@src/constants/auth';
+import { setCookie, getCookie } from '@src/utils/cookie';
 import apiClient from '../index';
 
 export interface LoginRequest {
@@ -39,6 +40,24 @@ export interface RegisterResponse {
   token: string;
   user: User;
 }
+
+const TOKEN_COOKIE_KEY = 'accessToken';
+const TOKEN_EXPIRY_DAYS = 7;
+
+export const tokenService = {
+  saveToken: (token: string): void => {
+    const expiryTime = TOKEN_EXPIRY_DAYS * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+    setCookie(TOKEN_COOKIE_KEY, token, expiryTime);
+  },
+
+  getToken: (): string => {
+    return getCookie(TOKEN_COOKIE_KEY);
+  },
+
+  removeToken: (): void => {
+    setCookie(TOKEN_COOKIE_KEY, '', -1);
+  },
+};
 
 export const authService = {
   login: async (credentials: LoginRequest): Promise<LoginResponse> => {
@@ -130,5 +149,6 @@ export const authService = {
 
   logout: async (): Promise<void> => {
     await apiClient.post('/auth/logout');
+    tokenService.removeToken();
   },
 };

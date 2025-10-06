@@ -14,7 +14,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { BreadcrumbMolecule } from '@src/components/molecules';
-import { currentUserState } from '@src/store/auth';
+import { currentUserState, isAuthenticatedState } from '@src/store/auth';
 import { useLogoutMutation } from '@src/hooks';
 import {
   StyledAppBar,
@@ -42,6 +42,7 @@ const HeaderOrganism: FC<HeaderProps> = ({
   breadcrumbItems,
 }) => {
   const currentUser = useRecoilValue(currentUserState);
+  const isAuthenticated = useRecoilValue(isAuthenticatedState);
   const logoutMutation = useLogoutMutation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -73,7 +74,7 @@ const HeaderOrganism: FC<HeaderProps> = ({
           <BreadcrumbMolecule items={breadcrumbItems} />
         </StyledHeaderContent>
 
-        {currentUser && (
+        {isAuthenticated && (
           <>
             <StyledUserProfileSection
               direction="row"
@@ -83,14 +84,14 @@ const HeaderOrganism: FC<HeaderProps> = ({
             >
               <StyledUserInfo>
                 <Typography variant="body2" fontWeight={600}>
-                  {currentUser.fullName}
+                  {currentUser?.fullName || 'Loading...'}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  {currentUser.department}
+                  {currentUser?.department || 'Loading...'}
                 </Typography>
               </StyledUserInfo>
-              <StyledAvatar src={currentUser.avatar}>
-                {!currentUser.avatar && <PersonIcon />}
+              <StyledAvatar src={currentUser?.avatar}>
+                {!currentUser?.avatar && <PersonIcon />}
               </StyledAvatar>
             </StyledUserProfileSection>
 
@@ -109,10 +110,10 @@ const HeaderOrganism: FC<HeaderProps> = ({
             >
               <StyledMenuHeader>
                 <Typography variant="subtitle2" fontWeight={600}>
-                  {currentUser.fullName}
+                  {currentUser?.fullName || 'Loading...'}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  {currentUser.email}
+                  {currentUser?.email || 'Loading...'}
                 </Typography>
               </StyledMenuHeader>
               <Divider />
