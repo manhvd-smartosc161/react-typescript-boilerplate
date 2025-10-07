@@ -1,11 +1,7 @@
 import React, { FC, ReactNode } from 'react';
 import { Box } from '@mui/material';
 import { TitleAtom } from '@src/components/atoms';
-import {
-  StyledPageHeader,
-  StyledPageContent,
-  StyledSubtitle,
-} from './index.styled';
+import { StyledPageHeader, StyledSubtitle } from './index.styled';
 
 interface PageTemplateProps {
   children: ReactNode;
@@ -21,7 +17,7 @@ const PageTemplate: FC<PageTemplateProps> = ({
   actions,
 }) => {
   return (
-    <StyledPageContent>
+    <Box>
       {(title || subtitle || actions) && (
         <StyledPageHeader>
           <Box>
@@ -36,7 +32,7 @@ const PageTemplate: FC<PageTemplateProps> = ({
         </StyledPageHeader>
       )}
       {children}
-    </StyledPageContent>
+    </Box>
   );
 };
 

@@ -2,7 +2,6 @@ import './App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RecoilRoot } from 'recoil';
 import AppRouter from './routes';
 import { queryClient } from './lib/queryClient';
@@ -23,7 +22,6 @@ const AppContent = () => {
         pauseOnHover
         theme="light"
       />
-      <ReactQueryDevtools initialIsOpen={false} />
     </>
   );
 };

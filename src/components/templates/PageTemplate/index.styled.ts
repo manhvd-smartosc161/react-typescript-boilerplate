@@ -13,8 +13,6 @@ export const StyledPageHeader = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const StyledPageContent = styled(Box)(() => ({}));
-
 export const StyledSubtitle = styled('p')(() => ({
   margin: 0,
   color: '#666',
