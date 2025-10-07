@@ -63,6 +63,7 @@ const ControlledDropdownField = <
             {...field}
             {...selectProps}
             id={field.name}
+            variant={variant}
             placeholder={placeholder}
             options={options}
             required={required}

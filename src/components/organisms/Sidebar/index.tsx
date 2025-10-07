@@ -42,11 +42,7 @@ export interface SidebarProps {
   onExport?: () => void;
 }
 
-const SidebarOrganism: FC<SidebarProps> = ({
-  collapsed,
-  menuItems,
-  onExport,
-}) => {
+const Sidebar: FC<SidebarProps> = ({ collapsed, menuItems, onExport }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const currentUser = useRecoilValue(currentUserState);
@@ -225,4 +221,4 @@ const SidebarOrganism: FC<SidebarProps> = ({
   );
 };
 
-export default SidebarOrganism;
+export default Sidebar;

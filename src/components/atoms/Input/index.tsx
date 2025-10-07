@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react';
 import { TextFieldProps } from '@mui/material';
 import { StyledInput } from './index.styled';
 
-export interface InputProps extends Omit<TextFieldProps, 'variant' | 'error'> {
+export interface InputProps extends Omit<TextFieldProps, 'error'> {
   placeholder?: string;
   helperText?: string;
   error?: boolean | string;
@@ -35,13 +35,13 @@ const InputAtom: FC<InputProps> = ({
       InputProps={{
         startAdornment: startIcon ? (
           <div
-            style={{ marginRight: 8, display: 'flex', alignItems: 'center' }}
+            style={{ marginRight: 3, display: 'flex', alignItems: 'center' }}
           >
             {startIcon}
           </div>
         ) : undefined,
         endAdornment: endIcon ? (
-          <div style={{ marginLeft: 8, display: 'flex', alignItems: 'center' }}>
+          <div style={{ marginLeft: 4, display: 'flex', alignItems: 'center' }}>
             {endIcon}
           </div>
         ) : undefined,

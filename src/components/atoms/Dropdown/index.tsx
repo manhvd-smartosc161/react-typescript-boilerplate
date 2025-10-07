@@ -23,6 +23,7 @@ export interface DropdownProps extends Omit<SelectProps, 'variant'> {
   fullWidth?: boolean;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
+  variant?: 'standard' | 'outlined' | 'filled';
 }
 
 const DropdownAtom: FC<DropdownProps> = ({
@@ -35,6 +36,7 @@ const DropdownAtom: FC<DropdownProps> = ({
   fullWidth = true,
   startIcon,
   endIcon,
+  variant = 'outlined',
   ...props
 }) => {
   const errorMessage = typeof error === 'string' ? error : '';
@@ -46,15 +48,16 @@ const DropdownAtom: FC<DropdownProps> = ({
       error={showError}
       $success={success && !showError}
     >
-      {label && <InputLabel>{label}</InputLabel>}
+      {label && <InputLabel variant={variant}>{label}</InputLabel>}
       <StyledDropdown
         displayEmpty
         label={label}
         $success={success && !showError}
+        variant={variant}
         startAdornment={
           startIcon ? (
             <div
-              style={{ marginRight: 8, display: 'flex', alignItems: 'center' }}
+              style={{ marginRight: 4, display: 'flex', alignItems: 'center' }}
             >
               {startIcon}
             </div>
@@ -63,7 +66,7 @@ const DropdownAtom: FC<DropdownProps> = ({
         endAdornment={
           endIcon ? (
             <div
-              style={{ marginLeft: 8, display: 'flex', alignItems: 'center' }}
+              style={{ marginLeft: 4, display: 'flex', alignItems: 'center' }}
             >
               {endIcon}
             </div>

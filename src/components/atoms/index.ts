@@ -14,6 +14,7 @@ export { default as LogoAtom } from './Logo';
 export { default as RadioAtom } from './Radio';
 export { default as StepIconAtom } from './StepIcon';
 export { default as TagAtom } from './Tag';
+export { default as TextAreaAtom } from './TextArea';
 export { default as TextAtom } from './Text';
 export { default as TextLinkAtom } from './TextLink';
 export { default as TitleAtom } from './Title';

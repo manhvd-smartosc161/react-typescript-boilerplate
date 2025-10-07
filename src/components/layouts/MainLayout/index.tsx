@@ -1,7 +1,7 @@
 import React, { FC, ReactNode, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
-import { SidebarOrganism, HeaderOrganism } from '@src/components/organisms';
+import { Sidebar, Header } from '@src/components';
 import { isAuthenticatedState } from '@src/store/auth';
 import ROUTES from '@src/routes/route';
 import {
@@ -57,9 +57,9 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     <>
       {isAuthenticated && (
         <StyledMainContainer>
-          <SidebarOrganism collapsed={collapsed} menuItems={menuItems} />
+          <Sidebar collapsed={collapsed} menuItems={menuItems} />
           <StyledMainContent component="main">
-            <HeaderOrganism
+            <Header
               collapsed={collapsed}
               onToggleCollapse={handleCollapse}
               breadcrumbItems={getBreadcrumbItems()}

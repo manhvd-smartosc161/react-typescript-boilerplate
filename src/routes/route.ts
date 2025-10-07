@@ -4,4 +4,5 @@ export default {
   SIGNUP: '/signup',
   FORGOT_PASSWORD: '/forgot-password',
   SETTINGS: '/settings',
+  REGISTRATION: '/registration',
 };

@@ -63,6 +63,7 @@ const ControlledDatePickerField = <
             {...field}
             {...inputProps}
             id={field.name}
+            variant={variant}
             placeholder={placeholder}
             type={showTime ? 'datetime-local' : 'date'}
             size={size}
