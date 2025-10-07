@@ -1,4 +1,8 @@
-import { User } from '@src/types';
+import {
+  User,
+  ValidateResetTokenRequest,
+  ValidateResetTokenResponse,
+} from '@src/types';
 import { LOGIN_ERROR_CODE, AUTH_ENDPOINT } from '@src/constants';
 import { setCookie, getCookie } from '@src/utils/cookie';
 import apiClient from '../index';
@@ -35,6 +39,15 @@ export interface ForgotPasswordRequest {
 }
 
 export interface ForgotPasswordResponse {
+  message: string;
+}
+
+export interface ResetPasswordRequest {
+  newPassword: string;
+  token: string;
+}
+
+export interface ResetPasswordResponse {
   message: string;
 }
 
@@ -168,6 +181,43 @@ export const authService = {
     } catch (error: any) {
       if (error.response?.status === 400) {
         throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
+      }
+      throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
+    }
+  },
+
+  validateResetToken: async (
+    data: ValidateResetTokenRequest,
+  ): Promise<ValidateResetTokenResponse> => {
+    try {
+      const response = await apiClient.post(
+        AUTH_ENDPOINT.VALIDATE_RESET_TOKEN,
+        data,
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response?.status === 400) {
+        throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
+      }
+      if (error.response?.status === 401) {
+        throw new AuthError(LOGIN_ERROR_CODE.ACCOUNT_DEACTIVATED);
+      }
+      throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
+    }
+  },
+
+  resetPassword: async (
+    data: ResetPasswordRequest,
+  ): Promise<ResetPasswordResponse> => {
+    try {
+      const response = await apiClient.post(AUTH_ENDPOINT.RESET_PASSWORD, data);
+      return response.data;
+    } catch (error: any) {
+      if (error.response?.status === 400) {
+        throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
+      }
+      if (error.response?.status === 401) {
+        throw new AuthError(LOGIN_ERROR_CODE.ACCOUNT_DEACTIVATED);
       }
       throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
     }

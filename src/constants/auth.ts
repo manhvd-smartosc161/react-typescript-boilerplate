@@ -50,4 +50,6 @@ export const AUTH_ENDPOINT = {
   LOGOUT: '/auth/logout',
   ME: '/auth/me',
   FORGOT_PASSWORD: '/auth/forgot-password',
+  VALIDATE_RESET_TOKEN: '/auth/validate-reset-token',
+  RESET_PASSWORD: '/auth/reset-password',
 } as const;

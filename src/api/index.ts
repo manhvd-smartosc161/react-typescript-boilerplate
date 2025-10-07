@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import camelCase from 'camelcase-keys';
 import { getCookie } from '@src/utils/cookie';
+import { camelToSnakeKeys } from '@src/utils/snakeCase';
 import { ApiError } from './ApiError';
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -19,6 +20,10 @@ apiClient.interceptors.request.use(
     const token = getCookie('accessToken');
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    if (config.data && typeof config.data === 'object') {
+      config.data = camelToSnakeKeys(config.data);
     }
 
     return config;

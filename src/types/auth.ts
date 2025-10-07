@@ -15,3 +15,17 @@ export interface RegisterFormData {
 export interface ForgotPasswordFormData {
   email: string;
 }
+
+export interface ResetPasswordFormData {
+  newPassword: string;
+  confirmPassword: string;
+}
+
+export interface ValidateResetTokenRequest {
+  token: string;
+}
+
+export interface ValidateResetTokenResponse {
+  valid: boolean;
+  message?: string;
+}

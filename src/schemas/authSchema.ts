@@ -4,6 +4,8 @@ import {
   LoginFormData,
   RegisterFormData,
   ForgotPasswordFormData,
+  ResetPasswordFormData,
+  ValidateResetTokenRequest,
 } from '@src/types';
 
 export const loginSchema: yup.ObjectSchema<LoginFormData> = yup.object().shape({
@@ -54,4 +56,25 @@ export const forgotPasswordSchema: yup.ObjectSchema<ForgotPasswordFormData> =
       .string()
       .required(getAuthMessage('MSG_001'))
       .email(getAuthMessage('MSG_005')),
+  });
+
+export const resetPasswordSchema: yup.ObjectSchema<ResetPasswordFormData> = yup
+  .object()
+  .shape({
+    newPassword: yup
+      .string()
+      .required(getAuthMessage('MSG_001'))
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/,
+        getAuthMessage('MSG_006'),
+      ),
+    confirmPassword: yup
+      .string()
+      .required(getAuthMessage('MSG_001'))
+      .oneOf([yup.ref('newPassword')], getAuthMessage('MSG_007')),
+  });
+
+export const validateResetTokenSchema: yup.ObjectSchema<ValidateResetTokenRequest> =
+  yup.object().shape({
+    token: yup.string().required(getAuthMessage('MSG_001')),
   });
