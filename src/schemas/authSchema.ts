@@ -1,6 +1,10 @@
 import * as yup from 'yup';
 import { getAuthMessage } from '@src/constants/auth';
-import { LoginFormData, RegisterFormData } from '@src/types';
+import {
+  LoginFormData,
+  RegisterFormData,
+  ForgotPasswordFormData,
+} from '@src/types';
 
 export const loginSchema: yup.ObjectSchema<LoginFormData> = yup.object().shape({
   email: yup.string().required(getAuthMessage('MSG_001')),
@@ -42,4 +46,12 @@ export const registerSchema: yup.ObjectSchema<RegisterFormData> = yup
       .boolean()
       .required(getAuthMessage('MSG_001'))
       .oneOf([true], getAuthMessage('MSG_009')),
+  });
+
+export const forgotPasswordSchema: yup.ObjectSchema<ForgotPasswordFormData> =
+  yup.object().shape({
+    email: yup
+      .string()
+      .required(getAuthMessage('MSG_001'))
+      .email(getAuthMessage('MSG_005')),
   });

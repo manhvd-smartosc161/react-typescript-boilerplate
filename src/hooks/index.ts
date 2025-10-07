@@ -4,5 +4,6 @@ export {
   useLoginMutation,
   useRegisterMutation,
   useLogoutMutation,
+  useForgotPasswordMutation,
 } from './auth';
 export { useCurrentUser } from './user';

@@ -34,6 +34,8 @@ export const AUTH_MESSAGES = {
   MSG_011:
     "You can't signup because the account is deactivated. Please contact Admin if you want to reactivate account.",
   MSG_012: 'Your account has been successfully created',
+  MSG_013:
+    'A password reset email has already been sent. Please check your inbox. You can request again after 5 minutes.',
 } as const;
 
 // Helper function to get message by code
@@ -47,4 +49,5 @@ export const AUTH_ENDPOINT = {
   REGISTER: '/auth/register',
   LOGOUT: '/auth/logout',
   ME: '/auth/me',
+  FORGOT_PASSWORD: '/auth/forgot-password',
 } as const;

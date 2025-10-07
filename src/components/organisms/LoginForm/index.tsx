@@ -132,7 +132,7 @@ const LoginForm: FC = () => {
         <Box sx={{ textAlign: 'right', mb: 3 }}>
           <TextAtom variant="body2" sx={{ color: 'text.secondary' }}>
             Forgot Password?{' '}
-            <TextLinkAtom variant="body2" href="/forgot-password">
+            <TextLinkAtom variant="body2" to={ROUTES.FORGOT_PASSWORD}>
               Click here
             </TextLinkAtom>
           </TextAtom>

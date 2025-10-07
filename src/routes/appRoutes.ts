@@ -5,6 +5,7 @@ import { LayoutType } from '@src/components/layouts';
 const Home = lazy(() => import('@src/pages/Home'));
 const Login = lazy(() => import('@src/pages/Login'));
 const SignUp = lazy(() => import('@src/pages/SignUp'));
+const ForgotPassword = lazy(() => import('@src/pages/ForgotPassword'));
 const Settings = lazy(() => import('@src/pages/System'));
 const NotFound = lazy(() => import('@src/pages/Error'));
 
@@ -28,6 +29,13 @@ export default [
   {
     path: routes.SIGNUP,
     component: SignUp,
+    restricted: true,
+    isPrivate: false,
+    layout: 'auth',
+  },
+  {
+    path: routes.FORGOT_PASSWORD,
+    component: ForgotPassword,
     restricted: true,
     isPrivate: false,
     layout: 'auth',

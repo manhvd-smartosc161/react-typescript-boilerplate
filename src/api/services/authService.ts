@@ -13,11 +13,6 @@ export interface LoginResponse {
   user: User;
 }
 
-export interface AuthError {
-  code: number;
-  message: string;
-}
-
 export class AuthError extends Error {
   public code: number;
 
@@ -33,6 +28,14 @@ export interface RegisterRequest {
   password: string;
   name: string;
   surname?: string;
+}
+
+export interface ForgotPasswordRequest {
+  email: string;
+}
+
+export interface ForgotPasswordResponse {
+  message: string;
 }
 
 export interface RegisterResponse {
@@ -150,6 +153,23 @@ export const authService = {
     } catch (error) {
     } finally {
       tokenService.removeToken();
+    }
+  },
+
+  forgotPassword: async (
+    email: ForgotPasswordRequest,
+  ): Promise<ForgotPasswordResponse> => {
+    try {
+      const response = await apiClient.post(
+        AUTH_ENDPOINT.FORGOT_PASSWORD,
+        email,
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response?.status === 400) {
+        throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
+      }
+      throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
     }
   },
 };

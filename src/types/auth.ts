@@ -11,3 +11,7 @@ export interface RegisterFormData {
   surname?: string;
   acceptTerms: boolean;
 }
+
+export interface ForgotPasswordFormData {
+  email: string;
+}
