@@ -37,7 +37,7 @@ const RegisterForm: FC = () => {
       confirmPassword: '',
       name: '',
       surname: '',
-      acceptTerms: false,
+      agreedTerms: false,
     },
   });
 
@@ -91,6 +91,7 @@ const RegisterForm: FC = () => {
       password: data.password,
       name: data.name,
       surname: data.surname || undefined,
+      agreedTerms: data.agreedTerms,
     });
   };
 
@@ -187,7 +188,7 @@ const RegisterForm: FC = () => {
 
         <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
           <ControlledCheckBoxField
-            name="acceptTerms"
+            name="agreedTerms"
             control={control}
             label="I agree to the Terms & Conditions"
             required

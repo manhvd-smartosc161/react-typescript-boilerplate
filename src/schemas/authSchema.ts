@@ -44,7 +44,7 @@ export const registerSchema: yup.ObjectSchema<RegisterFormData> = yup
         }
         return /^[a-zA-Z\s\u0E00-\u0E7F]{3,32}$/.test(value);
       }),
-    acceptTerms: yup
+    agreedTerms: yup
       .boolean()
       .required(getAuthMessage('MSG_001'))
       .oneOf([true], getAuthMessage('MSG_009')),

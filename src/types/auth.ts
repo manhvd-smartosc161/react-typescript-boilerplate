@@ -9,7 +9,7 @@ export interface RegisterFormData {
   confirmPassword: string;
   name: string;
   surname?: string;
-  acceptTerms: boolean;
+  agreedTerms: boolean;
 }
 
 export interface ForgotPasswordFormData {

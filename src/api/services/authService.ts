@@ -32,6 +32,7 @@ export interface RegisterRequest {
   password: string;
   name: string;
   surname?: string;
+  agreedTerms: boolean;
 }
 
 export interface ForgotPasswordRequest {
@@ -116,6 +117,7 @@ export const authService = {
         password: userData.password,
         name: userData.name,
         surname: userData.surname,
+        agreedTerms: userData.agreedTerms,
       };
 
       const response = await apiClient.post(AUTH_ENDPOINT.REGISTER, dataToSend);
