@@ -19,3 +19,4 @@ export { default as PageHeader } from './PageHeader';
 export { default as MultiStepForm } from './MultiStepForm';
 export { default as MultiUploader } from './MultiUploader';
 export { default as ProductLineEntry } from './ProductLineEntry';
+export { default as SettingsOrganism } from './Settings';

@@ -8,7 +8,7 @@ const Login = lazy(() => import('@src/pages/Login'));
 const SignUp = lazy(() => import('@src/pages/SignUp'));
 const ForgotPassword = lazy(() => import('@src/pages/ForgotPassword'));
 const ResetPassword = lazy(() => import('@src/pages/ResetPassword'));
-const Settings = lazy(() => import('@src/pages/System'));
+const Settings = lazy(() => import('@src/pages/Settings'));
 const NotFound = lazy(() => import('@src/pages/Error'));
 
 export interface AppRoute {
