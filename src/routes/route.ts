@@ -6,4 +6,5 @@ export default {
   RESET_PASSWORD: '/reset-password',
   SETTINGS: '/settings',
   REGISTRATION: '/registration',
+  LEADS: '/leads',
 };

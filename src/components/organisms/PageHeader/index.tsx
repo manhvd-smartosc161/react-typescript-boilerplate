@@ -5,25 +5,25 @@ import { StyledRoot, StyledLeftGroup } from './index.styled';
 interface PageHeaderProps {
   title: string;
   titleSuffix?: React.ReactNode;
-  leadingAction?: React.ReactNode;
-  trailingActions?: React.ReactNode;
+  leading?: React.ReactNode;
+  trailing?: React.ReactNode;
 }
 
 const PageHeader = ({
   title,
   titleSuffix,
-  leadingAction,
-  trailingActions,
+  leading,
+  trailing,
 }: PageHeaderProps) => {
   return (
     <StyledRoot>
       <StyledLeftGroup direction="row" alignItems="center" spacing={2}>
-        {leadingAction}
+        {leading}
         <HeadingAtom level={4}>{title}</HeadingAtom>
         {titleSuffix}
       </StyledLeftGroup>
 
-      {trailingActions}
+      {trailing}
     </StyledRoot>
   );
 };
