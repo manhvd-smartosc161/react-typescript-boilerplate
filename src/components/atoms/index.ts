@@ -20,3 +20,5 @@ export { default as TextLinkAtom } from './TextLink';
 export { default as TitleAtom } from './Title';
 export { default as UploadZoneAtom } from './UploadZone';
 export { default as SwitchAtom } from './Switch';
+export { default as StatusChipAtom } from './StatusChip';
+export { default as ActionButtonAtom } from './ActionButton';

@@ -31,6 +31,11 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       label: 'Dashboard',
     },
     {
+      key: '/leads',
+      icon: <span>📋</span>,
+      label: 'Leads',
+    },
+    {
       key: '/settings',
       icon: <span>⚙️</span>,
       label: 'Settings',

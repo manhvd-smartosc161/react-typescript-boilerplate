@@ -104,7 +104,7 @@ const RegistrationPage = () => {
           titleSuffix={
             <TagAtom variant="filled" color="primary" children={'#586789963'} />
           }
-          trailingActions={
+          trailing={
             <ActionButtonsGroup>
               <ButtonAtom variant="secondary"> Cancel </ButtonAtom>
               <ButtonAtom variant="primary"> Save </ButtonAtom>

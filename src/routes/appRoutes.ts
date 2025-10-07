@@ -9,6 +9,7 @@ const SignUp = lazy(() => import('@src/pages/SignUp'));
 const ForgotPassword = lazy(() => import('@src/pages/ForgotPassword'));
 const ResetPassword = lazy(() => import('@src/pages/ResetPassword'));
 const Settings = lazy(() => import('@src/pages/Settings'));
+const Leads = lazy(() => import('@src/pages/Leads'));
 const NotFound = lazy(() => import('@src/pages/Error'));
 
 export interface AppRoute {
@@ -59,6 +60,13 @@ export default [
   {
     path: routes.SETTINGS,
     component: Settings,
+    restricted: false,
+    isPrivate: true,
+    layout: 'main',
+  },
+  {
+    path: routes.LEADS,
+    component: Leads,
     restricted: false,
     isPrivate: true,
     layout: 'main',
