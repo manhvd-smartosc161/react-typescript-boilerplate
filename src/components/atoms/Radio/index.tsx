@@ -14,6 +14,7 @@ const RadioAtom: FC<RadioProps> = ({
   color = 'primary',
   labelPlacement = 'end',
   disabled = false,
+
   ...props
 }) => {
   const radioElement = (

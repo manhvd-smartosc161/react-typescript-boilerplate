@@ -36,7 +36,7 @@ export interface HeaderProps {
   }>;
 }
 
-const HeaderOrganism: FC<HeaderProps> = ({
+const Header: FC<HeaderProps> = ({
   collapsed,
   onToggleCollapse,
   breadcrumbItems,
@@ -143,4 +143,4 @@ const HeaderOrganism: FC<HeaderProps> = ({
   );
 };
 
-export default HeaderOrganism;
+export default Header;

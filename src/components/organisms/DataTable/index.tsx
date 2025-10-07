@@ -16,7 +16,7 @@ export interface DataTableProps {
   loading?: boolean;
 }
 
-const DataTableOrganism: FC<DataTableProps> = ({
+const DataTable: FC<DataTableProps> = ({
   cardTitle,
   cardExtra,
   dataSource = [],
@@ -59,4 +59,4 @@ const DataTableOrganism: FC<DataTableProps> = ({
   return table;
 };
 
-export default DataTableOrganism;
+export default DataTable;

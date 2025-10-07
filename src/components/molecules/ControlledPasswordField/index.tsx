@@ -72,6 +72,7 @@ const ControlledPasswordField = <
             {...field}
             {...inputProps}
             id={field.name}
+            variant={variant}
             placeholder={placeholder}
             type={showPassword ? 'text' : 'password'}
             size={size}

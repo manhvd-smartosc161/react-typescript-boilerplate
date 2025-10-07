@@ -7,6 +7,7 @@ export const StyledMainContainer = styled(Box)(({ theme }) => ({
   width: '100vw',
   overflow: 'hidden',
   flexDirection: 'column',
+  backgroundColor: '#FFFFFF',
   [theme.breakpoints.up('md')]: {
     flexDirection: 'row',
   },
@@ -14,7 +15,7 @@ export const StyledMainContainer = styled(Box)(({ theme }) => ({
 
 export const StyledMainContent = styled(Box)(({ theme }) => ({
   flexGrow: 1,
-  backgroundColor: '#F5F6FA',
+  backgroundColor: '#FFFFFF',
   height: 'calc(100vh - 64px)',
   overflow: 'auto',
   display: 'flex',
@@ -26,12 +27,8 @@ export const StyledMainContent = styled(Box)(({ theme }) => ({
   },
 })) as typeof Box;
 
-export const StyledContentArea = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(2),
+export const StyledContentArea = styled(Box)(() => ({
   flexGrow: 1,
   overflow: 'auto',
   maxWidth: '100%',
-  [theme.breakpoints.up('sm')]: {
-    padding: theme.spacing(3),
-  },
 }));

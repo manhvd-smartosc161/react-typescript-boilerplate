@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 import routes from './route';
 import { LayoutType } from '@src/components/layouts';
+import RegistrationPage from '@src/pages/RegistrationPage';
 
 const Home = lazy(() => import('@src/pages/Home'));
 const Login = lazy(() => import('@src/pages/Login'));
@@ -75,5 +76,12 @@ export default [
     restricted: false,
     isPrivate: false,
     layout: 'none',
+  },
+  {
+    path: '/registration',
+    component: RegistrationPage,
+    restricted: false,
+    isPrivate: false,
+    layout: 'main',
   },
 ] as AppRoute[];

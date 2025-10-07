@@ -8,7 +8,7 @@ export interface ChartCardProps {
   loading?: boolean;
 }
 
-const ChartCardOrganism: FC<ChartCardProps> = ({
+const ChartCard: FC<ChartCardProps> = ({
   title,
   children,
   loading = false,
@@ -25,4 +25,4 @@ const ChartCardOrganism: FC<ChartCardProps> = ({
   );
 };
 
-export default ChartCardOrganism;
+export default ChartCard;

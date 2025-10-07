@@ -16,7 +16,7 @@ export interface StatsGridProps {
   };
 }
 
-const StatsGridOrganism: FC<StatsGridProps> = ({ stats }) => {
+const StatsGrid: FC<StatsGridProps> = ({ stats }) => {
   return (
     <StatsGridContainer sx={statsGridStyles}>
       {stats.map((stat, index) => (
@@ -26,4 +26,4 @@ const StatsGridOrganism: FC<StatsGridProps> = ({ stats }) => {
   );
 };
 
-export default StatsGridOrganism;
+export default StatsGrid;

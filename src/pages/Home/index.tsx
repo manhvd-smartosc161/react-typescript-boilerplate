@@ -7,11 +7,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { GridColDef } from '@mui/x-data-grid';
 import { DashboardTemplate } from '@src/components/templates';
-import {
-  StatsGridOrganism,
-  DataTableOrganism,
-  ChartCardOrganism,
-} from '@src/components/organisms';
+import { StatsGrid, DataTable, ChartCard } from '@src/components';
 import { ButtonAtom, CardAtom } from '@src/components/atoms';
 import {
   mockStats,
@@ -131,16 +127,16 @@ const Home: FC = () => {
         )}
       </CardAtom>
 
-      <StatsGridOrganism stats={stats} />
+      <StatsGrid stats={stats} />
 
       <StyledChartSection>
-        <ChartCardOrganism>
+        <ChartCard>
           <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-        </ChartCardOrganism>
+        </ChartCard>
       </StyledChartSection>
 
       <StyledTableSection>
-        <DataTableOrganism
+        <DataTable
           columns={columns}
           dataSource={recentEmployees}
           pagination={true}

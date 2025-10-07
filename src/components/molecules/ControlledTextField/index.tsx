@@ -62,6 +62,7 @@ const ControlledTextField = <TFieldValues extends FieldValues = FieldValues>({
             {...field}
             {...inputProps}
             id={field.name}
+            variant={variant}
             placeholder={placeholder}
             type={type}
             size={size}
