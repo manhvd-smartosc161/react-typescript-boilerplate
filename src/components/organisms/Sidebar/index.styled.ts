@@ -26,7 +26,7 @@ export const StyledDrawer = styled(Drawer)<StyledDrawerProps>(
 export const StyledLogoSection = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  padding: '10px 15px',
+  justifyContent: 'center',
   borderBottom: '1px solid',
   borderColor: theme.palette.divider,
 }));

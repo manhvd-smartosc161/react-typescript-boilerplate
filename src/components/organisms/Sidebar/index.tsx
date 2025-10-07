@@ -13,9 +13,8 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { UserProfileMolecule } from '@src/components/molecules';
-import { ButtonAtom, ImageAtom, TitleAtom } from '@src/components/atoms';
+import { ButtonAtom, LogoAtom } from '@src/components/atoms';
 import { currentUserState } from '@src/store/auth';
-import logoImage from '@src/assets/images/logo.png';
 import {
   StyledDrawer,
   StyledLogoSection,
@@ -183,12 +182,7 @@ const Sidebar: FC<SidebarProps> = ({ collapsed, menuItems, onExport }) => {
   return (
     <StyledDrawer variant="permanent" $collapsed={collapsed}>
       <StyledLogoSection>
-        <ImageAtom width={36} height={36} src={logoImage} alt="Logo" />
-        {!collapsed && (
-          <TitleAtom level={4} sx={{ marginLeft: 1, marginBottom: 0 }}>
-            Smart Logo
-          </TitleAtom>
-        )}
+        <LogoAtom collapsed={collapsed} />
       </StyledLogoSection>
 
       <StyledMenuSection>
