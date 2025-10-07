@@ -18,3 +18,4 @@ export { default as TextAtom } from './Text';
 export { default as TextLinkAtom } from './TextLink';
 export { default as TitleAtom } from './Title';
 export { default as UploadZoneAtom } from './UploadZone';
+export { default as SwitchAtom } from './Switch';

@@ -5,3 +5,4 @@ export { default as LoginFormOrganism } from './LoginForm';
 export { default as RegisterFormOrganism } from './RegisterForm';
 export { default as SidebarOrganism } from './Sidebar';
 export { default as StatsGridOrganism } from './StatsGrid';
+export { default as SettingsOrganism } from './Settings';
