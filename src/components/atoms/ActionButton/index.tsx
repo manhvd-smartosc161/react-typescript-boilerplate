@@ -4,13 +4,15 @@ import {
   SuccessButton,
   ActionButton,
   ReportButton,
+  DangerButton,
 } from './index.styled';
 
 export type ActionButtonVariant =
   | 'assign'
   | 'assigned'
   | 'details'
-  | 'detail-report';
+  | 'detail-report'
+  | 'danger';
 
 interface ActionButtonProps {
   variant: ActionButtonVariant;
@@ -42,6 +44,12 @@ const ActionButtonAtom: React.FC<ActionButtonProps> = ({
           <ReportButton startIcon={startIcon} onClick={onClick}>
             {children}
           </ReportButton>
+        );
+      case 'danger':
+        return (
+          <DangerButton startIcon={startIcon} onClick={onClick}>
+            {children}
+          </DangerButton>
         );
       default:
         return null;

@@ -1,5 +1,4 @@
 export { default as ChartCardOrganism } from './ChartCard';
-export { default as DataTableOrganism } from './DataTable';
 export { default as ForgotPasswordFormOrganism } from './ForgotPasswordForm';
 export { default as HeaderOrganism } from './Header';
 export { default as LoginFormOrganism } from './LoginForm';
@@ -9,7 +8,6 @@ export { default as StatsGridOrganism } from './StatsGrid';
 export * from './RegistrationSteps';
 export * from './PICSection';
 export { default as ChartCard } from './ChartCard';
-export { default as DataTable } from './DataTable';
 export { default as Header } from './Header';
 export { default as LoginForm } from './LoginForm';
 export { default as Sidebar } from './Sidebar';

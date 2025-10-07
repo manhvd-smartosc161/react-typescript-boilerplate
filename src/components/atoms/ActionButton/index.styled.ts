@@ -49,3 +49,15 @@ export const ReportButton = styled(Button)(() => ({
     backgroundColor: '#5a32a3',
   },
 }));
+
+export const DangerButton = styled(Button)(() => ({
+  backgroundColor: '#dc3545',
+  color: 'white',
+  borderRadius: '4px',
+  textTransform: 'none',
+  fontWeight: 'bold',
+  minWidth: '80px',
+  '&:hover': {
+    backgroundColor: '#c82333',
+  },
+}));

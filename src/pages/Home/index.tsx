@@ -1,24 +1,36 @@
-import { FC, useMemo } from 'react';
-import { Stack, Box, Typography, CircularProgress, Alert } from '@mui/material';
+import React, { useMemo, useState } from 'react';
+import { Stack, Box, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { GridColDef } from '@mui/x-data-grid';
-import { DashboardTemplate } from '@src/components/templates';
-import { StatsGrid, DataTable, ChartCard } from '@src/components';
-import { ButtonAtom, CardAtom } from '@src/components/atoms';
+import { StatsGrid, ChartCard } from '@src/components';
+import { ActionButtonAtom } from '@src/components/atoms';
+import { PageHeader, TableOrganism } from '@src/components/organisms';
 import {
   mockStats,
   mockEmployees,
   mockChartOptions,
 } from '@src/mock/dashboardData';
-import { useCurrentUser } from '@src/hooks';
-import { StyledChartSection, StyledTableSection } from './index.styled';
+import {
+  StyledContainer,
+  StyledPaper,
+  StyledChartSection,
+  StyledTableSection,
+} from './index.styled';
 
-const Home: FC = () => {
-  const { data: currentUser, isLoading, error, refetch } = useCurrentUser();
+interface EmployeeData {
+  id: number;
+  name: string;
+  position: string;
+  department: string;
+  email: string;
+  phone: string;
+}
+
+const Home: React.FC = () => {
+  const [currentPage, setCurrentPage] = useState(1);
 
   const stats = useMemo(
     () =>
@@ -33,51 +45,62 @@ const Home: FC = () => {
 
   const chartOptions = useMemo(() => mockChartOptions, []);
 
-  const columns: GridColDef[] = useMemo(
+  const handleEdit = (id: number) => {
+    console.log('Edit employee:', id);
+    // TODO: Implement edit functionality
+  };
+
+  const handleDelete = (id: number) => {
+    console.log('Delete employee:', id);
+    // TODO: Implement delete functionality
+  };
+
+  const columns = useMemo(
     () => [
       {
-        field: 'name',
-        headerName: 'Name',
-        flex: 1,
-        minWidth: 150,
+        key: 'name' as keyof EmployeeData,
+        label: 'Name',
+        render: (value: string) => (
+          <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+            {value}
+          </Typography>
+        ),
       },
       {
-        field: 'position',
-        headerName: 'Position',
-        flex: 1,
-        minWidth: 120,
+        key: 'position' as keyof EmployeeData,
+        label: 'Position',
       },
       {
-        field: 'department',
-        headerName: 'Department',
-        flex: 1,
-        minWidth: 120,
+        key: 'department' as keyof EmployeeData,
+        label: 'Department',
       },
       {
-        field: 'email',
-        headerName: 'Email',
-        flex: 1,
-        minWidth: 200,
+        key: 'email' as keyof EmployeeData,
+        label: 'Email',
       },
       {
-        field: 'phone',
-        headerName: 'Phone',
-        flex: 1,
-        minWidth: 130,
+        key: 'phone' as keyof EmployeeData,
+        label: 'Phone',
       },
       {
-        field: 'actions',
-        headerName: 'Actions',
-        width: 180,
-        sortable: false,
-        renderCell: () => (
-          <Stack direction="row" spacing={1} py={1}>
-            <ButtonAtom variant="primary" size="small" icon={<EditIcon />}>
+        key: 'actions' as keyof EmployeeData,
+        label: 'Actions',
+        render: (value: any, record: EmployeeData) => (
+          <Stack direction="row" spacing={1}>
+            <ActionButtonAtom
+              variant="details"
+              startIcon={<EditIcon />}
+              onClick={() => handleEdit(record.id)}
+            >
               Edit
-            </ButtonAtom>
-            <ButtonAtom variant="danger" size="small" icon={<DeleteIcon />}>
+            </ActionButtonAtom>
+            <ActionButtonAtom
+              variant="danger"
+              startIcon={<DeleteIcon />}
+              onClick={() => handleDelete(record.id)}
+            >
               Delete
-            </ButtonAtom>
+            </ActionButtonAtom>
           </Stack>
         ),
       },
@@ -86,69 +109,38 @@ const Home: FC = () => {
   );
 
   return (
-    <DashboardTemplate>
-      <CardAtom sx={{ mb: 3, p: 3 }}>
-        <Typography variant="h6" gutterBottom>
-          User Information
-        </Typography>
-        {isLoading && (
-          <Box display="flex" alignItems="center" gap={2}>
-            <CircularProgress size={20} />
-            <Typography>Loading user data...</Typography>
-          </Box>
-        )}
-        {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            Error: {String(error)}
-          </Alert>
-        )}
-        {currentUser && (
-          <Box>
-            <Box sx={{ mt: 2, p: 2, bgcolor: 'grey.50', borderRadius: 1 }}>
-              <Typography variant="subtitle2" color="primary">
-                User Information:
-              </Typography>
-              <Typography variant="body2">
-                <strong>Name:</strong> {currentUser.name}
-              </Typography>
-              <Typography variant="body2">
-                <strong>Email:</strong> {currentUser.email}
-              </Typography>
-            </Box>
-            <ButtonAtom
-              variant="secondary"
-              size="small"
-              onClick={() => refetch()}
-              sx={{ mt: 2 }}
-            >
-              🔄 Refetch Data
-            </ButtonAtom>
-          </Box>
-        )}
-      </CardAtom>
-
-      <StatsGrid stats={stats} />
-
-      <StyledChartSection>
-        <ChartCard>
-          <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-        </ChartCard>
-      </StyledChartSection>
-
-      <StyledTableSection>
-        <DataTable
-          columns={columns}
-          dataSource={recentEmployees}
-          pagination={true}
-          cardTitle="Recent Employees"
-          cardExtra={
-            <ButtonAtom variant="primary" icon={<AddIcon />}>
-              Add Employee
-            </ButtonAtom>
-          }
+    <StyledContainer>
+      <StyledPaper>
+        <PageHeader
+          title="Dashboard"
+          leading={<DashboardIcon sx={{ color: '#6f42c1', fontSize: 28 }} />}
         />
-      </StyledTableSection>
-    </DashboardTemplate>
+
+        <Box sx={{ mt: 3 }}>
+          <StatsGrid stats={stats} />
+
+          <StyledChartSection>
+            <ChartCard>
+              <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+            </ChartCard>
+          </StyledChartSection>
+
+          <StyledTableSection>
+            <TableOrganism<EmployeeData>
+              columns={columns}
+              data={recentEmployees}
+              rowKey="id"
+              pagination={{
+                current: currentPage,
+                total: recentEmployees.length,
+                pageSize: 10,
+                onChange: (page) => setCurrentPage(page),
+              }}
+            />
+          </StyledTableSection>
+        </Box>
+      </StyledPaper>
+    </StyledContainer>
   );
 };
 
