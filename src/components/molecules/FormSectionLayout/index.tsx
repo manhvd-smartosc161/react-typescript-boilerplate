@@ -1,6 +1,12 @@
 import React from 'react';
-import { Stack, Grid } from '@mui/material';
+import { Stack } from '@mui/material';
 import { HeadingAtom, TextAtom } from '@src/components/atoms';
+import {
+  StyledFormSectionContainer,
+  StyledSidebar,
+  StyledContentArea,
+  StyledContentGrid,
+} from './index.styled';
 
 interface FormSectionLayoutProps {
   title: string;
@@ -15,20 +21,20 @@ const FormSectionLayout: React.FC<FormSectionLayoutProps> = ({
   ...props
 }: FormSectionLayoutProps) => {
   return (
-    <Grid container {...props}>
-      <Grid size={{ xs: 12, md: 3 }}>
+    <StyledFormSectionContainer container {...props}>
+      <StyledSidebar size={{ xs: 12, md: 2 }}>
         <Stack spacing={1}>
           <HeadingAtom level={6}>{title}</HeadingAtom>
           {subtitle && <TextAtom color="default">{subtitle}</TextAtom>}
         </Stack>
-      </Grid>
+      </StyledSidebar>
 
-      <Grid size={{ xs: 12, md: 9 }}>
-        <Grid container spacing={3}>
+      <StyledContentArea size={{ xs: 12, md: 10 }}>
+        <StyledContentGrid container spacing={3}>
           {children}
-        </Grid>
-      </Grid>
-    </Grid>
+        </StyledContentGrid>
+      </StyledContentArea>
+    </StyledFormSectionContainer>
   );
 };
 

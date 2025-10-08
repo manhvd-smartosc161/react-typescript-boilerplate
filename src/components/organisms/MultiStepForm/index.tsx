@@ -17,8 +17,9 @@ export interface StepDefinition<T extends FieldValues> {
   label: string;
   icon: React.ReactNode;
   Form: React.FC<{ isLoading?: boolean }>;
-  Review: React.FC;
+  Review: React.FC<{ data?: any }>;
   fieldsToValidate: Path<T>[];
+  reviewDataPath?: keyof T;
 }
 
 interface MultiStepFormProps<T extends FieldValues> {
@@ -68,6 +69,7 @@ const MultiStepForm = <T extends FieldValues>({
 
   const isReviewStep = currentStep === steps.length - 1;
   const CurrentStepFormComponent = steps[currentStep].Form;
+  const formData = formMethods.getValues();
 
   return (
     <FormProvider {...formMethods}>
@@ -77,9 +79,12 @@ const MultiStepForm = <T extends FieldValues>({
             <Box>
               {isReviewStep ? (
                 <Stack spacing={4}>
-                  {steps.slice(0, -1).map((step) => (
-                    <step.Review key={step.label} />
-                  ))}
+                  {steps.slice(0, -1).map((step) => {
+                    const reviewData = step.reviewDataPath
+                      ? formData[step.reviewDataPath]
+                      : formData;
+                    return <step.Review key={step.label} data={reviewData} />;
+                  })}
                 </Stack>
               ) : (
                 <CurrentStepFormComponent isLoading={isLoading} />

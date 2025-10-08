@@ -35,14 +35,7 @@ const ProductLineEntry: React.FC<Props> = ({ index, onRemove, canRemove }) => {
     ?.message;
 
   return (
-    <Paper
-      sx={{
-        p: 3,
-        position: 'relative',
-        border: '1px solid #E0E0E0',
-        borderRadius: '12px',
-      }}
-    >
+    <Paper variant="outlined" sx={{ p: 2.5 }}>
       <Stack
         direction="row"
         justifyContent="space-between"

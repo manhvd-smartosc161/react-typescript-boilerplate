@@ -22,3 +22,4 @@ export { default as UploadZoneAtom } from './UploadZone';
 export { default as SwitchAtom } from './Switch';
 export { default as StatusChipAtom } from './StatusChip';
 export { default as ActionButtonAtom } from './ActionButton';
+export { default as AutocompleteAtom } from './Autocomplete';

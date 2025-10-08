@@ -33,6 +33,7 @@
     "axios": "^0.21.2",
     "camelcase-keys": "^6.2.2",
     "cross-env": "^7.0.2",
+    "dayjs": "^1.11.18",
     "dotenv": "^8.2.0",
     "highcharts": "^12.3.0",
     "highcharts-react-official": "^3.2.2",

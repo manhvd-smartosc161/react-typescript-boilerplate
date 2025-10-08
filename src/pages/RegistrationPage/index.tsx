@@ -16,7 +16,10 @@ import {
 import RegistrationStepper from '@src/components/organisms/Stepper';
 
 import { RegistrationTemplate } from '@src/components/templates/RegistrationTemplate';
-import { registrationMasterSchema } from '@src/schemas';
+import {
+  registrationMasterSchema,
+  defaultRegistrationValues,
+} from '@src/schemas';
 import { RegistrationFormValues } from '@src/types/registration';
 
 import { useState } from 'react';
@@ -39,6 +42,7 @@ const RegistrationPage = () => {
       icon: <span>1</span>,
       Form: CompanyInfoForm,
       Review: CompanyInfoView,
+      reviewDataPath: 'companyInfo' as keyof RegistrationFormValues,
       fieldsToValidate: [
         'companyInfo.companyNameTh',
         'companyInfo.companyNameEn',
@@ -58,6 +62,7 @@ const RegistrationPage = () => {
       icon: <span>2</span>,
       Form: FactoryDataForm,
       Review: FactoryDataView,
+      reviewDataPath: 'factoryData' as keyof RegistrationFormValues,
       fieldsToValidate: [
         'factoryData.factoryName',
         'factoryData.factoryAddress',
@@ -72,6 +77,7 @@ const RegistrationPage = () => {
       icon: <span>3</span>,
       Form: ProductInfoForm,
       Review: ProductInfoView,
+      reviewDataPath: 'productInfo' as keyof RegistrationFormValues,
       fieldsToValidate: [
         'productInfo.productLines',
       ] as Path<RegistrationFormValues>[],
@@ -117,6 +123,7 @@ const RegistrationPage = () => {
         <MultiStepForm<RegistrationFormValues>
           formId="registration-form"
           steps={steps}
+          defaultValues={defaultRegistrationValues}
           onSubmit={handleSubmit}
           resolver={yupResolver(registrationMasterSchema) as any}
           isLoading={isLoading}

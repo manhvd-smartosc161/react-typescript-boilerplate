@@ -26,9 +26,13 @@ const PICSection: React.FC<PICSectionProps> = ({ name }) => {
     }
   };
 
+  // TODO: Refactor required — relocate the "PIC" label to the parent component to enhance reusability and maintainability across different sections.
   return (
     <Box>
-      <TitleAtom level={6}>PIC</TitleAtom>
+      <TitleAtom variant="subtitle1" fontWeight={'bold'}>
+        PIC
+      </TitleAtom>
+
       <Stack spacing={2}>
         {fields.map((field, index) => (
           <PICEntryForm
