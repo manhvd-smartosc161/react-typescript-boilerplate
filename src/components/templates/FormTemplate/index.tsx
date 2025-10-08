@@ -25,7 +25,7 @@ const FormTemplate: FC<FormTemplateProps> = ({
       <StyledFormPaper elevation={3} $maxWidth={maxWidth}>
         {title && (
           <StyledFormHeader>
-            <TitleAtom level={3}>{title}</TitleAtom>
+            <TitleAtom variant="h3">{title}</TitleAtom>
             {subtitle && (
               <Typography variant="body2" color="text.secondary">
                 {subtitle}

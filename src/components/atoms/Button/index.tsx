@@ -13,6 +13,7 @@ export interface ButtonProps extends Omit<MuiButtonProps, 'variant'> {
     | 'warning'
     | 'danger'
     | 'ghost'
+    | 'text'
     | 'link';
   children?: ReactNode;
   icon?: ReactNode;
@@ -75,6 +76,14 @@ const StyledButton = styled(MuiButton)<{ $variant?: string }>(({
             backgroundColor: theme.palette.action.hover,
           },
         };
+      case 'text':
+        return {
+          backgroundColor: 'transparent',
+          color: theme.palette.primary.main,
+          '&:hover': {
+            backgroundColor: theme.palette.action.hover,
+          },
+        };
       case 'link':
         return {
           backgroundColor: 'transparent',
@@ -102,7 +111,8 @@ const ButtonAtom: FC<ButtonProps> = ({
   loading,
   ...props
 }) => {
-  const muiVariant = variant === 'link' ? 'text' : 'contained';
+  const muiVariant =
+    variant === 'link' || variant === 'text' ? 'text' : 'contained';
 
   return (
     <StyledButton

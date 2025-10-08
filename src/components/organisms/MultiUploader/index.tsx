@@ -1,12 +1,20 @@
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Controller, useFormContext, FieldPath } from 'react-hook-form';
-import { Box, Typography, Stack, FormHelperText } from '@mui/material';
+import { Box, FormHelperText } from '@mui/material';
 import FilePreviewItem, {
   ManagedFile,
 } from '@src/components/molecules/FilePreviewItem';
-import { AddFileButton } from '@src/components/molecules';
+import { ButtonAtom, IconAtom } from '@src/components/atoms';
+import { UploadFileOutlined } from '@mui/icons-material';
+import {
+  StyledDropZone,
+  StyledFileStack,
+  StyledUploadZone,
+  StyledUploadIcon,
+} from './index.styled';
 
+// TODO: Need Refactor
 const uploadFile = (
   file: File,
   onProgress: (percent: number) => void,
@@ -33,10 +41,30 @@ interface MultiUploaderProps {
   label: string;
 }
 
-// TODO: Refactor this component when the API is ready for integration
-const MultiUploader: React.FC<MultiUploaderProps> = ({ name, label }) => {
+// TODO: Need Refactor and optimize this component
+const MultiUploader: React.FC<MultiUploaderProps> = ({ name }) => {
   const { control } = useFormContext();
   const [managedFiles, setManagedFiles] = useState<ManagedFile[]>([]);
+
+  const renderUploadZone = (openFileDialog: () => void) => {
+    return (
+      <StyledUploadZone
+        direction="row"
+        spacing={1.5}
+        alignItems="center"
+        onClick={openFileDialog}
+      >
+        {managedFiles?.length === 0 && (
+          <StyledUploadIcon variant="outlined">
+            <IconAtom>
+              <UploadFileOutlined />
+            </IconAtom>
+          </StyledUploadIcon>
+        )}
+        <ButtonAtom variant="text">+ Add</ButtonAtom>
+      </StyledUploadZone>
+    );
+  };
 
   return (
     <Controller
@@ -102,38 +130,28 @@ const MultiUploader: React.FC<MultiUploaderProps> = ({ name, label }) => {
           }
         };
 
-        const { getRootProps, getInputProps } = useDropzone({
-          onDrop,
-          // noClick: true,
-        });
+        const { getRootProps, getInputProps, isDragActive, open } = useDropzone(
+          {
+            onDrop,
+            noClick: true,
+          },
+        );
 
         return (
           <Box>
-            <Typography
-              variant="h6"
-              component="label"
-              sx={{ mb: 1.5, display: 'block' }}
-            >
-              {label}
-            </Typography>
-            <Stack
-              direction="row"
-              spacing={2}
-              alignItems="center"
-              sx={{ position: 'relative' }}
-            >
-              {managedFiles.map((file) => (
-                <FilePreviewItem
-                  key={file.id}
-                  file={file}
-                  onRemove={() => onRemove(file.id)}
-                />
-              ))}
-              <Box {...getRootProps()}>
-                <input {...getInputProps()} />
-                <AddFileButton />
-              </Box>
-            </Stack>
+            <StyledDropZone {...getRootProps()} $isDragActive={isDragActive}>
+              <input {...getInputProps()} />
+              <StyledFileStack direction="row" spacing={2} alignItems="center">
+                {managedFiles.map((file) => (
+                  <FilePreviewItem
+                    key={file.id}
+                    file={file}
+                    onRemove={() => onRemove(file.id)}
+                  />
+                ))}
+                {renderUploadZone(open)}
+              </StyledFileStack>
+            </StyledDropZone>
             {error && (
               <FormHelperText error sx={{ mt: 1 }}>
                 {error.message}

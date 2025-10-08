@@ -10,6 +10,8 @@ import {
   RegistrationFormValues,
 } from '@src/types/registration';
 
+// TODO: Need Refactor and verify all schema are correct BRD
+
 const requiredMsg = 'This is a required field.';
 
 export const personInChargeSchema: yup.ObjectSchema<PersonInCharge> =
@@ -148,6 +150,16 @@ export const defaultRegistrationValues: DeepPartial<RegistrationFormValues> = {
     productLines: [
       {
         soldAt: { makro: false, lotus: false },
+        brandNameTh: '',
+        brandNameEn: '',
+        productCategory: '',
+        productSubcategory: '',
+        skuCount: 1,
+        offerExclusivity: 'no',
+        targetCustomerType: '',
+        availableChannels: [],
+        usp: '',
+        currentlySoldIn: '',
         images: {
           packagingFront: null,
           packagingBehind: null,

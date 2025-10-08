@@ -3,7 +3,7 @@ import { useFormContext, Path } from 'react-hook-form';
 import { Box, Stack, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { RegistrationFormValues } from '@src/types/registration';
-import { ControlledTextField, TitleAtom } from '@src/components';
+import { ControlledTextField } from '@src/components';
 
 interface PICEntryFormProps {
   fieldPrefix: string;
@@ -22,10 +22,8 @@ export const PICEntryForm: React.FC<PICEntryFormProps> = ({
 
   return (
     <Box>
-      <TitleAtom level={6}>Representative #{displayIndex}</TitleAtom>
       <Stack direction="row" spacing={2} alignItems="flex-start">
         <ControlledTextField
-          variant="filled"
           control={control}
           name={`${fieldPrefix}.name` as Path<RegistrationFormValues>}
           label="Representative Name"
@@ -33,7 +31,6 @@ export const PICEntryForm: React.FC<PICEntryFormProps> = ({
           required
         />
         <ControlledTextField
-          variant="filled"
           control={control}
           name={`${fieldPrefix}.email` as Path<RegistrationFormValues>}
           label="Representative Email"
@@ -41,7 +38,6 @@ export const PICEntryForm: React.FC<PICEntryFormProps> = ({
           required
         />
         <ControlledTextField
-          variant="filled"
           control={control}
           name={`${fieldPrefix}.contact` as Path<RegistrationFormValues>}
           label="Representative Contact"

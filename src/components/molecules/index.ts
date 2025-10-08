@@ -19,3 +19,7 @@ export { default as FormSectionLayout } from './FormSectionLayout';
 export { default as FilePreviewItem } from './FilePreviewItem';
 export { default as AddFileButton } from './AddFileButton';
 export { default as SingleImageUploader } from './SingleImageUploader';
+export { default as DataPair } from './DataPair';
+export { default as ReviewOptionList } from './ReviewOptionList';
+export { default as ImagePreview } from './ImagePreview';
+export { default as ControlledAutocompleteField } from './ControlledAutocompleteField';

@@ -13,7 +13,7 @@ const DashboardTemplate: FC<DashboardTemplateProps> = ({
 }) => {
   return (
     <Box>
-      <TitleAtom level={2}>{title}</TitleAtom>
+      <TitleAtom variant="h2">{title}</TitleAtom>
       {children}
     </Box>
   );

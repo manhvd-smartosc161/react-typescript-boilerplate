@@ -5,4 +5,8 @@ interface StyledInputProps {
   $success?: boolean;
 }
 
-export const StyledInput = styled(TextField)<StyledInputProps>(() => ({}));
+export const StyledInput = styled(TextField)<StyledInputProps>(() => ({
+  '& .MuiInputBase-input': {
+    padding: '12px 16px',
+  },
+}));

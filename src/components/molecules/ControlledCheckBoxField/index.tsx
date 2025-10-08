@@ -7,7 +7,7 @@ import {
   Typography,
   Box,
 } from '@mui/material';
-import { CheckBoxAtom } from '@src/components/atoms';
+import { CheckBoxAtom, InputLabelAtom } from '@src/components/atoms';
 
 export interface CheckBoxOption {
   value: string | number;
@@ -115,10 +115,9 @@ const ControlledCheckBoxField = <
         return (
           <>
             {label && (
-              <FormHelperText sx={{ mb: 1, fontWeight: 500 }}>
+              <InputLabelAtom required={required} sx={{ mb: 1 }}>
                 {label}
-                {required && <span style={{ color: '#ff4d4f' }}> *</span>}
-              </FormHelperText>
+              </InputLabelAtom>
             )}
 
             <FormGroup>
@@ -140,6 +139,13 @@ const ControlledCheckBoxField = <
                       }
                       label={option.label}
                       disabled={disabled || option.disabled}
+                      // TODO: Need Refactor, move to styled component
+                      sx={{
+                        '& .MuiFormControlLabel-label': {
+                          fontSize: '1rem',
+                          fontWeight: 400,
+                        },
+                      }}
                     />
                   </Grid>
                 ))}

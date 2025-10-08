@@ -21,7 +21,7 @@ const PageTemplate: FC<PageTemplateProps> = ({
       {(title || subtitle || actions) && (
         <StyledPageHeader>
           <Box>
-            {title && <TitleAtom level={2}>{title}</TitleAtom>}
+            {title && <TitleAtom variant="h2">{title}</TitleAtom>}
             {subtitle && (
               <Box mt={1}>
                 <StyledSubtitle>{subtitle}</StyledSubtitle>
