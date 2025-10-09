@@ -8,7 +8,7 @@ import { ControlledTextField } from '@src/components/molecules';
 import { useForgotPasswordMutation } from '@src/hooks';
 import { forgotPasswordSchema } from '@src/schemas/authSchema';
 import { ForgotPasswordFormData } from '@src/types';
-import { getAuthMessage, LOGIN_ERROR_CODE } from '@src/constants/auth';
+import { ERROR_CODE_MESSAGE_MAPPING, MESSAGES } from '@src/constants';
 import { AuthError } from '@src/api/services/authService';
 import ROUTES from '@src/routes/route';
 import { StyledForgotPasswordForm, StyledResendButton } from './index.styled';
@@ -53,14 +53,13 @@ const ForgotPasswordForm: FC = () => {
       if (error instanceof AuthError) {
         const errorCode = error.code;
 
-        switch (errorCode) {
-          case LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS:
-            setErrorMessage(getAuthMessage('MSG_013'));
-            break;
-          default:
-            setErrorMessage('An unknown error occurred');
-            break;
-        }
+        setErrorMessage(
+          MESSAGES[
+            ERROR_CODE_MESSAGE_MAPPING[
+              errorCode as keyof typeof ERROR_CODE_MESSAGE_MAPPING
+            ] as keyof typeof MESSAGES
+          ],
+        );
       } else {
         const fallbackMessage =
           error && typeof error === 'object' && 'message' in error

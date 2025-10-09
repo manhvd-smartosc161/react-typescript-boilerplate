@@ -11,7 +11,7 @@ import {
 } from '@src/hooks/auth';
 import { resetPasswordSchema } from '@src/schemas/authSchema';
 import { ResetPasswordFormData } from '@src/types';
-import { getAuthMessage, LOGIN_ERROR_CODE } from '@src/constants/auth';
+import { ERROR_CODE_MESSAGE_MAPPING, MESSAGES } from '@src/constants';
 import { AuthError } from '@src/api/services/authService';
 import ROUTES from '@src/routes/route';
 import { StyledResetPasswordForm } from './index.styled';
@@ -86,17 +86,13 @@ const ResetPasswordForm: FC = () => {
       if (error instanceof AuthError) {
         const errorCode = error.code;
 
-        switch (errorCode) {
-          case LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS:
-            setErrorMessage(getAuthMessage('MSG_001'));
-            break;
-          case LOGIN_ERROR_CODE.ACCOUNT_DEACTIVATED:
-            setErrorMessage(getAuthMessage('MSG_003'));
-            break;
-          default:
-            setErrorMessage('An unknown error occurred');
-            break;
-        }
+        setErrorMessage(
+          MESSAGES[
+            ERROR_CODE_MESSAGE_MAPPING[
+              errorCode as keyof typeof ERROR_CODE_MESSAGE_MAPPING
+            ] as keyof typeof MESSAGES
+          ],
+        );
       } else {
         const fallbackMessage =
           error && typeof error === 'object' && 'message' in error

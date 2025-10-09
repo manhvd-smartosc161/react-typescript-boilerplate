@@ -4,11 +4,7 @@ import {
   NotificationFormData,
   ProfileFormData,
 } from '@src/types';
-import {
-  getAuthMessage,
-  LANGUAGE_CODES,
-  LANGUAGE_DISPLAY,
-} from '@src/constants';
+import { MESSAGES, LANGUAGE_CODES, LANGUAGE_DISPLAY } from '@src/constants';
 
 const NAME_REGEX = /^[A-Za-z\u0E00-\u0E7F\s]+$/;
 const PASSWORD_REGEX =
@@ -19,10 +15,10 @@ export const profileFormSchema: yup.ObjectSchema<ProfileFormData> = yup
   .shape({
     name: yup
       .string()
-      .min(3, getAuthMessage('MSG_008'))
-      .max(32, getAuthMessage('MSG_008'))
-      .matches(NAME_REGEX, getAuthMessage('MSG_008'))
-      .required(getAuthMessage('MSG_001')),
+      .min(3, MESSAGES.MSG_008)
+      .max(32, MESSAGES.MSG_008)
+      .matches(NAME_REGEX, MESSAGES.MSG_008)
+      .required(MESSAGES.MSG_001),
     interfaceLanguage: yup
       .string()
       .oneOf(
@@ -71,34 +67,34 @@ export const changePasswordFormSchema: yup.ObjectSchema<ChangePasswordFormData> 
       if (!currentPassword?.trim()) {
         return this.createError({
           path: 'currentPassword',
-          message: getAuthMessage('MSG_001'),
+          message: MESSAGES.MSG_001,
         });
       }
 
       if (!newPassword?.trim()) {
         return this.createError({
           path: 'newPassword',
-          message: getAuthMessage('MSG_001'),
+          message: MESSAGES.MSG_001,
         });
       }
 
       if (!confirmPassword?.trim()) {
         return this.createError({
           path: 'confirmPassword',
-          message: getAuthMessage('MSG_001'),
+          message: MESSAGES.MSG_001,
         });
       }
 
       if (newPassword && !PASSWORD_REGEX.test(newPassword)) {
         return this.createError({
           path: 'newPassword',
-          message: getAuthMessage('MSG_006'),
+          message: MESSAGES.MSG_006,
         });
       }
       if (confirmPassword !== newPassword) {
         return this.createError({
           path: 'confirmPassword',
-          message: getAuthMessage('MSG_007'),
+          message: MESSAGES.MSG_007,
         });
       }
 

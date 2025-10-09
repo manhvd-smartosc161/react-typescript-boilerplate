@@ -13,7 +13,7 @@ import { useRegisterMutation } from '@src/hooks';
 import { registerSchema } from '@src/schemas/authSchema';
 import { RegisterFormData } from '@src/types';
 import { AuthError } from '@src/api/services/authService';
-import { getAuthMessage, REGISTER_ERROR_CODE } from '@src/constants/auth';
+import { ERROR_CODE_MESSAGE_MAPPING, MESSAGES } from '@src/constants';
 import ROUTES from '@src/routes/route';
 import { StyledRegisterForm } from './index.styled';
 
@@ -56,17 +56,13 @@ const RegisterForm: FC = () => {
       if (error instanceof AuthError) {
         const errorCode = error.code;
 
-        switch (errorCode) {
-          case REGISTER_ERROR_CODE.EMAIL_EXISTS_ACTIVE:
-            setErrorMessage(getAuthMessage('MSG_010'));
-            break;
-          case REGISTER_ERROR_CODE.EMAIL_EXISTS_INACTIVE:
-            setErrorMessage(getAuthMessage('MSG_011'));
-            break;
-          default:
-            setErrorMessage('Registration failed! Please try again.');
-            break;
-        }
+        setErrorMessage(
+          MESSAGES[
+            ERROR_CODE_MESSAGE_MAPPING[
+              errorCode as keyof typeof ERROR_CODE_MESSAGE_MAPPING
+            ] as keyof typeof MESSAGES
+          ],
+        );
       } else {
         // Fallback for regular Error objects
         const fallbackMessage =
@@ -127,7 +123,7 @@ const RegisterForm: FC = () => {
 
         {showSuccess && (
           <Alert severity="success" sx={{ mb: 3 }}>
-            {getAuthMessage('MSG_012')}
+            {MESSAGES.MSG_012}
           </Alert>
         )}
 

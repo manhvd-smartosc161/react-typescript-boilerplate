@@ -3,7 +3,7 @@ import {
   ValidateResetTokenRequest,
   ValidateResetTokenResponse,
 } from '@src/types';
-import { LOGIN_ERROR_CODE, AUTH_ENDPOINT } from '@src/constants';
+import { AUTH_ENDPOINT } from '@src/constants';
 import { setCookie, getCookie } from '@src/utils/cookie';
 import { getBrowserLanguage } from '@src/utils/browserLanguage';
 import apiClient from '../index';
@@ -102,17 +102,7 @@ export const authService = {
         },
       };
     } catch (error: any) {
-      if (error.response?.status === 401) {
-        throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
-      }
-      if (error.response?.status === 403) {
-        throw new AuthError(LOGIN_ERROR_CODE.ACCOUNT_BLOCKED);
-      }
-      if (error.response?.status === 404) {
-        throw new AuthError(LOGIN_ERROR_CODE.ACCOUNT_DEACTIVATED);
-      }
-
-      throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
+      throw new AuthError(error?.code);
     }
   },
 
@@ -141,8 +131,7 @@ export const authService = {
         },
       };
     } catch (error: any) {
-      //TODO:
-      throw error;
+      throw new AuthError(error?.code);
     }
   },
 
@@ -163,8 +152,8 @@ export const authService = {
         marketingNotifications: userData.marketingNotifications,
         avatar: userData.avatar,
       };
-    } catch (error) {
-      throw error;
+    } catch (error: any) {
+      throw new AuthError(error?.code);
     }
   },
 
@@ -202,8 +191,7 @@ export const authService = {
       );
       return response.data;
     } catch (error: any) {
-      //TODO:
-      throw error;
+      throw new AuthError(error?.code);
     }
   },
 
@@ -214,8 +202,7 @@ export const authService = {
       const response = await apiClient.post(AUTH_ENDPOINT.RESET_PASSWORD, data);
       return response.data;
     } catch (error: any) {
-      //TODO:
-      throw error;
+      throw new AuthError(error?.code);
     }
   },
 
@@ -243,8 +230,7 @@ export const authService = {
         },
       });
     } catch (error: any) {
-      //TODO:
-      throw error;
+      throw new AuthError(error?.code);
     }
   },
 
@@ -260,8 +246,7 @@ export const authService = {
         confirmPassword: data.confirmPassword,
       });
     } catch (error: any) {
-      //TODO:
-      throw error;
+      throw new AuthError(error?.code);
     }
   },
 
@@ -272,8 +257,7 @@ export const authService = {
     try {
       await apiClient.put(AUTH_ENDPOINT.NOTIFICATIONS, data);
     } catch (error: any) {
-      //TODO:
-      throw error;
+      throw new AuthError(error?.code);
     }
   },
 };

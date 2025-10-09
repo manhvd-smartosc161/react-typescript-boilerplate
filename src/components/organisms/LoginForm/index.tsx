@@ -11,7 +11,7 @@ import {
 import { useLoginMutation } from '@src/hooks';
 import { loginSchema } from '@src/schemas/authSchema';
 import { LoginFormData } from '@src/types';
-import { getAuthMessage, LOGIN_ERROR_CODE } from '@src/constants/auth';
+import { ERROR_CODE_MESSAGE_MAPPING, MESSAGES } from '@src/constants';
 import { AuthError } from '@src/api/services/authService';
 import ROUTES from '@src/routes/route';
 import { StyledLoginForm } from './index.styled';
@@ -41,21 +41,13 @@ const LoginForm: FC = () => {
 
       if (error instanceof AuthError) {
         const errorCode = error.code;
-
-        switch (errorCode) {
-          case LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS:
-            setErrorMessage(getAuthMessage('MSG_002'));
-            break;
-          case LOGIN_ERROR_CODE.ACCOUNT_DEACTIVATED:
-            setErrorMessage(getAuthMessage('MSG_003'));
-            break;
-          case LOGIN_ERROR_CODE.ACCOUNT_BLOCKED:
-            setErrorMessage(getAuthMessage('MSG_004'));
-            break;
-          default:
-            setErrorMessage('An unknown error occurred');
-            break;
-        }
+        setErrorMessage(
+          MESSAGES[
+            ERROR_CODE_MESSAGE_MAPPING[
+              errorCode as keyof typeof ERROR_CODE_MESSAGE_MAPPING
+            ] as keyof typeof MESSAGES
+          ],
+        );
       } else {
         // Fallback for regular Error objects
         const fallbackMessage =
