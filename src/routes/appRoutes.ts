@@ -1,7 +1,6 @@
 import { lazy } from 'react';
 import routes from './route';
 import { LayoutType } from '@src/components/layouts';
-import RegistrationPage from '@src/pages/RegistrationPage';
 
 const Home = lazy(() => import('@src/pages/Home'));
 const Login = lazy(() => import('@src/pages/Login'));
@@ -10,6 +9,7 @@ const ForgotPassword = lazy(() => import('@src/pages/ForgotPassword'));
 const ResetPassword = lazy(() => import('@src/pages/ResetPassword'));
 const Settings = lazy(() => import('@src/pages/Settings'));
 const Leads = lazy(() => import('@src/pages/Leads'));
+const SupplierRegistration = lazy(() => import('@src/pages/RegistrationPage'));
 const NotFound = lazy(() => import('@src/pages/Error'));
 
 export interface AppRoute {
@@ -86,10 +86,10 @@ export default [
     layout: 'none',
   },
   {
-    path: '/registration',
-    component: RegistrationPage,
+    path: routes.SUPPLIER_REGISTRATION,
+    component: SupplierRegistration,
     restricted: false,
-    isPrivate: false,
+    isPrivate: true,
     layout: 'main',
   },
 ] as AppRoute[];

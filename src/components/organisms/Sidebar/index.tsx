@@ -172,7 +172,14 @@ const Sidebar: FC<SidebarProps> = ({ collapsed, menuItems, onExport }) => {
           onClick={() => handleMenuClick(item.key)}
           selected={isActive}
         >
-          <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
+          <ListItemIcon
+            sx={{
+              minWidth: 40,
+              color: `${isActive ? '#fff' : 'text.secondary'}`,
+            }}
+          >
+            {item.icon}
+          </ListItemIcon>
           {!collapsed && <ListItemText primary={item.label} />}
         </StyledListItemButton>
       );

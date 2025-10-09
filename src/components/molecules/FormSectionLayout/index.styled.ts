@@ -15,13 +15,6 @@ export const StyledContentArea = styled(Grid)(() => ({
   flexDirection: 'column',
 }));
 
-export const StyledContentPaper = styled(Paper)(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
-  borderRadius: '8px',
-  width: '100%',
-  padding: 16,
-}));
-
 export const StyledContentGrid = styled(Grid)(() => ({
   width: '100%',
 }));
