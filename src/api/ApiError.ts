@@ -1,16 +1,10 @@
 export class ApiError extends Error {
-  public readonly status: number;
+  public readonly code?: number;
 
-  public readonly statusText: string;
-
-  public readonly data: any;
-
-  constructor(message: string, status: number, statusText: string, data?: any) {
-    super(message);
+  constructor(error: string, code?: number) {
+    super(error);
     this.name = 'ApiError';
-    this.status = status;
-    this.statusText = statusText;
-    this.data = data;
+    this.code = code;
 
     // Maintains proper stack trace for where our error was thrown
     if (Error.captureStackTrace) {
@@ -19,12 +13,9 @@ export class ApiError extends Error {
   }
 
   static fromAxiosError(error: any): ApiError {
-    const message =
-      error.response?.data?.error || error.message || 'An error occurred';
-    const status = error.response?.status || 500;
-    const statusText = error.response?.statusText || 'Internal Server Error';
-    const data = error.response?.data;
+    const message = error.response?.data?.error || 'An error occurred';
+    const code = error.response?.data?.code;
 
-    return new ApiError(message, status, statusText, data);
+    return new ApiError(message, code);
   }
 }
