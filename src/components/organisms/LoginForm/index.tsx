@@ -11,8 +11,7 @@ import {
 import { useLoginMutation } from '@src/hooks';
 import { loginSchema } from '@src/schemas/authSchema';
 import { LoginFormData } from '@src/types';
-import { ERROR_CODE_MESSAGE_MAPPING, MESSAGES } from '@src/constants';
-import { AuthError } from '@src/api/services/authService';
+import { getErrorMessage } from '@src/errors';
 import ROUTES from '@src/routes/route';
 import { StyledLoginForm } from './index.styled';
 
@@ -37,26 +36,8 @@ const LoginForm: FC = () => {
 
   useEffect(() => {
     if (loginMutation.isError && loginMutation.error) {
-      const error = loginMutation.error;
-
-      if (error instanceof AuthError) {
-        const errorCode = error.code;
-        setErrorMessage(
-          MESSAGES[
-            ERROR_CODE_MESSAGE_MAPPING[
-              errorCode as keyof typeof ERROR_CODE_MESSAGE_MAPPING
-            ] as keyof typeof MESSAGES
-          ],
-        );
-      } else {
-        // Fallback for regular Error objects
-        const fallbackMessage =
-          error instanceof Error
-            ? error.message
-            : 'Login failed! Please try again.';
-        setErrorMessage(fallbackMessage);
-      }
-
+      const message = getErrorMessage(loginMutation.error);
+      setErrorMessage(message);
       setShowWarning(true);
     }
   }, [loginMutation.isError, loginMutation.error]);

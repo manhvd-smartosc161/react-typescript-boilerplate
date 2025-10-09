@@ -12,8 +12,8 @@ import {
 import { useRegisterMutation } from '@src/hooks';
 import { registerSchema } from '@src/schemas/authSchema';
 import { RegisterFormData } from '@src/types';
-import { AuthError } from '@src/api/services/authService';
-import { ERROR_CODE_MESSAGE_MAPPING, MESSAGES } from '@src/constants';
+import { getErrorMessage } from '@src/errors';
+import { MESSAGES } from '@src/constants';
 import ROUTES from '@src/routes/route';
 import { StyledRegisterForm } from './index.styled';
 
@@ -51,27 +51,8 @@ const RegisterForm: FC = () => {
 
   useEffect(() => {
     if (registerMutation.isError && registerMutation.error) {
-      const error = registerMutation.error;
-
-      if (error instanceof AuthError) {
-        const errorCode = error.code;
-
-        setErrorMessage(
-          MESSAGES[
-            ERROR_CODE_MESSAGE_MAPPING[
-              errorCode as keyof typeof ERROR_CODE_MESSAGE_MAPPING
-            ] as keyof typeof MESSAGES
-          ],
-        );
-      } else {
-        // Fallback for regular Error objects
-        const fallbackMessage =
-          error instanceof Error
-            ? error.message
-            : 'Registration failed! Please try again.';
-        setErrorMessage(fallbackMessage);
-      }
-
+      const message = getErrorMessage(registerMutation.error);
+      setErrorMessage(message);
       setShowWarning(true);
       setShowSuccess(false);
     }

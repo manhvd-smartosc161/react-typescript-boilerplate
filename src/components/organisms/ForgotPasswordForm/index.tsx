@@ -8,8 +8,7 @@ import { ControlledTextField } from '@src/components/molecules';
 import { useForgotPasswordMutation } from '@src/hooks';
 import { forgotPasswordSchema } from '@src/schemas/authSchema';
 import { ForgotPasswordFormData } from '@src/types';
-import { ERROR_CODE_MESSAGE_MAPPING, MESSAGES } from '@src/constants';
-import { AuthError } from '@src/api/services/authService';
+import { getErrorMessage } from '@src/errors';
 import ROUTES from '@src/routes/route';
 import { StyledForgotPasswordForm, StyledResendButton } from './index.styled';
 
@@ -48,26 +47,8 @@ const ForgotPasswordForm: FC = () => {
 
   useEffect(() => {
     if (forgotPasswordMutation.isError && forgotPasswordMutation.error) {
-      const error = forgotPasswordMutation.error;
-
-      if (error instanceof AuthError) {
-        const errorCode = error.code;
-
-        setErrorMessage(
-          MESSAGES[
-            ERROR_CODE_MESSAGE_MAPPING[
-              errorCode as keyof typeof ERROR_CODE_MESSAGE_MAPPING
-            ] as keyof typeof MESSAGES
-          ],
-        );
-      } else {
-        const fallbackMessage =
-          error && typeof error === 'object' && 'message' in error
-            ? (error as Error).message
-            : 'Failed to send reset email! Please try again.';
-        setErrorMessage(fallbackMessage);
-      }
-
+      const message = getErrorMessage(forgotPasswordMutation.error);
+      setErrorMessage(message);
       setShowWarning(true);
       setShowSuccess(false);
     }
