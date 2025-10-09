@@ -7,7 +7,7 @@ import {
   tokenService,
   LoginRequest,
 } from '@src/api/services/authService';
-import { authState, saveAuthState } from '@src/store/auth';
+import { authState } from '@src/store/auth';
 
 export const useLoginMutation = () => {
   const setAuthState = useSetRecoilState(authState);
@@ -27,8 +27,6 @@ export const useLoginMutation = () => {
       setAuthState(newAuthState);
 
       tokenService.saveToken(data.token);
-
-      saveAuthState(newAuthState);
 
       toast.success('Login successful! Redirecting...');
       setTimeout(() => navigate('/'), 800);

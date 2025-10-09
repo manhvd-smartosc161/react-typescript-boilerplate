@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { useSetRecoilState } from 'recoil';
 import { authService, tokenService } from '@src/api/services/authService';
-import { authState, saveAuthState } from '@src/store/auth';
+import { authState } from '@src/store/auth';
 import ROUTES from '@src/routes/route';
 
 export const useLogoutMutation = () => {
@@ -24,7 +24,6 @@ export const useLogoutMutation = () => {
       };
 
       setAuthState(newAuthState);
-      saveAuthState(newAuthState);
 
       tokenService.removeToken();
 
@@ -41,7 +40,6 @@ export const useLogoutMutation = () => {
       };
 
       setAuthState(newAuthState);
-      saveAuthState(newAuthState);
 
       tokenService.removeToken();
 

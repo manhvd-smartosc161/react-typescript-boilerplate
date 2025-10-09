@@ -2,12 +2,22 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { authService, tokenService } from '@src/api/services/authService';
-import { authState, saveAuthState } from '@src/store/auth';
+import { authState } from '@src/store';
 import { authKeys } from '@src/constants';
 
 export const useCurrentUser = () => {
   const token = tokenService.getToken();
   const setAuthState = useSetRecoilState(authState);
+
+  useEffect(() => {
+    if (token) {
+      setAuthState((prev) => ({
+        ...prev,
+        isAuthenticated: true,
+        token,
+      }));
+    }
+  }, [token, setAuthState]);
 
   const query = useQuery({
     queryKey: authKeys.user(),
@@ -33,7 +43,6 @@ export const useCurrentUser = () => {
       };
 
       setAuthState(newAuthState);
-      saveAuthState(newAuthState);
     } else if (query.isError || (!token && !query.isLoading)) {
       setAuthState({
         isAuthenticated: false,
