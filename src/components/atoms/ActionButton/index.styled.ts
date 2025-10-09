@@ -1,63 +1,70 @@
 import { Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-export const PrimaryButton = styled(Button)(() => ({
-  backgroundColor: '#6f42c1',
+// Base styles for all buttons
+const baseButtonStyles = {
   color: 'white',
-  borderRadius: '4px',
-  textTransform: 'none',
+  textTransform: 'none' as const,
   fontWeight: 'bold',
-  minWidth: '80px',
-  '&:hover': {
-    backgroundColor: '#5a32a3',
+  '&:disabled': {
+    color: 'white',
+    opacity: 0.6,
+    '& .MuiButton-startIcon': {
+      color: 'white',
+    },
   },
-}));
+};
 
-export const SuccessButton = styled(Button)(() => ({
+// Create styled button with base styles and specific config
+const createStyledButton = (config: {
+  backgroundColor: string;
+  hoverColor: string;
+  borderRadius?: string;
+  minWidth?: string;
+  padding?: string;
+  fontSize?: string;
+}) => {
+  return styled(Button)(() => ({
+    ...baseButtonStyles,
+    backgroundColor: config.backgroundColor,
+    borderRadius: config.borderRadius || '4px',
+    minWidth: config.minWidth || '80px',
+    ...(config.padding && { padding: config.padding }),
+    ...(config.fontSize && { fontSize: config.fontSize }),
+    '&:hover': {
+      backgroundColor: config.hoverColor,
+    },
+    '&:disabled': {
+      ...baseButtonStyles['&:disabled'],
+      backgroundColor: config.backgroundColor,
+    },
+  }));
+};
+
+export const PrimaryButton = createStyledButton({
+  backgroundColor: '#6f42c1',
+  hoverColor: '#5a32a3',
+});
+
+export const SuccessButton = createStyledButton({
   backgroundColor: '#28a745',
-  color: 'white',
-  borderRadius: '4px',
-  textTransform: 'none',
-  fontWeight: 'bold',
-  minWidth: '80px',
-  '&:hover': {
-    backgroundColor: '#218838',
-  },
-}));
+  hoverColor: '#218838',
+});
 
-export const ActionButton = styled(Button)(() => ({
+export const ActionButton = createStyledButton({
   backgroundColor: '#6f42c1',
-  color: 'white',
-  borderRadius: '4px',
-  textTransform: 'none',
-  fontWeight: 'bold',
-  minWidth: '80px',
-  '&:hover': {
-    backgroundColor: '#5a32a3',
-  },
-}));
+  hoverColor: '#5a32a3',
+});
 
-export const ReportButton = styled(Button)(() => ({
+export const ReportButton = createStyledButton({
   backgroundColor: '#6f42c1',
-  color: 'white',
+  hoverColor: '#5a32a3',
   borderRadius: '6px',
-  textTransform: 'none',
-  fontWeight: 'bold',
   padding: '8px 16px',
   fontSize: '14px',
-  '&:hover': {
-    backgroundColor: '#5a32a3',
-  },
-}));
+});
 
-export const DangerButton = styled(Button)(() => ({
+export const DangerButton = createStyledButton({
   backgroundColor: '#dc3545',
-  color: 'white',
-  borderRadius: '4px',
-  textTransform: 'none',
-  fontWeight: 'bold',
-  minWidth: '80px',
-  '&:hover': {
-    backgroundColor: '#c82333',
-  },
-}));
+  hoverColor: '#c82333',
+});

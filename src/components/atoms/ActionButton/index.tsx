@@ -19,44 +19,37 @@ interface ActionButtonProps {
   children: React.ReactNode;
   startIcon?: React.ReactNode;
   onClick?: () => void;
+  disabled?: boolean;
 }
+
+const BUTTON_COMPONENTS = {
+  assign: PrimaryButton,
+  assigned: SuccessButton,
+  details: ActionButton,
+  'detail-report': ReportButton,
+  danger: DangerButton,
+} as const;
 
 const ActionButtonAtom: React.FC<ActionButtonProps> = ({
   variant,
   children,
   startIcon,
   onClick,
+  disabled = false,
 }) => {
-  const renderButton = () => {
-    switch (variant) {
-      case 'assign':
-        return <PrimaryButton onClick={onClick}>{children}</PrimaryButton>;
-      case 'assigned':
-        return <SuccessButton startIcon={startIcon}>{children}</SuccessButton>;
-      case 'details':
-        return (
-          <ActionButton startIcon={startIcon} onClick={onClick}>
-            {children}
-          </ActionButton>
-        );
-      case 'detail-report':
-        return (
-          <ReportButton startIcon={startIcon} onClick={onClick}>
-            {children}
-          </ReportButton>
-        );
-      case 'danger':
-        return (
-          <DangerButton startIcon={startIcon} onClick={onClick}>
-            {children}
-          </DangerButton>
-        );
-      default:
-        return null;
-    }
-  };
+  const ButtonComponent = BUTTON_COMPONENTS[variant];
 
-  return renderButton();
+  if (!ButtonComponent) return null;
+
+  return (
+    <ButtonComponent
+      startIcon={startIcon}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {children}
+    </ButtonComponent>
+  );
 };
 
 export default ActionButtonAtom;

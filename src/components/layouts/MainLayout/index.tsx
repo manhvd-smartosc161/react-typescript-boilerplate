@@ -1,10 +1,12 @@
 import React, { FC, ReactNode, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { useNavigate } from 'react-router-dom';
 import { HandshakeOutlined } from '@mui/icons-material';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Sidebar, Header } from '@src/components';
 import { isAuthenticatedState } from '@src/store/auth';
 import ROUTES from '@src/routes/route';
+import { PAGE_TITLES } from '@src/constants';
+
 import {
   StyledMainContainer,
   StyledMainContent,
@@ -18,6 +20,7 @@ interface MainLayoutProps {
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   const isAuthenticated = useRecoilValue(isAuthenticatedState);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -27,24 +30,24 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
 
   const menuItems = [
     {
-      key: '/',
+      key: ROUTES.HOME,
       icon: <span>🏠</span>,
-      label: 'Dashboard',
+      label: PAGE_TITLES.DASHBOARD,
     },
     {
-      key: '/supplier-registration',
+      key: ROUTES.SUPPLIER_REGISTRATION,
       icon: <HandshakeOutlined />,
-      label: 'Partner Registration',
+      label: PAGE_TITLES.PARTNER_REGISTRATION,
     },
     {
-      key: '/leads',
+      key: ROUTES.LEADS,
       icon: <span>📋</span>,
-      label: 'Leads',
+      label: PAGE_TITLES.LEADS,
     },
     {
-      key: '/settings',
+      key: ROUTES.SETTINGS,
       icon: <span>⚙️</span>,
-      label: 'Settings',
+      label: PAGE_TITLES.SETTINGS,
     },
   ];
 
@@ -54,15 +57,34 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     setCollapsed(!collapsed);
   };
 
-  const getBreadcrumbItems = () => [
-    {
-      title: 'Employee Portal',
-      onClick: () => navigate('/'),
-    },
-    {
-      title: 'Dashboard',
-    },
-  ];
+  const getBreadcrumbItems = () => {
+    const breadcrumbItems = [
+      {
+        title: 'Supplier Portal',
+        onClick: () => navigate(ROUTES.HOME),
+      },
+    ];
+
+    const getCurrentPageTitle = () => {
+      switch (location.pathname) {
+        case ROUTES.HOME:
+          return PAGE_TITLES.DASHBOARD;
+        case ROUTES.LEADS:
+          return PAGE_TITLES.LEADS;
+        case ROUTES.SETTINGS:
+          return PAGE_TITLES.SETTINGS;
+        default:
+          return PAGE_TITLES.DASHBOARD;
+      }
+    };
+
+    breadcrumbItems.push({
+      title: getCurrentPageTitle(),
+      onClick: () => {}, // Current page doesn't need navigation
+    });
+
+    return breadcrumbItems;
+  };
 
   return (
     <>

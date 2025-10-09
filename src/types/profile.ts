@@ -1,15 +1,17 @@
 export interface ProfileFormData {
-  email: string;
   name: string;
+  interfaceLanguage: string;
+  language: string;
+  avatar?: File | null;
 }
 
 export interface ChangePasswordFormData {
-  currentPassword?: string | null;
-  newPassword?: string | null;
-  confirmPassword?: string | null;
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
 }
 
 export interface NotificationFormData {
-  emailNotification: boolean;
-  marketingNotification: boolean;
+  emailNotifications: boolean;
+  marketingNotifications: boolean;
 }

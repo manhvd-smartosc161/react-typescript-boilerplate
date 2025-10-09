@@ -1,7 +1,7 @@
 import { UseFormReturn } from 'react-hook-form';
 import { Box } from '@mui/material';
 import { CardAtom, LabelAtom } from '@src/components/atoms';
-import { ControlledPasswordField } from '@src/components/molecules';
+import { ControlledPasswordField, Alert } from '@src/components/molecules';
 import { StyledSubtitle } from '@src/components/templates/PageTemplate/index.styled';
 import { ChangePasswordFormData } from '@src/types';
 import { StyledChangePasswordForm } from './index.styled';
@@ -12,10 +12,14 @@ export interface ChangePasswordFormProps {
     any,
     ChangePasswordFormData
   >;
+  banner?: {
+    type: 'success' | 'error' | null;
+    message: string;
+  };
 }
 
 const ChangePasswordForm = (props: ChangePasswordFormProps) => {
-  const { passwordForm } = props;
+  const { passwordForm, banner } = props;
 
   return (
     <StyledChangePasswordForm
@@ -30,6 +34,7 @@ const ChangePasswordForm = (props: ChangePasswordFormProps) => {
           Change your password. It's a good idea to use a strong password that
           you're not using elsewhere.
         </StyledSubtitle>
+        {banner?.type && <Alert severity={banner.type}>{banner.message}</Alert>}
         <Box sx={{ marginTop: 4 }}>
           <Box sx={{ marginTop: 2 }}>
             <ControlledPasswordField

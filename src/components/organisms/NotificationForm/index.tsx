@@ -3,6 +3,7 @@ import { CardAtom, LabelAtom, SwitchAtom } from '@src/components/atoms';
 import { StyledSubtitle } from '@src/components/templates/PageTemplate/index.styled';
 import { Controller, UseFormReturn } from 'react-hook-form';
 import { StyledNotificationForm } from './index.styled';
+import { Alert } from '@src/components/molecules';
 import { NotificationFormData } from '@src/types';
 
 export interface NotificationFormProps {
@@ -11,10 +12,14 @@ export interface NotificationFormProps {
     any,
     NotificationFormData
   >;
+  banner?: {
+    type: 'success' | 'error' | null;
+    message: string;
+  };
 }
 
 const NotificationForm = (props: NotificationFormProps) => {
-  const { notificationForm } = props;
+  const { notificationForm, banner } = props;
 
   return (
     <StyledNotificationForm
@@ -28,6 +33,7 @@ const NotificationForm = (props: NotificationFormProps) => {
         <StyledSubtitle sx={{ color: '#94a2b8' }}>
           Choose how you want to be notified.
         </StyledSubtitle>
+        {banner?.type && <Alert severity={banner.type}>{banner.message}</Alert>}
         <CardAtom
           sx={{
             borderRadius: 2,
@@ -48,7 +54,7 @@ const NotificationForm = (props: NotificationFormProps) => {
           </Box>
 
           <Controller
-            name="emailNotification"
+            name="emailNotifications"
             control={notificationForm.control}
             render={({ field }) => (
               <SwitchAtom
@@ -83,7 +89,7 @@ const NotificationForm = (props: NotificationFormProps) => {
           </Box>
 
           <Controller
-            name="marketingNotification"
+            name="marketingNotifications"
             control={notificationForm.control}
             render={({ field }) => (
               <SwitchAtom

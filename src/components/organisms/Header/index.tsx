@@ -7,6 +7,8 @@ import {
   MenuItem,
   ListItemIcon,
   Divider,
+  Avatar,
+  Stack,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
@@ -89,7 +91,10 @@ const Header: FC<HeaderProps> = ({
                     : 'Loading...'}
                 </Typography>
               </StyledUserInfo>
-              <StyledAvatar>
+              <StyledAvatar
+                src={currentUser?.avatar}
+                alt={currentUser?.name || 'User'}
+              >
                 <PersonIcon />
               </StyledAvatar>
             </StyledUserProfileSection>
@@ -108,12 +113,23 @@ const Header: FC<HeaderProps> = ({
               }}
             >
               <StyledMenuHeader>
-                <Typography variant="subtitle2" fontWeight={600}>
-                  {currentUser?.name || 'Loading...'}
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  {currentUser?.email || 'Loading...'}
-                </Typography>
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Avatar
+                    src={currentUser?.avatar}
+                    alt={currentUser?.name || 'User'}
+                    sx={{ width: 40, height: 40 }}
+                  >
+                    <PersonIcon />
+                  </Avatar>
+                  <Stack>
+                    <Typography variant="subtitle2" fontWeight={600}>
+                      {currentUser?.name || 'Loading...'}
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      {currentUser?.email || 'Loading...'}
+                    </Typography>
+                  </Stack>
+                </Stack>
               </StyledMenuHeader>
               <Divider />
               <MenuItem onClick={handleMenuClose}>

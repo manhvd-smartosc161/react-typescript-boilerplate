@@ -22,7 +22,11 @@ apiClient.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    if (config.data && typeof config.data === 'object') {
+    if (
+      config.data &&
+      typeof config.data === 'object' &&
+      !(config.data instanceof FormData)
+    ) {
       config.data = camelToSnakeKeys(config.data);
     }
 
