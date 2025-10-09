@@ -23,114 +23,35 @@ This is a frontend web application designed following the Atomic Design pattern,
 
 ```
 fe-employee-app/
-├── build/                    # Production build directory (created after build)
-│   ├── static/              # Optimized static assets
-│   └── index.html           # Entry HTML file
-│
-├── public/                   # Public static files directory
-│   ├── index.html           # HTML template
-│   ├── favicon.ico          # Website icon
-│   └── manifest.json        # PWA manifest
-│
+├── build/                    # Production build directory
+├── public/                   # Public static files
 ├── src/                      # Main source code
-│   │
 │   ├── api/                  # API layer - HTTP requests management
-│   │   ├── index.ts         # Axios instance and base config
-│   │   ├── ApiError.ts      # API error handling
-│   │   └── services/        # API service modules
-│   │       └── authService.ts # Authentication API services
-│   │
 │   ├── assets/              # Static assets (images, icons, fonts)
-│   │   └── images/         # Images (logo, backgrounds, etc.)
-│   │
 │   ├── components/          # Atomic Design Components
-│   │   │
-│   │   ├── atoms/           # Atomic Design - Smallest components
-│   │   │   ├── Avatar/      # User avatar display component
-│   │   │   ├── Button/      # Button component
-│   │   │   ├── Card/        # Card component
-│   │   │   ├── Icon/        # Icon component
-│   │   │   ├── Image/       # Image component
-│   │   │   ├── Loading/      # Loading spinner component
-│   │   │   ├── Text/        # Text component
-│   │   │   ├── Title/       # Title component
-│   │   │   └── index.ts     # Export all atoms
-│   │   │
-│   │   ├── molecules/       # Atomic Design - Combination of multiple atoms
-│   │   │   ├── Breadcrumb/  # Breadcrumb navigation component
-│   │   │   ├── StatCard/    # Statistics display component
-│   │   │   ├── UserProfile/ # User information component
-│   │   │   └── index.ts     # Export all molecules
-│   │   │
-│   │   ├── organisms/       # Atomic Design - Complex UI parts
-│   │   │   ├── ChartCard/   # Chart container card component
-│   │   │   ├── DataTable/   # Data table component
-│   │   │   ├── Header/      # Page header component
-│   │   │   ├── Sidebar/     # Sidebar navigation component
-│   │   │   ├── StatsGrid/   # Statistics grid display component
-│   │   │   └── index.ts     # Export all organisms
-│   │   │
-│   │   ├── layouts/         # Layout components
-│   │   │   ├── AuthLayout/  # Authentication layout
-│   │   │   ├── MainLayout/  # Main application layout
-│   │   │   ├── LayoutWrapper/ # Layout wrapper component
-│   │   │   └── index.ts     # Export all layouts
-│   │   │
-│   │   ├── templates/       # Atomic Design - Layout templates
-│   │   │   ├── DashboardTemplate/ # Template for dashboard pages
-│   │   │   ├── FormTemplate/      # Template for form pages
-│   │   │   ├── PageTemplate/      # General page template
-│   │   │   └── index.ts           # Export all templates
-│   │   │
-│   │   └── index.ts         # Export all components
-│   │
-│   ├── pages/               # Page components - Application pages
-│   │   ├── Home/           # Home / Dashboard page
-│   │   ├── Login/          # Login page
-│   │   ├── Error/          # 404 error page
-│   │   ├── System/         # System settings page
-│   │   └── index.tsx       # Export all pages
-│   │
-│   ├── routes/              # Routing configuration
-│   │   ├── appRoutes.ts     # Route definitions
-│   │   ├── route.ts         # Route types
-│   │   └── index.tsx        # Router component with route guards
-│   │
-│   ├── store/               # State management (Recoil)
-│   │   ├── auth.ts          # Auth state atoms and selectors
-│   │   └── index.ts         # Export all stores
-│   │
+│   │   ├── atoms/           # Basic UI components (Button, Input, Text...)
+│   │   ├── molecules/       # Combination of atoms (SearchBar, UserCard...)
+│   │   ├── organisms/       # Complex UI parts (Header, Sidebar, Table...)
+│   │   ├── layouts/         # Layout components (AuthLayout, MainLayout...)
+│   │   └── templates/       # Page templates (DashboardTemplate, FormTemplate...)
+│   ├── pages/               # Application pages
+│   ├── routes/              # Routing configuration and route guards
+│   ├── store/               # State management (Recoil atoms and selectors)
 │   ├── hooks/               # Custom React hooks
-│   │   ├── useDebounce.ts   # Input debounce hook
-│   │   ├── useLocalStorage.ts # localStorage interaction hook
-│   │   └── index.ts         # Export all hooks
-│   │
-│   ├── config/              # Configuration files
-│   │   ├── color.ts         # Color palette configuration
-│   │   ├── theme.ts         # MUI theme customization
-│   │   └── index.ts         # Export configurations
-│   │
+│   ├── config/              # Configuration files (theme, colors)
+│   ├── constants/           # Application constants
 │   ├── types/               # TypeScript type definitions
-│   │   ├── api.ts           # API response types
-│   │   ├── user.ts          # User-related types
-│   │   └── index.ts         # Export all types
-│   │
+│   ├── errors/              # Error handling utilities
 │   ├── utils/               # Utility functions
-│   │   ├── cookie.ts        # Cookie utilities
-│   │   └── errorMessage.ts  # Error message utilities
-│   │
 │   ├── mock/                # Mock data for development
-│   │   └── data.ts          # Mock data definitions
-│   │
+│   ├── schemas/             # Form validation schemas
+│   ├── lib/                 # Library configurations
 │   ├── fonts/               # Custom fonts
-│   │   └── Vbee.woff        # Custom font file
-│   │
 │   ├── App.tsx              # Root App component
 │   ├── App.css              # App styles
 │   ├── index.tsx            # Entry point
 │   ├── index.css            # Global CSS
 │   └── react-app-env.d.ts   # React app environment types
-│
 ├── craco.config.ts          # CRACO configuration (webpack override)
 ├── tsconfig.json            # TypeScript configuration
 ├── package.json             # Dependencies and scripts
