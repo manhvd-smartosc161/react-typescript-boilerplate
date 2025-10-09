@@ -52,4 +52,7 @@ export const AUTH_ENDPOINT = {
   FORGOT_PASSWORD: '/auth/forgot-password',
   VALIDATE_RESET_TOKEN: '/auth/validate-reset-token',
   RESET_PASSWORD: '/auth/reset-password',
+  PROFILE: '/auth/profile',
+  PASSWORD: '/auth/password',
+  NOTIFICATIONS: '/auth/notifications',
 } as const;

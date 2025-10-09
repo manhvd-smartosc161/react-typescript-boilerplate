@@ -1,5 +1,4 @@
 import { FC, useState, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
 import {
   Box,
   List,
@@ -11,10 +10,7 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import { UserProfileMolecule } from '@src/components/molecules';
-import { ButtonAtom, LogoAtom } from '@src/components/atoms';
-import { currentUserState } from '@src/store/auth';
+import { LogoAtom } from '@src/components/atoms';
 import {
   StyledDrawer,
   StyledLogoSection,
@@ -23,8 +19,6 @@ import {
   StyledGroupLabel,
   StyledListItemButton,
   StyledSubMenuItemButton,
-  StyledUserSection,
-  StyledExportSection,
 } from './index.styled';
 
 interface MenuItem {
@@ -38,13 +32,11 @@ interface MenuItem {
 export interface SidebarProps {
   collapsed: boolean;
   menuItems: MenuItem[];
-  onExport?: () => void;
 }
 
-const Sidebar: FC<SidebarProps> = ({ collapsed, menuItems, onExport }) => {
+const Sidebar: FC<SidebarProps> = ({ collapsed, menuItems }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const currentUser = useRecoilValue(currentUserState);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
 
   const findParentKey = (path: string, items: any[]): string | null => {
@@ -195,29 +187,6 @@ const Sidebar: FC<SidebarProps> = ({ collapsed, menuItems, onExport }) => {
       <StyledMenuSection>
         <StyledList component="nav">{renderMenuItems(menuItems)}</StyledList>
       </StyledMenuSection>
-
-      {currentUser && (
-        <StyledUserSection>
-          <UserProfileMolecule
-            name={currentUser.name}
-            role="Employee"
-            avatarUrl=""
-            collapsed={collapsed}
-          />
-          {!collapsed && (
-            <StyledExportSection>
-              <ButtonAtom
-                variant="secondary"
-                fullWidth
-                icon={<FileDownloadIcon />}
-                onClick={onExport}
-              >
-                Export Data
-              </ButtonAtom>
-            </StyledExportSection>
-          )}
-        </StyledUserSection>
-      )}
     </StyledDrawer>
   );
 };

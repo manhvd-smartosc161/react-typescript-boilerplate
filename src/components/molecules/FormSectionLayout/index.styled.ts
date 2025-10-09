@@ -1,4 +1,4 @@
-import { styled, Paper, Grid } from '@mui/material';
+import { styled, Grid } from '@mui/material';
 
 export const StyledFormSectionContainer = styled(Grid)(() => ({
   width: '100%',

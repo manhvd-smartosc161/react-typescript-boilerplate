@@ -4,6 +4,10 @@ export interface User {
   name: string;
   email: string;
   surname: string;
+  language?: string;
+  emailNotifications?: boolean;
+  marketingNotifications?: boolean;
+  avatar?: string;
 }
 
 export interface UserProfile extends User {

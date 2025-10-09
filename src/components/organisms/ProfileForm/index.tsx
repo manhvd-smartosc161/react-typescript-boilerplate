@@ -1,32 +1,108 @@
 import { UseFormReturn } from 'react-hook-form';
 import { Box } from '@mui/material';
+import React, { useRef } from 'react';
+import { CardAtom, InputLabelAtom, TextAtom } from '@src/components/atoms';
 import {
-  CardAtom,
-  LabelAtom,
-  InputLabelAtom,
-  AvatarAtom,
-  ButtonAtom,
-  TextAtom,
-} from '@src/components/atoms';
-import { ControlledTextField } from '@src/components/molecules';
-import { StyledSubtitle } from '@src/components/templates/PageTemplate/index.styled';
+  ControlledTextField,
+  ControlledDropdownField,
+  Alert,
+} from '@src/components/molecules';
 import { ProfileFormData } from '@src/types';
-import { StyledProfileForm } from './index.styled';
+import { LANGUAGE_DISPLAY } from '@src/constants';
+import {
+  StyledProfileForm,
+  DeleteButton,
+  AvatarContainer,
+  AvatarImage,
+  ChangeAvatarButton,
+  DefaultAvatar,
+  ProfileSubtitle,
+  ProfileTitle,
+} from './index.styled';
 
 export interface ProfileFormProps {
   profileForm: UseFormReturn<ProfileFormData, any, ProfileFormData>;
+  avatarUrl?: string;
+  banner?: {
+    type: 'success' | 'error' | null;
+    message: string;
+  };
 }
 
 const ProfileForm = (props: ProfileFormProps) => {
-  const { profileForm } = props;
+  const { profileForm, avatarUrl, banner } = props;
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleAvatarChange = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.size > 3 * 1024 * 1024) {
+        alert('File size must be less than 3MB');
+        return;
+      }
+      if (!file.type.startsWith('image/')) {
+        alert('Please select an image file');
+        return;
+      }
+      profileForm.setValue('avatar', file, { shouldDirty: true });
+    }
+  };
+
+  const avatarValue = profileForm.watch('avatar');
+
+  const renderAvatarSection = () => {
+    if (avatarValue) {
+      return (
+        <AvatarContainer>
+          <AvatarImage
+            src={URL.createObjectURL(avatarValue)}
+            alt="Avatar preview"
+          />
+          <DeleteButton
+            variant="text"
+            size="small"
+            onClick={() =>
+              profileForm.setValue('avatar', null, {
+                shouldDirty: true,
+              })
+            }
+          >
+            ×
+          </DeleteButton>
+        </AvatarContainer>
+      );
+    }
+
+    if (avatarUrl) {
+      return (
+        <AvatarContainer>
+          <AvatarImage src={avatarUrl} alt="Current avatar" />
+        </AvatarContainer>
+      );
+    }
+
+    return <DefaultAvatar />;
+  };
+
+  const getButtonText = () => {
+    if (avatarValue || avatarUrl) {
+      return 'Change Avatar';
+    }
+    return 'Upload Avatar';
+  };
 
   return (
     <StyledProfileForm component="form" onSubmit={(e) => e.preventDefault()}>
       <CardAtom sx={{ borderRadius: 2 }}>
-        <LabelAtom sx={{ fontSize: 28, fontWeight: 'bold' }}>Profile</LabelAtom>
-        <StyledSubtitle sx={{ color: '#94a2b8' }}>
+        <ProfileTitle>Profile</ProfileTitle>
+        <ProfileSubtitle>
           This is how others will see you on the site.
-        </StyledSubtitle>
+        </ProfileSubtitle>
+        {banner?.type && <Alert severity={banner.type}>{banner.message}</Alert>}
         <Box sx={{ marginTop: 4 }}>
           <Box sx={{ marginTop: 2 }}>
             <ControlledTextField
@@ -37,28 +113,33 @@ const ProfileForm = (props: ProfileFormProps) => {
             />
           </Box>
           <Box sx={{ marginTop: 2 }}>
-            <ControlledTextField
-              name="email"
+            <ControlledDropdownField
+              key={`interfaceLanguage-${profileForm.watch('interfaceLanguage')}`}
+              name="interfaceLanguage"
               control={profileForm.control}
-              label="Email"
-              type="text"
+              label="Interface Language"
+              placeholder="Select language"
+              options={[
+                { value: LANGUAGE_DISPLAY.THAI, label: 'Thai' },
+                { value: LANGUAGE_DISPLAY.ENGLISH, label: 'English' },
+              ]}
             />
           </Box>
           <Box sx={{ marginTop: 2 }}>
             <InputLabelAtom htmlFor={'avatar'}>Avatar</InputLabelAtom>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <AvatarAtom
-                sx={{
-                  width: 56,
-                  height: 56,
-                  backgroundColor: '#ececfd',
-                  color: '#4b43ea',
-                }}
-              />
-              <ButtonAtom variant="ghost" sx={{ textTransform: 'capitalize' }}>
-                <TextAtom variant="label">Change Avatar</TextAtom>
-              </ButtonAtom>
+              {renderAvatarSection()}
+              <ChangeAvatarButton variant="ghost" onClick={handleAvatarChange}>
+                <TextAtom variant="label">{getButtonText()}</TextAtom>
+              </ChangeAvatarButton>
             </Box>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              onChange={handleFileChange}
+            />
           </Box>
         </Box>
       </CardAtom>

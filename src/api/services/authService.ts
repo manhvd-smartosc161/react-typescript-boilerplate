@@ -5,6 +5,7 @@ import {
 } from '@src/types';
 import { LOGIN_ERROR_CODE, AUTH_ENDPOINT } from '@src/constants';
 import { setCookie, getCookie } from '@src/utils/cookie';
+import { getBrowserLanguage } from '@src/utils/browserLanguage';
 import apiClient from '../index';
 
 export interface LoginRequest {
@@ -33,6 +34,7 @@ export interface RegisterRequest {
   name: string;
   surname?: string;
   agreedTerms: boolean;
+  language?: string;
 }
 
 export interface ForgotPasswordRequest {
@@ -92,7 +94,11 @@ export const authService = {
           username: userData.name,
           name: userData.name,
           email: userData.email,
-          surname: userData.surname,
+          surname: userData.surname || '',
+          language: userData.language,
+          emailNotifications: userData.emailNotifications,
+          marketingNotifications: userData.marketingNotifications,
+          avatar: userData.avatar,
         },
       };
     } catch (error: any) {
@@ -118,6 +124,7 @@ export const authService = {
         name: userData.name,
         surname: userData.surname,
         agreedTerms: userData.agreedTerms,
+        language: userData.language || getBrowserLanguage(),
       };
 
       const response = await apiClient.post(AUTH_ENDPOINT.REGISTER, dataToSend);
@@ -130,17 +137,12 @@ export const authService = {
           name: user.name,
           email: user.email,
           surname: user.surname,
+          ...(user.language && { language: user.language }),
         },
       };
     } catch (error: any) {
-      if (error.response?.status === 400) {
-        throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
-      }
-      if (error.response?.status === 403) {
-        throw new AuthError(LOGIN_ERROR_CODE.ACCOUNT_BLOCKED);
-      }
-
-      throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
+      //TODO:
+      throw error;
     }
   },
 
@@ -155,7 +157,11 @@ export const authService = {
         username: userData.name,
         name: userData.name,
         email: userData.email,
-        surname: userData.surname,
+        surname: userData.surname || '',
+        language: userData.language,
+        emailNotifications: userData.emailNotifications,
+        marketingNotifications: userData.marketingNotifications,
+        avatar: userData.avatar,
       };
     } catch (error) {
       throw error;
@@ -181,10 +187,8 @@ export const authService = {
       );
       return response.data;
     } catch (error: any) {
-      if (error.response?.status === 400) {
-        throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
-      }
-      throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
+      //TODO:
+      throw error;
     }
   },
 
@@ -198,13 +202,8 @@ export const authService = {
       );
       return response.data;
     } catch (error: any) {
-      if (error.response?.status === 400) {
-        throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
-      }
-      if (error.response?.status === 401) {
-        throw new AuthError(LOGIN_ERROR_CODE.ACCOUNT_DEACTIVATED);
-      }
-      throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
+      //TODO:
+      throw error;
     }
   },
 
@@ -215,13 +214,66 @@ export const authService = {
       const response = await apiClient.post(AUTH_ENDPOINT.RESET_PASSWORD, data);
       return response.data;
     } catch (error: any) {
-      if (error.response?.status === 400) {
-        throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
+      //TODO:
+      throw error;
+    }
+  },
+
+  updateUserProfile: async (data: {
+    name: string;
+    surname: string;
+    language: string;
+    avatar?: File | null;
+  }): Promise<void> => {
+    try {
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('surname', data.surname);
+      formData.append('language', data.language);
+
+      if (data.avatar && data.avatar instanceof File) {
+        formData.append('avatar', data.avatar);
+      } else {
+        formData.append('avatar', '');
       }
-      if (error.response?.status === 401) {
-        throw new AuthError(LOGIN_ERROR_CODE.ACCOUNT_DEACTIVATED);
-      }
-      throw new AuthError(LOGIN_ERROR_CODE.INCORRECT_CREDENTIALS);
+
+      await apiClient.put(AUTH_ENDPOINT.PROFILE, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    } catch (error: any) {
+      //TODO:
+      throw error;
+    }
+  },
+
+  updatePassword: async (data: {
+    currentPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+  }): Promise<void> => {
+    try {
+      await apiClient.put(AUTH_ENDPOINT.PASSWORD, {
+        currentPassword: data.currentPassword,
+        newPassword: data.newPassword,
+        confirmPassword: data.confirmPassword,
+      });
+    } catch (error: any) {
+      //TODO:
+      throw error;
+    }
+  },
+
+  updateNotificationSettings: async (data: {
+    emailNotifications: boolean;
+    marketingNotifications: boolean;
+  }): Promise<void> => {
+    try {
+      await apiClient.put(AUTH_ENDPOINT.NOTIFICATIONS, data);
+    } catch (error: any) {
+      //TODO:
+      throw error;
     }
   },
 };

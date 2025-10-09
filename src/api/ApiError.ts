@@ -20,7 +20,7 @@ export class ApiError extends Error {
 
   static fromAxiosError(error: any): ApiError {
     const message =
-      error.response?.data?.message || error.message || 'An error occurred';
+      error.response?.data?.error || error.message || 'An error occurred';
     const status = error.response?.status || 500;
     const statusText = error.response?.statusText || 'Internal Server Error';
     const data = error.response?.data;

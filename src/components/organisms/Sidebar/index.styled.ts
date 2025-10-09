@@ -77,12 +77,3 @@ export const StyledSubMenuItemButton = styled(ListItemButton)(({ theme }) => ({
     },
   },
 }));
-
-export const StyledUserSection = styled(Box)(({ theme }) => ({
-  borderTop: '1px solid',
-  borderColor: theme.palette.divider,
-}));
-
-export const StyledExportSection = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(2),
-}));
