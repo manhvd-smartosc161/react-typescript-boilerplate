@@ -5,7 +5,7 @@ import {
   authService,
   ResetPasswordRequest,
   AuthError,
-} from '@src/api/services/authService';
+} from '@src/api/services';
 
 export const useResetPasswordMutation = () => {
   const navigate = useNavigate();

@@ -3,7 +3,7 @@ import {
   authService,
   ForgotPasswordRequest,
   AuthError,
-} from '@src/api/services/authService';
+} from '@src/api/services';
 
 export const useForgotPasswordMutation = () => {
   return useMutation({

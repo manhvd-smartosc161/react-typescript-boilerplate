@@ -36,7 +36,7 @@ fe-employee-app/
 │   │   └── templates/       # Page templates (DashboardTemplate, FormTemplate...)
 │   ├── pages/               # Application pages
 │   ├── routes/              # Routing configuration and route guards
-│   ├── store/               # State management (Recoil atoms and selectors)
+│   ├── stores/               # State management (Recoil atoms and selectors)
 │   ├── hooks/               # Custom React hooks
 │   ├── config/              # Configuration files (theme, colors)
 │   ├── constants/           # Application constants
@@ -45,7 +45,7 @@ fe-employee-app/
 │   ├── utils/               # Utility functions
 │   ├── mock/                # Mock data for development
 │   ├── schemas/             # Form validation schemas
-│   ├── lib/                 # Library configurations
+│   ├── libs/                 # Library configurations
 │   ├── fonts/               # Custom fonts
 │   ├── App.tsx              # Root App component
 │   ├── App.css              # App styles

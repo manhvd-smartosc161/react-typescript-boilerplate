@@ -1,4 +1,4 @@
-import { AuthError } from '@src/api/services/authService';
+import { AuthError } from '@src/api/services';
 import { MESSAGES } from '@src/constants';
 import { ERROR_CODE_MESSAGE_MAPPING } from './errorCode';
 

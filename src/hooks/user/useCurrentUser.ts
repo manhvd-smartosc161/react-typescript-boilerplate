@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { authService, tokenService } from '@src/api/services/authService';
-import { authState } from '@src/store';
+import { authService, tokenService } from '@src/api/services';
+import { authState } from '@src/stores';
 import { authKeys } from '@src/constants';
 
 export const useCurrentUser = () => {

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { authService } from '@src/api/services/authService';
+import { authService } from '@src/api/services';
 import { authKeys } from '@src/constants';
 
 export interface UpdateProfileRequest {

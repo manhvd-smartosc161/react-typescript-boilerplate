@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { authService } from '@src/api/services/authService';
+import { authService } from '@src/api/services';
 import {
   ValidateResetTokenRequest,
   ValidateResetTokenResponse,

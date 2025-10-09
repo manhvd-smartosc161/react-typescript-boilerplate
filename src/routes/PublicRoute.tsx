@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { isAuthenticatedState } from '@src/store/auth';
+import { isAuthenticatedState } from '@src/stores';
 import routes from '@src/routes/route';
 
 interface PublicRouteProps {

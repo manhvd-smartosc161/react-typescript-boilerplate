@@ -16,7 +16,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { BreadcrumbMolecule } from '@src/components/molecules';
-import { currentUserState, isAuthenticatedState } from '@src/store/auth';
+import { currentUserState, isAuthenticatedState } from '@src/stores';
 import { useLogoutMutation } from '@src/hooks';
 import {
   StyledAppBar,

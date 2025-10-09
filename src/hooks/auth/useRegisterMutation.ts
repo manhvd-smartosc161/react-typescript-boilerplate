@@ -2,8 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { authService, RegisterRequest } from '@src/api/services/authService';
-import { authState } from '@src/store/auth';
+import { authService, RegisterRequest } from '@src/api/services';
+import { authState } from '@src/stores';
 import ROUTES from '@src/routes/route';
 
 export const useRegisterMutation = () => {

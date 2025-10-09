@@ -2,12 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import {
-  authService,
-  tokenService,
-  LoginRequest,
-} from '@src/api/services/authService';
-import { authState } from '@src/store/auth';
+import { authService, tokenService, LoginRequest } from '@src/api/services';
+import { authState } from '@src/stores';
 
 export const useLoginMutation = () => {
   const setAuthState = useSetRecoilState(authState);
