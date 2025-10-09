@@ -1,6 +1,7 @@
 import React, { FC, ReactNode, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
+import { HandshakeOutlined } from '@mui/icons-material';
 import { Sidebar, Header } from '@src/components';
 import { isAuthenticatedState } from '@src/store/auth';
 import ROUTES from '@src/routes/route';
@@ -29,6 +30,11 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       key: '/',
       icon: <span>🏠</span>,
       label: 'Dashboard',
+    },
+    {
+      key: '/supplier-registration',
+      icon: <HandshakeOutlined />,
+      label: 'Partner Registration',
     },
     {
       key: '/leads',

@@ -4,6 +4,7 @@ import {
   StyledStickyHeader,
   StyledFormContent,
   StyledRegistrationTemplate,
+  StyledStickyHeaderContainer,
 } from './index.styled';
 
 export interface IRegistrationTemplateProps {
@@ -18,11 +19,13 @@ export const RegistrationTemplate = ({
   formContent,
 }: IRegistrationTemplateProps) => {
   return (
-    <StyledRegistrationTemplate spacing={3}>
-      <StyledStickyHeader>
-        {pageHeader}
-        {stepper && <Box sx={{ mt: 2 }}>{stepper}</Box>}
-      </StyledStickyHeader>
+    <StyledRegistrationTemplate>
+      <StyledStickyHeaderContainer>
+        <StyledStickyHeader>
+          {pageHeader}
+          <Box>{stepper}</Box>
+        </StyledStickyHeader>
+      </StyledStickyHeaderContainer>
       <StyledFormContent>{formContent}</StyledFormContent>
     </StyledRegistrationTemplate>
   );

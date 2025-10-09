@@ -13,6 +13,7 @@ export const StyledDropZone = styled(Box)<StyledDropZoneProps>(
     padding: theme.spacing(2),
     transition: 'all 0.2s ease',
     backgroundColor: $isDragActive ? theme.palette.action.hover : 'transparent',
+    position: 'relative',
   }),
 );
 
