@@ -113,7 +113,7 @@ const Home: React.FC = () => {
       <StyledPaper>
         <PageHeader
           title="Dashboard"
-          leading={<DashboardIcon sx={{ color: '#6f42c1', fontSize: 28 }} />}
+          leading={<DashboardIcon sx={{ color: '#1976d2', fontSize: 28 }} />}
         />
 
         <Box sx={{ mt: 3 }}>

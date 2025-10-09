@@ -105,7 +105,7 @@ const LeadsPage: React.FC = () => {
       <StyledPaper>
         <PageHeader
           title="Supplier Registration Leads"
-          leading={<AssignmentIcon sx={{ color: '#6f42c1', fontSize: 28 }} />}
+          leading={<AssignmentIcon sx={{ color: '#1976d2', fontSize: 28 }} />}
           trailing={
             <ActionButtonAtom
               variant="detail-report"

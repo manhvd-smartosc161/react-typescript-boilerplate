@@ -40,7 +40,7 @@ const Settings: React.FC = () => {
       <StyledPaper>
         <PageHeader
           title="Settings"
-          leading={<SettingsIcon sx={{ color: '#6f42c1', fontSize: 28 }} />}
+          leading={<SettingsIcon sx={{ color: '#1976d2', fontSize: 28 }} />}
           trailing={
             <ActionButtonAtom
               variant="detail-report"

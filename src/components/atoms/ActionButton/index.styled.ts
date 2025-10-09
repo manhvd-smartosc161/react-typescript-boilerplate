@@ -42,7 +42,7 @@ const createStyledButton = (config: {
 };
 
 export const PrimaryButton = createStyledButton({
-  backgroundColor: '#6f42c1',
+  backgroundColor: '#1976d2',
   hoverColor: '#5a32a3',
 });
 
@@ -52,12 +52,12 @@ export const SuccessButton = createStyledButton({
 });
 
 export const ActionButton = createStyledButton({
-  backgroundColor: '#6f42c1',
+  backgroundColor: '#1976d2',
   hoverColor: '#5a32a3',
 });
 
 export const ReportButton = createStyledButton({
-  backgroundColor: '#6f42c1',
+  backgroundColor: '#1976d2',
   hoverColor: '#5a32a3',
   borderRadius: '6px',
   padding: '8px 16px',
