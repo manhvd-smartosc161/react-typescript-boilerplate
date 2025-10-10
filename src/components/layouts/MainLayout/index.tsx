@@ -1,6 +1,5 @@
 import React, { FC, ReactNode, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { HandshakeOutlined } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Sidebar from '@src/components/organisms/Sidebar';
 import Header from '@src/components/organisms/Header';
@@ -13,6 +12,7 @@ import {
   StyledMainContent,
   StyledContentArea,
 } from './index.styled';
+import { IconAtom } from '@src/components/atoms';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -37,7 +37,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     },
     {
       key: ROUTES.SUPPLIER_REGISTRATION,
-      icon: <HandshakeOutlined />,
+      icon: <IconAtom name="userGroup" />,
       label: PAGE_TITLES.PARTNER_REGISTRATION,
     },
     {

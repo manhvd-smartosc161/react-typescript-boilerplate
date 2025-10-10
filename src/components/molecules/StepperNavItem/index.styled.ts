@@ -19,6 +19,10 @@ export const StyledIconContainer = styled(Box)<{ $status: StepStatus }>(
     width: 32,
     height: 32,
     borderRadius: '50%',
+    color:
+      $status === 'locked'
+        ? theme.palette.text.secondary
+        : theme.palette.common.white,
     backgroundColor:
       $status === 'locked'
         ? theme.palette.grey[200]
