@@ -21,10 +21,6 @@ export const StyledUserProfileSection = styled(Stack)(() => ({
   },
 }));
 
-export const StyledUserInfo = styled(Box)(() => ({
-  textAlign: 'right',
-}));
-
 export const StyledAvatar = styled(Avatar)(({ theme }) => ({
   width: 40,
   height: 40,

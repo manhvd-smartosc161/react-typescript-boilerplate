@@ -26,7 +26,6 @@ import {
   StyledAppBar,
   StyledHeaderContent,
   StyledUserProfileSection,
-  StyledUserInfo,
   StyledAvatar,
   StyledMenu,
   StyledMenuHeader,
@@ -91,13 +90,6 @@ const Header: FC<HeaderProps> = ({
               alignItems="center"
               onClick={handleMenuOpen}
             >
-              <StyledUserInfo>
-                <Typography variant="body2" fontWeight={600}>
-                  {currentUser
-                    ? `${currentUser.surname} ${currentUser.name}`
-                    : t('user:loading')}
-                </Typography>
-              </StyledUserInfo>
               <StyledAvatar
                 src={currentUser?.avatar}
                 alt={currentUser?.name || t('user:user')}

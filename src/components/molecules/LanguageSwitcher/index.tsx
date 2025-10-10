@@ -1,19 +1,15 @@
-import { FC, useMemo, useState, useEffect } from 'react';
+import { FC, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
 import { LANGUAGE_CODES } from '@src/constants';
 import { useLocalStorage } from '@src/hooks/common/useLocalStorage';
 import { useUpdateProfileMutation } from '@src/hooks/auth/useUpdateProfileMutation';
 import { currentUserState } from '@src/stores';
-import { Stack, Typography } from '@mui/material';
-import { FlagAtom } from '@src/components/atoms';
-import LanguageIcon from '@mui/icons-material/Language';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { Box, Typography } from '@mui/material';
 import {
   StyledLanguageSwitcherWrapper,
-  StyledLanguageButton,
-  StyledLanguageMenu,
-  StyledLanguageMenuItem,
+  StyledLanguageToggle,
+  StyledLanguageOption,
 } from './index.styled';
 
 const LanguageSwitcher: FC = () => {
@@ -21,7 +17,6 @@ const LanguageSwitcher: FC = () => {
   const currentUser = useRecoilValue(currentUserState);
   const updateProfileMutation = useUpdateProfileMutation();
   const [lang, setLang] = useLocalStorage<string>('i18nextLng', i18n.language);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   // Initialize language from user profile on mount
   useEffect(() => {
@@ -41,7 +36,6 @@ const LanguageSwitcher: FC = () => {
     // Update i18n language immediately
     void i18n.changeLanguage(nextLang);
     setLang(nextLang);
-    setAnchorEl(null);
 
     // Update user profile with new language in background
     if (currentUser) {
@@ -54,76 +48,31 @@ const LanguageSwitcher: FC = () => {
     }
   };
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const languages = [
-    {
-      code: LANGUAGE_CODES.EN,
-      label: 'English',
-    },
-    {
-      code: LANGUAGE_CODES.TH,
-      label: 'ไทย',
-    },
-  ];
-
-  const currentLanguage = languages.find((l) => l.code === currentLang);
-
   return (
     <StyledLanguageSwitcherWrapper>
-      <StyledLanguageButton
-        onClick={handleClick}
-        variant="text"
-        startIcon={
-          currentLanguage ? (
-            <Stack direction="row" spacing={0.5} alignItems="center">
-              <FlagAtom
-                country={currentLanguage.code as 'en' | 'th'}
-                size={20}
-              />
-              <Typography variant="body2" fontSize="12px" fontWeight="600">
-                {currentLanguage.code.toUpperCase()}
-              </Typography>
-            </Stack>
-          ) : (
-            <LanguageIcon />
-          )
-        }
-        endIcon={<KeyboardArrowDownIcon sx={{ fontSize: 16, ml: -0.5 }} />}
-      />
-      <StyledLanguageMenu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-      >
-        {languages.map((language) => (
-          <StyledLanguageMenuItem
-            key={language.code}
-            onClick={() => handleChange(language.code)}
-            selected={currentLang === language.code}
-            isPending={false}
-          >
-            <Stack direction="row" spacing={1.5} alignItems="center">
-              <FlagAtom country={language.code as 'en' | 'th'} size={20} />
-              <Typography variant="body2">{language.label}</Typography>
-            </Stack>
-          </StyledLanguageMenuItem>
-        ))}
-      </StyledLanguageMenu>
+      <StyledLanguageToggle>
+        <StyledLanguageOption
+          onClick={() => handleChange(LANGUAGE_CODES.TH)}
+          isActive={currentLang === LANGUAGE_CODES.TH}
+        >
+          <Typography variant="body2" fontWeight={600}>
+            {LANGUAGE_CODES.TH.toUpperCase()}
+          </Typography>
+        </StyledLanguageOption>
+
+        <Box sx={{ color: '#666', mx: 0.25 }}>
+          <Typography variant="body2">|</Typography>
+        </Box>
+
+        <StyledLanguageOption
+          onClick={() => handleChange(LANGUAGE_CODES.EN)}
+          isActive={currentLang === LANGUAGE_CODES.EN}
+        >
+          <Typography variant="body2" fontWeight={600}>
+            {LANGUAGE_CODES.EN.toUpperCase()}
+          </Typography>
+        </StyledLanguageOption>
+      </StyledLanguageToggle>
     </StyledLanguageSwitcherWrapper>
   );
 };
