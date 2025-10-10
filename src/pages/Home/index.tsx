@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Stack, Box, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -30,6 +31,7 @@ interface EmployeeData {
 }
 
 const Home: React.FC = () => {
+  const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
 
   const stats = useMemo(
@@ -59,7 +61,7 @@ const Home: React.FC = () => {
     () => [
       {
         key: 'name' as keyof EmployeeData,
-        label: 'Name',
+        label: t('user:name'),
         render: (value: string) => (
           <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
             {value}
@@ -68,23 +70,25 @@ const Home: React.FC = () => {
       },
       {
         key: 'position' as keyof EmployeeData,
-        label: 'Position',
+        label: t('user:position'),
       },
       {
         key: 'department' as keyof EmployeeData,
-        label: 'Department',
+        label: t('user:department'),
       },
       {
         key: 'email' as keyof EmployeeData,
-        label: 'Email',
+        label: t('auth:email'),
       },
       {
         key: 'phone' as keyof EmployeeData,
-        label: 'Phone',
+        label: t('user:phone'),
       },
       {
         key: 'actions' as keyof EmployeeData,
-        label: 'Actions',
+        label: t('common:actions'),
+        width: '200px',
+        align: 'center' as const,
         render: (value: any, record: EmployeeData) => (
           <Stack direction="row" spacing={1}>
             <ActionButtonAtom
@@ -92,27 +96,27 @@ const Home: React.FC = () => {
               startIcon={<EditIcon />}
               onClick={() => handleEdit(record.id)}
             >
-              Edit
+              {t('common:edit')}
             </ActionButtonAtom>
             <ActionButtonAtom
               variant="danger"
               startIcon={<DeleteIcon />}
               onClick={() => handleDelete(record.id)}
             >
-              Delete
+              {t('common:delete')}
             </ActionButtonAtom>
           </Stack>
         ),
       },
     ],
-    [],
+    [t],
   );
 
   return (
     <StyledContainer>
       <StyledPaper>
         <PageHeader
-          title="Dashboard"
+          title={t('common:dashboard')}
           leading={<DashboardIcon sx={{ color: '#1976d2', fontSize: 28 }} />}
         />
 

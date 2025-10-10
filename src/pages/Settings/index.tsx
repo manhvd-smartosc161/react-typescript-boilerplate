@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Box } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { PageHeader } from '@src/components/organisms';
 import { ActionButtonAtom } from '@src/components/atoms';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -8,6 +9,7 @@ import { SettingsOrganism } from '@src/components/organisms';
 import { StyledContainer, StyledPaper } from './index.styled';
 
 const Settings: React.FC = () => {
+  const { t } = useTranslation();
   const settingsRef = useRef<{
     handleSaveAll: () => void;
     isAllValid: () => boolean;
@@ -39,7 +41,7 @@ const Settings: React.FC = () => {
     <StyledContainer>
       <StyledPaper>
         <PageHeader
-          title="Settings"
+          title={t('common:settings')}
           leading={<SettingsIcon sx={{ color: '#1976d2', fontSize: 28 }} />}
           trailing={
             <ActionButtonAtom
@@ -48,7 +50,7 @@ const Settings: React.FC = () => {
               onClick={handleSaveAll}
               disabled={!isFormValid || isLoading}
             >
-              {isLoading ? 'Saving...' : 'Save All'}
+              {isLoading ? t('supplier:saving') : t('supplier:saveAll')}
             </ActionButtonAtom>
           }
         />

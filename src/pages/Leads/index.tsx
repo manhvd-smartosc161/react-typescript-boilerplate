@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { PageHeader } from '@src/components/organisms';
 import { TableOrganism } from '@src/components/organisms';
 import { StatusChipAtom, ActionButtonAtom } from '@src/components/atoms';
@@ -12,6 +13,7 @@ import { LeadData } from '@src/types';
 import { StyledContainer, StyledPaper } from './index.styled';
 
 const LeadsPage: React.FC = () => {
+  const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(4);
   const [leads, setLeads] = useState(leadsData);
 
@@ -39,62 +41,66 @@ const LeadsPage: React.FC = () => {
   const columns = [
     {
       key: 'company' as keyof LeadData,
-      label: 'COMPANY',
+      label: t('lead:company'),
     },
     {
       key: 'customerName' as keyof LeadData,
-      label: 'CUSTOMER NAME',
+      label: t('lead:customerName'),
       render: (value: string) => (
         <span style={{ fontWeight: 'bold' }}>{value}</span>
       ),
     },
     {
       key: 'annualRevenue' as keyof LeadData,
-      label: 'Annual Revenue',
+      label: t('lead:annualRevenue'),
       render: (value: number) => `$${value}`,
     },
     {
       key: 'date' as keyof LeadData,
-      label: 'Date',
+      label: t('lead:date'),
     },
     {
       key: 'status' as keyof LeadData,
-      label: 'STATUS',
+      label: t('lead:status'),
       render: (value: string) => <StatusChipAtom status={value} size="small" />,
     },
     {
       key: 'remarks' as keyof LeadData,
-      label: 'Remarks',
+      label: t('lead:remarks'),
       render: (value: string) => value || '-',
     },
     {
       key: 'assigned' as keyof LeadData,
-      label: 'Assign',
+      label: t('lead:assign'),
+      width: '120px',
+      align: 'center' as const,
       render: (value: boolean, record: LeadData) => {
         return record.assigned ? (
           <ActionButtonAtom variant="assigned" startIcon={<CheckCircleIcon />}>
-            Assigned
+            {t('lead:assigned')}
           </ActionButtonAtom>
         ) : (
           <ActionButtonAtom
             variant="assign"
             onClick={() => handleAssign(record.id)}
           >
-            Assign
+            {t('lead:assign')}
           </ActionButtonAtom>
         );
       },
     },
     {
       key: 'id' as keyof LeadData,
-      label: 'View',
+      label: t('common:view'),
+      width: '120px',
+      align: 'center' as const,
       render: (value: number, record: LeadData) => (
         <ActionButtonAtom
           variant="details"
           startIcon={<VisibilityIcon />}
           onClick={() => handleViewDetails(record.id)}
         >
-          Details
+          {t('common:details')}
         </ActionButtonAtom>
       ),
     },
@@ -104,7 +110,7 @@ const LeadsPage: React.FC = () => {
     <StyledContainer>
       <StyledPaper>
         <PageHeader
-          title="Supplier Registration Leads"
+          title={t('supplier:supplierRegistrationLeads')}
           leading={<AssignmentIcon sx={{ color: '#1976d2', fontSize: 28 }} />}
           trailing={
             <ActionButtonAtom
@@ -112,7 +118,7 @@ const LeadsPage: React.FC = () => {
               startIcon={<DescriptionIcon />}
               onClick={handleDetailReport}
             >
-              Detail Report
+              {t('supplier:detailReport')}
             </ActionButtonAtom>
           }
         />

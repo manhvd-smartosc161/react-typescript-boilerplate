@@ -1,0 +1,13 @@
+{
+  "settings": "การตั้งค่า",
+  "logout": "ออกจากระบบ",
+  "dashboard": "แดชบอร์ด",
+  "leads": "ลีด",
+  "partnerRegistration": "การลงทะเบียนพันธมิตร",
+  "supplierPortal": "พอร์ทัลซัพพลายเออร์",
+  "actions": "การดำเนินการ",
+  "edit": "แก้ไข",
+  "delete": "ลบ",
+  "view": "ดู",
+  "details": "รายละเอียด"
+}

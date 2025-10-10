@@ -4,6 +4,7 @@ import { RecoilRoot } from 'recoil';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import './i18n';
 
 // Global error handler - log errors for debugging
 window.addEventListener('error', (event) => {

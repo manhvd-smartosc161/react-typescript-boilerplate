@@ -1,0 +1,10 @@
+{
+  "company": "Company",
+  "customerName": "Customer Name",
+  "annualRevenue": "Annual Revenue",
+  "date": "Date",
+  "status": "Status",
+  "remarks": "Remarks",
+  "assign": "Assign",
+  "assigned": "Assigned"
+}

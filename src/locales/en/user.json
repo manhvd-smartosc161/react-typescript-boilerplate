@@ -1,0 +1,9 @@
+{
+  "profile": "Profile",
+  "name": "Name",
+  "position": "Position",
+  "department": "Department",
+  "phone": "Phone",
+  "user": "User",
+  "loading": "Loading..."
+}
