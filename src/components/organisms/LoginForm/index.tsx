@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Person, Lock } from '@mui/icons-material';
 import { Box, Typography, Alert } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { ButtonAtom, TextAtom, TextLinkAtom } from '@src/components/atoms';
 import {
   ControlledTextField,
@@ -16,6 +17,7 @@ import ROUTES from '@src/routes/route';
 import { StyledLoginForm } from './index.styled';
 
 const LoginForm: FC = () => {
+  const { t } = useTranslation();
   const loginMutation = useLoginMutation();
   const [showWarning, setShowWarning] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -64,7 +66,7 @@ const LoginForm: FC = () => {
             mb: 0.5,
           }}
         >
-          Sign in
+          {t('auth:signIn')}
         </Typography>
       </Box>
 
@@ -83,8 +85,8 @@ const LoginForm: FC = () => {
           <ControlledTextField
             name="email"
             control={control}
-            label="Email"
-            placeholder="example.email@gmail.com"
+            label={t('auth:email')}
+            placeholder={t('auth:emailPlaceholder')}
             type="email"
             startIcon={<Person />}
             required
@@ -95,8 +97,8 @@ const LoginForm: FC = () => {
           <ControlledPasswordField
             name="password"
             control={control}
-            label="Password"
-            placeholder="Password"
+            label={t('auth:password')}
+            placeholder={t('auth:passwordPlaceholder')}
             startIcon={<Lock />}
             required
           />
@@ -104,9 +106,9 @@ const LoginForm: FC = () => {
 
         <Box sx={{ textAlign: 'right', mb: 3 }}>
           <TextAtom variant="body2" sx={{ color: 'text.secondary' }}>
-            Forgot Password?{' '}
+            {t('auth:forgotPassword')}{' '}
             <TextLinkAtom variant="body2" to={ROUTES.FORGOT_PASSWORD}>
-              Click here
+              {t('auth:clickHere')}
             </TextLinkAtom>
           </TextAtom>
         </Box>
@@ -125,14 +127,14 @@ const LoginForm: FC = () => {
             },
           }}
         >
-          Sign in
+          {t('auth:signIn')}
         </ButtonAtom>
 
         <Box sx={{ textAlign: 'center', mt: 1 }}>
           <TextAtom variant="body2" sx={{ color: 'text.secondary' }}>
-            Create an account?{' '}
+            {t('auth:createAccount')}{' '}
             <TextLinkAtom variant="body2" to={ROUTES.SIGNUP}>
-              Sign Up
+              {t('auth:signUp')}
             </TextLinkAtom>
           </TextAtom>
         </Box>

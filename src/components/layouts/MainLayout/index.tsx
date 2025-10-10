@@ -1,11 +1,11 @@
 import React, { FC, ReactNode, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Sidebar from '@src/components/organisms/Sidebar';
 import Header from '@src/components/organisms/Header';
 import { isAuthenticatedState } from '@src/stores';
 import ROUTES from '@src/routes/route';
-import { PAGE_TITLES } from '@src/constants';
 
 import {
   StyledMainContainer,
@@ -19,6 +19,7 @@ interface MainLayoutProps {
 }
 
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
+  const { t } = useTranslation();
   const isAuthenticated = useRecoilValue(isAuthenticatedState);
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,22 +34,22 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     {
       key: ROUTES.HOME,
       icon: <span>🏠</span>,
-      label: PAGE_TITLES.DASHBOARD,
+      label: t('common:dashboard'),
     },
     {
       key: ROUTES.SUPPLIER_REGISTRATION,
       icon: <IconAtom name="userGroup" />,
-      label: PAGE_TITLES.PARTNER_REGISTRATION,
+      label: t('common:partnerRegistration'),
     },
     {
       key: ROUTES.LEADS,
       icon: <span>📋</span>,
-      label: PAGE_TITLES.LEADS,
+      label: t('common:leads'),
     },
     {
       key: ROUTES.SETTINGS,
       icon: <span>⚙️</span>,
-      label: PAGE_TITLES.SETTINGS,
+      label: t('common:settings'),
     },
   ];
 
@@ -61,7 +62,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   const getBreadcrumbItems = () => {
     const breadcrumbItems = [
       {
-        title: 'Supplier Portal',
+        title: t('common:supplierPortal'),
         onClick: () => navigate(ROUTES.HOME),
       },
     ];
@@ -69,13 +70,13 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     const getCurrentPageTitle = () => {
       switch (location.pathname) {
         case ROUTES.HOME:
-          return PAGE_TITLES.DASHBOARD;
+          return t('common:dashboard');
         case ROUTES.LEADS:
-          return PAGE_TITLES.LEADS;
+          return t('common:leads');
         case ROUTES.SETTINGS:
-          return PAGE_TITLES.SETTINGS;
+          return t('common:settings');
         default:
-          return PAGE_TITLES.DASHBOARD;
+          return t('common:dashboard');
       }
     };
 

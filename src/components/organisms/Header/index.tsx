@@ -15,7 +15,11 @@ import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { BreadcrumbMolecule } from '@src/components/molecules';
+import {
+  BreadcrumbMolecule,
+  LanguageSwitcher,
+} from '@src/components/molecules';
+import { useTranslation } from 'react-i18next';
 import { currentUserState, isAuthenticatedState } from '@src/stores';
 import { useLogoutMutation } from '@src/hooks';
 import {
@@ -43,6 +47,7 @@ const Header: FC<HeaderProps> = ({
   onToggleCollapse,
   breadcrumbItems,
 }) => {
+  const { t } = useTranslation();
   const currentUser = useRecoilValue(currentUserState);
   const isAuthenticated = useRecoilValue(isAuthenticatedState);
   const logoutMutation = useLogoutMutation();
@@ -76,6 +81,8 @@ const Header: FC<HeaderProps> = ({
           <BreadcrumbMolecule items={breadcrumbItems} />
         </StyledHeaderContent>
 
+        <LanguageSwitcher />
+
         {isAuthenticated && (
           <>
             <StyledUserProfileSection
@@ -88,12 +95,12 @@ const Header: FC<HeaderProps> = ({
                 <Typography variant="body2" fontWeight={600}>
                   {currentUser
                     ? `${currentUser.surname} ${currentUser.name}`
-                    : 'Loading...'}
+                    : t('user:loading')}
                 </Typography>
               </StyledUserInfo>
               <StyledAvatar
                 src={currentUser?.avatar}
-                alt={currentUser?.name || 'User'}
+                alt={currentUser?.name || t('user:user')}
               >
                 <PersonIcon />
               </StyledAvatar>
@@ -116,17 +123,17 @@ const Header: FC<HeaderProps> = ({
                 <Stack direction="row" spacing={2} alignItems="center">
                   <Avatar
                     src={currentUser?.avatar}
-                    alt={currentUser?.name || 'User'}
+                    alt={currentUser?.name || t('user:user')}
                     sx={{ width: 40, height: 40 }}
                   >
                     <PersonIcon />
                   </Avatar>
                   <Stack>
                     <Typography variant="subtitle2" fontWeight={600}>
-                      {currentUser?.name || 'Loading...'}
+                      {currentUser?.name || t('user:loading')}
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
-                      {currentUser?.email || 'Loading...'}
+                      {currentUser?.email || t('user:loading')}
                     </Typography>
                   </Stack>
                 </Stack>
@@ -136,20 +143,20 @@ const Header: FC<HeaderProps> = ({
                 <ListItemIcon>
                   <PersonIcon fontSize="small" />
                 </ListItemIcon>
-                Profile
+                {t('user:profile')}
               </MenuItem>
               <MenuItem onClick={handleMenuClose}>
                 <ListItemIcon>
                   <SettingsIcon fontSize="small" />
                 </ListItemIcon>
-                Settings
+                {t('common:settings')}
               </MenuItem>
               <Divider />
               <MenuItem onClick={handleLogout}>
                 <ListItemIcon>
                   <LogoutIcon fontSize="small" color="error" />
                 </ListItemIcon>
-                <Typography color="error">Logout</Typography>
+                <Typography color="error">{t('common:logout')}</Typography>
               </MenuItem>
             </StyledMenu>
           </>

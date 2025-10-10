@@ -23,3 +23,4 @@ export { default as SwitchAtom } from './Switch';
 export { default as StatusChipAtom } from './StatusChip';
 export { default as ActionButtonAtom } from './ActionButton';
 export { default as AutocompleteAtom } from './Autocomplete';
+export { default as FlagAtom } from './Flag';

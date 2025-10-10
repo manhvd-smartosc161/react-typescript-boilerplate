@@ -1,0 +1,10 @@
+{
+  "company": "บริษัท",
+  "customerName": "ชื่อลูกค้า",
+  "annualRevenue": "รายได้ต่อปี",
+  "date": "วันที่",
+  "status": "สถานะ",
+  "remarks": "หมายเหตุ",
+  "assign": "มอบหมาย",
+  "assigned": "มอบหมายแล้ว"
+}
