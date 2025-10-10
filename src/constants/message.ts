@@ -20,4 +20,7 @@ export const MESSAGES = {
   MSG_012: 'Your account has been successfully created',
   MSG_013:
     'A password reset email has already been sent. Please check your inbox. You can request again after 5 minutes.',
+  MSG_014: 'Password reset link is expired.',
+  MSG_015:
+    'Password must not be identical with one of your most 3 recent used passwords.',
 } as const;

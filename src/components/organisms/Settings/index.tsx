@@ -25,6 +25,7 @@ import {
   notificationFormSchema,
   profileFormSchema,
 } from '@src/schemas/settingsSchema';
+import { getErrorMessage } from '@src/errors';
 import ProfileForm from '../ProfileForm';
 import ChangePasswordForm from '../ChangePasswordForm';
 import NotificationForm from '../NotificationForm';
@@ -194,9 +195,9 @@ const SettingsOrganism = forwardRef<{
         });
       },
       onError: (error: any) => {
-        const errorMessage =
-          error?.message || 'Failed to update profile. Please try again.';
-        setProfileBanner({ type: 'error', message: errorMessage });
+        const message = getErrorMessage(error);
+        setPasswordBanner({ type: 'error', message });
+        setProfileBanner({ type: 'error', message });
       },
     });
   };
@@ -219,9 +220,8 @@ const SettingsOrganism = forwardRef<{
           });
         },
         onError: (error: any) => {
-          const errorMessage =
-            error?.message || 'Failed to update password. Please try again.';
-          setPasswordBanner({ type: 'error', message: errorMessage });
+          const message = getErrorMessage(error);
+          setPasswordBanner({ type: 'error', message });
         },
       },
     );
@@ -243,11 +243,9 @@ const SettingsOrganism = forwardRef<{
           });
         },
         onError: (error: any) => {
-          const errorMessage =
-            error?.data?.message ||
-            error?.message ||
-            'Failed to update notification preferences. Please try again.';
-          setNotificationBanner({ type: 'error', message: errorMessage });
+          const message = getErrorMessage(error);
+          setPasswordBanner({ type: 'error', message });
+          setNotificationBanner({ type: 'error', message });
         },
       },
     );
