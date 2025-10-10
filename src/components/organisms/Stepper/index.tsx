@@ -1,6 +1,5 @@
 import React from 'react';
 import { Stack } from '@mui/material';
-import { ChevronRight as ChevronRightIcon } from '@mui/icons-material';
 import StepperNavItemMolecule, {
   StepStatus,
 } from '@src/components/molecules/StepperNavItem';
@@ -42,12 +41,7 @@ const RegistrationStepper = ({
                 status === 'complete' ? () => onStepClick?.(index) : undefined
               }
             />
-
-            {index < steps.length - 1 && (
-              <IconAtom>
-                <ChevronRightIcon sx={{ color: 'text.disabled' }} />
-              </IconAtom>
-            )}
+            {index < steps.length - 1 && <IconAtom name="chevronRight" />}
           </React.Fragment>
         );
       })}

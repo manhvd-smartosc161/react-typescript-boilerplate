@@ -1,10 +1,6 @@
 import React from 'react';
-import { IconAtom } from '@src/components/atoms';
 import { StyledRoot, StyledIconContainer, StyledLabel } from './index.styled';
 
-/**
- * StepStatus represents the possible states of a stepper navigation item.
- */
 export type StepStatus = 'complete' | 'active' | 'locked';
 
 export interface IStepperNavItemMoleculeProps {
@@ -20,9 +16,10 @@ const StepperNavItemMolecule = ({
   status = 'locked',
   onClick,
 }: IStepperNavItemMoleculeProps) => {
-  const getIconColor = (): string => {
-    return status === 'locked' ? 'text.secondary' : 'white';
-  };
+  // TODO: Needs update when the icon component is ready
+  // const getIconColor = (): string => {
+  //   return status === 'locked' ? 'text.secondary' : 'white';
+  // };
 
   const handleClick = () => {
     if (status === 'complete' && onClick) {
@@ -32,11 +29,7 @@ const StepperNavItemMolecule = ({
 
   return (
     <StyledRoot $status={status} onClick={handleClick}>
-      <StyledIconContainer $status={status}>
-        <IconAtom size="small" color={getIconColor()}>
-          {icon}
-        </IconAtom>
-      </StyledIconContainer>
+      <StyledIconContainer $status={status}>{icon}</StyledIconContainer>
       <StyledLabel $status={status}>{label}</StyledLabel>
     </StyledRoot>
   );

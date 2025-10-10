@@ -14,6 +14,21 @@ module.exports = {
       '@assets': path.resolve(__dirname, 'src/assets'),
     },
     configure: (webpackConfig: any, { env }: { env: string }) => {
+      // ===== SVG CONFIGURATION START =====
+      webpackConfig.module.rules.push({
+        test: /\.svg$/,
+        use: [
+          {
+            loader: require.resolve('@svgr/webpack'),
+            options: {
+              icon: true,
+              titleProp: true,
+            },
+          },
+        ],
+      });
+      // ===== SVG CONFIGURATION END =====
+
       // Ignore source map warnings for styled-components
       webpackConfig.module.rules = webpackConfig.module.rules.map(
         (rule: any) => {

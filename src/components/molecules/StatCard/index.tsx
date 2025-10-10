@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { Box } from '@mui/material';
-import { IconAtom, TextAtom } from '@src/components/atoms';
+import { TextAtom } from '@src/components/atoms';
 import {
   StyledStatCard,
   StyledStatCardContent,
@@ -51,7 +51,7 @@ const StatCardMolecule: FC<StatCardProps> = ({
       <StyledStatCardContent>
         {icon && (
           <StyledStatCardIcon $colorValue={colorValue}>
-            <IconAtom size="large">{icon}</IconAtom>
+            {icon}
           </StyledStatCardIcon>
         )}
         <Box>

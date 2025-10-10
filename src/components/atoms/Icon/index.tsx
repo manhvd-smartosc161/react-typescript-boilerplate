@@ -1,32 +1,28 @@
-import { FC, ReactNode } from 'react';
-import { StyledIcon } from './index.styled';
+import React from 'react';
+import iconMap from './icons';
 
-export interface IconProps {
-  children: ReactNode;
-  size?: 'small' | 'medium' | 'large';
-  color?: string;
-  className?: string;
-  onClick?: () => void;
+export type IconName = keyof typeof iconMap;
+
+export interface IconProps extends React.SVGProps<SVGSVGElement> {
+  name: IconName;
+  size?: number;
 }
 
-const IconAtom: FC<IconProps> = ({
-  children,
-  size = 'medium',
-  color,
-  className,
-  onClick,
-}) => {
+const IconAtom = ({ name, size = 24, ...props }: IconProps) => {
+  const IconComponent = iconMap[name];
+
+  if (!IconComponent) {
+    console.warn(`Icon "${name}" not found.`);
+    return null;
+  }
+
   return (
-    <StyledIcon
-      component="span"
-      className={className}
-      onClick={onClick}
-      $size={size}
-      $color={color}
-      $clickable={!!onClick}
-    >
-      {children}
-    </StyledIcon>
+    <IconComponent
+      style={{ fontSize: size }}
+      aria-hidden="true"
+      focusable="false"
+      {...props}
+    />
   );
 };
 

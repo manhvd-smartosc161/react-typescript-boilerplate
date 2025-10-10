@@ -5,7 +5,7 @@ import { Box, FormHelperText } from '@mui/material';
 import FilePreviewItem, {
   ManagedFile,
 } from '@src/components/molecules/FilePreviewItem';
-import { ButtonAtom, IconAtom } from '@src/components/atoms';
+import { ButtonAtom } from '@src/components/atoms';
 import { UploadFileOutlined } from '@mui/icons-material';
 import {
   StyledDropZone,
@@ -56,9 +56,7 @@ const MultiUploader: React.FC<MultiUploaderProps> = ({ name }) => {
       >
         {managedFiles?.length === 0 && (
           <StyledUploadIcon variant="outlined">
-            <IconAtom>
-              <UploadFileOutlined />
-            </IconAtom>
+            <UploadFileOutlined />
           </StyledUploadIcon>
         )}
         <ButtonAtom variant="text">+ Add</ButtonAtom>
