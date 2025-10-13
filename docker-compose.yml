@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  supplier-portal-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
+    ports:
+      - "${PORT:-3000}:80"
+    env_file:
+      - .env
+    restart: unless-stopped
+    container_name: supplier-portal-app
