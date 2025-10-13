@@ -25,7 +25,7 @@ const LanguageSwitcher: FC = () => {
       void i18n.changeLanguage(userLanguage);
       setLang(userLanguage);
     }
-  }, [currentUser?.language, i18n, setLang]);
+  }, [currentUser?.language, i18n]);
 
   const currentLang = useMemo(() => {
     if (lang?.startsWith(LANGUAGE_CODES.TH)) return LANGUAGE_CODES.TH;
