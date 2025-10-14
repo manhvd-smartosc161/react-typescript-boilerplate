@@ -1,6 +1,7 @@
 import { UseFormReturn } from 'react-hook-form';
 import { Box } from '@mui/material';
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CardAtom, InputLabelAtom, TextAtom } from '@src/components/atoms';
 import {
   ControlledTextField,
@@ -31,6 +32,7 @@ export interface ProfileFormProps {
 
 const ProfileForm = (props: ProfileFormProps) => {
   const { profileForm, avatarUrl, banner } = props;
+  const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleAvatarChange = () => {
@@ -41,11 +43,11 @@ const ProfileForm = (props: ProfileFormProps) => {
     const file = event.target.files?.[0];
     if (file) {
       if (file.size > 3 * 1024 * 1024) {
-        alert('File size must be less than 3MB');
+        alert(t('user:fileSizeError'));
         return;
       }
       if (!file.type.startsWith('image/')) {
-        alert('Please select an image file');
+        alert(t('user:fileTypeError'));
         return;
       }
       profileForm.setValue('avatar', file, { shouldDirty: true });
@@ -90,25 +92,23 @@ const ProfileForm = (props: ProfileFormProps) => {
 
   const getButtonText = () => {
     if (avatarValue || avatarUrl) {
-      return 'Change Avatar';
+      return t('user:changeAvatar');
     }
-    return 'Upload Avatar';
+    return t('user:uploadAvatar');
   };
 
   return (
     <StyledProfileForm component="form" onSubmit={(e) => e.preventDefault()}>
       <CardAtom sx={{ borderRadius: 2 }}>
-        <ProfileTitle>Profile</ProfileTitle>
-        <ProfileSubtitle>
-          This is how others will see you on the site.
-        </ProfileSubtitle>
+        <ProfileTitle>{t('user:profile')}</ProfileTitle>
+        <ProfileSubtitle>{t('user:profileSubtitle')}</ProfileSubtitle>
         {banner?.type && <Alert severity={banner.type}>{banner.message}</Alert>}
         <Box sx={{ marginTop: 4 }}>
           <Box sx={{ marginTop: 2 }}>
             <ControlledTextField
               name="name"
               control={profileForm.control}
-              label="Name"
+              label={t('user:name')}
               type="text"
             />
           </Box>
@@ -117,8 +117,8 @@ const ProfileForm = (props: ProfileFormProps) => {
               key={`interfaceLanguage-${profileForm.watch('interfaceLanguage')}`}
               name="interfaceLanguage"
               control={profileForm.control}
-              label="Interface Language"
-              placeholder="Select language"
+              label={t('user:interfaceLanguage')}
+              placeholder={t('user:selectLanguage')}
               options={[
                 { value: LANGUAGE_DISPLAY.THAI, label: 'Thai' },
                 { value: LANGUAGE_DISPLAY.ENGLISH, label: 'English' },
@@ -126,7 +126,9 @@ const ProfileForm = (props: ProfileFormProps) => {
             />
           </Box>
           <Box sx={{ marginTop: 2 }}>
-            <InputLabelAtom htmlFor={'avatar'}>Avatar</InputLabelAtom>
+            <InputLabelAtom htmlFor={'avatar'}>
+              {t('user:avatar')}
+            </InputLabelAtom>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               {renderAvatarSection()}
               <ChangeAvatarButton variant="ghost" onClick={handleAvatarChange}>

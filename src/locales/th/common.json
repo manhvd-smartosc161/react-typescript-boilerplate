@@ -9,5 +9,10 @@
   "edit": "แก้ไข",
   "delete": "ลบ",
   "view": "ดู",
-  "details": "รายละเอียด"
+  "details": "รายละเอียด",
+  "status": {
+    "new": "ใหม่",
+    "inProgress": "กำลังดำเนินการ",
+    "completed": "เสร็จสิ้น"
+  }
 }

@@ -7,6 +7,7 @@ import React, {
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useCurrentUser } from '@src/hooks';
 import {
   useUpdateProfileMutation,
@@ -40,6 +41,7 @@ const SettingsOrganism = forwardRef<{
   isAllValid: () => boolean;
   isLoading: () => boolean;
 }>((props, ref) => {
+  const { t } = useTranslation();
   const {
     data: currentUser,
     isLoading: isLoadingUser,
@@ -191,7 +193,7 @@ const SettingsOrganism = forwardRef<{
       onSuccess: () => {
         setProfileBanner({
           type: 'success',
-          message: 'Profile updated successfully!',
+          message: t('user:profileUpdatedSuccess'),
         });
       },
       onError: (error: any) => {
@@ -216,7 +218,7 @@ const SettingsOrganism = forwardRef<{
           passwordForm.reset();
           setPasswordBanner({
             type: 'success',
-            message: 'Password updated successfully!',
+            message: t('user:passwordUpdatedSuccess'),
           });
         },
         onError: (error: any) => {
@@ -239,7 +241,7 @@ const SettingsOrganism = forwardRef<{
         onSuccess: () => {
           setNotificationBanner({
             type: 'success',
-            message: 'Notification preferences updated successfully!',
+            message: t('user:notificationUpdatedSuccess'),
           });
         },
         onError: (error: any) => {
@@ -310,7 +312,7 @@ const SettingsOrganism = forwardRef<{
   if (isLoadingUser) {
     return (
       <div style={{ textAlign: 'center', padding: '40px' }}>
-        Loading user data...
+        {t('user:loadingUserData')}
       </div>
     );
   }
@@ -318,9 +320,9 @@ const SettingsOrganism = forwardRef<{
   if (userError) {
     return (
       <div style={{ textAlign: 'center', padding: '40px', color: 'red' }}>
-        Error loading user data. Please try refreshing the page.
+        {t('user:errorLoadingUser')}
         <br />
-        <small>If the problem persists, please log out and log back in.</small>
+        <small>{t('user:errorPersists')}</small>
       </div>
     );
   }

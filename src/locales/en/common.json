@@ -9,5 +9,10 @@
   "edit": "Edit",
   "delete": "Delete",
   "view": "View",
-  "details": "Details"
+  "details": "Details",
+  "status": {
+    "new": "New",
+    "inProgress": "In-progress",
+    "completed": "Completed"
+  }
 }

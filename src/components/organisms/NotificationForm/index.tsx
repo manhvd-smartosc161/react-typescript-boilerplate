@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { CardAtom, LabelAtom, SwitchAtom } from '@src/components/atoms';
 import { StyledSubtitle } from '@src/components/templates/PageTemplate/index.styled';
 import { Controller, UseFormReturn } from 'react-hook-form';
@@ -20,6 +21,7 @@ export interface NotificationFormProps {
 
 const NotificationForm = (props: NotificationFormProps) => {
   const { notificationForm, banner } = props;
+  const { t } = useTranslation();
 
   return (
     <StyledNotificationForm
@@ -28,10 +30,10 @@ const NotificationForm = (props: NotificationFormProps) => {
     >
       <CardAtom sx={{ borderRadius: 2, marginTop: 4 }}>
         <LabelAtom sx={{ fontSize: 28, fontWeight: 'bold' }}>
-          Notifications
+          {t('user:notifications')}
         </LabelAtom>
         <StyledSubtitle sx={{ color: '#94a2b8' }}>
-          Choose how you want to be notified.
+          {t('user:notificationsSubtitle')}
         </StyledSubtitle>
         {banner?.type && <Alert severity={banner.type}>{banner.message}</Alert>}
         <CardAtom
@@ -46,10 +48,10 @@ const NotificationForm = (props: NotificationFormProps) => {
         >
           <Box>
             <LabelAtom sx={{ fontSize: 22, fontWeight: 'bold' }}>
-              Email Notifications
+              {t('user:emailNotifications')}
             </LabelAtom>
             <StyledSubtitle sx={{ color: '#94a2b8' }}>
-              Receive important updates about your account and new leads
+              {t('user:emailNotificationsDescription')}
             </StyledSubtitle>
           </Box>
 
@@ -81,10 +83,10 @@ const NotificationForm = (props: NotificationFormProps) => {
         >
           <Box>
             <LabelAtom sx={{ fontSize: 22, fontWeight: 'bold' }}>
-              Marketing Communications
+              {t('user:marketingCommunications')}
             </LabelAtom>
             <StyledSubtitle sx={{ color: '#94a2b8' }}>
-              Receive news, offers, and promotions from CP Axtra.
+              {t('user:marketingCommunicationsDescription')}
             </StyledSubtitle>
           </Box>
 
