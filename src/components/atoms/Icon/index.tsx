@@ -8,7 +8,7 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
 }
 
-const IconAtom = ({ name, size = 24, ...props }: IconProps) => {
+const IconAtom = ({ name, size = 16, ...props }: IconProps) => {
   const IconComponent = iconMap[name];
 
   if (!IconComponent) {
