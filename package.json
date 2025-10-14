@@ -2,17 +2,16 @@
   "name": "supplier-portal",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "build:prod": "GENERATE_SOURCEMAP=false craco build",
-    "analyze": "npm run build && npx webpack-bundle-analyzer build/static/js/*.js",
-    "start:prod": "npx serve -s build -l 3000",
-    "test": "craco test",
-    "eject": "craco eject",
-    "deploy": "cross-env NODE_ENV=production node server",
+    "dev": "vite",
+    "start": "vite",
+    "build": "tsc && vite build",
+    "build:prod": "tsc && vite build",
+    "preview": "vite preview",
+    "start:prod": "vite preview --port 3000",
     "lint": "eslint \"**/*.{ts,tsx}\"",
-    "preload": "npm run build:prod && npm run start:prod"
+    "preload": "pnpm run build:prod && pnpm run start:prod"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -22,14 +21,7 @@
     "@mui/material": "^7.3.2",
     "@mui/x-data-grid": "^8.12.1",
     "@tanstack/react-query": "^5.90.2",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
-    "@testing-library/user-event": "^13.2.1",
-    "@types/jest": "^27.0.1",
-    "@types/node": "^16.7.13",
     "@types/nprogress": "^0.2.3",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
     "axios": "^0.21.2",
     "camelcase-keys": "^6.2.2",
     "cross-env": "^7.0.2",
@@ -46,25 +38,21 @@
     "react-hook-form": "^7.63.0",
     "react-i18next": "^16.0.0",
     "react-router-dom": "^6.30.1",
-    "react-scripts": "5.0.1",
     "react-toastify": "^11.0.5",
     "recoil": "^0.7.7",
     "styled-components": "^5.1.1",
-    "typescript": "^4.4.2",
     "web-vitals": "^2.1.0",
     "yup": "^1.7.1"
   },
   "devDependencies": {
-    "@babel/types": "^7.25.2",
-    "@craco/craco": "^7.1.0",
-    "@hot-loader/react-dom": "17.0.2",
-    "@svgr/webpack": "^8.1.0",
+    "@types/node": "^20.11.5",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.34",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
-    "babel-eslint": "^10.1.0",
-    "babel-plugin-import": "^1.13.8",
+    "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.1.0",
@@ -75,24 +63,9 @@
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-react": "^7.34.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "prettier": "^3.2.5"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "prettier": "^3.2.5",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.12",
+    "vite-plugin-svgr": "^4.2.0"
   }
 }

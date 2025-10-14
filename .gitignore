@@ -5,6 +5,7 @@ pnpm-lock.yaml
 
 # Build
 build/
+dist/
 
 # Logs
 logs

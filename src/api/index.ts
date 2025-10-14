@@ -4,7 +4,7 @@ import { getCookie } from '@src/utils/cookie';
 import { camelToSnakeKeys } from '@src/utils/snakeCase';
 import { ApiError } from './ApiError';
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const apiClient = axios.create({
   baseURL: `${API_URL}/api/v1`,
