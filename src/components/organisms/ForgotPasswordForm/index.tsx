@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Email } from '@mui/icons-material';
 import { Box, Typography, Alert } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { ButtonAtom, TextAtom, TextLinkAtom } from '@src/components/atoms';
 import { ControlledTextField } from '@src/components/molecules';
 import { useForgotPasswordMutation } from '@src/hooks';
@@ -13,6 +14,7 @@ import ROUTES from '@src/routes/route';
 import { StyledForgotPasswordForm, StyledResendButton } from './index.styled';
 
 const ForgotPasswordForm: FC = () => {
+  const { t } = useTranslation();
   const forgotPasswordMutation = useForgotPasswordMutation();
   const [showWarning, setShowWarning] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -58,11 +60,9 @@ const ForgotPasswordForm: FC = () => {
     if (forgotPasswordMutation.isSuccess) {
       setShowSuccess(true);
       setShowWarning(false);
-      setSuccessMessage(
-        "Check Your Inbox: We've sent you an email with instructions to reset your password. Please check your Spam inbox if you don't receive it shortly.",
-      );
+      setSuccessMessage(t('auth:emailSentMessage'));
     }
-  }, [forgotPasswordMutation.isSuccess]);
+  }, [forgotPasswordMutation.isSuccess, t]);
 
   const onSubmit = async (data: ForgotPasswordFormData) => {
     if (forgotPasswordMutation.isPending) {
@@ -106,11 +106,10 @@ const ForgotPasswordForm: FC = () => {
             mb: 0.5,
           }}
         >
-          Forgot Password
+          {t('auth:forgotPassword')}
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Enter your email address and we'll send you a link to reset your
-          password.
+          {t('auth:forgotPasswordSubtitle')}
         </Typography>
       </Box>
 
@@ -132,8 +131,8 @@ const ForgotPasswordForm: FC = () => {
             <ControlledTextField
               name="email"
               control={control}
-              label="Email"
-              placeholder="example.email@gmail.com"
+              label={t('auth:email')}
+              placeholder={t('auth:emailPlaceholder')}
               type="email"
               startIcon={<Email />}
               required
@@ -161,7 +160,7 @@ const ForgotPasswordForm: FC = () => {
               },
             }}
           >
-            {showSuccess ? 'Email Sent!' : 'Send password reset link'}
+            {showSuccess ? t('auth:emailSent') : t('auth:sendPasswordReset')}
           </ButtonAtom>
 
           {showSuccess && (
@@ -172,24 +171,26 @@ const ForgotPasswordForm: FC = () => {
               fullWidth
               size="large"
             >
-              {forgotPasswordMutation.isPending ? 'Sending...' : 'Resend Email'}
+              {forgotPasswordMutation.isPending
+                ? t('auth:sending')
+                : t('auth:resendEmail')}
             </StyledResendButton>
           )}
 
           <Box sx={{ textAlign: 'center', mt: 1 }}>
             <TextAtom variant="body2" sx={{ color: 'text.secondary' }}>
-              Remember your password?{' '}
+              {t('auth:rememberPassword')}{' '}
               <TextLinkAtom variant="body2" to={ROUTES.LOGIN}>
-                Back to login
+                {t('auth:backToLogin')}
               </TextLinkAtom>
             </TextAtom>
           </Box>
 
           <Box sx={{ textAlign: 'center', mt: 2 }}>
             <TextAtom variant="body2" sx={{ color: 'text.secondary' }}>
-              Don't have an account?{' '}
+              {t('auth:dontHaveAccount')}{' '}
               <TextLinkAtom variant="body2" to={ROUTES.SIGNUP}>
-                Sign up
+                {t('auth:signUp')}
               </TextLinkAtom>
             </TextAtom>
           </Box>

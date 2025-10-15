@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Person, Lock, Email } from '@mui/icons-material';
 import { Box, Typography, Alert } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { ButtonAtom, TextAtom, TextLinkAtom } from '@src/components/atoms';
 import {
   ControlledTextField,
@@ -18,6 +19,7 @@ import ROUTES from '@src/routes/route';
 import { StyledRegisterForm } from './index.styled';
 
 const RegisterForm: FC = () => {
+  const { t } = useTranslation();
   const registerMutation = useRegisterMutation();
   const [showWarning, setShowWarning] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -84,10 +86,10 @@ const RegisterForm: FC = () => {
             mb: 0.5,
           }}
         >
-          Sign up
+          {t('auth:signUp')}
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary', mb: 0.5 }}>
-          Create your account to get started
+          {t('auth:createAccountSubtitle')}
         </Typography>
       </Box>
 
@@ -112,8 +114,8 @@ const RegisterForm: FC = () => {
           <ControlledTextField
             name="name"
             control={control}
-            label="Name"
-            placeholder="Enter your name"
+            label={t('auth:name')}
+            placeholder={t('auth:namePlaceholder')}
             startIcon={<Person />}
             required
           />
@@ -123,8 +125,8 @@ const RegisterForm: FC = () => {
           <ControlledTextField
             name="surname"
             control={control}
-            label="Surname"
-            placeholder="Enter your surname"
+            label={t('auth:surname')}
+            placeholder={t('auth:surnamePlaceholder')}
             startIcon={<Person />}
           />
         </Box>
@@ -133,8 +135,8 @@ const RegisterForm: FC = () => {
           <ControlledTextField
             name="email"
             control={control}
-            label="Email"
-            placeholder="example.email@gmail.com"
+            label={t('auth:email')}
+            placeholder={t('auth:emailPlaceholder')}
             type="email"
             startIcon={<Email />}
             required
@@ -145,8 +147,8 @@ const RegisterForm: FC = () => {
           <ControlledPasswordField
             name="password"
             control={control}
-            label="Password"
-            placeholder="Password"
+            label={t('auth:password')}
+            placeholder={t('auth:passwordPlaceholder')}
             startIcon={<Lock />}
             required
           />
@@ -156,8 +158,8 @@ const RegisterForm: FC = () => {
           <ControlledPasswordField
             name="confirmPassword"
             control={control}
-            label="Confirm Password"
-            placeholder="Confirm Password"
+            label={t('auth:confirmPassword')}
+            placeholder={t('auth:confirmPasswordPlaceholder')}
             startIcon={<Lock />}
             required
           />
@@ -167,7 +169,7 @@ const RegisterForm: FC = () => {
           <ControlledCheckBoxField
             name="agreedTerms"
             control={control}
-            label="I agree to the Terms & Conditions"
+            label={t('auth:agreeTerms')}
             required
             single={true}
             color="primary"
@@ -188,14 +190,14 @@ const RegisterForm: FC = () => {
             },
           }}
         >
-          Create an account
+          {t('auth:signUp')}
         </ButtonAtom>
 
         <Box sx={{ textAlign: 'center', mt: 1 }}>
           <TextAtom variant="body2" sx={{ color: 'text.secondary' }}>
-            Already have an account?{' '}
+            {t('auth:alreadyHaveAccount')}{' '}
             <TextLinkAtom variant="body2" to={ROUTES.LOGIN}>
-              Sign In
+              {t('auth:signIn')}
             </TextLinkAtom>
           </TextAtom>
         </Box>

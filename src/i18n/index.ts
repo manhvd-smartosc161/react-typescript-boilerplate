@@ -1,21 +1,12 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-
-import enAuth from '@src/locales/en/auth.json';
-import thAuth from '@src/locales/th/auth.json';
-import enUser from '@src/locales/en/user.json';
-import thUser from '@src/locales/th/user.json';
-import enCommon from '@src/locales/en/common.json';
-import thCommon from '@src/locales/th/common.json';
-import enSupplier from '@src/locales/en/supplier.json';
-import thSupplier from '@src/locales/th/supplier.json';
-import enLead from '@src/locales/en/lead.json';
-import thLead from '@src/locales/th/lead.json';
+import HttpBackend from 'i18next-http-backend';
 
 export const defaultNS = 'common';
 
 void i18n
+  .use(HttpBackend)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
@@ -28,22 +19,17 @@ void i18n
       order: ['localStorage', 'navigator', 'htmlTag', 'path', 'subdomain'],
       caches: ['localStorage'],
     },
-    resources: {
-      en: {
-        auth: enAuth,
-        user: enUser,
-        common: enCommon,
-        supplier: enSupplier,
-        lead: enLead,
-      },
-      th: {
-        auth: thAuth,
-        user: thUser,
-        common: thCommon,
-        supplier: thSupplier,
-        lead: thLead,
+    backend: {
+      loadPath: '/locales/{{lng}}/{{ns}}.json',
+      // Cache translations for 1 hour in production
+      requestOptions: {
+        cache: 'default',
       },
     },
+    // Load translations asynchronously
+    load: 'languageOnly',
+    // Preload languages on init
+    preload: ['en', 'th'],
   });
 
 export default i18n;
