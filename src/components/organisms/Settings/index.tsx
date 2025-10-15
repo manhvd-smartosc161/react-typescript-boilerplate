@@ -254,7 +254,12 @@ const SettingsOrganism = forwardRef<{
   };
 
   const handleSaveAll = () => {
-    const hasProfileChanges = profileForm.formState.isDirty;
+    // Check for actual profile changes
+    const profileValues = profileForm.getValues();
+    const hasProfileChanges =
+      profileValues.name !== (currentUser?.name || '') ||
+      profileValues.avatar !== null ||
+      profileValues.language !== (currentUser?.language || LANGUAGE_CODES.TH);
 
     const passwordValues = passwordForm.getValues();
     const hasPasswordChanges =
@@ -269,6 +274,11 @@ const SettingsOrganism = forwardRef<{
         (currentUser?.emailNotifications ?? false) ||
       notificationValues.marketingNotifications !==
         (currentUser?.marketingNotifications ?? false);
+
+    // Clear all banners first
+    setProfileBanner({ type: null, message: '' });
+    setPasswordBanner({ type: null, message: '' });
+    setNotificationBanner({ type: null, message: '' });
 
     if (hasProfileChanges) {
       profileForm.handleSubmit(onSubmitProfile)();
