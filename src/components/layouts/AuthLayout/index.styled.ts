@@ -31,7 +31,7 @@ export const StyledAuthWrapper = styled(Box)(({ theme }) => ({
     backgroundRepeat: 'no-repeat',
   },
   [theme.breakpoints.down('sm')]: {
-    padding: theme.spacing(1.25),
+    padding: theme.spacing(3),
   },
 }));
 

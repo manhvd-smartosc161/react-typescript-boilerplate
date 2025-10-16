@@ -5,10 +5,16 @@ export const StyledForgotPasswordForm = styled(Box)(({ theme }) => ({
   width: '100%',
   maxWidth: '400px',
   margin: '0 auto',
-  padding: theme.spacing(3),
+  padding: theme.spacing(2),
   backgroundColor: theme.palette.background.paper,
   borderRadius: theme.spacing(2),
   boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(1.5),
+    maxWidth: '100%',
+    boxShadow: 'none',
+    border: '1px solid #e0e0e0',
+  },
 }));
 
 export const StyledResendButton = styled(Button)(() => ({

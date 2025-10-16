@@ -119,6 +119,9 @@ const TableOrganism = <T,>({
           color="primary"
           showFirstButton
           showLastButton
+          siblingCount={1}
+          boundaryCount={1}
+          size="small"
         />
       </Box>
     );

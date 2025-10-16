@@ -53,6 +53,7 @@ const Settings: React.FC = () => {
               {isLoading ? t('supplier:saving') : t('supplier:saveAll')}
             </ActionButtonAtom>
           }
+          keepHorizontalOnMobile={true}
         />
 
         <Box sx={{ mt: 3 }}>

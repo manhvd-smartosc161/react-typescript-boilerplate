@@ -28,83 +28,90 @@ const NotificationForm = (props: NotificationFormProps) => {
       component="form"
       onSubmit={(e) => e.preventDefault()}
     >
-      <CardAtom sx={{ borderRadius: 2, marginTop: 4 }}>
-        <LabelAtom sx={{ fontSize: 28, fontWeight: 'bold' }}>
+      <CardAtom sx={{ borderRadius: 2, marginTop: 6 }}>
+        <LabelAtom sx={{ fontSize: 18, fontWeight: 'bold' }}>
           {t('user:notifications')}
         </LabelAtom>
         <StyledSubtitle sx={{ color: '#94a2b8' }}>
           {t('user:notificationsSubtitle')}
         </StyledSubtitle>
         {banner?.type && <Alert severity={banner.type}>{banner.message}</Alert>}
-        <CardAtom
-          sx={{
-            borderRadius: 2,
-            marginTop: 4,
-            border: '1px solid #e1e7f0',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
+        <Box
+          marginTop={{ xs: 4, md: 0 }}
+          display={{ xs: 'flex', md: 'block' }}
+          flexDirection="column"
+          gap={2}
         >
-          <Box>
-            <LabelAtom sx={{ fontSize: 22, fontWeight: 'bold' }}>
-              {t('user:emailNotifications')}
-            </LabelAtom>
-            <StyledSubtitle sx={{ color: '#94a2b8' }}>
-              {t('user:emailNotificationsDescription')}
-            </StyledSubtitle>
-          </Box>
+          <CardAtom
+            sx={{
+              borderRadius: 2,
+              marginTop: 4,
+              border: '1px solid #e1e7f0',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Box>
+              <LabelAtom sx={{ fontSize: 14, fontWeight: 'bold' }}>
+                {t('user:emailNotifications')}
+              </LabelAtom>
+              <StyledSubtitle sx={{ color: '#94a2b8' }}>
+                {t('user:emailNotificationsDescription')}
+              </StyledSubtitle>
+            </Box>
 
-          <Controller
-            name="emailNotifications"
-            control={notificationForm.control}
-            render={({ field }) => (
-              <SwitchAtom
-                sx={{ m: 1 }}
-                checked={field.value}
-                onChange={(e) => field.onChange(e.target.checked)}
-                activeColor="#4b43ea"
-                inactiveColor="#ccc"
-                thumbColor="#fff"
-                customSize="medium"
-              />
-            )}
-          />
-        </CardAtom>
-        <CardAtom
-          sx={{
-            borderRadius: 2,
-            marginTop: 4,
-            border: '1px solid #e1e7f0',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Box>
-            <LabelAtom sx={{ fontSize: 22, fontWeight: 'bold' }}>
-              {t('user:marketingCommunications')}
-            </LabelAtom>
-            <StyledSubtitle sx={{ color: '#94a2b8' }}>
-              {t('user:marketingCommunicationsDescription')}
-            </StyledSubtitle>
-          </Box>
+            <Controller
+              name="emailNotifications"
+              control={notificationForm.control}
+              render={({ field }) => (
+                <SwitchAtom
+                  sx={{ m: 1 }}
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e.target.checked)}
+                  activeColor="#4b43ea"
+                  inactiveColor="#ccc"
+                  thumbColor="#fff"
+                  customSize="medium"
+                />
+              )}
+            />
+          </CardAtom>
+          <CardAtom
+            sx={{
+              borderRadius: 2,
+              marginTop: 4,
+              border: '1px solid #e1e7f0',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Box>
+              <LabelAtom sx={{ fontSize: 14, fontWeight: 'bold' }}>
+                {t('user:marketingCommunications')}
+              </LabelAtom>
+              <StyledSubtitle sx={{ color: '#94a2b8' }}>
+                {t('user:marketingCommunicationsDescription')}
+              </StyledSubtitle>
+            </Box>
 
-          <Controller
-            name="marketingNotifications"
-            control={notificationForm.control}
-            render={({ field }) => (
-              <SwitchAtom
-                checked={field.value}
-                onChange={(e) => field.onChange(e.target.checked)}
-                activeColor="#4b43ea"
-                inactiveColor="#ccc"
-                thumbColor="#fff"
-                customSize="medium"
-              />
-            )}
-          />
-        </CardAtom>
+            <Controller
+              name="marketingNotifications"
+              control={notificationForm.control}
+              render={({ field }) => (
+                <SwitchAtom
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e.target.checked)}
+                  activeColor="#4b43ea"
+                  inactiveColor="#ccc"
+                  thumbColor="#fff"
+                  customSize="medium"
+                />
+              )}
+            />
+          </CardAtom>
+        </Box>
       </CardAtom>
     </StyledNotificationForm>
   );

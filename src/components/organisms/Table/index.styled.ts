@@ -1,11 +1,24 @@
 import { TableContainer, TableHead, TableRow, TableCell } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-export const StyledTableContainer = styled(TableContainer)(() => ({
+export const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
   borderRadius: '8px',
   overflow: 'hidden',
   backgroundColor: 'white',
   boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+  [theme.breakpoints.down('md')]: {
+    overflow: 'auto',
+    boxShadow: 'none',
+    border: '1px solid #e0e0e0',
+    '& .MuiTable-root': {
+      minWidth: 600,
+    },
+  },
+  [theme.breakpoints.down('sm')]: {
+    '& .MuiTable-root': {
+      minWidth: 500,
+    },
+  },
 }));
 
 export const StyledTableHead = styled(TableHead)(() => ({
