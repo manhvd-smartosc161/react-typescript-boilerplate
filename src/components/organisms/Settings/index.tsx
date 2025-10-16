@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import { Box } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
@@ -338,7 +339,11 @@ const SettingsOrganism = forwardRef<{
   }
 
   return (
-    <>
+    <Box
+      display={{ xs: 'flex', md: 'block' }}
+      flexDirection="column"
+      gap={{ xs: 2, md: 0 }}
+    >
       <ProfileForm
         profileForm={profileForm}
         avatarUrl={currentUser?.avatar}
@@ -349,7 +354,7 @@ const SettingsOrganism = forwardRef<{
         notificationForm={notificationForm}
         banner={notificationBanner}
       />
-    </>
+    </Box>
   );
 });
 

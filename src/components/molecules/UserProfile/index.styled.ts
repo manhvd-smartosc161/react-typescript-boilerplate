@@ -2,11 +2,11 @@ import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 
 interface StyledUserProfileProps {
-  $collapsed?: boolean;
+  collapsed?: boolean;
 }
 
 export const StyledUserProfile = styled(Box)<StyledUserProfileProps>(
-  ({ theme, $collapsed = false }) => ({
+  ({ theme, collapsed = false }) => ({
     display: 'flex',
     alignItems: 'center',
     gap: theme.spacing(1.5),
@@ -14,7 +14,7 @@ export const StyledUserProfile = styled(Box)<StyledUserProfileProps>(
     borderTop: '1px solid',
     borderColor: theme.palette.divider,
     backgroundColor: theme.palette.background.paper,
-    justifyContent: $collapsed ? 'center' : 'flex-start',
+    justifyContent: collapsed ? 'center' : 'flex-start',
   }),
 );
 

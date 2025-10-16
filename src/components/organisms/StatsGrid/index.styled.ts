@@ -11,5 +11,5 @@ export const statsGridStyles = {
     lg: 'repeat(4, 1fr)',
     xl: 'repeat(4, 1fr)',
   },
-  gap: 2,
+  gap: 1.5,
 };

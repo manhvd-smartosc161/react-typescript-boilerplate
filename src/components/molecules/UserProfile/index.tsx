@@ -21,7 +21,7 @@ const UserProfileMolecule: FC<UserProfileProps> = ({
   collapsed = false,
 }) => {
   return (
-    <StyledUserProfile $collapsed={collapsed}>
+    <StyledUserProfile collapsed={collapsed}>
       <AvatarAtom src={avatarUrl}>{!avatarUrl && <PersonIcon />}</AvatarAtom>
       {!collapsed && (
         <>

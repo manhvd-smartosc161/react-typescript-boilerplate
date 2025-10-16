@@ -7,6 +7,7 @@ interface PageHeaderProps {
   titleSuffix?: React.ReactNode;
   leading?: React.ReactNode;
   trailing?: React.ReactNode;
+  keepHorizontalOnMobile?: boolean;
 }
 
 const PageHeader = ({
@@ -14,9 +15,10 @@ const PageHeader = ({
   titleSuffix,
   leading,
   trailing,
+  keepHorizontalOnMobile = false,
 }: PageHeaderProps) => {
   return (
-    <StyledRoot>
+    <StyledRoot keepHorizontalOnMobile={keepHorizontalOnMobile}>
       <StyledLeftGroup direction="row" alignItems="center" spacing={2}>
         {leading}
         <HeadingAtom level={4}>{title}</HeadingAtom>

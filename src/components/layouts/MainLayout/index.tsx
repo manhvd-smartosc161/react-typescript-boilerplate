@@ -54,9 +54,18 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   ];
 
   const [collapsed, setCollapsed] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleCollapse = () => {
     setCollapsed(!collapsed);
+  };
+
+  const handleMobileToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const handleMobileClose = () => {
+    setMobileOpen(false);
   };
 
   const getBreadcrumbItems = () => {
@@ -75,6 +84,8 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
           return t('common:leads');
         case ROUTES.SETTINGS:
           return t('common:settings');
+        case ROUTES.SUPPLIER_REGISTRATION:
+          return t('common:partnerRegistration');
         default:
           return t('common:dashboard');
       }
@@ -92,11 +103,17 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     <>
       {isAuthenticated && (
         <StyledMainContainer>
-          <Sidebar collapsed={collapsed} menuItems={menuItems} />
+          <Sidebar
+            collapsed={collapsed}
+            mobileOpen={mobileOpen}
+            onMobileClose={handleMobileClose}
+            menuItems={menuItems}
+          />
           <StyledMainContent component="main">
             <Header
               collapsed={collapsed}
               onToggleCollapse={handleCollapse}
+              onMobileToggle={handleMobileToggle}
               breadcrumbItems={getBreadcrumbItems()}
             />
             <StyledContentArea>{children}</StyledContentArea>

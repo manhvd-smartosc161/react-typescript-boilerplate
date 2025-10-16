@@ -34,6 +34,7 @@ import {
 export interface HeaderProps {
   collapsed: boolean;
   onToggleCollapse: () => void;
+  onMobileToggle?: () => void;
   breadcrumbItems?: Array<{
     title: string | React.ReactNode;
     href?: string;
@@ -44,6 +45,7 @@ export interface HeaderProps {
 const Header: FC<HeaderProps> = ({
   collapsed,
   onToggleCollapse,
+  onMobileToggle,
   breadcrumbItems,
 }) => {
   const { t } = useTranslation();
@@ -71,9 +73,17 @@ const Header: FC<HeaderProps> = ({
         <IconButton
           edge="start"
           onClick={onToggleCollapse}
-          sx={{ marginRight: 2 }}
+          sx={{ marginRight: 2, display: { xs: 'none', md: 'flex' } }}
         >
           {collapsed ? <MenuIcon /> : <MenuOpenIcon />}
+        </IconButton>
+
+        <IconButton
+          edge="start"
+          onClick={onMobileToggle}
+          sx={{ marginRight: 2, display: { xs: 'flex', md: 'none' } }}
+        >
+          <MenuIcon />
         </IconButton>
 
         <StyledHeaderContent>

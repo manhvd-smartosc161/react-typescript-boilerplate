@@ -3,9 +3,9 @@ import { styled, Box, Stack } from '@mui/material';
 export const StyledRegistrationTemplate = styled(Stack)(({ theme }) => ({
   height: '100%',
   backgroundColor: '#f5f5f5',
-  padding: `${theme.spacing(0)} ${theme.spacing(2)}`,
   overflowY: 'scroll',
   overflowX: 'hidden',
+  padding: `${theme.spacing(0)} ${theme.spacing(1.5)} ${theme.spacing(1.5)} ${theme.spacing(1.5)}`,
 }));
 
 export const StyledRegistrationContent = styled(Box)(() => ({
@@ -25,7 +25,7 @@ export const StyledStickyHeaderContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledStickyHeader = styled(Box)(({ theme }) => ({
-  padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+  padding: `${theme.spacing(1.5)} ${theme.spacing(2)}`,
   backgroundColor: '#FFFFFF',
   gap: theme.spacing(2),
   display: 'flex',
@@ -35,7 +35,7 @@ export const StyledStickyHeader = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledFormContent = styled(Box)(({ theme }) => ({
-  padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+  padding: `${theme.spacing(1.5)} ${theme.spacing(2)}`,
   backgroundColor: '#FFFFFF',
   borderBottomLeftRadius: '8px',
   borderBottomRightRadius: '8px',

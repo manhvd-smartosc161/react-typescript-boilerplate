@@ -28,8 +28,8 @@ const ChangePasswordForm = (props: ChangePasswordFormProps) => {
       component="form"
       onSubmit={(e) => e.preventDefault()}
     >
-      <CardAtom sx={{ borderRadius: 2, marginTop: 4 }}>
-        <LabelAtom sx={{ fontSize: 28, fontWeight: 'bold' }}>
+      <CardAtom sx={{ borderRadius: 2, marginTop: 6 }}>
+        <LabelAtom sx={{ fontSize: 18, fontWeight: 'bold' }}>
           {t('user:password')}
         </LabelAtom>
         <StyledSubtitle sx={{ color: '#94a2b8' }}>

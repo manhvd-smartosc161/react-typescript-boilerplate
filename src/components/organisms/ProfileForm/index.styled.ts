@@ -2,9 +2,14 @@ import { styled } from '@mui/material/styles';
 import { Box, Button, Typography } from '@mui/material';
 import { ButtonAtom, AvatarAtom, LabelAtom } from '@src/components/atoms';
 
-export const StyledProfileForm = styled(Box)(() => ({
+export const StyledProfileForm = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
+  gap: theme.spacing(1.5),
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(0.25),
+    gap: theme.spacing(1),
+  },
 })) as typeof Box;
 
 export const DeleteButton = styled(Button)(() => ({
@@ -21,12 +26,16 @@ export const DeleteButton = styled(Button)(() => ({
   },
 }));
 
-export const AvatarContainer = styled(Box)(() => ({
-  width: 56,
-  height: 56,
+export const AvatarContainer = styled(Box)(({ theme }) => ({
+  width: 48,
+  height: 48,
   borderRadius: '50%',
   overflow: 'hidden',
   position: 'relative',
+  [theme.breakpoints.down('sm')]: {
+    width: 40,
+    height: 40,
+  },
 }));
 
 export const AvatarImage = styled('img')(() => ({
@@ -35,7 +44,7 @@ export const AvatarImage = styled('img')(() => ({
   objectFit: 'cover',
 }));
 
-export const ChangeAvatarButton = styled(ButtonAtom)(() => ({
+export const ChangeAvatarButton = styled(ButtonAtom)(({ theme }) => ({
   textTransform: 'capitalize',
   borderColor: '#d1d5db',
   color: '#374151',
@@ -44,13 +53,22 @@ export const ChangeAvatarButton = styled(ButtonAtom)(() => ({
     borderColor: '#9ca3af',
     backgroundColor: '#f9fafb',
   },
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(0.5, 1),
+    fontSize: '0.75rem',
+    minHeight: '28px',
+  },
 }));
 
-export const DefaultAvatar = styled(AvatarAtom)(() => ({
-  width: 56,
-  height: 56,
+export const DefaultAvatar = styled(AvatarAtom)(({ theme }) => ({
+  width: 48,
+  height: 48,
   backgroundColor: '#ececfd',
   color: '#4b43ea',
+  [theme.breakpoints.down('sm')]: {
+    width: 40,
+    height: 40,
+  },
 }));
 
 export const ProfileSubtitle = styled(Typography)(() => ({
@@ -58,6 +76,6 @@ export const ProfileSubtitle = styled(Typography)(() => ({
 }));
 
 export const ProfileTitle = styled(LabelAtom)(() => ({
-  fontSize: 28,
+  fontSize: '18px',
   fontWeight: 'bold',
 }));

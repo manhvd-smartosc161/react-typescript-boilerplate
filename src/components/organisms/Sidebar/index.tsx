@@ -31,10 +31,17 @@ interface MenuItem {
 
 export interface SidebarProps {
   collapsed: boolean;
+  mobileOpen?: boolean;
+  onMobileClose?: () => void;
   menuItems: MenuItem[];
 }
 
-const Sidebar: FC<SidebarProps> = ({ collapsed, menuItems }) => {
+const Sidebar: FC<SidebarProps> = ({
+  collapsed,
+  mobileOpen,
+  onMobileClose,
+  menuItems,
+}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [openKeys, setOpenKeys] = useState<string[]>([]);
@@ -75,6 +82,10 @@ const Sidebar: FC<SidebarProps> = ({ collapsed, menuItems }) => {
   const handleMenuClick = (key: string) => {
     if (key.startsWith('/')) {
       navigate(key);
+      // Close mobile menu when item is clicked
+      if (onMobileClose) {
+        onMobileClose();
+      }
     }
   };
 
@@ -179,15 +190,44 @@ const Sidebar: FC<SidebarProps> = ({ collapsed, menuItems }) => {
   };
 
   return (
-    <StyledDrawer variant="permanent" $collapsed={collapsed}>
-      <StyledLogoSection>
-        <LogoAtom collapsed={collapsed} />
-      </StyledLogoSection>
+    <>
+      {/* Desktop Sidebar */}
+      <StyledDrawer
+        variant="permanent"
+        collapsed={collapsed}
+        sx={{
+          display: { xs: 'none', md: 'block' },
+        }}
+      >
+        <StyledLogoSection>
+          <LogoAtom collapsed={collapsed} />
+        </StyledLogoSection>
+        <StyledMenuSection>
+          <StyledList component="nav">{renderMenuItems(menuItems)}</StyledList>
+        </StyledMenuSection>
+      </StyledDrawer>
 
-      <StyledMenuSection>
-        <StyledList component="nav">{renderMenuItems(menuItems)}</StyledList>
-      </StyledMenuSection>
-    </StyledDrawer>
+      {/* Mobile Sidebar */}
+      <StyledDrawer
+        variant="temporary"
+        collapsed={false}
+        open={mobileOpen}
+        onClose={onMobileClose}
+        ModalProps={{
+          keepMounted: true,
+        }}
+        sx={{
+          display: { xs: 'block', md: 'none' },
+        }}
+      >
+        <StyledLogoSection>
+          <LogoAtom collapsed={false} />
+        </StyledLogoSection>
+        <StyledMenuSection>
+          <StyledList component="nav">{renderMenuItems(menuItems)}</StyledList>
+        </StyledMenuSection>
+      </StyledDrawer>
+    </>
   );
 };
 

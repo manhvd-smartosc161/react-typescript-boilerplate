@@ -5,9 +5,9 @@ export const StyledPageHeader = styled(Box)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'flex-start',
-  marginBottom: theme.spacing(3),
+  marginBottom: theme.spacing(2),
   flexDirection: 'column',
-  gap: theme.spacing(2),
+  gap: theme.spacing(1.5),
   [theme.breakpoints.up('sm')]: {
     flexDirection: 'row',
   },
