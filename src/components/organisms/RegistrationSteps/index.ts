@@ -1,6 +1,5 @@
-export { default as CompanyInfoForm } from './CompanyInfoForm';
-export { default as CompanyInfoView } from './CompanyInfoView';
-export { default as FactoryDataForm } from './FactoryDataForm';
-export { default as FactoryDataView } from './FactoryDataView';
-export { default as ProductInfoView } from './ProductInfoView';
-export { default as ProductInfoForm } from './ProductInfoForm';
+export { default as CompanyInfoForm } from './SupplierInfoForm';
+export { default as SupplierSitesForm } from './SupplierSitesForm';
+export { default as SupplierSitesView } from './SupplierSitesView';
+export { default as SupplierInfoForm } from './SupplierInfoForm';
+export { default as SupplierInfoView } from './SupplierInfoView';

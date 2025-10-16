@@ -25,3 +25,4 @@ export { default as ImagePreview } from './ImagePreview';
 export { default as ControlledAutocompleteField } from './ControlledAutocompleteField';
 export { default as Alert } from './Alert';
 export { default as LanguageSwitcher } from './LanguageSwitcher';
+export { default as CollapsibleCard } from './CollapsibleCard';

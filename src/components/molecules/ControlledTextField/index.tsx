@@ -10,7 +10,7 @@ export interface ControlledTextFieldProps<
   label?: string;
   placeholder?: string;
   helperText?: string;
-  type?: 'text' | 'email' | 'tel' | 'url' | 'search';
+  type?: 'text' | 'email' | 'tel' | 'url' | 'search' | 'number';
   required?: boolean;
   disabled?: boolean;
   fullWidth?: boolean;

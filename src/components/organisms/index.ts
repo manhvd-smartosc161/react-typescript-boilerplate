@@ -1,4 +1,5 @@
 export { default as ChartCardOrganism } from './ChartCard';
+export { default as FactoryDataView } from './__experimental__/FactoryDataView';
 export { default as ForgotPasswordFormOrganism } from './ForgotPasswordForm';
 export { default as HeaderOrganism } from './Header';
 export { default as LoginFormOrganism } from './LoginForm';
@@ -7,6 +8,7 @@ export { default as SidebarOrganism } from './Sidebar';
 export { default as StatsGridOrganism } from './StatsGrid';
 export * from './RegistrationSteps';
 export * from './PICSection';
+export * from './CompanyForm';
 export { default as ChartCard } from './ChartCard';
 export { default as Header } from './Header';
 export { default as LoginForm } from './LoginForm';
@@ -19,3 +21,4 @@ export { default as MultiUploader } from './MultiUploader';
 export { default as ProductLineEntry } from './ProductLineEntry';
 export { default as SettingsOrganism } from './Settings';
 export { default as TableOrganism } from './Table';
+export { default as CompanyInfoForm } from './RegistrationSteps/SupplierInfoForm';

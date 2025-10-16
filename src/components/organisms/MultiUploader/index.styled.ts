@@ -2,17 +2,17 @@ import { styled } from '@mui/material/styles';
 import { Stack, Box, Paper } from '@mui/material';
 
 interface StyledDropZoneProps {
-  $isDragActive: boolean;
+  isDragActive: boolean;
 }
 
 export const StyledDropZone = styled(Box)<StyledDropZoneProps>(
-  ({ theme, $isDragActive }) => ({
-    border: $isDragActive ? '2px dashed' : 'none',
-    borderColor: $isDragActive ? theme.palette.primary.main : 'transparent',
+  ({ theme, isDragActive }) => ({
+    border: isDragActive ? '2px dashed' : 'none',
+    borderColor: isDragActive ? theme.palette.primary.main : 'transparent',
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(2),
     transition: 'all 0.2s ease',
-    backgroundColor: $isDragActive ? theme.palette.action.hover : 'transparent',
+    backgroundColor: isDragActive ? theme.palette.action.hover : 'transparent',
     position: 'relative',
   }),
 );

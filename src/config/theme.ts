@@ -101,6 +101,15 @@ export const theme = createTheme({
       xl: 1200,
     },
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+        },
+      },
+    },
+  },
 });
 
 // Custom theme extensions

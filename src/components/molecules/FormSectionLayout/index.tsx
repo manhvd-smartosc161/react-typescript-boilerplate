@@ -22,14 +22,18 @@ const FormSectionLayout: React.FC<FormSectionLayoutProps> = ({
 }: FormSectionLayoutProps) => {
   return (
     <StyledFormSectionContainer container {...props}>
-      <StyledSidebar size={{ xs: 12, md: 2 }}>
+      <StyledSidebar size={{ xs: 12, md: 2.5 }}>
         <Stack spacing={1}>
           <HeadingAtom level={6}>{title}</HeadingAtom>
-          {subtitle && <TextAtom color="default">{subtitle}</TextAtom>}
+          {subtitle && (
+            <TextAtom fontSize={'16px'} color="default">
+              {subtitle}
+            </TextAtom>
+          )}
         </Stack>
       </StyledSidebar>
 
-      <StyledContentArea size={{ xs: 12, md: 10 }}>
+      <StyledContentArea size={{ xs: 12, md: 9.5 }}>
         <StyledContentGrid container spacing={3}>
           {children}
         </StyledContentGrid>
