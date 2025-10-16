@@ -6,7 +6,6 @@ import {
   TagAtom,
   ButtonAtom,
   MultiStepForm,
-  FactoryDataView,
   SupplierSitesForm,
   SupplierInfoView,
 } from '@src/components';
@@ -21,7 +20,7 @@ import { RegistrationFormValues } from '@src/types/registration';
 
 import { useState } from 'react';
 import { Work } from '@mui/icons-material';
-import { SupplierInfoForm } from '@src/components/organisms';
+import { SupplierInfoForm, SupplierSitesView } from '@src/components/organisms';
 
 const RegistrationPage = () => {
   const [isLoading] = useState(false);
@@ -48,7 +47,7 @@ const RegistrationPage = () => {
       label: 'Sites Information',
       icon: <Work />,
       Form: SupplierSitesForm,
-      Review: FactoryDataView,
+      Review: SupplierSitesView,
       reviewDataPath: 'factoryData' as keyof RegistrationFormValues,
       fieldsToValidate: [],
     },
