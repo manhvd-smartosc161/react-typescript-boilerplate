@@ -6,12 +6,9 @@ import {
   TagAtom,
   ButtonAtom,
   MultiStepForm,
-  CompanyInfoForm,
-  CompanyInfoView,
-  FactoryDataForm,
   FactoryDataView,
-  ProductInfoForm,
-  ProductInfoView,
+  SupplierSitesForm,
+  SupplierInfoView,
 } from '@src/components';
 import RegistrationStepper from '@src/components/organisms/Stepper';
 
@@ -23,6 +20,8 @@ import {
 import { RegistrationFormValues } from '@src/types/registration';
 
 import { useState } from 'react';
+import { Work } from '@mui/icons-material';
+import { SupplierInfoForm } from '@src/components/organisms';
 
 const RegistrationPage = () => {
   const [isLoading] = useState(false);
@@ -39,48 +38,19 @@ const RegistrationPage = () => {
   const steps = [
     {
       label: 'Company Information',
-      icon: <span>1</span>,
-      Form: CompanyInfoForm,
-      Review: CompanyInfoView,
+      icon: <Work />,
+      Form: SupplierInfoForm,
+      Review: SupplierInfoView,
       reviewDataPath: 'companyInfo' as keyof RegistrationFormValues,
-      fieldsToValidate: [
-        'companyInfo.companyNameTh',
-        'companyInfo.companyNameEn',
-        'companyInfo.companyAddressTh',
-        'companyInfo.companyAddressEn',
-        'companyInfo.province',
-        'companyInfo.zipCode',
-        'companyInfo.companyEmail',
-        'companyInfo.contactNumber',
-        'companyInfo.annualRevenue',
-        'companyInfo.establishmentDate',
-        'companyInfo.taxpayerNumber',
-      ] as Path<RegistrationFormValues>[],
+      fieldsToValidate: [] as Path<RegistrationFormValues>[],
     },
     {
-      label: 'Factory Data',
-      icon: <span>2</span>,
-      Form: FactoryDataForm,
+      label: 'Sites Information',
+      icon: <Work />,
+      Form: SupplierSitesForm,
       Review: FactoryDataView,
       reviewDataPath: 'factoryData' as keyof RegistrationFormValues,
-      fieldsToValidate: [
-        'factoryData.factoryName',
-        'factoryData.factoryAddress',
-        'factoryData.province',
-        'factoryData.zipCode',
-        'factoryData.licensingStatus',
-        'factoryData.factoryStandards',
-      ] as Path<RegistrationFormValues>[],
-    },
-    {
-      label: 'Product Information',
-      icon: <span>3</span>,
-      Form: ProductInfoForm,
-      Review: ProductInfoView,
-      reviewDataPath: 'productInfo' as keyof RegistrationFormValues,
-      fieldsToValidate: [
-        'productInfo.productLines',
-      ] as Path<RegistrationFormValues>[],
+      fieldsToValidate: [],
     },
     {
       label: 'Review and Submit',

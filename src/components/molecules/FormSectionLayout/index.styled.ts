@@ -1,4 +1,5 @@
 import { styled, Grid } from '@mui/material';
+import { theme } from '@src/config/theme';
 
 export const StyledFormSectionContainer = styled(Grid)(() => ({
   width: '100%',
@@ -17,4 +18,5 @@ export const StyledContentArea = styled(Grid)(() => ({
 
 export const StyledContentGrid = styled(Grid)(() => ({
   width: '100%',
+  // paddingTop: theme.spacing(2),
 }));

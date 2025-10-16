@@ -3,8 +3,8 @@ import { useFieldArray, useFormContext, FieldPath } from 'react-hook-form';
 import { Box, Typography, Button, Stack } from '@mui/material';
 import { Add as AddIcon } from '@mui/icons-material';
 import { RegistrationFormValues } from '@src/types/registration';
-import { PICEntryForm } from '@src/components/molecules/PICEntryForm';
 import { TitleAtom } from '@src/components/atoms';
+import PICEntryForm from '@src/components/molecules/PICEntryForm';
 
 const MAX_ENTRIES = 5;
 const MIN_ENTRIES = 1;

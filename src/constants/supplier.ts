@@ -55,6 +55,38 @@ export const FACTORY_DATA_CONST = {
   ],
 };
 
+export const ADDRESS_CONST = {
+  addressTypeOptions: [
+    { value: 'BUSINESS', label: 'Business Address' },
+    { value: 'POSTAL', label: 'Postal Address' },
+    { value: 'SHIPPING', label: 'Shipping Address' },
+    { value: 'BILLING', label: 'Billing Address' },
+  ],
+  addressStatusOptions: [
+    { value: 'ACTIVE', label: 'Active' },
+    { value: 'INACTIVE', label: 'Inactive' },
+  ],
+  addressPurposeOptions: [
+    { value: 'ORDERING', label: 'Ordering' },
+    { value: 'REMIT', label: 'Remit' },
+    { value: 'RFQ', label: 'RFQ' },
+    { value: 'SHIPPING', label: 'Shipping' },
+    { value: 'BILLING', label: 'Billing' },
+  ],
+  countryOptions: [
+    { value: 'TH', label: 'Thailand' },
+    { value: 'SG', label: 'Singapore' },
+    { value: 'MY', label: 'Malaysia' },
+    { value: 'VN', label: 'Vietnam' },
+    { value: 'ID', label: 'Indonesia' },
+    { value: 'PH', label: 'Philippines' },
+    { value: 'MM', label: 'Myanmar' },
+    { value: 'KH', label: 'Cambodia' },
+    { value: 'LA', label: 'Laos' },
+    { value: 'BN', label: 'Brunei' },
+  ],
+};
+
 export const THAI_PROVINCES = [
   { id: 'bangkok', label: 'Bangkok' },
   { id: 'amnat-charoen', label: 'Amnat Charoen' },

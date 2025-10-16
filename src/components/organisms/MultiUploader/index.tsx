@@ -137,7 +137,7 @@ const MultiUploader: React.FC<MultiUploaderProps> = ({ name }) => {
 
         return (
           <Box>
-            <StyledDropZone {...getRootProps()} $isDragActive={isDragActive}>
+            <StyledDropZone {...getRootProps()} isDragActive={isDragActive}>
               <input {...getInputProps()} />
               <StyledFileStack direction="row" spacing={2} alignItems="center">
                 {managedFiles.map((file) => (

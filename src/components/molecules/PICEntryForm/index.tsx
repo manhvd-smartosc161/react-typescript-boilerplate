@@ -12,7 +12,7 @@ interface PICEntryFormProps {
   onRemove: () => void;
 }
 
-export const PICEntryForm: React.FC<PICEntryFormProps> = ({
+const PICEntryForm: React.FC<PICEntryFormProps> = ({
   fieldPrefix,
   displayIndex,
   canRemove,
@@ -57,3 +57,5 @@ export const PICEntryForm: React.FC<PICEntryFormProps> = ({
     </Box>
   );
 };
+
+export default PICEntryForm;
