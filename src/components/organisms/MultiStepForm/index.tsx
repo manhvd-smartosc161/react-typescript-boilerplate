@@ -52,10 +52,7 @@ const MultiStepForm = <T extends FieldValues>({
 
   const handleNext = async () => {
     // TODO: Uncomment this when validation is implemented.
-    // const fieldsToValidate = steps[currentStep].fieldsToValidate as Path<T>[];
-    // const isValid = await trigger(fieldsToValidate);
-    const isValid = true;
-
+    const isValid = await formMethods.trigger();
     if (isValid) {
       const nextStep = Math.min(currentStep + 1, steps.length - 1);
       onStepChange(nextStep);

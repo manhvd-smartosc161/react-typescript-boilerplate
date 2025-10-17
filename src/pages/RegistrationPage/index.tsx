@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Path } from 'react-hook-form';
 import {
@@ -10,16 +11,12 @@ import {
   SupplierInfoView,
 } from '@src/components';
 import RegistrationStepper from '@src/components/organisms/Stepper';
-
 import { RegistrationTemplate } from '@src/components/templates/RegistrationTemplate';
 import {
   registrationMasterSchema,
   defaultRegistrationValues,
 } from '@src/schemas';
-import { RegistrationFormValues } from '@src/types/registration';
-
-import { useState } from 'react';
-import { Work } from '@mui/icons-material';
+import { SupplierRegistrationFormValues } from '@src/types/supplier';
 import { SupplierInfoForm, SupplierSitesView } from '@src/components/organisms';
 
 const RegistrationPage = () => {
@@ -37,23 +34,23 @@ const RegistrationPage = () => {
   const steps = [
     {
       label: 'Company Information',
-      icon: <Work />,
+      icon: <span>1</span>,
       Form: SupplierInfoForm,
       Review: SupplierInfoView,
-      reviewDataPath: 'companyInfo' as keyof RegistrationFormValues,
-      fieldsToValidate: [] as Path<RegistrationFormValues>[],
+      reviewDataPath: 'information' as keyof SupplierRegistrationFormValues,
+      fieldsToValidate: [] as Path<SupplierRegistrationFormValues>[],
     },
     {
       label: 'Sites Information',
-      icon: <Work />,
+      icon: <span>2</span>,
       Form: SupplierSitesForm,
       Review: SupplierSitesView,
-      reviewDataPath: 'factoryData' as keyof RegistrationFormValues,
+      reviewDataPath: 'sites' as keyof SupplierRegistrationFormValues,
       fieldsToValidate: [],
     },
     {
       label: 'Review and Submit',
-      icon: <span>✓</span>,
+      icon: <span>3</span>,
       Form: () => null,
       Review: () => null,
       fieldsToValidate: [],
@@ -89,7 +86,7 @@ const RegistrationPage = () => {
       }
       stepper={stepper}
       formContent={
-        <MultiStepForm<RegistrationFormValues>
+        <MultiStepForm<SupplierRegistrationFormValues>
           formId="registration-form"
           steps={steps}
           defaultValues={defaultRegistrationValues}
