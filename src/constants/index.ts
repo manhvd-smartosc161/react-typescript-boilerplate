@@ -3,3 +3,4 @@ export * from './supplier';
 export * from './language';
 export * from './message';
 export * from './companyInfo';
+export * from './regex';

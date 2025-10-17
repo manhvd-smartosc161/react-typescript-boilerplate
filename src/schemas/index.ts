@@ -1,2 +1,2 @@
-export * from './registrationFormSchema';
+export * from './supplerSchema';
 export * from './authSchema';

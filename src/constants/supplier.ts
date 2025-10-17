@@ -165,3 +165,8 @@ export const THAI_PROVINCES = [
   { id: 'yala', label: 'Yala' },
   { id: 'yasothon', label: 'Yasothon' },
 ];
+
+export enum EBusinessUnit {
+  LOTUS = 'LOTUS',
+  MAKRO = 'MAKRO',
+}

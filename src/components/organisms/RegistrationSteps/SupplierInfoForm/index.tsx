@@ -15,7 +15,7 @@ import {
 interface SupplierInfoFormProps {}
 
 const SupplierInfoForm: React.FC<SupplierInfoFormProps> = ({}) => {
-  const sectionPrefix = 'supplierInfo';
+  const sectionPrefix = 'inforamtion';
   const { control } = useFormContext();
 
   return (
