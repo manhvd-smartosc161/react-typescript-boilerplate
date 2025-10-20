@@ -1,51 +1,72 @@
-import React from 'react';
-import { Stack } from '@mui/material';
-import StepperNavItemMolecule, {
-  StepStatus,
-} from '@src/components/molecules/StepperNavItem';
-import { IconAtom } from '@src/components/atoms';
+import { Stepper, Step } from '@mui/material';
+import { StepButtonMolecule, StepConnectorAtom } from '@src/components';
 
 export interface IStepData {
   label: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
 }
 
-export interface IRegistrationStepperProps {
+export interface IStepperProps {
   steps: IStepData[];
   currentStepIndex: number;
   onStepClick?: (index: number) => void;
+  allowBackwardNavigation?: boolean;
+  stepIconSize?: number;
+  orientation?: 'horizontal' | 'vertical';
 }
 
-const RegistrationStepper = ({
+const StepperOrganism = ({
   steps,
   currentStepIndex,
   onStepClick,
-}: IRegistrationStepperProps) => {
-  return (
-    <Stack direction="row" alignItems="center" spacing={2}>
-      {steps.map((step, index) => {
-        let status: StepStatus = 'locked';
-        if (index < currentStepIndex) {
-          status = 'complete';
-        } else if (index === currentStepIndex) {
-          status = 'active';
+  allowBackwardNavigation = true,
+  stepIconSize = 42,
+  orientation = 'horizontal',
+}: IStepperProps) => {
+  const handleStepClick = (stepIndex: number) => {
+    if (onStepClick) {
+      if (allowBackwardNavigation) {
+        // Allow clicking on any step up to current step
+        if (stepIndex <= currentStepIndex) {
+          onStepClick(stepIndex);
         }
+      } else {
+        // Only allow clicking on the current step
+        if (stepIndex === currentStepIndex) {
+          onStepClick(stepIndex);
+        }
+      }
+    }
+  };
 
-        return (
-          <React.Fragment key={step.label}>
-            <StepperNavItemMolecule
-              label={step.label}
-              icon={step.icon}
-              status={status}
-              onClick={
-                status === 'complete' ? () => onStepClick?.(index) : undefined
-              }
-            />
-            {index < steps.length - 1 && <IconAtom name="chevronRight" />}
-          </React.Fragment>
-        );
-      })}
-    </Stack>
+  const isStepDisabled = (stepIndex: number) => {
+    if (allowBackwardNavigation) {
+      return stepIndex > currentStepIndex;
+    }
+    return stepIndex !== currentStepIndex;
+  };
+
+  return (
+    <Stepper
+      activeStep={currentStepIndex}
+      connector={<StepConnectorAtom />}
+      orientation={orientation}
+    >
+      {steps.map((step, index) => (
+        <Step key={step.label} completed={index < currentStepIndex}>
+          <StepButtonMolecule
+            label={step.label}
+            icon={step.icon || index + 1}
+            active={index === currentStepIndex}
+            completed={index < currentStepIndex}
+            disabled={isStepDisabled(index)}
+            onClick={() => handleStepClick(index)}
+            size={stepIconSize}
+          />
+        </Step>
+      ))}
+    </Stepper>
   );
 };
-export default RegistrationStepper;
+
+export default StepperOrganism;

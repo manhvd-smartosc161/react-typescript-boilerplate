@@ -26,3 +26,4 @@ export { default as ControlledAutocompleteField } from './ControlledAutocomplete
 export { default as Alert } from './Alert';
 export { default as LanguageSwitcher } from './LanguageSwitcher';
 export { default as CollapsibleCard } from './CollapsibleCard';
+export { default as StepButtonMolecule } from './StepButton';

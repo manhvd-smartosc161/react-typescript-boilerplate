@@ -1,50 +1,24 @@
-import { FC, ReactNode } from 'react';
-import { StepIconProps as MuiStepIconProps } from '@mui/material';
-import { StyledStepIcon } from './index.styled';
+import { StepIconProps } from '@mui/material/StepIcon';
+import { StatusIconFrameAtom, IconAtom } from '@src/components/atoms';
+import { StepIconNumber } from './index.styled';
 
-export interface StepIconProps extends MuiStepIconProps {
-  children?: ReactNode;
-  size?: 'small' | 'medium' | 'large';
-  completed?: boolean;
-  error?: boolean;
-  active?: boolean;
+export interface IStepIconProps extends StepIconProps {
+  size?: number;
 }
 
-const StepIconAtom: FC<StepIconProps> = ({
-  children,
-  size = 'medium',
-  completed = false,
-  error = false,
-  active = false,
-  ...props
-}) => {
-  const getIconContent = () => {
-    if (children) {
-      return children;
-    }
-
-    if (error) {
-      return '✕';
-    }
-
-    if (completed) {
-      return '✓';
-    }
-
-    return props.icon;
-  };
-
+const StepIcon = ({ active, completed, icon, size = 42 }: IStepIconProps) => {
   return (
-    <StyledStepIcon
-      $size={size}
-      $completed={completed}
-      $error={error}
-      $active={active}
-      {...props}
+    <StatusIconFrameAtom
+      variant={completed ? 'completed' : active ? 'active' : 'pending'}
+      size={size}
     >
-      {getIconContent()}
-    </StyledStepIcon>
+      {completed ? (
+        <IconAtom name="check" />
+      ) : (
+        <StepIconNumber>{icon}</StepIconNumber>
+      )}
+    </StatusIconFrameAtom>
   );
 };
 
-export default StepIconAtom;
+export default StepIcon;
