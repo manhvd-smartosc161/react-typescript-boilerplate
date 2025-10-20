@@ -10,7 +10,7 @@ import {
   SupplierSitesForm,
   SupplierInfoView,
 } from '@src/components';
-import RegistrationStepper from '@src/components/organisms/Stepper';
+import { StepperOrganism } from '@src/components';
 import { RegistrationTemplate } from '@src/components/templates/RegistrationTemplate';
 import {
   registrationMasterSchema,
@@ -34,7 +34,6 @@ const RegistrationPage = () => {
   const steps = [
     {
       label: 'Company Information',
-      icon: <span>1</span>,
       Form: SupplierInfoForm,
       Review: SupplierInfoView,
       reviewDataPath: 'information' as keyof SupplierRegistrationFormValues,
@@ -42,7 +41,6 @@ const RegistrationPage = () => {
     },
     {
       label: 'Sites Information',
-      icon: <span>2</span>,
       Form: SupplierSitesForm,
       Review: SupplierSitesView,
       reviewDataPath: 'sites' as keyof SupplierRegistrationFormValues,
@@ -50,7 +48,6 @@ const RegistrationPage = () => {
     },
     {
       label: 'Review and Submit',
-      icon: <span>3</span>,
       Form: () => null,
       Review: () => null,
       fieldsToValidate: [],
@@ -58,13 +55,15 @@ const RegistrationPage = () => {
   ];
 
   const stepper = (
-    <RegistrationStepper
-      steps={steps.map(({ label, icon }) => ({
+    <StepperOrganism
+      steps={steps.map(({ label }) => ({
         label,
-        icon,
       }))}
       currentStepIndex={currentStep}
       onStepClick={handleStepClick}
+      allowBackwardNavigation={true}
+      stepIconSize={42}
+      orientation="horizontal"
     />
   );
 

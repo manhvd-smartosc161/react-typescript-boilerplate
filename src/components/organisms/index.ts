@@ -12,7 +12,7 @@ export { default as Header } from './Header';
 export { default as LoginForm } from './LoginForm';
 export { default as Sidebar } from './Sidebar';
 export { default as StatsGrid } from './StatsGrid';
-export { default as RegistrationStepper } from './Stepper';
+export { default as StepperOrganism } from './Stepper';
 export { default as PageHeader } from './PageHeader';
 export { default as MultiStepForm } from './MultiStepForm';
 export { default as MultiUploader } from './MultiUploader';

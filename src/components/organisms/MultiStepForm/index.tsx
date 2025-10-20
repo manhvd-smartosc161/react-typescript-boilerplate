@@ -15,7 +15,6 @@ import { StyledFormFieldset } from './index.styled';
 
 export interface StepDefinition<T extends FieldValues> {
   label: string;
-  icon: React.ReactNode;
   Form: React.FC<{ isLoading?: boolean }>;
   Review: React.FC<{ data?: any }>;
   fieldsToValidate: Path<T>[];
@@ -52,7 +51,8 @@ const MultiStepForm = <T extends FieldValues>({
 
   const handleNext = async () => {
     // TODO: Uncomment this when validation is implemented.
-    const isValid = await formMethods.trigger();
+    // const isValid = await formMethods.trigger();
+    const isValid = true;
     if (isValid) {
       const nextStep = Math.min(currentStep + 1, steps.length - 1);
       onStepChange(nextStep);
