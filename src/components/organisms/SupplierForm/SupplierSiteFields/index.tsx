@@ -70,7 +70,7 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
       returnableSupplier: 'N',
       deliveryMode: 'STANDARD_DELIVERY',
       overReceivingFlag: 'N',
-      percent_off_invoice: [],
+      percentOffInvoice: [],
     });
   };
 
@@ -91,7 +91,7 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
           <Grid size={{ xs: 12, md: 3 }}>
             <ControlledTextField
               variant="outlined"
-              name={`${sectionPrefix}.${siteIndex}.percent_off_invoice.${invoiceIndex}.amount`}
+              name={`${sectionPrefix}.${siteIndex}.percentOffInvoice.${invoiceIndex}.amount`}
               control={control}
               label="Amount (%)"
               placeholder="0.0"
@@ -100,14 +100,14 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
             <ControlledDatePickerField
-              name={`${sectionPrefix}.${siteIndex}.percent_off_invoice.${invoiceIndex}.start_date`}
+              name={`${sectionPrefix}.${siteIndex}.percentOffInvoice.${invoiceIndex}.start_date`}
               control={control}
               label="Start Date"
             />
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
             <ControlledDatePickerField
-              name={`${sectionPrefix}.${siteIndex}.percent_off_invoice.${invoiceIndex}.end_date`}
+              name={`${sectionPrefix}.${siteIndex}.percentOffInvoice.${invoiceIndex}.end_date`}
               control={control}
               label="End Date"
             />
@@ -132,7 +132,7 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
     const invoices =
       useWatch({
         control,
-        name: `${sectionPrefix}.${siteIndex}.percent_off_invoice`,
+        name: `${sectionPrefix}.${siteIndex}.percentOffInvoice`,
       }) || [];
 
     return (
@@ -295,7 +295,6 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
               // TODO: Implement dynamic addition of percent off invoice items
               // This requires a more complex form state management approach
             }}
-            disabled
             sx={{ mt: 1 }}
           >
             Add Percent Off Invoice
