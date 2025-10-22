@@ -88,7 +88,6 @@ const LoginForm: FC = () => {
             label={t('auth:email')}
             placeholder={t('auth:emailPlaceholder')}
             type="email"
-            startIcon={<Person />}
             required
           />
         </Box>
@@ -99,12 +98,11 @@ const LoginForm: FC = () => {
             control={control}
             label={t('auth:password')}
             placeholder={t('auth:passwordPlaceholder')}
-            startIcon={<Lock />}
             required
           />
         </Box>
 
-        <Box sx={{ textAlign: 'right', mb: 3 }}>
+        <Box sx={{ textAlign: 'left', mb: 3 }}>
           <TextAtom variant="body2" sx={{ color: 'text.secondary' }}>
             {t('auth:forgotPassword')}{' '}
             <TextLinkAtom variant="body2" to={ROUTES.FORGOT_PASSWORD}>
@@ -121,10 +119,7 @@ const LoginForm: FC = () => {
           size="large"
           sx={{
             mb: 2,
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            '&:hover': {
-              background: 'linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)',
-            },
+            background: '#0071CD',
           }}
         >
           {t('auth:signIn')}
