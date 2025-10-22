@@ -1,102 +1,129 @@
 import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Path } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import {
   PageHeader,
   ActionButtonsGroup,
   TagAtom,
   ButtonAtom,
-  MultiStepForm,
-  SupplierSitesForm,
-  SupplierInfoView,
 } from '@src/components';
-import { StepperOrganism } from '@src/components';
+import MultiStepForm, {
+  StepDefinition,
+} from '@src/components/organisms/MultiStepForm';
+import {
+  ReviewStep,
+  SupplierInfoForm,
+  SupplierSitesForm,
+} from '@src/components/organisms';
 import { RegistrationTemplate } from '@src/components/templates/RegistrationTemplate';
 import {
   registrationMasterSchema,
   defaultRegistrationValues,
 } from '@src/schemas';
 import { SupplierRegistrationFormValues } from '@src/types/supplier';
-import { SupplierInfoForm, SupplierSitesView } from '@src/components/organisms';
 
 const RegistrationPage = () => {
-  const [isLoading] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async () => {};
+  const formMethods = useForm<SupplierRegistrationFormValues>({
+    resolver: yupResolver(registrationMasterSchema) as any,
+    defaultValues: defaultRegistrationValues,
+    mode: 'onSubmit',
+  });
 
-  const handleStepClick = (index: number) => {
-    if (index < currentStep) {
-      setCurrentStep(index);
+  const { handleSubmit, getValues } = formMethods;
+
+  const handleSaveDraft = async () => {
+    try {
+      setIsLoading(true);
+      const formData = getValues();
+
+      console.log('Saving draft...', formData);
+      // TODO: Implement API call
+      // await api.saveRegistrationDraft(formData);
+
+      // Show success message
+      console.log('Draft saved successfully');
+    } catch (error) {
+      console.error('Failed to save draft:', error);
+      // TODO: Show error message to user
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const steps = [
+  const handleFinalSubmit = async (data: SupplierRegistrationFormValues) => {
+    try {
+      setIsLoading(true);
+
+      console.log('Submitting registration...', data);
+      // TODO: Implement API call
+      // await api.submitRegistration(data);
+
+      // Show success message and redirect
+      console.log('Registration submitted successfully');
+      // TODO: Navigate to success page
+    } catch (error) {
+      console.error('Failed to submit registration:', error);
+      // TODO: Show error message to user
+      setIsLoading(false);
+    }
+  };
+
+  const registrationSteps: StepDefinition[] = [
     {
       label: 'Company Information',
-      Form: SupplierInfoForm,
-      Review: SupplierInfoView,
-      reviewDataPath: 'information' as keyof SupplierRegistrationFormValues,
-      fieldsToValidate: [] as Path<SupplierRegistrationFormValues>[],
+      Component: SupplierInfoForm,
+      schemaKey: 'information',
     },
     {
       label: 'Sites Information',
-      Form: SupplierSitesForm,
-      Review: SupplierSitesView,
-      reviewDataPath: 'sites' as keyof SupplierRegistrationFormValues,
-      fieldsToValidate: [],
+      Component: SupplierSitesForm,
+      schemaKey: 'sites',
     },
     {
       label: 'Review and Submit',
-      Form: () => null,
-      Review: () => null,
-      fieldsToValidate: [],
+      Component: ReviewStep,
+      schemaKey: null,
     },
   ];
 
-  const stepper = (
-    <StepperOrganism
-      steps={steps.map(({ label }) => ({
-        label,
-      }))}
-      currentStepIndex={currentStep}
-      onStepClick={handleStepClick}
-      allowBackwardNavigation={true}
-      stepIconSize={42}
-      orientation="horizontal"
-    />
-  );
-
   return (
-    <RegistrationTemplate
-      pageHeader={
-        <PageHeader
-          title="Registration"
-          titleSuffix={
-            <TagAtom variant="filled" color="primary" children={'#586789963'} />
+    <FormProvider {...formMethods}>
+      <form
+        id="registration-form"
+        onSubmit={handleSubmit(handleFinalSubmit)}
+        noValidate
+      >
+        <RegistrationTemplate
+          pageHeader={
+            <PageHeader
+              title="Registration"
+              titleSuffix={
+                <TagAtom
+                  variant="filled"
+                  color="primary"
+                  children={'#586789963'}
+                />
+              }
+              trailing={
+                <ActionButtonsGroup>
+                  <ButtonAtom variant="secondary">Cancel</ButtonAtom>
+                </ActionButtonsGroup>
+              }
+            />
           }
-          trailing={
-            <ActionButtonsGroup>
-              <ButtonAtom variant="secondary"> Cancel </ButtonAtom>
-              <ButtonAtom variant="primary"> Save </ButtonAtom>
-            </ActionButtonsGroup>
+          formContent={
+            <MultiStepForm
+              steps={registrationSteps}
+              isLoading={isLoading}
+              onSubmit={handleSubmit(handleFinalSubmit)}
+              onSaveDraft={handleSaveDraft}
+            />
           }
         />
-      }
-      stepper={stepper}
-      formContent={
-        <MultiStepForm<SupplierRegistrationFormValues>
-          formId="registration-form"
-          steps={steps}
-          defaultValues={defaultRegistrationValues}
-          onSubmit={handleSubmit}
-          resolver={yupResolver(registrationMasterSchema) as any}
-          isLoading={isLoading}
-          currentStep={currentStep}
-          onStepChange={setCurrentStep}
-        />
-      }
-    />
+      </form>
+    </FormProvider>
   );
 };
 

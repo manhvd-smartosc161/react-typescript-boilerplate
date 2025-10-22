@@ -6,12 +6,20 @@ interface StyledInputProps {
 }
 
 export const StyledInput = styled(TextField)<StyledInputProps>(({ theme }) => ({
-  '& .MuiInputBase-input': {
+  '&.MuiOutlinedInput-root': {
+    height: 40,
+  },
+  '& .MuiOutlinedInput-input, & .MuiSelect-select': {
     padding: '10px 14px',
+    display: 'flex',
+    alignItems: 'center',
     fontSize: '14px',
   },
   [theme.breakpoints.down('sm')]: {
-    '& .MuiInputBase-input': {
+    '&.MuiOutlinedInput-root': {
+      height: 36,
+    },
+    '& .MuiOutlinedInput-input, & .MuiSelect-select': {
       padding: '8px 12px',
       fontSize: '14px',
     },

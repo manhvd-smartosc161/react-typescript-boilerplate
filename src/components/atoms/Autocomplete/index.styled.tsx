@@ -18,10 +18,10 @@ export const StyledAutocomplete = styled(
   MuiAutocomplete<AutocompleteOption, false, false, false>,
 )<StyledAutocompleteProps>(() => ({
   '& .MuiAutocomplete-inputRoot': {
-    padding: '12px 0px',
+    padding: '10px 0px',
   },
   '& .MuiAutocomplete-input': {
-    padding: '0 16px !important',
+    padding: '0 14px !important',
   },
 }));
 

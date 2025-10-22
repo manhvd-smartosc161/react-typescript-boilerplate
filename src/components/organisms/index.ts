@@ -6,7 +6,7 @@ export { default as RegisterFormOrganism } from './RegisterForm';
 export { default as SidebarOrganism } from './Sidebar';
 export { default as StatsGridOrganism } from './StatsGrid';
 export * from './RegistrationSteps';
-export * from './CompanyForm';
+export * from './SupplierForm';
 export { default as ChartCard } from './ChartCard';
 export { default as Header } from './Header';
 export { default as LoginForm } from './LoginForm';

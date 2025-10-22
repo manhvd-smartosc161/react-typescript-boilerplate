@@ -24,18 +24,17 @@ const StepperOrganism = ({
   orientation = 'horizontal',
 }: IStepperProps) => {
   const handleStepClick = (stepIndex: number) => {
-    if (onStepClick) {
-      if (allowBackwardNavigation) {
-        // Allow clicking on any step up to current step
-        if (stepIndex <= currentStepIndex) {
-          onStepClick(stepIndex);
-        }
-      } else {
-        // Only allow clicking on the current step
-        if (stepIndex === currentStepIndex) {
-          onStepClick(stepIndex);
-        }
+    if (allowBackwardNavigation) {
+      // Allow clicking on any step up to current step
+      if (stepIndex <= currentStepIndex) {
+        onStepClick?.(stepIndex);
       }
+      return;
+    }
+
+    // Only allow clicking on the current step
+    if (stepIndex === currentStepIndex) {
+      onStepClick?.(stepIndex);
     }
   };
 
@@ -48,6 +47,7 @@ const StepperOrganism = ({
 
   return (
     <Stepper
+      alternativeLabel
       activeStep={currentStepIndex}
       connector={<StepConnectorAtom />}
       orientation={orientation}

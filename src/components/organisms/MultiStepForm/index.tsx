@@ -1,112 +1,140 @@
-import React from 'react';
-import {
-  FormProvider,
-  useForm,
-  FieldValues,
-  Resolver,
-  DefaultValues,
-  Path,
-} from 'react-hook-form';
-import { Stack, Box } from '@mui/material';
+import React, { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { Stack, Box, useMediaQuery, useTheme } from '@mui/material';
 import { ActionButtonsGroup } from '@src/components/molecules';
-
 import { ButtonAtom } from '@src/components/atoms';
-import { StyledFormFieldset } from './index.styled';
+import { StepperOrganism } from '@src/components';
 
-export interface StepDefinition<T extends FieldValues> {
+export interface StepDefinition {
   label: string;
-  Form: React.FC<{ isLoading?: boolean }>;
-  Review: React.FC<{ data?: any }>;
-  fieldsToValidate: Path<T>[];
-  reviewDataPath?: keyof T;
+  Component: React.FC;
+  schemaKey: 'information' | 'sites' | null;
 }
 
-interface MultiStepFormProps<T extends FieldValues> {
-  formId: string;
-  steps: StepDefinition<T>[];
-  defaultValues?: DefaultValues<T>;
+interface MultiStepFormProps {
+  steps: StepDefinition[];
   isLoading?: boolean;
-  currentStep: number;
-  onSubmit: (data: T) => Promise<void>;
-  resolver: Resolver<T>;
-  onStepChange: (step: number) => void;
+  onSubmit: () => void | Promise<void>;
+  onSaveDraft: () => void | Promise<void>;
 }
 
-const MultiStepForm = <T extends FieldValues>({
-  formId,
+const MultiStepForm: React.FC<MultiStepFormProps> = ({
   steps,
-  defaultValues,
   isLoading = false,
-  currentStep,
   onSubmit,
-  resolver,
-  onStepChange,
-}: MultiStepFormProps<T>) => {
-  const formMethods = useForm<T>({
-    resolver,
-    defaultValues,
-    mode: 'onSubmit',
-  });
-  const { handleSubmit, formState } = formMethods;
+  onSaveDraft,
+}) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [currentStep, setCurrentStep] = useState(0);
+  const { formState } = useFormContext();
+
+  const isLastStep = currentStep === steps.length - 1;
+  const CurrentStepComponent = steps[currentStep].Component;
 
   const handleNext = async () => {
-    // TODO: Uncomment this when validation is implemented.
-    // const isValid = await formMethods.trigger();
-    const isValid = true;
-    if (isValid) {
-      const nextStep = Math.min(currentStep + 1, steps.length - 1);
-      onStepChange(nextStep);
+    const currentSchemaKey = steps[currentStep].schemaKey;
+
+    if (currentSchemaKey) {
+      // NOTE: Remove comment when yup schema validation is implemented
+      // const isValid = await trigger();
+      // if (!isValid) {
+      //   return;
+      // }
     }
+
+    setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
   };
 
   const handleBack = () => {
-    const prevStep = Math.max(currentStep - 1, 0);
-    onStepChange(prevStep);
+    setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
-  const isReviewStep = currentStep === steps.length - 1;
-  const CurrentStepFormComponent = steps[currentStep].Form;
-  const formData = formMethods.getValues();
+  const handleStepClick = (index: number) => {
+    if (index < currentStep) {
+      setCurrentStep(index);
+    }
+  };
 
   return (
-    <FormProvider {...formMethods}>
-      <form id={formId} onSubmit={handleSubmit(onSubmit)}>
-        <StyledFormFieldset disabled={isLoading || formState.isSubmitting}>
-          <Stack spacing={4}>
-            <Box>
-              {isReviewStep ? (
-                <Stack spacing={4}>
-                  {steps.slice(0, -1).map((step) => {
-                    const reviewData = step.reviewDataPath
-                      ? formData[step.reviewDataPath]
-                      : formData;
-                    return <step.Review key={step.label} data={reviewData} />;
-                  })}
-                </Stack>
-              ) : (
-                <CurrentStepFormComponent isLoading={isLoading} />
-              )}
-            </Box>
+    <Stack spacing={isMobile ? 2 : 4}>
+      <StepperOrganism
+        steps={steps.map(({ label }) => ({ label }))}
+        currentStepIndex={currentStep}
+        onStepClick={handleStepClick}
+        allowBackwardNavigation={true}
+        stepIconSize={42}
+        orientation="horizontal"
+      />
 
-            <Stack direction="row" justifyContent="flex-end">
-              <ActionButtonsGroup>
-                {currentStep > 0 && (
-                  <ButtonAtom variant="secondary" onClick={handleBack}>
-                    Back
-                  </ButtonAtom>
-                )}
+      <Box>
+        <CurrentStepComponent />
+      </Box>
 
-                {!isReviewStep && (
-                  <ButtonAtom variant="primary" onClick={handleNext}>
-                    Next
-                  </ButtonAtom>
-                )}
-              </ActionButtonsGroup>
-            </Stack>
-          </Stack>
-        </StyledFormFieldset>
-      </form>
-    </FormProvider>
+      <Stack
+        direction={isMobile ? 'column' : 'row'}
+        justifyContent="flex-end"
+        spacing={isMobile ? 1 : 2}
+        sx={{
+          ...(isMobile && {
+            position: 'sticky',
+            bottom: 0,
+            backgroundColor: theme.palette.background.paper,
+            padding: theme.spacing(2),
+            borderTop: `1px solid ${theme.palette.divider}`,
+            margin: `0 -${theme.spacing(1)}`,
+          }),
+        }}
+      >
+        <ActionButtonsGroup>
+          {currentStep > 0 && (
+            <ButtonAtom
+              variant="secondary"
+              onClick={handleBack}
+              fullWidth={isMobile}
+              size={isMobile ? 'medium' : 'large'}
+              disabled={isLoading}
+            >
+              Back
+            </ButtonAtom>
+          )}
+
+          {!isLastStep && (
+            <ButtonAtom
+              variant="secondary"
+              onClick={onSaveDraft}
+              fullWidth={isMobile}
+              size={isMobile ? 'medium' : 'large'}
+              disabled={isLoading}
+            >
+              Save Draft
+            </ButtonAtom>
+          )}
+
+          {isLastStep ? (
+            <ButtonAtom
+              variant="primary"
+              onClick={onSubmit}
+              fullWidth={isMobile}
+              size={isMobile ? 'medium' : 'large'}
+              disabled={isLoading || formState.isSubmitting}
+            >
+              Submit
+            </ButtonAtom>
+          ) : (
+            <ButtonAtom
+              variant="primary"
+              onClick={handleNext}
+              fullWidth={isMobile}
+              size={isMobile ? 'medium' : 'large'}
+              disabled={isLoading}
+            >
+              Next
+            </ButtonAtom>
+          )}
+        </ActionButtonsGroup>
+      </Stack>
+    </Stack>
   );
 };
 

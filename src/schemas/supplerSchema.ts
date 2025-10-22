@@ -2,20 +2,27 @@ import { DeepPartial } from 'react-hook-form';
 import * as yup from 'yup';
 import {
   SupplierInfo,
-  CompanyAddress,
-  CompanyContact,
-  CompanyPayment,
+  SupplierAddress,
+  SupplierContact,
+  SupplierPayment,
   SupplierSite,
   PercentOffInvoice,
   DnbFinance,
   SupplierRegistrationFormValues,
 } from '@src/types/supplier';
 import { MESSAGES, REGEX } from '@src/constants';
-import { EBusinessUnit } from '@src/constants/supplier';
+import {
+  EAccountType,
+  EApType,
+  EBusinessUnit,
+  EInvoiceSubmitChannel,
+  EStatus as EPaymentStatus,
+  EBooleanFlag as EYesNo,
+} from '@src/constants';
 import './methods/supplierMethod';
 
-// not completed
-export const companyAddressSchema: yup.ObjectSchema<CompanyAddress> =
+//TODO: Not completed, needs to be updated to match the BRD documentation
+export const supplierAddressSchema: yup.ObjectSchema<SupplierAddress> =
   yup.object({
     id: yup.string().optional(),
     type: yup
@@ -50,8 +57,8 @@ export const companyAddressSchema: yup.ObjectSchema<CompanyAddress> =
       .required(MESSAGES.MSG_001),
   });
 
-// not completed
-export const companyContactSchema: yup.ObjectSchema<CompanyContact> =
+//TODO: Not completed, needs to be updated to match the BRD documentation
+export const supplierContactSchema: yup.ObjectSchema<SupplierContact> =
   yup.object({
     id: yup.string().optional(),
     addressIds: yup
@@ -91,8 +98,8 @@ export const companyContactSchema: yup.ObjectSchema<CompanyContact> =
       .required(MESSAGES.MSG_001),
   });
 
-// not completed
-export const companyPaymentSchema: yup.ObjectSchema<CompanyPayment> =
+//TODO: Not completed, needs to be updated to match the BRD documentation
+export const supplierPaymentSchema: yup.ObjectSchema<SupplierPayment> =
   yup.object({
     id: yup.string().optional(),
     method: yup.string().required(MESSAGES.MSG_001),
@@ -102,37 +109,40 @@ export const companyPaymentSchema: yup.ObjectSchema<CompanyPayment> =
     accountNumber: yup.string().required(MESSAGES.MSG_001),
     accountName: yup.string().required(MESSAGES.MSG_001),
     accountType: yup
-      .string()
-      .oneOf(['CURRENT', 'SAVINGS', 'CHECKING'])
+      .string<EAccountType>()
+      .oneOf(Object.values(EAccountType))
       .required(MESSAGES.MSG_001),
-    proofAttached: yup.string().oneOf(['Y', 'N']).required(MESSAGES.MSG_001),
+    proofAttached: yup
+      .string<EYesNo>()
+      .oneOf(Object.values(EYesNo))
+      .required(MESSAGES.MSG_001),
     remittanceEmail: yup
       .string()
       .email('Invalid email')
       .required(MESSAGES.MSG_001),
     payeeName: yup.string().required(MESSAGES.MSG_001),
     apType: yup
-      .string()
-      .oneOf(['NORMAL', 'ADVANCE', 'URGENT'])
+      .string<EApType>()
+      .oneOf(Object.values(EApType))
       .required(MESSAGES.MSG_001),
     paymentTerm: yup.string().required(MESSAGES.MSG_001),
     additionalPaymentTerm: yup.string().optional(),
     invoiceSubmitChannel: yup
-      .string()
-      .oneOf(['WEB', 'EMAIL', 'MAIL', 'FAX'])
+      .string<EInvoiceSubmitChannel>()
+      .oneOf(Object.values(EInvoiceSubmitChannel))
       .required(MESSAGES.MSG_001),
     vendorTraits: yup.string().required(MESSAGES.MSG_001),
     sendRemittanceAdvise: yup
-      .string()
-      .oneOf(['Y', 'N'])
+      .string<EYesNo>()
+      .oneOf(Object.values(EYesNo))
       .required(MESSAGES.MSG_001),
     status: yup
-      .string()
-      .oneOf(['ACTIVE', 'INACTIVE'])
+      .string<EPaymentStatus>()
+      .oneOf(Object.values(EPaymentStatus))
       .required(MESSAGES.MSG_001),
   });
 
-// not completed
+// TODO: Not completed, needs to be updated to match the BRD documentation
 export const percentOffInvoiceSchema: yup.ObjectSchema<PercentOffInvoice> =
   yup.object({
     amount: yup.number().required(MESSAGES.MSG_001).min(0).max(100),
@@ -140,7 +150,7 @@ export const percentOffInvoiceSchema: yup.ObjectSchema<PercentOffInvoice> =
     endDate: yup.string().required(MESSAGES.MSG_001),
   });
 
-// not completed
+//TODO: Not completed, needs to be updated to match the BRD documentation
 export const dnbFinanceSchema: yup.ObjectSchema<DnbFinance> = yup.object({
   dueDiligenceRemarks: yup.string().required(MESSAGES.MSG_001),
   dueDiligenceResult: yup
@@ -158,7 +168,7 @@ export const dnbFinanceSchema: yup.ObjectSchema<DnbFinance> = yup.object({
   companyStatus: yup.string().oneOf(['Y', 'N']).required(MESSAGES.MSG_001),
 });
 
-// not completed
+//TODO: Not completed, needs to be updated to match the BRD documentation
 export const supplierSiteSchema: yup.ObjectSchema<SupplierSite> = yup.object({
   id: yup.string().optional(),
   name: yup.string().required(MESSAGES.MSG_001),
@@ -215,11 +225,7 @@ export const supplierSiteSchema: yup.ObjectSchema<SupplierSite> = yup.object({
   overReceivingFlag: yup.string().oneOf(['Y', 'N']).required(MESSAGES.MSG_001),
 });
 
-/**
- * Supplier Info Schema
- *
- * Written according to the API Spec but not yet updated according to the BRD document
- */
+//TODO: Not completed, needs to be updated to match the BRD documentation
 export const supplierInfoSchema = yup.object<SupplierInfo>({
   nameTh: yup.string().required(MESSAGES.MSG_001), //
   nameEn: yup.string().required(MESSAGES.MSG_001),
@@ -272,14 +278,14 @@ export const supplierInfoSchema = yup.object<SupplierInfo>({
     .min(1, 'At least one business unit is required')
     .required(MESSAGES.MSG_001),
 
-  addresses: yup.array().of(companyAddressSchema).optional().default([]),
-  contacts: yup.array().of(companyContactSchema).optional().default([]),
-  payments: yup.array().of(companyPaymentSchema).optional().default([]),
+  addresses: yup.array().of(supplierAddressSchema).optional().default([]),
+  contacts: yup.array().of(supplierContactSchema).optional().default([]),
+  payments: yup.array().of(supplierPaymentSchema).optional().default([]),
 });
 
 export const registrationMasterSchema =
   yup.object<SupplierRegistrationFormValues>({
-    inforamtion: supplierInfoSchema,
+    information: supplierInfoSchema,
     sites: yup.array().of(supplierSiteSchema).optional().default([]),
   });
 
@@ -287,7 +293,8 @@ export const registrationSchemaType = registrationMasterSchema;
 
 export const defaultRegistrationValues: DeepPartial<SupplierRegistrationFormValues> =
   {
-    inforamtion: {
+    information: {
+      businessUnits: [],
       addresses: [],
       contacts: [],
       payments: [],

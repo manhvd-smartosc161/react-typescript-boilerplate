@@ -1,35 +1,12 @@
-export interface PersonInCharge {
-  name: string;
-  email: string;
-  contact: string;
-}
+import {
+  EAccountType,
+  EApType,
+  EInvoiceSubmitChannel,
+  EStatus as EPaymentStatus,
+  EBooleanFlag as EYesNo,
+} from '@src/constants';
 
-export interface ProductImages {
-  packagingFront?: any; // Using any for File type since Yup's mixed() doesn't map well to File
-  packagingBehind?: any;
-  packagingSide?: any;
-  otherAspects?: any;
-}
-
-export interface ProductLine {
-  soldAt: {
-    makro?: boolean;
-    lotus?: boolean;
-  };
-  brandNameTh: string;
-  brandNameEn: string;
-  productCategory: string;
-  productSubcategory: string;
-  skuCount: number;
-  offerExclusivity: 'yes' | 'no';
-  targetCustomerType: string;
-  availableChannels?: string[];
-  usp?: string;
-  currentlySoldIn?: string;
-  images: ProductImages;
-}
-
-export interface CompanyAddress {
+export interface SupplierAddress {
   id?: string;
   type: 'BUSINESS' | 'POSTAL' | 'SHIPPING' | 'BILLING';
   name: string;
@@ -48,7 +25,7 @@ export interface CompanyAddress {
   status: 'ACTIVE' | 'INACTIVE';
 }
 
-export interface CompanyContact {
+export interface SupplierContact {
   id?: string;
   addressIds?: string[];
   department: string;
@@ -70,7 +47,7 @@ export interface CompanyContact {
   status: 'ACTIVE' | 'INACTIVE';
 }
 
-export interface CompanyPayment {
+export interface SupplierPayment {
   id?: string;
   method: string;
   currency: string;
@@ -78,17 +55,17 @@ export interface CompanyPayment {
   bankBranch: string;
   accountNumber: string;
   accountName: string;
-  accountType: 'CURRENT' | 'SAVINGS' | 'CHECKING';
-  proofAttached: 'Y' | 'N';
+  accountType: EAccountType;
+  proofAttached: EYesNo;
   remittanceEmail: string;
   payeeName: string;
-  apType: 'NORMAL' | 'ADVANCE' | 'URGENT';
+  apType: EApType;
   paymentTerm: string;
   additionalPaymentTerm?: string;
-  invoiceSubmitChannel: 'WEB' | 'EMAIL' | 'MAIL' | 'FAX';
+  invoiceSubmitChannel: EInvoiceSubmitChannel;
   vendorTraits: string;
-  sendRemittanceAdvise: 'Y' | 'N';
-  status: 'ACTIVE' | 'INACTIVE';
+  sendRemittanceAdvise: EYesNo;
+  status: EPaymentStatus;
 }
 
 export interface PercentOffInvoice {
@@ -175,12 +152,12 @@ export interface SupplierInfo {
   commuLanguage: string;
   businessUnits: string[];
 
-  addresses?: CompanyAddress[];
-  contacts?: CompanyContact[];
-  payments?: CompanyPayment[];
+  addresses?: SupplierAddress[];
+  contacts?: SupplierContact[];
+  payments?: SupplierPayment[];
 }
 
 export interface SupplierRegistrationFormValues {
-  inforamtion: SupplierInfo;
+  information: SupplierInfo;
   sites: SupplierSite[];
 }

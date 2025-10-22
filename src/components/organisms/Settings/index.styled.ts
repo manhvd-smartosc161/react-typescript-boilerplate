@@ -1,9 +1,5 @@
 import { styled } from '@mui/material/styles';
 import { Box, Paper, Typography, Button } from '@mui/material';
-import {
-  Settings as SettingsIcon,
-  Save as SaveIcon,
-} from '@mui/icons-material';
 
 export const StyledSettingsContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
@@ -112,7 +108,7 @@ export const StyledAvatarSection = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const StyledAvatarContainer = styled(Box)(({ theme }) => ({
+export const StyledAvatarContainer = styled(Box)(() => ({
   position: 'relative',
   display: 'inline-block',
 }));

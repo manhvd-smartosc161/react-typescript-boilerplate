@@ -1,0 +1,9 @@
+export { default as SupplierGeneralView } from './SupplierGeneralView';
+export { default as SupplierRepresentativeView } from './SupplierRepresentativeView';
+export { default as SupplierProductView } from './SupplierProductView';
+export { default as SupplierFinancialView } from './SupplierFinancialView';
+export { default as SupplierDocumentView } from './SupplierDocumentView';
+export { default as SupplierAddressView } from './SupplierAddressView';
+export { default as SupplierContactView } from './SupplierContactView';
+export { default as SupplierPaymentView } from './SupplierPaymentView';
+export { default as SupplierSiteView } from './SupplierSiteView';
