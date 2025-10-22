@@ -1,0 +1,9 @@
+export { default as SupplierGeneralFields } from './SupplierGeneralFields';
+export { default as SupplierFinancialFields } from './SupplierFinancialFields';
+export { default as SupplierDocumentFields } from './SupplierDocumentFields';
+export { default as SupplierAddressFields } from './SupplierAddressFields';
+export { default as SupplierRepresentativeFields } from './SupplierRepresentativeFields';
+export { default as SupplierProductFields } from './SupplierProductFields';
+export { default as SupplierContactFields } from './SupplierContactFields';
+export { default as SupplierPaymentFields } from './SupplierPaymentFields';
+export { default as SupplierSiteFields } from './SupplierSiteFields';

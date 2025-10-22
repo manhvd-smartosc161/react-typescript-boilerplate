@@ -1,9 +1,0 @@
-export { default as CompanyGeneralFields } from './CompanyGeneralFields';
-export { default as CompanyFinancialFields } from './CompanyFinancialFields';
-export { default as CompanyDocumentFields } from './CompanyDocumentFields';
-export { default as CompanyAddressFields } from './CompanyAddressFields';
-export { default as CompanyRepresentativeFields } from './CompanyRepresentativeFields';
-export { default as CompanyProductFields } from './CompanyProductFields';
-export { default as CompanyContactFields } from './CompanyContactFields';
-export { default as CompanyPaymentFields } from './CompanyPaymentFields';
-export { default as CompanySupplierSiteFields } from './CompanySupplierSiteFields';

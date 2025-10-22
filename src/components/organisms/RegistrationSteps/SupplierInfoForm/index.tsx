@@ -2,26 +2,29 @@ import { Box, Divider } from '@mui/material';
 import { FormSectionLayout } from '@src/components/molecules';
 import { useFormContext } from 'react-hook-form';
 import {
-  CompanyGeneralFields,
-  CompanyRepresentativeFields,
-  CompanyProductFields,
-  CompanyFinancialFields,
-  CompanyDocumentFields,
-  CompanyAddressFields,
-  CompanyContactFields,
-  CompanyPaymentFields,
-} from '../../CompanyForm';
+  SupplierGeneralFields,
+  SupplierRepresentativeFields,
+  SupplierProductFields,
+  SupplierFinancialFields,
+  SupplierDocumentFields,
+  SupplierAddressFields,
+  SupplierContactFields,
+  SupplierPaymentFields,
+} from '../../SupplierForm';
 
 interface SupplierInfoFormProps {}
 
 const SupplierInfoForm: React.FC<SupplierInfoFormProps> = ({}) => {
-  const sectionPrefix = 'inforamtion';
+  const sectionPrefix = 'information';
   const { control } = useFormContext();
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       <FormSectionLayout title="General" subtitle="Basic Information">
-        <CompanyGeneralFields control={control} sectionPrefix={sectionPrefix} />
+        <SupplierGeneralFields
+          control={control}
+          sectionPrefix={sectionPrefix}
+        />
       </FormSectionLayout>
 
       <Divider />
@@ -30,7 +33,7 @@ const SupplierInfoForm: React.FC<SupplierInfoFormProps> = ({}) => {
         title="Representative"
         subtitle="Representative Information"
       >
-        <CompanyRepresentativeFields
+        <SupplierRepresentativeFields
           control={control}
           sectionPrefix={sectionPrefix}
         />
@@ -39,13 +42,16 @@ const SupplierInfoForm: React.FC<SupplierInfoFormProps> = ({}) => {
       <Divider />
 
       <FormSectionLayout title="Product" subtitle="Product Information">
-        <CompanyProductFields control={control} sectionPrefix={sectionPrefix} />
+        <SupplierProductFields
+          control={control}
+          sectionPrefix={sectionPrefix}
+        />
       </FormSectionLayout>
 
       <Divider />
 
       <FormSectionLayout title="Financial" subtitle="Financial Information">
-        <CompanyFinancialFields
+        <SupplierFinancialFields
           control={control}
           sectionPrefix={sectionPrefix}
         />
@@ -54,7 +60,7 @@ const SupplierInfoForm: React.FC<SupplierInfoFormProps> = ({}) => {
       <Divider />
 
       <FormSectionLayout title="Documents" subtitle="Documents Information">
-        <CompanyDocumentFields
+        <SupplierDocumentFields
           control={control}
           sectionPrefix={sectionPrefix}
         />
@@ -63,19 +69,28 @@ const SupplierInfoForm: React.FC<SupplierInfoFormProps> = ({}) => {
       <Divider />
 
       <FormSectionLayout title="Address" subtitle="Address Information">
-        <CompanyAddressFields control={control} sectionPrefix={sectionPrefix} />
+        <SupplierAddressFields
+          control={control}
+          sectionPrefix={sectionPrefix}
+        />
       </FormSectionLayout>
 
       <Divider />
 
       <FormSectionLayout title="Contacts" subtitle="Contact Information">
-        <CompanyContactFields control={control} sectionPrefix={sectionPrefix} />
+        <SupplierContactFields
+          control={control}
+          sectionPrefix={sectionPrefix}
+        />
       </FormSectionLayout>
 
       <Divider />
 
       <FormSectionLayout title="Payments" subtitle="Payment Information">
-        <CompanyPaymentFields control={control} sectionPrefix={sectionPrefix} />
+        <SupplierPaymentFields
+          control={control}
+          sectionPrefix={sectionPrefix}
+        />
       </FormSectionLayout>
 
       <Divider />
