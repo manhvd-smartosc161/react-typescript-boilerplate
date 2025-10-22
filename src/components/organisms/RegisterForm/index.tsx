@@ -88,9 +88,6 @@ const RegisterForm: FC = () => {
         >
           {t('auth:signUp')}
         </Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary', mb: 0.5 }}>
-          {t('auth:createAccountSubtitle')}
-        </Typography>
       </Box>
 
       <StyledRegisterForm
@@ -110,26 +107,7 @@ const RegisterForm: FC = () => {
           </Alert>
         )}
 
-        <Box>
-          <ControlledTextField
-            name="name"
-            control={control}
-            label={t('auth:name')}
-            placeholder={t('auth:namePlaceholder')}
-            startIcon={<Person />}
-            required
-          />
-        </Box>
 
-        <Box>
-          <ControlledTextField
-            name="surname"
-            control={control}
-            label={t('auth:surname')}
-            placeholder={t('auth:surnamePlaceholder')}
-            startIcon={<Person />}
-          />
-        </Box>
 
         <Box>
           <ControlledTextField
@@ -138,7 +116,6 @@ const RegisterForm: FC = () => {
             label={t('auth:email')}
             placeholder={t('auth:emailPlaceholder')}
             type="email"
-            startIcon={<Email />}
             required
           />
         </Box>
@@ -149,7 +126,6 @@ const RegisterForm: FC = () => {
             control={control}
             label={t('auth:password')}
             placeholder={t('auth:passwordPlaceholder')}
-            startIcon={<Lock />}
             required
           />
         </Box>
@@ -160,8 +136,25 @@ const RegisterForm: FC = () => {
             control={control}
             label={t('auth:confirmPassword')}
             placeholder={t('auth:confirmPasswordPlaceholder')}
-            startIcon={<Lock />}
             required
+          />
+        </Box>
+        <Box>
+          <ControlledTextField
+            name="name"
+            control={control}
+            label={t('auth:name')}
+            placeholder={t('auth:namePlaceholder')}
+            required
+          />
+        </Box>
+
+        <Box>
+          <ControlledTextField
+            name="surname"
+            control={control}
+            label={t('auth:surname')}
+            placeholder={t('auth:surnamePlaceholder')}
           />
         </Box>
 
@@ -184,10 +177,7 @@ const RegisterForm: FC = () => {
           size="large"
           sx={{
             mb: 2,
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            '&:hover': {
-              background: 'linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)',
-            },
+            background: '#0071CD',
           }}
         >
           {t('auth:signUp')}
