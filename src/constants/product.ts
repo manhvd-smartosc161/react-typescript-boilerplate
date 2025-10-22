@@ -99,12 +99,6 @@ export const SiteStatusLabels: Record<ESiteStatus, string> = {
   [ESiteStatus.INACTIVE]: 'Inactive',
 };
 
-/**
- * ============================================================================
- * FORM OPTIONS
- * ============================================================================
- */
-
 export const productDivisionOptions = enumToOptions(
   EProductDivision,
   ProductDivisionLabels,
