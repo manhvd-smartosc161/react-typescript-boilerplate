@@ -160,7 +160,6 @@ export const authService = {
   logout: async (): Promise<void> => {
     try {
       await apiClient.post(AUTH_ENDPOINT.LOGOUT);
-    } catch (error) {
     } finally {
       tokenService.removeToken();
     }
