@@ -5,7 +5,7 @@ import {
   StyledAuthWrapper,
   StyledAuthCard,
   StyledLogoImage,
-  StyledBrandLogo ,
+  StyledBrandLogo,
 } from './index.styled';
 
 interface AuthLayoutProps {
@@ -20,7 +20,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
       <Box sx={{ position: 'absolute', top: 16, right: 16, zIndex: 25 }}>
         <LanguageSwitcher />
       </Box>
-      <StyledBrandLogo  src='/images/logo-cpaxtra.png' alt="logo" />
+      <StyledBrandLogo src="/images/logo-cpaxtra.png" alt="logo" />
       <StyledAuthCard>{children}</StyledAuthCard>
       <StyledLogoImage src="/images/marko-lotus.png" alt="Marko Lotus" />
     </StyledAuthWrapper>

@@ -41,7 +41,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     },
     {
       key: ROUTES.SUPPLIER_REGISTRATION,
-      icon: <IconAtom name="userGroup" size={collapsed ? 24 : 16}  />,
+      icon: <IconAtom name="userGroup" size={collapsed ? 24 : 16} />,
       label: t('common:partnerRegistration'),
     },
     {
@@ -55,7 +55,6 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       label: t('common:settings'),
     },
   ];
-
 
   const handleCollapse = () => {
     setCollapsed(!collapsed);
@@ -105,9 +104,9 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       {isAuthenticated && (
         <StyledMainContainer>
           <Header
-              collapsed={collapsed}
-              onMobileToggle={handleMobileToggle}
-              breadcrumbItems={getBreadcrumbItems()}
+            collapsed={collapsed}
+            onMobileToggle={handleMobileToggle}
+            breadcrumbItems={getBreadcrumbItems()}
           />
           <StyledMainContent component="main">
             <Sidebar

@@ -1,5 +1,12 @@
 import { styled } from '@mui/material/styles';
-import { Drawer, Box, Typography, ListItemButton, List, IconButton } from '@mui/material';
+import {
+  Drawer,
+  Box,
+  Typography,
+  ListItemButton,
+  List,
+  IconButton,
+} from '@mui/material';
 
 interface StyledDrawerProps {
   collapsed?: boolean;
@@ -51,16 +58,17 @@ export const StyledLogoSection = styled(Box)(({ theme }) => ({
   borderColor: theme.palette.divider,
 }));
 
-
 interface StyledMenuSectionProps {
   collapsed?: boolean;
 }
 
-export const StyledMenuSection = styled(Box)<StyledMenuSectionProps>(({ collapsed = false, theme }) => ({
-  flex: 1,
-  overflowY: 'auto',
-  padding: `${collapsed} ? ${theme.spacing(1)} ${theme.spacing(2)}: ${theme.spacing(1)} ${theme.spacing(1)}`,
-}));
+export const StyledMenuSection = styled(Box)<StyledMenuSectionProps>(
+  ({ collapsed = false, theme }) => ({
+    flex: 1,
+    overflowY: 'auto',
+    padding: `${collapsed} ? ${theme.spacing(1)} ${theme.spacing(2)}: ${theme.spacing(1)} ${theme.spacing(1)}`,
+  }),
+);
 
 export const StyledList = styled(List)(({ theme }) => ({
   '& .MuiListItemButton-root': {
@@ -114,17 +122,16 @@ export const StyledToggleBtn = styled(IconButton, {
   position: 'fixed',
   top: '50%',
   transform: 'translateY(-50%)',
-  left: (collapsed ? 72 : 260),
+  left: collapsed ? 72 : 260,
   width: 18,
   height: 48,
   borderRadius: '0 8px 8px 0',
   background: theme.palette.background.paper,
   boxShadow: theme.shadows[2],
   zIndex: theme.zIndex.drawer + 1,
-  '&:hover':
-  {
+  '&:hover': {
     boxShadow: theme.shadows[4],
-    background: theme.palette.background.paper
+    background: theme.palette.background.paper,
   },
   [theme.breakpoints.down('md')]: {
     display: 'none',

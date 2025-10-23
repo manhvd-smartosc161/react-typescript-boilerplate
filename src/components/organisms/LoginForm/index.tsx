@@ -1,7 +1,6 @@
 import { FC, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Person, Lock } from '@mui/icons-material';
 import { Box, Typography, Alert } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ButtonAtom, TextAtom, TextLinkAtom } from '@src/components/atoms';

@@ -12,13 +12,10 @@ import {
   Box,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
-import {
-  LanguageSwitcher,
-} from '@src/components/molecules';
+import { LanguageSwitcher } from '@src/components/molecules';
 import { useTranslation } from 'react-i18next';
 import { currentUserState, isAuthenticatedState } from '@src/stores';
 import { useLogoutMutation } from '@src/hooks';
@@ -29,7 +26,7 @@ import {
   StyledAvatar,
   StyledMenu,
   StyledMenuHeader,
-  StyledLogoSection
+  StyledLogoSection,
 } from './index.styled';
 import { LogoAtom } from '@src/components/atoms';
 
@@ -43,10 +40,7 @@ export interface HeaderProps {
   }>;
 }
 
-const Header: FC<HeaderProps> = ({
-  collapsed,
-  onMobileToggle,
-}) => {
+const Header: FC<HeaderProps> = ({ collapsed, onMobileToggle }) => {
   const { t } = useTranslation();
   const currentUser = useRecoilValue(currentUserState);
   const isAuthenticated = useRecoilValue(isAuthenticatedState);
@@ -81,9 +75,7 @@ const Header: FC<HeaderProps> = ({
         </IconButton>
 
         <StyledHeaderContent>
-          <Typography>
-            Auto CN Collection
-          </Typography>
+          <Typography>Auto CN Collection</Typography>
         </StyledHeaderContent>
 
         <Box sx={{ flex: 1, display: { xs: 'block', md: 'none' } }} />

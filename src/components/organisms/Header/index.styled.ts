@@ -16,7 +16,7 @@ export const StyledAppBar = styled(AppBar)(({ theme }) => ({
 export const StyledHeaderContent = styled(Box)(({ theme }) => ({
   flex: 1,
   [theme.breakpoints.down('sm')]: {
-    display: 'none'
+    display: 'none',
   },
 }));
 
@@ -61,7 +61,7 @@ export const StyledLogoSection = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-   [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('md')]: {
     display: 'none',
   },
 }));

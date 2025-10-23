@@ -10,15 +10,15 @@ export const StyledLogoContainer = styled(Box)<{ collapsed?: boolean }>(
     justifyContent: collapsed ? 'center' : 'flex-start',
     marginRight: '16px',
     borderRight: '1px solid #E8E8E8',
-     [theme.breakpoints.down('sm')]: {
-        borderRight: 'none',
-        height: '64px',
-        marginRight: 0,
-      },
+    [theme.breakpoints.down('sm')]: {
+      borderRight: 'none',
+      height: '64px',
+      marginRight: 0,
+    },
   }),
 );
 
 export const StyledBrandLogo = styled('img')<{ collapsed?: boolean }>(() => ({
   height: 24,
   objectFit: 'contain',
-}))
+}));

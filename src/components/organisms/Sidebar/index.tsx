@@ -204,16 +204,20 @@ const Sidebar: FC<SidebarProps> = ({
           display: { xs: 'none', md: 'block' },
         }}
       >
-        <StyledMenuSection  collapsed={collapsed}>
+        <StyledMenuSection collapsed={collapsed}>
           <StyledList component="nav">{renderMenuItems(menuItems)}</StyledList>
         </StyledMenuSection>
       </StyledDrawer>
-       <StyledToggleBtn
+      <StyledToggleBtn
         aria-label="Toggle sidebar"
         collapsed={collapsed}
         onClick={onToggleCollapse}
       >
-        {collapsed ? <ChevronRightIcon fontSize="small" /> : <ChevronLeftIcon fontSize="small" />}
+        {collapsed ? (
+          <ChevronRightIcon fontSize="small" />
+        ) : (
+          <ChevronLeftIcon fontSize="small" />
+        )}
       </StyledToggleBtn>
 
       {/* Mobile Sidebar */}

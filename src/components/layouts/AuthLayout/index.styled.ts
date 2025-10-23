@@ -66,7 +66,7 @@ export const StyledLogoFooter = styled('p')(() => ({
   color: '#999',
 }));
 
-export const StyledBrandLogo = styled('img')(({ theme }) => ({
+export const StyledBrandLogo = styled('img')(() => ({
   position: 'absolute',
   height: 'auto',
   zIndex: 1,

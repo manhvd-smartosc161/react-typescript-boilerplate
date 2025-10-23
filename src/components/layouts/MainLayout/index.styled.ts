@@ -34,7 +34,7 @@ export const StyledMainContent = styled(Box)(({ theme }) => ({
   },
 })) as typeof Box;
 
-export const StyledContentArea = styled(Box)(({ theme }) => ({ 
+export const StyledContentArea = styled(Box)(({ theme }) => ({
   flexGrow: 1,
   overflow: 'auto',
   maxWidth: '100%',
