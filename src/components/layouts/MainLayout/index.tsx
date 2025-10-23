@@ -36,22 +36,22 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   const menuItems = [
     {
       key: ROUTES.HOME,
-      icon: <IconAtom name="home" size={collapsed ? 24 : 16} />,
+      icon: <IconAtom name="home" size={collapsed ? 20 : 16} />,
       label: t('common:dashboard'),
     },
     {
       key: ROUTES.SUPPLIER_REGISTRATION,
-      icon: <IconAtom name="userGroup" size={collapsed ? 24 : 16} />,
+      icon: <IconAtom name="userGroup" size={collapsed ? 20 : 16} />,
       label: t('common:partnerRegistration'),
     },
     {
       key: ROUTES.LEADS,
-      icon: <span>📋</span>,
+      icon: <IconAtom name="lead" size={collapsed ? 20 : 16} />,
       label: t('common:leads'),
     },
     {
       key: ROUTES.SETTINGS,
-      icon: <span>⚙️</span>,
+      icon: <IconAtom name="settings" size={collapsed ? 20 : 16} />,
       label: t('common:settings'),
     },
   ];
