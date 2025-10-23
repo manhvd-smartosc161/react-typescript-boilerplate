@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { AppBar, Box, Stack, Avatar, Menu } from '@mui/material';
+import { AppBar, Box, Stack, Avatar, Menu, IconButton } from '@mui/material';
 
 export const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
@@ -64,4 +64,24 @@ export const StyledLogoSection = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     display: 'none',
   },
+}));
+
+export const StyledMobileHeaderSection = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 0.5,
+  flex: 1,
+  [theme.breakpoints.up('md')]: {
+    display: 'none',
+  },
+}));
+
+export const StyledMobileHamburgerButton = styled(IconButton)(({ theme }) => ({
+  marginRight: 0.5,
+}));
+
+export const StyledRightSection = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 1,
 }));
