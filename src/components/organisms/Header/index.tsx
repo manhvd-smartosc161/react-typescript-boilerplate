@@ -17,7 +17,6 @@ import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import {
-  BreadcrumbMolecule,
   LanguageSwitcher,
 } from '@src/components/molecules';
 import { useTranslation } from 'react-i18next';
@@ -30,11 +29,12 @@ import {
   StyledAvatar,
   StyledMenu,
   StyledMenuHeader,
+  StyledLogoSection
 } from './index.styled';
+import { LogoAtom } from '@src/components/atoms';
 
 export interface HeaderProps {
   collapsed: boolean;
-  onToggleCollapse: () => void;
   onMobileToggle?: () => void;
   breadcrumbItems?: Array<{
     title: string | React.ReactNode;
@@ -45,9 +45,7 @@ export interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({
   collapsed,
-  onToggleCollapse,
   onMobileToggle,
-  breadcrumbItems,
 }) => {
   const { t } = useTranslation();
   const currentUser = useRecoilValue(currentUserState);
@@ -71,14 +69,9 @@ const Header: FC<HeaderProps> = ({
   return (
     <StyledAppBar position="sticky" color="default" elevation={0}>
       <Toolbar>
-        <IconButton
-          edge="start"
-          onClick={onToggleCollapse}
-          sx={{ marginRight: 2, display: { xs: 'none', md: 'flex' } }}
-        >
-          {collapsed ? <MenuIcon /> : <MenuOpenIcon />}
-        </IconButton>
-
+        <StyledLogoSection>
+          <LogoAtom collapsed={collapsed} />
+        </StyledLogoSection>
         <IconButton
           edge="start"
           onClick={onMobileToggle}
@@ -87,8 +80,10 @@ const Header: FC<HeaderProps> = ({
           <MenuIcon />
         </IconButton>
 
-        <StyledHeaderContent sx={{ display: { xs: 'none', md: 'flex' } }}>
-          <BreadcrumbMolecule items={breadcrumbItems} />
+        <StyledHeaderContent>
+          <Typography>
+            Auto CN Collection
+          </Typography>
         </StyledHeaderContent>
 
         <Box sx={{ flex: 1, display: { xs: 'block', md: 'none' } }} />

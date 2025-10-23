@@ -30,15 +30,18 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     }
   }, [isAuthenticated, navigate]);
 
+  const [collapsed, setCollapsed] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
   const menuItems = [
     {
       key: ROUTES.HOME,
-      icon: <span>🏠</span>,
+      icon: <IconAtom name="home" size={collapsed ? 24 : 16} />,
       label: t('common:dashboard'),
     },
     {
       key: ROUTES.SUPPLIER_REGISTRATION,
-      icon: <IconAtom name="userGroup" />,
+      icon: <IconAtom name="userGroup" size={collapsed ? 24 : 16}  />,
       label: t('common:partnerRegistration'),
     },
     {
@@ -53,8 +56,6 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     },
   ];
 
-  const [collapsed, setCollapsed] = React.useState(false);
-  const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleCollapse = () => {
     setCollapsed(!collapsed);
@@ -103,18 +104,18 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     <>
       {isAuthenticated && (
         <StyledMainContainer>
-          <Sidebar
-            collapsed={collapsed}
-            mobileOpen={mobileOpen}
-            onMobileClose={handleMobileClose}
-            menuItems={menuItems}
-          />
-          <StyledMainContent component="main">
-            <Header
+          <Header
               collapsed={collapsed}
-              onToggleCollapse={handleCollapse}
               onMobileToggle={handleMobileToggle}
               breadcrumbItems={getBreadcrumbItems()}
+          />
+          <StyledMainContent component="main">
+            <Sidebar
+              collapsed={collapsed}
+              mobileOpen={mobileOpen}
+              menuItems={menuItems}
+              onMobileClose={handleMobileClose}
+              onToggleCollapse={handleCollapse}
             />
             <StyledContentArea>{children}</StyledContentArea>
           </StyledMainContent>
