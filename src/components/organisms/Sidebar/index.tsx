@@ -10,6 +10,8 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { LogoAtom } from '@src/components/atoms';
 import {
   StyledDrawer,
@@ -19,6 +21,7 @@ import {
   StyledGroupLabel,
   StyledListItemButton,
   StyledSubMenuItemButton,
+  StyledToggleBtn,
 } from './index.styled';
 
 interface MenuItem {
@@ -34,6 +37,7 @@ export interface SidebarProps {
   mobileOpen?: boolean;
   onMobileClose?: () => void;
   menuItems: MenuItem[];
+  onToggleCollapse: () => void;
 }
 
 const Sidebar: FC<SidebarProps> = ({
@@ -41,6 +45,7 @@ const Sidebar: FC<SidebarProps> = ({
   mobileOpen,
   onMobileClose,
   menuItems,
+  onToggleCollapse,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -178,7 +183,7 @@ const Sidebar: FC<SidebarProps> = ({
           <ListItemIcon
             sx={{
               minWidth: 40,
-              color: `${isActive ? '#fff' : 'text.secondary'}`,
+              color: `${isActive ? '#424242' : 'text.secondary'}`,
             }}
           >
             {item.icon}
@@ -199,13 +204,17 @@ const Sidebar: FC<SidebarProps> = ({
           display: { xs: 'none', md: 'block' },
         }}
       >
-        <StyledLogoSection>
-          <LogoAtom collapsed={collapsed} />
-        </StyledLogoSection>
-        <StyledMenuSection>
+        <StyledMenuSection  collapsed={collapsed}>
           <StyledList component="nav">{renderMenuItems(menuItems)}</StyledList>
         </StyledMenuSection>
       </StyledDrawer>
+       <StyledToggleBtn
+        aria-label="Toggle sidebar"
+        collapsed={collapsed}
+        onClick={onToggleCollapse}
+      >
+        {collapsed ? <ChevronRightIcon fontSize="small" /> : <ChevronLeftIcon fontSize="small" />}
+      </StyledToggleBtn>
 
       {/* Mobile Sidebar */}
       <StyledDrawer

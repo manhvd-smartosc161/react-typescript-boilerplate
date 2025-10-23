@@ -2,17 +2,22 @@ import { styled } from '@mui/material/styles';
 import { AppBar, Box, Stack, Avatar, Menu } from '@mui/material';
 
 export const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper,
-  borderBottom: '1px solid',
-  borderColor: theme.palette.divider,
+  backgroundColor: theme.palette.background.default,
+  height: 64,
+  zIndex: theme.zIndex.drawer,
+  boxShadow: '0px -4px 32px 0px #0000001A, 0px 0px 4px 0px #00000014',
+  marginBottom: '3px',
   [theme.breakpoints.down('sm')]: {
     height: 56,
     boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
   },
 }));
 
-export const StyledHeaderContent = styled(Box)(() => ({
+export const StyledHeaderContent = styled(Box)(({ theme }) => ({
   flex: 1,
+  [theme.breakpoints.down('sm')]: {
+    display: 'none'
+  },
 }));
 
 export const StyledUserProfileSection = styled(Stack)(({ theme }) => ({
@@ -50,4 +55,13 @@ export const StyledMenu = styled(Menu)(({ theme }) => ({
 
 export const StyledMenuHeader = styled(Box)(({ theme }) => ({
   padding: `${theme.spacing(1.5)} ${theme.spacing(2)}`,
+}));
+
+export const StyledLogoSection = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+   [theme.breakpoints.down('md')]: {
+    display: 'none',
+  },
 }));
