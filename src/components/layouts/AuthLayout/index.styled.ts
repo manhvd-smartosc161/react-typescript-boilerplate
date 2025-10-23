@@ -10,7 +10,7 @@ export const StyledAuthWrapper = styled(Box)(({ theme }) => ({
   justifyContent: 'center',
   gap: '5px',
 
-  padding: 0,
+  padding: 15,
   margin: 0,
   position: 'fixed',
   top: 0,
