@@ -1,7 +1,6 @@
 import { FC, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Email } from '@mui/icons-material';
 import { Box, Typography, Alert } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ButtonAtom, TextAtom, TextLinkAtom } from '@src/components/atoms';
@@ -134,7 +133,6 @@ const ForgotPasswordForm: FC = () => {
               label={t('auth:email')}
               placeholder={t('auth:emailPlaceholder')}
               type="email"
-              startIcon={<Email />}
               required
               disabled={showSuccess}
             />
@@ -147,18 +145,7 @@ const ForgotPasswordForm: FC = () => {
             disabled={showSuccess}
             fullWidth
             size="large"
-            sx={{
-              mb: 2,
-              background: showSuccess
-                ? '#ccc'
-                : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              color: showSuccess ? '#666' : 'white',
-              '&:hover': {
-                background: showSuccess
-                  ? '#ccc'
-                  : 'linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)',
-              },
-            }}
+            sx={{ mb: 2, color: 'white' }}
           >
             {showSuccess ? t('auth:emailSent') : t('auth:sendPasswordReset')}
           </ButtonAtom>

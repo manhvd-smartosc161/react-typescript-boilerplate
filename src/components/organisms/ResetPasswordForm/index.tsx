@@ -1,7 +1,6 @@
 import { FC, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Lock } from '@mui/icons-material';
 import { Box, Typography, Alert } from '@mui/material';
 import { ButtonAtom, TextAtom, TextLinkAtom } from '@src/components/atoms';
 import { ControlledPasswordField } from '@src/components/molecules';
@@ -164,7 +163,6 @@ const ResetPasswordForm: FC = () => {
               control={control}
               label="New Password"
               placeholder="Enter new password"
-              startIcon={<Lock />}
               required
             />
           </Box>
@@ -175,7 +173,6 @@ const ResetPasswordForm: FC = () => {
               control={control}
               label="Confirm Password"
               placeholder="Confirm new password"
-              startIcon={<Lock />}
               required
             />
           </Box>
@@ -211,18 +208,7 @@ const ResetPasswordForm: FC = () => {
             }
             fullWidth
             size="large"
-            sx={{
-              mb: 2,
-              background: showSuccess
-                ? '#ccc'
-                : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              color: showSuccess ? '#666' : 'white',
-              '&:hover': {
-                background: showSuccess
-                  ? '#ccc'
-                  : 'linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)',
-              },
-            }}
+            sx={{ mb: 2 }}
           >
             {showSuccess ? 'Password Reset!' : 'Reset Password'}
           </ButtonAtom>

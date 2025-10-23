@@ -9,6 +9,7 @@ import {
   Divider,
   Avatar,
   Stack,
+  Box,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
@@ -86,9 +87,11 @@ const Header: FC<HeaderProps> = ({
           <MenuIcon />
         </IconButton>
 
-        <StyledHeaderContent>
+        <StyledHeaderContent sx={{ display: { xs: 'none', md: 'flex' } }}>
           <BreadcrumbMolecule items={breadcrumbItems} />
         </StyledHeaderContent>
+
+        <Box sx={{ flex: 1, display: { xs: 'block', md: 'none' } }} />
 
         <LanguageSwitcher />
 
