@@ -1,5 +1,6 @@
 import { styled } from '@mui/material/styles';
 import { AppBar, Box, Stack, Avatar, Menu, IconButton } from '@mui/material';
+import { IconAtom } from '@src/components/atoms';
 
 export const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
@@ -85,3 +86,17 @@ export const StyledRightSection = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   gap: 1,
 }));
+
+export const StyledIconContact = styled(Box)(() => ({
+  padding: '10px',
+  borderRadius: '4px',
+  cursor: 'pointer',
+  transition: 'all 0.2s ease',
+  '&:hover': {
+    backgroundColor: 'rgba(0, 0, 0, 0.04)',
+  },
+}));
+
+export const StyledIcon = styled(IconAtom)({
+  display: 'block',
+});
