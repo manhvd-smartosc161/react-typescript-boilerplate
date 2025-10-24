@@ -11,6 +11,7 @@ const Settings = lazy(() => import('@src/pages/Settings'));
 const Leads = lazy(() => import('@src/pages/Leads'));
 const SupplierRegistration = lazy(() => import('@src/pages/RegistrationPage'));
 const NotFound = lazy(() => import('@src/pages/Error'));
+const ContactUs = lazy(() => import('@src/pages/ContactUs'));
 
 export interface AppRoute {
   path: string;
@@ -67,6 +68,13 @@ export default [
   {
     path: routes.LEADS,
     component: Leads,
+    restricted: false,
+    isPrivate: true,
+    layout: 'main',
+  },
+  {
+    path: routes.CONTACT_US,
+    component: ContactUs,
     restricted: false,
     isPrivate: true,
     layout: 'main',

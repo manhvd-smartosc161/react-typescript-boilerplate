@@ -29,8 +29,12 @@ import {
   StyledMobileHeaderSection,
   StyledMobileHamburgerButton,
   StyledRightSection,
+  StyledIcon,
+  StyledIconContact,
 } from './index.styled';
 import { LogoAtom } from '@src/components/atoms';
+import ROUTES from '@src/routes/route';
+import { useNavigate } from 'react-router-dom';
 
 export interface HeaderProps {
   collapsed: boolean;
@@ -48,6 +52,7 @@ const Header: FC<HeaderProps> = ({ collapsed, onMobileToggle }) => {
   const isAuthenticated = useRecoilValue(isAuthenticatedState);
   const logoutMutation = useLogoutMutation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -87,6 +92,10 @@ const Header: FC<HeaderProps> = ({ collapsed, onMobileToggle }) => {
 
           {isAuthenticated && (
             <>
+              <StyledIconContact onClick={() => navigate(ROUTES.CONTACT_US)}>
+                <StyledIcon name="article" size={20} />
+              </StyledIconContact>
+
               <StyledUserProfileSection
                 direction="row"
                 spacing={1.5}

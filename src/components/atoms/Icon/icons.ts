@@ -12,6 +12,8 @@ import UserGroupIcon from './assets/user-group.svg';
 import ChevronRightIcon from './assets/chevron-right.svg';
 import SettingsIcon from './assets/setting.svg';
 import LeadIcon from './assets/lead.svg';
+import ArticleIcon from './assets/article.svg';
+import PlaceIcon from './assets/place.svg';
 
 const iconMap = {
   home: HomeIcon,
@@ -28,6 +30,8 @@ const iconMap = {
   userGroup: UserGroupIcon,
   settings: SettingsIcon,
   lead: LeadIcon,
+  article: ArticleIcon,
+  place: PlaceIcon,
 };
 
 export default iconMap;
