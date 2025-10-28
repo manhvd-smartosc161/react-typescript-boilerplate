@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Stack, Box, useMediaQuery, useTheme } from '@mui/material';
 import { ActionButtonsGroup } from '@src/components/molecules';
@@ -18,6 +18,8 @@ interface MultiStepFormProps {
   onSaveDraft: () => void | Promise<void>;
 }
 
+const STEP_STORAGE_KEY = 'registration-step';
+
 const MultiStepForm: React.FC<MultiStepFormProps> = ({
   steps,
   isLoading = false,
@@ -26,8 +28,25 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [currentStep, setCurrentStep] = useState(0);
+
+  const getInitialStep = () => {
+    const savedStep = localStorage.getItem(STEP_STORAGE_KEY);
+    if (savedStep) {
+      const stepIndex = parseInt(savedStep, 10);
+      if (stepIndex >= 0 && stepIndex < steps.length) {
+        return stepIndex;
+      }
+    }
+    return 0;
+  };
+
+  const [currentStep, setCurrentStep] = useState(getInitialStep);
   const { formState } = useFormContext();
+
+  // Save step to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(STEP_STORAGE_KEY, currentStep.toString());
+  }, [currentStep]);
 
   const isLastStep = currentStep === steps.length - 1;
   const CurrentStepComponent = steps[currentStep].Component;
