@@ -14,6 +14,10 @@ import SettingsIcon from './assets/setting.svg';
 import LeadIcon from './assets/lead.svg';
 import ArticleIcon from './assets/article.svg';
 import PlaceIcon from './assets/place.svg';
+import UploadCloudIcon from './assets/upload-cloud.svg';
+import ExcelFileIcon from './assets/excel-file.svg';
+import ImageFileIcon from './assets/image-file.svg';
+import PdfFileIcon from './assets/pdf-file.svg';
 
 const iconMap = {
   home: HomeIcon,
@@ -32,6 +36,10 @@ const iconMap = {
   lead: LeadIcon,
   article: ArticleIcon,
   place: PlaceIcon,
+  uploadCloud: UploadCloudIcon,
+  excelFile: ExcelFileIcon,
+  imageFile: ImageFileIcon,
+  pdfFile: PdfFileIcon,
 };
 
 export default iconMap;

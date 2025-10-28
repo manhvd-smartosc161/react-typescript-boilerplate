@@ -1,15 +1,24 @@
-import React from 'react';
-import { CircularProgress } from '@mui/material';
+import * as React from 'react';
 import {
-  DescriptionOutlined as FileIcon,
-  Cancel as CancelIcon,
+  Box,
+  IconButton,
+  LinearProgress,
+  Link,
+  Typography,
+} from '@mui/material';
+import {
+  Close as CloseIcon,
+  CheckCircle as CheckIcon,
   ErrorOutline as ErrorIcon,
 } from '@mui/icons-material';
 import {
-  FilePreviewContainer,
-  RemoveButton,
-  UploadOverlay,
+  FileItemRoot,
+  HeaderRow,
+  NameAndStatus,
+  StatusRow,
+  ActionsRow,
 } from './index.styled';
+import { IconAtom } from '@src/components/atoms';
 
 export type FileStatus = 'uploading' | 'success' | 'error';
 export interface ManagedFile {
@@ -18,41 +27,124 @@ export interface ManagedFile {
   name: string;
   url?: string;
   status: FileStatus;
-  progress: number;
+  progress: number; // 0-100
   error?: string;
 }
 
 interface FilePreviewItemProps {
   file: ManagedFile;
   onRemove: () => void;
+  onView?: () => void;
+  onChange?: () => void;
 }
+
+const pickIcon = (name = '') => {
+  const ext = name.split('.').pop()?.toLowerCase();
+  if (ext === 'pdf') return <IconAtom name="pdfFile" size={50} />;
+  if (ext === 'jpg' || ext === 'jpeg' || ext === 'png' || ext === 'webp')
+    return <IconAtom name="imageFile" size={50} />;
+  if (ext === 'xlsx' || ext === 'xls' || ext === 'csv')
+    return <IconAtom name="excelFile" size={50} />;
+  return <></>;
+};
+
+const StatusBadge: React.FC<{ status: FileStatus; text?: string }> = ({
+  status,
+  text,
+}) => {
+  if (status === 'success') {
+    return (
+      <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5 }}>
+        <CheckIcon fontSize="small" color="primary" />
+        <Typography variant="body2" color="secondary">
+          Uploaded
+        </Typography>
+      </Box>
+    );
+  }
+  if (status === 'error') {
+    return (
+      <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5 }}>
+        <ErrorIcon fontSize="small" color="error" />
+        <Typography variant="body2" color="error.main">
+          {text || 'Failed'}
+        </Typography>
+      </Box>
+    );
+  }
+  return (
+    <Typography variant="body2" color="text.secondary">
+      Uploading... {text}
+    </Typography>
+  );
+};
 
 const FilePreviewItem: React.FC<FilePreviewItemProps> = ({
   file,
   onRemove,
+  onView,
+  onChange,
 }) => {
   return (
-    <FilePreviewContainer variant="outlined" status={file.status}>
-      <RemoveButton size="small" onClick={onRemove}>
-        <CancelIcon fontSize="small" />
-      </RemoveButton>
+    <FileItemRoot elevation={1}>
+      <div aria-hidden>{pickIcon(file.name)}</div>
 
-      {file.status === 'uploading' && (
-        <UploadOverlay>
-          <CircularProgress
-            variant="determinate"
-            value={file.progress}
-            size={40}
-          />
-        </UploadOverlay>
-      )}
+      <Box sx={{ flex: 1, minWidth: 0 }}>
+        <HeaderRow>
+          <NameAndStatus>
+            <Typography variant="subtitle2" noWrap title={file.name}>
+              {file.name}
+            </Typography>
+            <StatusRow>
+              <StatusBadge
+                status={file.status}
+                text={
+                  file.status === 'uploading'
+                    ? `${Math.round(file.progress)}%`
+                    : file.status === 'error'
+                      ? file.error
+                      : undefined
+                }
+              />
+            </StatusRow>
+          </NameAndStatus>
 
-      {file.status === 'error' && <ErrorIcon color="error" fontSize="large" />}
+          <IconButton aria-label="remove file" size="small" onClick={onRemove}>
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </HeaderRow>
 
-      {file.status === 'success' && (
-        <FileIcon color="action" sx={{ fontSize: 40 }} />
-      )}
-    </FilePreviewContainer>
+        <ActionsRow>
+          <Link
+            component="button"
+            type="button"
+            variant="body2"
+            onClick={onView}
+            sx={{ mr: 1, textDecoration: 'none' }}
+          >
+            View
+          </Link>
+          <Typography variant="body2" sx={{ mx: 1 }} color="text.disabled">
+            |
+          </Typography>
+          <Link
+            component="button"
+            type="button"
+            variant="body2"
+            onClick={onChange}
+            sx={{ textDecoration: 'none' }}
+          >
+            Change File
+          </Link>
+        </ActionsRow>
+
+        {file.status === 'uploading' && (
+          <Box sx={{ mt: 1 }}>
+            <LinearProgress variant="determinate" value={file.progress} />
+          </Box>
+        )}
+      </Box>
+    </FileItemRoot>
   );
 };
 
