@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   Toolbar,
   Typography,
@@ -16,8 +16,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { LanguageSwitcher } from '@src/components/molecules';
 import { useTranslation } from 'react-i18next';
-import { currentUserState, isAuthenticatedState } from '@src/stores';
-import { useLogoutMutation } from '@src/hooks';
+import { authState, currentUserState, isAuthenticatedState } from '@src/stores';
 import {
   StyledAppBar,
   StyledHeaderContent,
@@ -35,6 +34,8 @@ import {
 import { LogoAtom } from '@src/components/atoms';
 import ROUTES from '@src/routes/route';
 import { useNavigate } from 'react-router-dom';
+import { tokenService } from '@src/api/services';
+import { toast } from 'react-toastify';
 
 export interface HeaderProps {
   collapsed: boolean;
@@ -50,9 +51,9 @@ const Header: FC<HeaderProps> = ({ collapsed, onMobileToggle }) => {
   const { t } = useTranslation();
   const currentUser = useRecoilValue(currentUserState);
   const isAuthenticated = useRecoilValue(isAuthenticatedState);
-  const logoutMutation = useLogoutMutation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
+  const setAuthState = useSetRecoilState(authState);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -63,8 +64,14 @@ const Header: FC<HeaderProps> = ({ collapsed, onMobileToggle }) => {
   };
 
   const handleLogout = () => {
-    handleMenuClose();
-    logoutMutation.mutate();
+    tokenService.removeToken();
+
+    setAuthState({
+      isAuthenticated: false,
+      user: null,
+      token: null,
+    });
+    toast.success('Logout successfully!');
   };
 
   return (

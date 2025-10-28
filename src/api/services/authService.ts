@@ -159,14 +159,6 @@ export const authService = {
     }
   },
 
-  logout: async (): Promise<void> => {
-    try {
-      await apiClient.post(AUTH_ENDPOINT.LOGOUT);
-    } finally {
-      tokenService.removeToken();
-    }
-  },
-
   forgotPassword: async (
     email: ForgotPasswordRequest,
   ): Promise<ForgotPasswordResponse> => {
