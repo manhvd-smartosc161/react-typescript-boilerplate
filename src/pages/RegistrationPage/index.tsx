@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRecoilValue } from 'recoil';
 import {
   PageHeader,
   ActionButtonsGroup,
@@ -21,9 +22,37 @@ import {
   defaultRegistrationValues,
 } from '@src/schemas';
 import { SupplierRegistrationFormValues } from '@src/types/supplier';
+import {
+  useUpdateSupplierMutation,
+  useGetSupplierById,
+  useCreateSupplierMutation,
+} from '@src/hooks';
+import { currentUserState } from '@src/stores';
 
 const RegistrationPage = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
+
+  const currentUser = useRecoilValue(currentUserState);
+  const updateSupplierMutation = useUpdateSupplierMutation();
+  const createSupplierMutation = useCreateSupplierMutation();
+
+  const { data: supplierData, isLoading: isLoadingSupplierData } =
+    useGetSupplierById(currentUser?.registrationId);
+  const [registrationId, setRegistrationId] = useState<string>('');
+
+  const getRegistrationId = useCallback(async () => {
+    if (!currentUser?.registrationId || currentUser?.registrationId === '') {
+      const response = await createSupplierMutation.mutateAsync();
+      if (response?.id) {
+        setRegistrationId(response.id);
+      }
+    } else {
+      setRegistrationId(currentUser.registrationId);
+    }
+  }, [currentUser?.registrationId]);
+  useEffect(() => {
+    getRegistrationId();
+  }, []);
 
   const formMethods = useForm<SupplierRegistrationFormValues>({
     resolver: yupResolver(registrationMasterSchema) as any,
@@ -33,28 +62,36 @@ const RegistrationPage = () => {
 
   const { handleSubmit, getValues } = formMethods;
 
-  const handleSaveDraft = async () => {
-    try {
-      setIsLoading(true);
-      const formData = getValues();
+  useEffect(() => {
+    if (supplierData) {
+      const formData = {
+        information: supplierData.information || {},
+        sites: supplierData.sites || [],
+      };
 
-      console.log('Saving draft...', formData);
-      // TODO: Implement API call
-      // await api.saveRegistrationDraft(formData);
-
-      // Show success message
-      console.log('Draft saved successfully');
-    } catch (error) {
-      console.error('Failed to save draft:', error);
-      // TODO: Show error message to user
-    } finally {
-      setIsLoading(false);
+      formMethods.reset(formData);
     }
+  }, [supplierData, formMethods]);
+
+  const handleSaveDraft = async () => {
+    if (!currentUser?.registrationId) {
+      return;
+    }
+
+    setIsLoadingSubmit(true);
+    const formData = getValues();
+
+    await updateSupplierMutation.mutateAsync({
+      id: currentUser.registrationId,
+      data: formData,
+    });
+
+    setIsLoadingSubmit(false);
   };
 
   const handleFinalSubmit = async (data: SupplierRegistrationFormValues) => {
     try {
-      setIsLoading(true);
+      setIsLoadingSubmit(true);
 
       console.log('Submitting registration...', data);
       // TODO: Implement API call
@@ -66,7 +103,7 @@ const RegistrationPage = () => {
     } catch (error) {
       console.error('Failed to submit registration:', error);
       // TODO: Show error message to user
-      setIsLoading(false);
+      setIsLoadingSubmit(false);
     }
   };
 
@@ -103,7 +140,9 @@ const RegistrationPage = () => {
                 <TagAtom
                   variant="filled"
                   color="primary"
-                  children={'#586789963'}
+                  children={
+                    isLoadingSupplierData ? 'Loading...' : `#${registrationId}`
+                  }
                 />
               }
               trailing={
@@ -116,7 +155,7 @@ const RegistrationPage = () => {
           formContent={
             <MultiStepForm
               steps={registrationSteps}
-              isLoading={isLoading}
+              isLoading={isLoadingSubmit || isLoadingSupplierData}
               onSubmit={handleSubmit(handleFinalSubmit)}
               onSaveDraft={handleSaveDraft}
             />

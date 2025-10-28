@@ -131,7 +131,7 @@ export const supplierPaymentSchema: yup.ObjectSchema<SupplierPayment> =
       .string<EInvoiceSubmitChannel>()
       .oneOf(Object.values(EInvoiceSubmitChannel))
       .required(MESSAGES.MSG_001),
-    vendorTraits: yup.string().required(MESSAGES.MSG_001),
+    vendorTraints: yup.string().required(MESSAGES.MSG_001),
     sendRemittanceAdvise: yup
       .string<EYesNo>()
       .oneOf(Object.values(EYesNo))

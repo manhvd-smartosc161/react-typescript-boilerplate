@@ -8,6 +8,7 @@ export interface User {
   emailNotifications?: boolean;
   marketingNotifications?: boolean;
   avatar?: string;
+  registrationId?: string;
 }
 
 export interface UserProfile extends User {

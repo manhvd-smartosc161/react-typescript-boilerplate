@@ -1,4 +1,5 @@
 import { atom, selector } from 'recoil';
+import { tokenService } from '@src/api/services';
 
 export interface User {
   id: number;
@@ -10,6 +11,7 @@ export interface User {
   emailNotifications?: boolean;
   marketingNotifications?: boolean;
   avatar?: string;
+  registrationId?: string;
 }
 
 export interface AuthState {
@@ -18,13 +20,18 @@ export interface AuthState {
   token: string | null;
 }
 
+const getInitialAuthState = (): AuthState => {
+  const token = tokenService.getToken();
+  return {
+    isAuthenticated: Boolean(token),
+    user: null,
+    token,
+  };
+};
+
 export const authState = atom<AuthState>({
   key: 'authState',
-  default: {
-    isAuthenticated: false,
-    user: null,
-    token: null,
-  },
+  default: getInitialAuthState(),
 });
 
 export const currentUserState = selector<User | null>({

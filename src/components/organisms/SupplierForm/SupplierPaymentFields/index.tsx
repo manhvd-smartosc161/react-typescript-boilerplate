@@ -14,7 +14,7 @@ import {
   accountTypeOptions,
   apTypeOptions,
   invoiceSubmitChannelOptions,
-  vendorTraitsOptions,
+  vendorTraintsOptions,
   paymentStatusOptions,
 } from '@src/constants';
 
@@ -57,7 +57,7 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
       paymentTerm: '',
       additionalPaymentTerm: '',
       invoiceSubmitChannel: 'WEB',
-      vendorTraits: 'MBAS_SUPPLIER',
+      vendorTraints: 'MBAS_SUPPLIER',
       sendRemittanceAdvise: 'N',
       status: 'ACTIVE',
     });
@@ -229,11 +229,11 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
           <ControlledDropdownField
             variant="outlined"
             required
-            name={`${sectionPrefix}.payments.${index}.vendorTraits`}
+            name={`${sectionPrefix}.payments.${index}.vendorTraints`}
             control={control}
             label="Vendor Traits"
             placeholder="Select vendor traits"
-            options={vendorTraitsOptions}
+            options={vendorTraintsOptions}
           />
         </Grid>
 

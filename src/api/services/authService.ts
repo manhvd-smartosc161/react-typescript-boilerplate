@@ -99,6 +99,7 @@ export const authService = {
           emailNotifications: userData.emailNotifications,
           marketingNotifications: userData.marketingNotifications,
           avatar: userData.avatar,
+          registrationId: userData.registrationId,
         },
       };
     } catch (error: any) {
@@ -151,6 +152,7 @@ export const authService = {
         emailNotifications: userData.emailNotifications,
         marketingNotifications: userData.marketingNotifications,
         avatar: userData.avatar,
+        registrationId: userData.registrationId,
       };
     } catch (error: any) {
       throw new AuthError(error?.code);
