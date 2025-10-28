@@ -10,3 +10,4 @@ export * from './auth';
 export * from './language';
 export * from './message';
 export * from './regex';
+export * from './supplier';

@@ -63,7 +63,7 @@ export interface SupplierPayment {
   paymentTerm: string;
   additionalPaymentTerm?: string;
   invoiceSubmitChannel: EInvoiceSubmitChannel;
-  vendorTraits: string;
+  vendorTraints: string;
   sendRemittanceAdvise: EYesNo;
   status: EPaymentStatus;
 }

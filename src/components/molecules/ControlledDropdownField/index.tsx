@@ -46,41 +46,47 @@ const ControlledDropdownField = <
     <Controller
       name={name}
       control={control}
-      render={({ field, fieldState }) => (
-        <FormControl
-          fullWidth={fullWidth}
-          error={!!fieldState.error}
-          disabled={disabled}
-          required={required}
-          variant={variant}
-        >
-          {label && (
-            <InputLabelAtom htmlFor={field.name} required={required}>
-              {label}
-            </InputLabelAtom>
-          )}
-          <DropdownAtom
-            {...field}
-            {...selectProps}
-            id={field.name}
-            variant={variant}
-            placeholder={placeholder}
-            options={options}
-            required={required}
-            disabled={disabled}
-            startIcon={startIcon}
-            endIcon={endIcon}
-            size={size}
-            multiple={multiple}
+      render={({ field, fieldState }) => {
+        const selectValue =
+          field.value !== undefined ? field.value : multiple ? [] : '';
+
+        return (
+          <FormControl
+            fullWidth={fullWidth}
             error={!!fieldState.error}
-          />
-          {(fieldState.error?.message || helperText) && (
-            <FormHelperText>
-              {fieldState.error?.message || helperText}
-            </FormHelperText>
-          )}
-        </FormControl>
-      )}
+            disabled={disabled}
+            required={required}
+            variant={variant}
+          >
+            {label && (
+              <InputLabelAtom htmlFor={field.name} required={required}>
+                {label}
+              </InputLabelAtom>
+            )}
+            <DropdownAtom
+              {...field}
+              {...selectProps}
+              id={field.name}
+              variant={variant}
+              placeholder={placeholder}
+              options={options}
+              required={required}
+              disabled={disabled}
+              startIcon={startIcon}
+              endIcon={endIcon}
+              size={size}
+              multiple={multiple}
+              error={!!fieldState.error}
+              value={selectValue}
+            />
+            {(fieldState.error?.message || helperText) && (
+              <FormHelperText>
+                {fieldState.error?.message || helperText}
+              </FormHelperText>
+            )}
+          </FormControl>
+        );
+      }}
     />
   );
 };

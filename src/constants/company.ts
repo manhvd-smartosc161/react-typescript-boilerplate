@@ -35,7 +35,7 @@ export enum EJuristicType {
   PARTNERSHIP = 'PARTNERSHIP',
 }
 
-export enum EVendorTraits {
+export enum EVendorTraints {
   MBAS_SUPPLIER = 'MBAS_SUPPLIER',
   REGULAR_SUPPLIER = 'REGULAR_SUPPLIER',
   PREMIUM_SUPPLIER = 'PREMIUM_SUPPLIER',
@@ -77,11 +77,11 @@ export const JuristicTypeLabels: Record<EJuristicType, string> = {
   [EJuristicType.PARTNERSHIP]: 'Partnership',
 };
 
-export const VendorTraitsLabels: Record<EVendorTraits, string> = {
-  [EVendorTraits.MBAS_SUPPLIER]: 'MBAS Supplier',
-  [EVendorTraits.REGULAR_SUPPLIER]: 'Regular Supplier',
-  [EVendorTraits.PREMIUM_SUPPLIER]: 'Premium Supplier',
-  [EVendorTraits.STRATEGIC_SUPPLIER]: 'Strategic Supplier',
+export const VendorTraintsLabels: Record<EVendorTraints, string> = {
+  [EVendorTraints.MBAS_SUPPLIER]: 'MBAS Supplier',
+  [EVendorTraints.REGULAR_SUPPLIER]: 'Regular Supplier',
+  [EVendorTraints.PREMIUM_SUPPLIER]: 'Premium Supplier',
+  [EVendorTraints.STRATEGIC_SUPPLIER]: 'Strategic Supplier',
 };
 
 export const businessUnitOptions = enumToOptions(
@@ -108,9 +108,9 @@ export const juristicTypeOptions = enumToOptions(
   EJuristicType,
   JuristicTypeLabels,
 );
-export const vendorTraitsOptions = enumToOptions(
-  EVendorTraits,
-  VendorTraitsLabels,
+export const vendorTraintsOptions = enumToOptions(
+  EVendorTraints,
+  VendorTraintsLabels,
 );
 
 export const ESmeFlag = EBooleanFlag;
