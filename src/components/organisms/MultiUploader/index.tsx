@@ -1,15 +1,13 @@
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Controller, useFormContext, FieldPath } from 'react-hook-form';
-import { Box, FormHelperText } from '@mui/material';
+import { Box, FormHelperText, Grid } from '@mui/material';
 import FilePreviewItem, {
   ManagedFile,
 } from '@src/components/molecules/FilePreviewItem';
-import { ButtonAtom } from '@src/components/atoms';
-import { UploadFileOutlined } from '@mui/icons-material';
+import { ButtonAtom, IconAtom } from '@src/components/atoms';
 import {
   StyledDropZone,
-  StyledFileStack,
   StyledUploadZone,
   StyledUploadIcon,
 } from './index.styled';
@@ -54,11 +52,9 @@ const MultiUploader: React.FC<MultiUploaderProps> = ({ name }) => {
         alignItems="center"
         onClick={openFileDialog}
       >
-        {managedFiles?.length === 0 && (
-          <StyledUploadIcon variant="outlined">
-            <UploadFileOutlined />
-          </StyledUploadIcon>
-        )}
+        <StyledUploadIcon>
+          <IconAtom name="uploadCloud" size={70} />
+        </StyledUploadIcon>
         <ButtonAtom variant="text">+ Add</ButtonAtom>
       </StyledUploadZone>
     );
@@ -128,6 +124,10 @@ const MultiUploader: React.FC<MultiUploaderProps> = ({ name }) => {
           }
         };
 
+        const handleViewFile = (file: ManagedFile) => {
+          console.log('handle preview file', file.name);
+        };
+
         const { getRootProps, getInputProps, isDragActive, open } = useDropzone(
           {
             onDrop,
@@ -139,16 +139,19 @@ const MultiUploader: React.FC<MultiUploaderProps> = ({ name }) => {
           <Box>
             <StyledDropZone {...getRootProps()} isDragActive={isDragActive}>
               <input {...getInputProps()} />
-              <StyledFileStack direction="row" spacing={2} alignItems="center">
+              <Grid container rowGap={2}>
                 {managedFiles.map((file) => (
-                  <FilePreviewItem
-                    key={file.id}
-                    file={file}
-                    onRemove={() => onRemove(file.id)}
-                  />
+                  <Grid size={{ xs: 12, md: 6, lg: 4 }}>
+                    <FilePreviewItem
+                      key={file.id}
+                      file={file}
+                      onRemove={() => onRemove(file.id)}
+                      onView={() => handleViewFile(file)}
+                    />
+                  </Grid>
                 ))}
-                {renderUploadZone(open)}
-              </StyledFileStack>
+              </Grid>
+              {renderUploadZone(open)}
             </StyledDropZone>
             {error && (
               <FormHelperText error sx={{ mt: 1 }}>
