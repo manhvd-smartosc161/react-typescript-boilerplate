@@ -62,11 +62,13 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
       // }
     }
 
-    setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+    const nextStep = Math.min(currentStep + 1, steps.length - 1);
+    setCurrentStep(nextStep);
   };
 
   const handleBack = () => {
-    setCurrentStep((prev) => Math.max(prev - 1, 0));
+    const prevStep = Math.max(currentStep - 1, 0);
+    setCurrentStep(prevStep);
   };
 
   const handleStepClick = (index: number) => {

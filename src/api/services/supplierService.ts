@@ -10,6 +10,11 @@ export interface UpdateSupplierResponse {
   id: string;
 }
 
+export interface UpdateSitesResponse {
+  success: boolean;
+  message?: string;
+}
+
 export interface GetSupplierResponse {
   id: string;
   information: any;
@@ -20,6 +25,21 @@ export const supplierService = {
   createSupplier: async (): Promise<CreateSupplierResponse> => {
     try {
       const response = await apiClient.post(SUPPLIER_ENDPOINT.CREATE, {});
+      return response.data;
+    } catch (error: any) {
+      throw error;
+    }
+  },
+
+  updateSites: async (
+    registrationId: string,
+    sites: any[],
+  ): Promise<UpdateSitesResponse> => {
+    try {
+      const response = await apiClient.put(
+        `/registrations/${registrationId}/sites`,
+        { sites },
+      );
       return response.data;
     } catch (error: any) {
       throw error;

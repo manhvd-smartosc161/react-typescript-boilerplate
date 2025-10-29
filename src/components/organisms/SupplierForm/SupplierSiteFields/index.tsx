@@ -8,7 +8,12 @@ import {
   ControlledCheckBoxField,
   ControlledDatePickerField,
 } from '@src/components/molecules';
-import { Control, useFieldArray, useWatch } from 'react-hook-form';
+import {
+  Control,
+  useFieldArray,
+  useWatch,
+  useFormContext,
+} from 'react-hook-form';
 import { Add as AddIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import {
   yesNoOptions,
@@ -26,6 +31,8 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
   control,
   sectionPrefix,
 }) => {
+  const { watch } = useFormContext();
+
   const {
     fields: siteFields,
     append: appendSite,
@@ -35,26 +42,19 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
     name: sectionPrefix,
   });
 
-  const addresses = useWatch({
-    control,
-    name: `${sectionPrefix}.addresses`,
-  });
-
-  const payments = useWatch({
-    control,
-    name: `${sectionPrefix}.payments`,
-  });
+  const addresses = watch('information.addresses') || [];
+  const payments = watch('information.payments') || [];
 
   const addressOptions =
     addresses?.map((address: any) => ({
-      label: `${address.name}`,
-      value: address.id,
+      label: `${address.name || address.address_name || 'Unnamed Address'}`,
+      value: address.id || address.address_id || address.uuid,
     })) || [];
 
   const paymentOptions =
     payments?.map((payment: any) => ({
-      label: `${payment.method} (${payment.account_name})`,
-      value: payment.id,
+      label: `${payment.method || 'Unknown Method'} (${payment.account_name || payment.accountName || 'Unknown Account'})`,
+      value: payment.id || payment.payment_id || payment.uuid,
     })) || [];
 
   const duplicateSite = (index: number) => {

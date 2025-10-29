@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
+import { useQueryClient } from '@tanstack/react-query';
 import {
   PageHeader,
   ActionButtonsGroup,
@@ -26,19 +27,23 @@ import {
   useUpdateSupplierMutation,
   useGetSupplierById,
   useCreateSupplierMutation,
+  useUpdateSitesMutation,
 } from '@src/hooks';
 import { currentUserState } from '@src/stores';
 
 const RegistrationPage = () => {
+  const queryClient = useQueryClient();
+  const currentUser = useRecoilValue(currentUserState);
   const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
 
-  const currentUser = useRecoilValue(currentUserState);
   const updateSupplierMutation = useUpdateSupplierMutation();
+  const updateSitesMutation = useUpdateSitesMutation();
   const createSupplierMutation = useCreateSupplierMutation();
 
-  const { data: supplierData, isLoading: isLoadingSupplierData } =
-    useGetSupplierById(currentUser?.registrationId);
   const [registrationId, setRegistrationId] = useState<string>('');
+
+  const { data: supplierData, isLoading: isLoadingSupplierData } =
+    useGetSupplierById(registrationId);
 
   const getRegistrationId = useCallback(async () => {
     if (!currentUser?.registrationId || currentUser?.registrationId === '') {
@@ -74,31 +79,62 @@ const RegistrationPage = () => {
   }, [supplierData, formMethods]);
 
   const handleSaveDraft = async () => {
-    if (!currentUser?.registrationId) {
+    if (!registrationId) {
       return;
     }
+
+    const savedStep = localStorage.getItem('registration-step');
+    const currentStep = savedStep ? parseInt(savedStep, 10) : 0;
 
     setIsLoadingSubmit(true);
     const formData = getValues();
 
-    await updateSupplierMutation.mutateAsync({
-      id: currentUser.registrationId,
-      data: formData,
-    });
+    try {
+      switch (currentStep) {
+        case 0:
+          // Step 1 (Company Information) - call supplier update API
+          await updateSupplierMutation.mutateAsync({
+            id: registrationId,
+            data: formData,
+          });
 
-    setIsLoadingSubmit(false);
+          // Refetch supplier data after step 1 update to get latest information
+          queryClient.invalidateQueries({
+            queryKey: ['supplier', registrationId],
+          });
+          break;
+
+        case 1:
+          // Step 2 (Sites Information) - call site update API
+          await updateSitesMutation.mutateAsync({
+            registrationId,
+            sites: formData.sites || [],
+          });
+          break;
+
+        case 2:
+          // Step 3 (Review and Submit) - no save draft action needed
+          break;
+
+        default:
+          console.warn(`Unknown step: ${currentStep}`);
+          break;
+      }
+    } catch (error) {
+      console.error('Failed to save draft:', error);
+    } finally {
+      setIsLoadingSubmit(false);
+    }
   };
 
-  const handleFinalSubmit = async (data: SupplierRegistrationFormValues) => {
+  const handleFinalSubmit = async () => {
     try {
       setIsLoadingSubmit(true);
 
-      console.log('Submitting registration...', data);
       // TODO: Implement API call
       // await api.submitRegistration(data);
 
       // Show success message and redirect
-      console.log('Registration submitted successfully');
       // TODO: Navigate to success page
     } catch (error) {
       console.error('Failed to submit registration:', error);
