@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
@@ -45,19 +45,18 @@ const RegistrationPage = () => {
   const { data: supplierData, isLoading: isLoadingSupplierData } =
     useGetSupplierById(registrationId);
 
-  const getRegistrationId = useCallback(async () => {
-    if (!currentUser?.registrationId || currentUser?.registrationId === '') {
-      const response = await createSupplierMutation.mutateAsync();
-      if (response?.id) {
-        setRegistrationId(response.id);
-      }
-    } else {
-      setRegistrationId(currentUser.registrationId);
-    }
-  }, [currentUser?.registrationId]);
   useEffect(() => {
-    getRegistrationId();
-  }, []);
+    if (!currentUser) return;
+    const initRegistration = async () => {
+      if (!currentUser.registrationId) {
+        const res = await createSupplierMutation.mutateAsync();
+        if (res?.id) setRegistrationId(res.id);
+      } else {
+        setRegistrationId(currentUser.registrationId);
+      }
+    };
+    initRegistration();
+  }, [currentUser]);
 
   const formMethods = useForm<SupplierRegistrationFormValues>({
     resolver: yupResolver(registrationMasterSchema) as any,
