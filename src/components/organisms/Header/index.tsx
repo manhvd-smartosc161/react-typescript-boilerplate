@@ -40,11 +40,6 @@ import { toast } from 'react-toastify';
 export interface HeaderProps {
   collapsed: boolean;
   onMobileToggle?: () => void;
-  breadcrumbItems?: Array<{
-    title: string | React.ReactNode;
-    href?: string;
-    onClick?: () => void;
-  }>;
 }
 
 const Header: FC<HeaderProps> = ({ collapsed, onMobileToggle }) => {

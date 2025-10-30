@@ -6,19 +6,32 @@ import {
   TableCell,
   Box,
   Pagination,
+  Typography,
+  Select,
+  MenuItem,
+  TableContainer,
+  TableSortLabel,
 } from '@mui/material';
 import {
   StyledTableContainer,
   StyledTableHead,
   StyledTableCell,
   StyledTableRow,
+  StyledTableFooter,
+  StyledTablePagination,
+  StyledLoadMore,
 } from './index.styled';
+import TableHeader from '../TableHeader';
+import { IconName } from '@src/components/atoms/Icon';
+import { ESortDirection } from '@src/constants';
+import { useTranslation } from 'react-i18next';
 
 export interface Column<T = any> {
   key: keyof T;
   label: string;
   width?: string | number;
   align?: 'left' | 'center' | 'right';
+  isSortable?: boolean;
   render?: (value: any, record: T, index: number) => React.ReactNode;
 }
 
@@ -27,13 +40,21 @@ export interface TableProps<T = any> {
   data: T[];
   loading?: boolean;
   pagination?: {
-    current: number;
+    currentPage: number;
+    pagesCount?: number;
+    rowsPerPage?: number;
     total: number;
-    pageSize?: number;
-    onChange: (page: number) => void;
+    hasMore?: boolean;
   };
   rowKey?: keyof T;
+  tableTitle?: string;
+  tableIcon?: IconName;
+  order?: 'asc' | 'desc';
+  orderBy?: string;
   onRowClick?: (record: T, index: number) => void;
+  onChangePage?: (page: number) => void;
+  onChangeRowsPerPage?: (size: number) => void;
+  onRequestSort?: (event: React.MouseEvent<unknown>, property: keyof T) => void;
 }
 
 const TableOrganism = <T,>({
@@ -42,12 +63,33 @@ const TableOrganism = <T,>({
   loading = false,
   pagination,
   rowKey = 'id' as keyof T,
+  tableTitle,
+  tableIcon,
+  order,
+  orderBy,
   onRowClick,
+  onChangePage = () => {},
+  onChangeRowsPerPage = () => {},
+  onRequestSort,
 }: TableProps<T>) => {
+  const { t } = useTranslation();
   const handleRowClick = (record: T, index: number) => {
     if (onRowClick) {
       onRowClick(record, index);
     }
+  };
+
+  const createSortHandler =
+    (property: keyof T) => (event: React.MouseEvent<unknown>) => {
+      if (onRequestSort) onRequestSort(event, property);
+    };
+  const handleChangePage = (event: unknown, page: number) => {
+    onChangePage(page);
+  };
+
+  const handleChangeRowsPerPage = (value: number) => {
+    onChangePage(1);
+    onChangeRowsPerPage(value);
   };
 
   const renderCellContent = (column: Column<T>, record: T, index: number) => {
@@ -66,8 +108,21 @@ const TableOrganism = <T,>({
               key={String(column.key)}
               align={column.align || 'left'}
               style={{ width: column.width }}
+              sortDirection={order && column.isSortable ? order : false}
             >
-              {column.label}
+              {column.isSortable ? (
+                <TableSortLabel
+                  active={orderBy === column.key}
+                  direction={
+                    orderBy === column.key ? order : ESortDirection.ASC
+                  }
+                  onClick={createSortHandler(column.key)}
+                >
+                  {column.label}
+                </TableSortLabel>
+              ) : (
+                column.label
+              )}
             </StyledTableCell>
           ))}
         </TableRow>
@@ -106,37 +161,64 @@ const TableOrganism = <T,>({
       return null;
     }
 
-    const totalPages = Math.ceil(
-      pagination.total / (pagination.pageSize || 10),
-    );
-
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-        <Pagination
-          count={totalPages}
-          page={pagination.current}
-          onChange={(event, page) => pagination.onChange(page)}
-          color="primary"
-          showFirstButton
-          showLastButton
-          siblingCount={1}
-          boundaryCount={1}
-          size="small"
-        />
-      </Box>
+      <StyledTableFooter>
+        <Typography color="secondary">
+          {pagination.total} {t('common:results')}
+        </Typography>
+        <StyledTablePagination>
+          <Pagination
+            count={pagination.pagesCount}
+            page={pagination.currentPage}
+            onChange={handleChangePage}
+            color="primary"
+            siblingCount={1}
+            boundaryCount={1}
+            size="small"
+          />
+          <Typography variant="body2" color="text.secondary">
+            {t('common:rowsPerPage')}
+          </Typography>
+          <Select
+            size="small"
+            value={pagination.rowsPerPage}
+            onChange={(e) => handleChangeRowsPerPage(Number(e.target.value))}
+          >
+            {[5, 10, 20, 50, 100].map((n) => (
+              <MenuItem key={n} value={n}>
+                {n}
+              </MenuItem>
+            ))}
+          </Select>
+        </StyledTablePagination>
+        {pagination?.hasMore && (
+          <StyledLoadMore
+            onClick={() =>
+              onChangeRowsPerPage((pagination?.rowsPerPage || 0) + 10)
+            }
+          >
+            {t('common:loadMore')}
+          </StyledLoadMore>
+        )}
+      </StyledTableFooter>
     );
   };
 
   return (
-    <Box>
-      <StyledTableContainer>
-        <Table>
-          {renderTableHeader()}
-          <TableBody>{renderTableBody()}</TableBody>
-        </Table>
-      </StyledTableContainer>
-      {renderPagination()}
-    </Box>
+    <StyledTableContainer>
+      {tableTitle && (
+        <TableHeader tableIcon={tableIcon} tableTitle={tableTitle} />
+      )}
+      <Box padding={3}>
+        <TableContainer>
+          <Table>
+            {renderTableHeader()}
+            <TableBody>{renderTableBody()}</TableBody>
+          </Table>
+        </TableContainer>
+        {renderPagination()}
+      </Box>
+    </StyledTableContainer>
   );
 };
 

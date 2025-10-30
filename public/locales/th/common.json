@@ -2,7 +2,9 @@
   "settings": "การตั้งค่า",
   "logout": "ออกจากระบบ",
   "dashboard": "แดชบอร์ด",
+  "home": "หน้าแรก",
   "leads": "ลีด",
+  "leadsManagement": "การจัดการลูกค้าเป้าหมาย",
   "partnerRegistration": "การลงทะเบียนพันธมิตร",
   "supplierPortal": "พอร์ทัลซัพพลายเออร์",
   "actions": "การดำเนินการ",
@@ -12,7 +14,11 @@
   "details": "รายละเอียด",
   "status": {
     "new": "ใหม่",
-    "inProgress": "กำลังดำเนินการ",
-    "completed": "เสร็จสิ้น"
-  }
+    "waiting": "ซึ่งรอคอย",
+    "rejected": "ถูกปฏิเสธ",
+    "approved": "ที่ได้รับการอนุมัติ"
+  },
+  "results": "ผลลัพธ์",
+  "rowsPerPage": "จำนวนแถวต่อหน้า",
+  "loadMore": "โหลดเพิ่มเติม"
 }

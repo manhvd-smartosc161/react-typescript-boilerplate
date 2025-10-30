@@ -38,18 +38,15 @@ export const StyledContentArea = styled(Box)(({ theme }) => ({
   flexGrow: 1,
   overflow: 'auto',
   maxWidth: '100%',
-  padding: theme.spacing(2),
-  [theme.breakpoints.up('md')]: {
-    padding: theme.spacing(2),
-  },
+  padding: theme.spacing(4),
   [theme.breakpoints.down('sm')]: {
-    padding: theme.spacing(1.5),
+    padding: theme.spacing(2),
     overflow: 'auto',
     height: '100%',
     paddingBottom: theme.spacing(2),
   },
   [theme.breakpoints.down('xs')]: {
-    padding: theme.spacing(1),
+    padding: theme.spacing(2),
     paddingBottom: theme.spacing(1.5),
   },
 }));

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledStatusChip } from './index.styled';
+import { ERegistrationStatus } from '@src/constants';
 
 interface StatusChipProps {
   status: string;
@@ -15,12 +16,14 @@ const StatusChipAtom: React.FC<StatusChipProps> = ({
 
   const getTranslatedStatus = (statusValue: string) => {
     switch (statusValue.toLowerCase()) {
-      case 'new':
+      case ERegistrationStatus.NEW:
         return t('common:status.new');
-      case 'in-progress':
-        return t('common:status.inProgress');
-      case 'completed':
-        return t('common:status.completed');
+      case ERegistrationStatus.WAITING:
+        return t('common:status.waiting');
+      case ERegistrationStatus.REJECTED:
+        return t('common:status.rejected');
+      case ERegistrationStatus.APPROVED:
+        return t('common:status.approved');
       default:
         return statusValue;
     }

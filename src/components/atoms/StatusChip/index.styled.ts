@@ -1,17 +1,20 @@
 import { Chip } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { ERegistrationStatus } from '@src/constants';
 
 export const StyledStatusChip = styled(Chip)<{ status: string }>(({
   status,
 }) => {
   const getStatusColor = (statusValue: string) => {
-    switch (statusValue.toLowerCase()) {
-      case 'new':
-        return { bg: '#e3f2fd', color: '#1976d2' };
-      case 'in-progress':
-        return { bg: '#fff3e0', color: '#f57c00' };
-      case 'completed':
-        return { bg: '#e8f5e8', color: '#2e7d32' };
+    switch (statusValue) {
+      case ERegistrationStatus.NEW:
+        return { bg: '#D8EAFB', color: '#424242' };
+      case ERegistrationStatus.WAITING:
+        return { bg: '#EDEDED', color: '#424242' };
+      case ERegistrationStatus.REJECTED:
+        return { bg: '#FEDFDE', color: '#424242' };
+      case ERegistrationStatus.APPROVED:
+        return { bg: '#96e0acff', color: '#424242' };
       default:
         return { bg: '#f5f5f5', color: '#757575' };
     }
@@ -22,7 +25,8 @@ export const StyledStatusChip = styled(Chip)<{ status: string }>(({
     backgroundColor: colors.bg,
     color: colors.color,
     fontWeight: 'bold',
-    borderRadius: '16px',
+    borderRadius: '8px',
     padding: '4px 12px',
+    width: 130,
   };
 });
