@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { Link } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 
 interface StyledBreadcrumbLinkProps {
   component?: React.ElementType;
@@ -9,11 +9,10 @@ interface StyledBreadcrumbLinkProps {
 }
 
 export const StyledBreadcrumbLink = styled(Link)<StyledBreadcrumbLinkProps>(
-  () => ({
+  ({ theme }) => ({
     cursor: 'pointer',
     textDecoration: 'none',
-    '&:hover': {
-      textDecoration: 'underline',
-    },
+    color: theme.palette.secondary.main,
+    fontSize: 16,
   }),
 );

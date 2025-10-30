@@ -13,12 +13,16 @@ export interface ApiErrorResponse {
 }
 
 export interface PaginatedResponse<T> {
-  data: T[];
+  items: T[];
   pagination: {
-    page: number;
-    limit: number;
+    pagesCount: number;
     total: number;
-    totalPages: number;
+    currentPage: number;
+    perPage: number;
+    from: number;
+    to: number;
+    limit: number;
+    hasMore: boolean;
   };
 }
 
@@ -28,11 +32,12 @@ export interface MutationResponse<T = any> {
   message: string;
 }
 
+export type SortDirection = 'asc' | 'desc';
 export interface PaginationParams {
   page?: number;
   limit?: number;
-  sort?: string;
-  order?: 'asc' | 'desc';
+  sortBy?: string;
+  sortOrder?: SortDirection;
 }
 
 export interface SearchParams extends PaginationParams {

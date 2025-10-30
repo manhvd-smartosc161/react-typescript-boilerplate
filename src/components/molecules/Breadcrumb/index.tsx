@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Breadcrumbs, Typography } from '@mui/material';
+import { Box, Breadcrumbs, Typography } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { StyledBreadcrumbLink } from './index.styled';
 
@@ -10,11 +10,7 @@ export interface BreadcrumbItem {
 }
 
 export interface BreadcrumbProps {
-  items?: Array<{
-    title: string | React.ReactNode;
-    href?: string;
-    onClick?: () => void;
-  }>;
+  items?: BreadcrumbItem[];
   separator?: string | React.ReactNode;
 }
 
@@ -22,30 +18,32 @@ const BreadcrumbMolecule: FC<BreadcrumbProps> = ({ items = [], separator }) => {
   const separatorIcon = separator || <NavigateNextIcon fontSize="small" />;
 
   return (
-    <Breadcrumbs separator={separatorIcon} aria-label="breadcrumb">
-      {items.map((item, index) => {
-        const isLast = index === items.length - 1;
+    <Box mb={2}>
+      <Breadcrumbs separator={separatorIcon} aria-label="breadcrumb">
+        {items.map((item, index) => {
+          const isLast = index === items.length - 1;
 
-        if (isLast || !item.onClick) {
+          if (isLast || !item.onClick) {
+            return (
+              <Typography key={index} color="text.secondary">
+                {item.title}
+              </Typography>
+            );
+          }
+
           return (
-            <Typography key={index} color="text.primary">
+            <StyledBreadcrumbLink
+              key={index}
+              component="button"
+              variant="body2"
+              onClick={item.onClick}
+            >
               {item.title}
-            </Typography>
+            </StyledBreadcrumbLink>
           );
-        }
-
-        return (
-          <StyledBreadcrumbLink
-            key={index}
-            component="button"
-            variant="body2"
-            onClick={item.onClick}
-          >
-            {item.title}
-          </StyledBreadcrumbLink>
-        );
-      })}
-    </Breadcrumbs>
+        })}
+      </Breadcrumbs>
+    </Box>
   );
 };
 

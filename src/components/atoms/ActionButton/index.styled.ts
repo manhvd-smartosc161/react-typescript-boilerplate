@@ -68,6 +68,7 @@ export const ActionButton = createStyledButton({
   hoverColor: '#5a32a3',
   minWidth: '100px',
   padding: '6px 12px',
+  borderRadius: '8px',
 });
 
 export const ReportButton = createStyledButton({

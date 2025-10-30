@@ -1,6 +1,10 @@
 import apiClient from '../index';
 import { SUPPLIER_ENDPOINT } from '@src/constants';
-import { SupplierRegistrationFormValues } from '@src/types/supplier';
+import { PaginatedResponse, SearchParams } from '@src/types';
+import {
+  SupplierInfoItem,
+  SupplierRegistrationFormValues,
+} from '@src/types/supplier';
 
 export interface CreateSupplierResponse {
   id: string;
@@ -132,5 +136,14 @@ export const supplierService = {
     } catch (error: any) {
       throw error;
     }
+  },
+
+  getSuppliers: async (
+    searchParams: SearchParams,
+  ): Promise<PaginatedResponse<SupplierInfoItem>> => {
+    const response = await apiClient.get(SUPPLIER_ENDPOINT.GET_LIST(), {
+      params: searchParams,
+    });
+    return response.data;
   },
 };

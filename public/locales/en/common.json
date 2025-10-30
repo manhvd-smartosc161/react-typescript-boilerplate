@@ -2,7 +2,9 @@
   "settings": "Settings",
   "logout": "Logout",
   "dashboard": "Dashboard",
+  "home": "Home",
   "leads": "Leads",
+  "leadsManagement": "Leads Management",
   "partnerRegistration": "Partner Registration",
   "supplierPortal": "Supplier Portal",
   "actions": "Actions",
@@ -12,7 +14,11 @@
   "details": "Details",
   "status": {
     "new": "New",
-    "inProgress": "In-progress",
-    "completed": "Completed"
-  }
+    "waiting": "Waiting",
+    "rejected": "Rejected",
+    "approved": "approved"
+  },
+  "results": "Results",
+  "rowsPerPage": "Rows Per Page",
+  "loadMore": "Load More"
 }

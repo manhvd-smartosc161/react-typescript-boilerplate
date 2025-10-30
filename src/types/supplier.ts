@@ -161,3 +161,37 @@ export interface SupplierRegistrationFormValues {
   information: SupplierInfo;
   sites: SupplierSite[];
 }
+
+export interface SupplierInfoItem {
+  id: string;
+  nameTh: string;
+  nameEn: string;
+  taxId: string;
+  taxCountry: string;
+  businessRelationship: string;
+  supType: string;
+  smeFlag: string;
+  productDivision: string;
+  businessCountry: string;
+  businessUnits: string[];
+  remark: string;
+  juristicType: string;
+  commercialTax: string;
+  withholdingTax: string;
+  distributionArea: string;
+  incorporationCountry: string;
+  commuLanguage: string;
+  numberOfEmp: number;
+  productType: string;
+  documentQuality: string;
+  connectionType: string;
+  contactPersonName: string;
+  contactPersonEmail: string;
+  contactPersonPhone: string;
+  buyerId: string;
+  buyerPhone: string;
+  annualRevenue: number;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+}

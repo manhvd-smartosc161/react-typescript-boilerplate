@@ -4,30 +4,29 @@ import { useTranslation } from 'react-i18next';
 import { PageHeader } from '@src/components/organisms';
 import { TableOrganism } from '@src/components/organisms';
 import { StatusChipAtom, ActionButtonAtom } from '@src/components/atoms';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import DescriptionIcon from '@mui/icons-material/Description';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import { leadsData } from '@src/mock/leadsData';
-import { LeadData } from '@src/types';
-import { StyledContainer, StyledPaper } from './index.styled';
+import { SortDirection, SupplierInfoItem } from '@src/types';
+import { useGetSuppliers } from '@src/hooks/supplier/useGetSuppliers';
+import { useRecoilValue } from 'recoil';
+import { currentUserState } from '@src/stores';
+import { ESortDirection, LANGUAGE_CODES } from '@src/constants';
+import { DATE_FORMATS, formatDate } from '@src/utils';
 
 const LeadsPage: React.FC = () => {
   const { t } = useTranslation();
-  const [currentPage, setCurrentPage] = useState(4);
-  const [leads, setLeads] = useState(leadsData);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [order, setOrder] = useState<SortDirection>(ESortDirection.ASC);
+  const [orderBy, setOrderBy] = useState('nameEn');
+  const currentUser = useRecoilValue(currentUserState);
 
-  const handleAssign = (id: number) => {
-    setLeads((prevLeads) =>
-      prevLeads.map((lead) =>
-        lead.id === id
-          ? { ...lead, assigned: true, status: 'In-progress' }
-          : lead,
-      ),
-    );
-  };
+  const { data } = useGetSuppliers({
+    page: currentPage,
+    limit: rowsPerPage,
+    sortBy: orderBy,
+    sortOrder: order,
+  });
 
-  const handleViewDetails = (id: number) => {
+  const handleViewDetails = (id: string) => {
     console.log('View details for lead:', id);
     // TODO: Implement navigation to details page
   };
@@ -37,107 +36,103 @@ const LeadsPage: React.FC = () => {
     // TODO: Implement detail report generation
     alert('Detail Report feature coming soon!');
   };
+  const handleRequestSort = (
+    _event: React.MouseEvent<unknown>,
+    property: keyof SupplierInfoItem,
+  ) => {
+    const isAsc = orderBy === property && order === ESortDirection.ASC;
+    setOrder(isAsc ? ESortDirection.DESC : ESortDirection.ASC);
+    setOrderBy(property);
+  };
 
   const columns = [
     {
-      key: 'company' as keyof LeadData,
+      key: `${currentUser?.language === LANGUAGE_CODES.EN ? 'nameEn' : 'nameTh'}` as keyof SupplierInfoItem,
       label: t('lead:company'),
+      isSortable: true,
     },
     {
-      key: 'customerName' as keyof LeadData,
+      key: 'contactPersonName' as keyof SupplierInfoItem,
       label: t('lead:customerName'),
-      render: (value: string) => (
-        <span style={{ fontWeight: 'bold' }}>{value}</span>
-      ),
+      isSortable: false,
     },
     {
-      key: 'annualRevenue' as keyof LeadData,
+      key: 'annualRevenue' as keyof SupplierInfoItem,
       label: t('lead:annualRevenue'),
       render: (value: number) => `$${value}`,
+      isSortable: false,
     },
     {
-      key: 'date' as keyof LeadData,
+      key: 'createdAt' as keyof SupplierInfoItem,
       label: t('lead:date'),
+      render: (value: string) => formatDate(value, DATE_FORMATS.ISO_DATE_ONLY),
+      isSortable: true,
     },
     {
-      key: 'status' as keyof LeadData,
+      key: 'status' as keyof SupplierInfoItem,
       label: t('lead:status'),
       render: (value: string) => <StatusChipAtom status={value} size="small" />,
+      isSortable: true,
     },
     {
-      key: 'remarks' as keyof LeadData,
+      key: 'remark' as keyof SupplierInfoItem,
       label: t('lead:remarks'),
       render: (value: string) => value || '-',
+      isSortable: false,
     },
     {
-      key: 'assigned' as keyof LeadData,
-      label: t('lead:assign'),
+      key: 'id' as keyof SupplierInfoItem,
+      label: t('common:actions'),
       width: '120px',
       align: 'center' as const,
-      render: (value: boolean, record: LeadData) => {
-        return record.assigned ? (
-          <ActionButtonAtom variant="assigned" startIcon={<CheckCircleIcon />}>
-            {t('lead:assigned')}
-          </ActionButtonAtom>
-        ) : (
-          <ActionButtonAtom
-            variant="assign"
-            onClick={() => handleAssign(record.id)}
-          >
-            {t('lead:assign')}
-          </ActionButtonAtom>
-        );
-      },
-    },
-    {
-      key: 'id' as keyof LeadData,
-      label: t('common:view'),
-      width: '120px',
-      align: 'center' as const,
-      render: (value: number, record: LeadData) => (
+      render: (value: number, record: SupplierInfoItem) => (
         <ActionButtonAtom
           variant="details"
-          startIcon={<VisibilityIcon />}
           onClick={() => handleViewDetails(record.id)}
         >
           {t('common:details')}
         </ActionButtonAtom>
       ),
+      isSortable: false,
     },
   ];
 
   return (
-    <StyledContainer>
-      <StyledPaper>
-        <PageHeader
-          title={t('supplier:supplierRegistrationLeads')}
-          leading={<AssignmentIcon sx={{ color: '#1976d2', fontSize: 28 }} />}
-          trailing={
-            <ActionButtonAtom
-              variant="detail-report"
-              startIcon={<DescriptionIcon />}
-              onClick={handleDetailReport}
-            >
-              {t('supplier:detailReport')}
-            </ActionButtonAtom>
-          }
-        />
+    <Box>
+      <PageHeader
+        title={t('supplier:supplierRegistrationLeads')}
+        trailing={
+          <ActionButtonAtom
+            variant="detail-report"
+            onClick={handleDetailReport}
+          >
+            {t('supplier:addNewLead')}
+          </ActionButtonAtom>
+        }
+      />
 
-        <Box sx={{ mt: 3 }}>
-          <TableOrganism<LeadData>
-            columns={columns}
-            data={leads}
-            rowKey="id"
-            pagination={{
-              current: currentPage,
-              total: 100,
-              pageSize: 10,
-              onChange: (page) => setCurrentPage(page),
-            }}
-          />
-        </Box>
-      </StyledPaper>
-    </StyledContainer>
+      <Box sx={{ mt: 3 }}>
+        <TableOrganism<SupplierInfoItem>
+          tableIcon="editNote"
+          tableTitle="Detailed Report"
+          columns={columns}
+          data={data?.items || []}
+          rowKey="id"
+          order={order}
+          orderBy={orderBy}
+          pagination={{
+            currentPage,
+            rowsPerPage,
+            total: data?.pagination?.total || 0,
+            pagesCount: data?.pagination?.pagesCount || 0,
+            hasMore: data?.pagination?.hasMore || false,
+          }}
+          onChangePage={(page) => setCurrentPage(page)}
+          onChangeRowsPerPage={(size) => setRowsPerPage(size)}
+          onRequestSort={handleRequestSort}
+        />
+      </Box>
+    </Box>
   );
 };
 

@@ -1,11 +1,12 @@
-import { TableContainer, TableHead, TableRow, TableCell } from '@mui/material';
+import { TableHead, TableRow, TableCell, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { ButtonAtom } from '@src/components/atoms';
 
-export const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
-  borderRadius: '8px',
+export const StyledTableContainer = styled(Box)(({ theme }) => ({
+  borderRadius: theme.shape.borderRadius,
+  border: '1px solid #E0E0E0',
   overflow: 'hidden',
   backgroundColor: 'white',
-  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
   [theme.breakpoints.down('md')]: {
     overflow: 'auto',
     boxShadow: 'none',
@@ -22,7 +23,7 @@ export const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
 }));
 
 export const StyledTableHead = styled(TableHead)(() => ({
-  backgroundColor: '#f8f9fa',
+  backgroundColor: '#fff',
 }));
 
 export const StyledTableCell = styled(TableCell)(() => ({
@@ -34,5 +35,31 @@ export const StyledTableCell = styled(TableCell)(() => ({
 export const StyledTableRow = styled(TableRow)(() => ({
   '&:hover': {
     backgroundColor: '#f8f9fa',
+  },
+}));
+
+export const StyledTableFooter = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginTop: theme.spacing(3),
+  gap: 2,
+}));
+
+export const StyledTablePagination = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginTop: theme.spacing(3),
+  gap: theme.spacing(3),
+  [theme.breakpoints.down('md')]: {
+    display: 'none',
+  },
+}));
+
+export const StyledLoadMore = styled(ButtonAtom)(({ theme }) => ({
+  display: 'none',
+  [theme.breakpoints.down('md')]: {
+    display: 'block',
   },
 }));

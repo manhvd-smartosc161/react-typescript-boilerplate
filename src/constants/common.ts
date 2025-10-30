@@ -28,3 +28,18 @@ export const statusOptions = enumToOptions(EStatus, StatusLabels);
 
 export const YES_NO_MAP = BooleanFlagLabels;
 export const STATUS_MAP = StatusLabels;
+
+export const enum ESortDirection {
+  ASC = 'asc',
+  DESC = 'desc',
+}
+
+export const enum ERegistrationStatus {
+  NEW = 'NEW',
+  DRAFT = 'DRAFT',
+  WAITING = 'WAITING',
+  REJECTED = 'REJECTED',
+  APPROVED = 'APPROVED',
+  INACTIVE = 'INACTIVE',
+  ACTIVE = 'ACTIVE',
+}
