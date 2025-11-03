@@ -10,7 +10,7 @@ import { useRecoilValue } from 'recoil';
 import { currentUserState } from '@src/stores';
 import { ESortDirection, LANGUAGE_CODES } from '@src/constants';
 import { DATE_FORMATS, formatDate } from '@src/utils';
-import { AddLeadModal } from '@src/components/organisms/AddLeadModal';
+import { AddLeadModalOrganism } from '@src/components/organisms';
 
 const LeadsPage: React.FC = () => {
   const { t } = useTranslation();
@@ -137,11 +137,11 @@ const LeadsPage: React.FC = () => {
           onRequestSort={handleRequestSort}
         />
       </Box>
-      <AddLeadModal
+      <AddLeadModalOrganism
         open={openAddModal}
         onClose={handleCloseAddNewLead}
         onSubmit={() => {}}
-      ></AddLeadModal>
+      />
     </Box>
   );
 };
