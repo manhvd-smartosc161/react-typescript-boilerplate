@@ -19,3 +19,5 @@ export { default as MultiUploader } from './MultiUploader';
 export { default as SettingsOrganism } from './Settings';
 export { default as TableOrganism } from './Table';
 export { default as CompanyInfoForm } from './RegistrationSteps/SupplierInfoForm';
+export { default as AddLeadModalOrganism } from './AddLeadModal';
+export { default as EditEmailModalOrganism } from './EditEmailModal';

@@ -9,4 +9,5 @@ export default {
   LEADS: '/leads',
   CONTACT_US: '/contact-us',
   AUDIT_LOGS: '/audit-logs',
+  EMAIL_SETTINGS: '/email-settings',
 };

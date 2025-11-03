@@ -15,7 +15,7 @@ export interface AddLeadModalProps {
   onSubmit: () => void;
 }
 
-export const AddLeadModal: React.FC<AddLeadModalProps> = ({
+const AddLeadModal: React.FC<AddLeadModalProps> = ({
   open,
   onClose,
   onSubmit,
@@ -172,3 +172,5 @@ export const AddLeadModal: React.FC<AddLeadModalProps> = ({
     </ModalDialog>
   );
 };
+
+export default AddLeadModal;

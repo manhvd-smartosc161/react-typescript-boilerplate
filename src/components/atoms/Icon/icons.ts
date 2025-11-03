@@ -20,6 +20,7 @@ import ImageFileIcon from './assets/image-file.svg';
 import PdfFileIcon from './assets/pdf-file.svg';
 import EditNoteIcon from './assets/edit-note.svg';
 import CloseIcon from './assets/close.svg';
+import EmailIcon from './assets/email.svg';
 
 const iconMap = {
   home: HomeIcon,
@@ -44,6 +45,7 @@ const iconMap = {
   pdfFile: PdfFileIcon,
   editNote: EditNoteIcon,
   close: CloseIcon,
+  email: EmailIcon,
 };
 
 export default iconMap;
