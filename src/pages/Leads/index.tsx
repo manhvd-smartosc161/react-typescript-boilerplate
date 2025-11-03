@@ -10,6 +10,7 @@ import { useRecoilValue } from 'recoil';
 import { currentUserState } from '@src/stores';
 import { ESortDirection, LANGUAGE_CODES } from '@src/constants';
 import { DATE_FORMATS, formatDate } from '@src/utils';
+import { AddLeadModal } from '@src/components/organisms/AddLeadModal';
 
 const LeadsPage: React.FC = () => {
   const { t } = useTranslation();
@@ -17,6 +18,7 @@ const LeadsPage: React.FC = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState<SortDirection>(ESortDirection.ASC);
   const [orderBy, setOrderBy] = useState('nameEn');
+  const [openAddModal, setOpenAddModal] = useState<boolean>(false);
   const currentUser = useRecoilValue(currentUserState);
 
   const { data } = useGetSuppliers({
@@ -31,11 +33,13 @@ const LeadsPage: React.FC = () => {
     // TODO: Implement navigation to details page
   };
 
-  const handleDetailReport = () => {
-    console.log('Generate detail report');
-    // TODO: Implement detail report generation
-    alert('Detail Report feature coming soon!');
+  const handleClickAddLead = () => {
+    setOpenAddModal(true);
   };
+  const handleCloseAddNewLead = () => {
+    setOpenAddModal(false);
+  };
+
   const handleRequestSort = (
     _event: React.MouseEvent<unknown>,
     property: keyof SupplierInfoItem,
@@ -65,7 +69,8 @@ const LeadsPage: React.FC = () => {
     {
       key: 'createdAt' as keyof SupplierInfoItem,
       label: t('lead:date'),
-      render: (value: string) => formatDate(value, DATE_FORMATS.ISO_DATE_ONLY),
+      render: (value: string) =>
+        formatDate(value, DATE_FORMATS.DISPLAY_DATE_FORMAT),
       isSortable: true,
     },
     {
@@ -104,7 +109,7 @@ const LeadsPage: React.FC = () => {
         trailing={
           <ActionButtonAtom
             variant="detail-report"
-            onClick={handleDetailReport}
+            onClick={handleClickAddLead}
           >
             {t('supplier:addNewLead')}
           </ActionButtonAtom>
@@ -132,6 +137,11 @@ const LeadsPage: React.FC = () => {
           onRequestSort={handleRequestSort}
         />
       </Box>
+      <AddLeadModal
+        open={openAddModal}
+        onClose={handleCloseAddNewLead}
+        onSubmit={() => {}}
+      ></AddLeadModal>
     </Box>
   );
 };

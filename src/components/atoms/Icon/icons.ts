@@ -18,7 +18,8 @@ import UploadCloudIcon from './assets/upload-cloud.svg';
 import ExcelFileIcon from './assets/excel-file.svg';
 import ImageFileIcon from './assets/image-file.svg';
 import PdfFileIcon from './assets/pdf-file.svg';
-import EditNote from './assets/edit-note.svg';
+import EditNoteIcon from './assets/edit-note.svg';
+import CloseIcon from './assets/close.svg';
 
 const iconMap = {
   home: HomeIcon,
@@ -41,7 +42,8 @@ const iconMap = {
   excelFile: ExcelFileIcon,
   imageFile: ImageFileIcon,
   pdfFile: PdfFileIcon,
-  editNote: EditNote,
+  editNote: EditNoteIcon,
+  close: CloseIcon,
 };
 
 export default iconMap;

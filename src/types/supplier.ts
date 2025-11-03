@@ -195,3 +195,11 @@ export interface SupplierInfoItem {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface AddLeadFormValue {
+  saleAt: string[];
+  email: string;
+  companyName: string;
+  productCategory: string[];
+  remarks: string;
+}

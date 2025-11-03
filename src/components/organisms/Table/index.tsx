@@ -21,7 +21,7 @@ import {
   StyledTablePagination,
   StyledLoadMore,
 } from './index.styled';
-import TableHeader from '../TableHeader';
+import TableHeader from '../../molecules/TableHeader';
 import { IconName } from '@src/components/atoms/Icon';
 import { ESortDirection } from '@src/constants';
 import { useTranslation } from 'react-i18next';
