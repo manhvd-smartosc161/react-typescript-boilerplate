@@ -6,9 +6,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { StatsGrid, ChartCard } from '@src/components';
+import { StatsGridOrganism, ChartCardOrganism } from '@src/components';
 import { ActionButtonAtom } from '@src/components/atoms';
-import { PageHeader, TableOrganism } from '@src/components/organisms';
+import { PageHeaderOrganism } from '@src/components/organisms';
 import {
   mockStats,
   mockEmployees,
@@ -18,7 +18,6 @@ import {
   StyledContainer,
   StyledPaper,
   StyledChartSection,
-  StyledTableSection,
 } from './index.styled';
 
 interface EmployeeData {
@@ -115,33 +114,19 @@ const Home: React.FC = () => {
   return (
     <StyledContainer>
       <StyledPaper>
-        <PageHeader
+        <PageHeaderOrganism
           title={t('common:dashboard')}
           leading={<DashboardIcon sx={{ color: '#1976d2', fontSize: 28 }} />}
         />
 
         <Box sx={{ mt: 3 }}>
-          <StatsGrid stats={stats} />
+          <StatsGridOrganism stats={stats} />
 
           <StyledChartSection>
-            <ChartCard>
+            <ChartCardOrganism>
               <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-            </ChartCard>
+            </ChartCardOrganism>
           </StyledChartSection>
-
-          <StyledTableSection>
-            <TableOrganism<EmployeeData>
-              columns={columns}
-              data={recentEmployees}
-              rowKey="id"
-              pagination={{
-                current: currentPage,
-                total: recentEmployees.length,
-                pageSize: 10,
-                onChange: (page) => setCurrentPage(page),
-              }}
-            />
-          </StyledTableSection>
         </Box>
       </StyledPaper>
     </StyledContainer>

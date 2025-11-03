@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box } from '@mui/material';
-import { PageHeader, TableOrganism } from '@src/components/organisms';
+import { PageHeaderOrganism, TableOrganism } from '@src/components/organisms';
 import { InputAtom, IconAtom } from '@src/components/atoms';
 import { ESortDirection } from '@src/constants';
 import {
@@ -124,7 +124,7 @@ const EmailSettings: React.FC = () => {
 
   return (
     <Box>
-      <PageHeader title="Emails" />
+      <PageHeaderOrganism title="Emails" />
       <Box sx={{ mt: 3 }}>
         <Box sx={{ mb: 2 }}>
           <InputAtom

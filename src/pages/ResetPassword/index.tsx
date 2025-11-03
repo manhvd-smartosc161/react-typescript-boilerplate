@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import ResetPasswordForm from '@src/components/organisms/ResetPasswordForm';
+import { ResetPasswordFormOrganism } from '@src/components/organisms';
 
 const ResetPassword: FC = () => {
-  return <ResetPasswordForm />;
+  return <ResetPasswordFormOrganism />;
 };
 
 export default ResetPassword;

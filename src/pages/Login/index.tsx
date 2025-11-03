@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { LoginForm } from '@src/components';
+import { LoginFormOrganism } from '@src/components';
 
 const LoginPage: FC = () => {
-  return <LoginForm />;
+  return <LoginFormOrganism />;
 };
 
 export default LoginPage;

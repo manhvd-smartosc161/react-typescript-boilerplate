@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { PageHeader } from '@src/components/organisms';
+import { PageHeaderOrganism } from '@src/components/organisms';
 import { ActionButtonAtom } from '@src/components/atoms';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SaveIcon from '@mui/icons-material/Save';
@@ -40,7 +40,7 @@ const Settings: React.FC = () => {
   return (
     <StyledContainer>
       <StyledPaper>
-        <PageHeader
+        <PageHeaderOrganism
           title={t('common:settings')}
           leading={<SettingsIcon sx={{ color: '#1976d2', fontSize: 28 }} />}
           trailing={

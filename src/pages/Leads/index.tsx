@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { PageHeader } from '@src/components/organisms';
+import { PageHeaderOrganism } from '@src/components/organisms';
 import { TableOrganism } from '@src/components/organisms';
 import { StatusChipAtom, ActionButtonAtom } from '@src/components/atoms';
 import { SortDirection, SupplierInfoItem } from '@src/types';
@@ -104,7 +104,7 @@ const LeadsPage: React.FC = () => {
 
   return (
     <Box>
-      <PageHeader
+      <PageHeaderOrganism
         title={t('supplier:supplierRegistrationLeads')}
         trailing={
           <ActionButtonAtom

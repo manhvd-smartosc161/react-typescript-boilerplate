@@ -4,7 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import { useQueryClient } from '@tanstack/react-query';
 import {
-  PageHeader,
+  PageHeaderOrganism,
   ActionButtonsGroup,
   TagAtom,
   ButtonAtom,
@@ -169,7 +169,7 @@ const RegistrationPage = () => {
       >
         <RegistrationTemplate
           pageHeader={
-            <PageHeader
+            <PageHeaderOrganism
               title="Registration"
               titleSuffix={
                 <TagAtom

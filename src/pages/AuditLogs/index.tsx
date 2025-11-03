@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box } from '@mui/material';
-import { PageHeader, TableOrganism } from '@src/components/organisms';
+import { PageHeaderOrganism, TableOrganism } from '@src/components/organisms';
 import { InputAtom, IconAtom } from '@src/components/atoms';
 import { ESortDirection } from '@src/constants';
 import { auditLogsData, AuditLogItem } from '@src/mock/auditLogsData';
@@ -85,7 +85,7 @@ const AuditLogs: React.FC = () => {
 
   return (
     <Box>
-      <PageHeader title="Audit Logs" />
+      <PageHeaderOrganism title="Audit Logs" />
       <Box sx={{ mt: 3 }}>
         <Box sx={{ mb: 2 }}>
           <InputAtom
