@@ -12,6 +12,7 @@ const Leads = lazy(() => import('@src/pages/Leads'));
 const SupplierRegistration = lazy(() => import('@src/pages/RegistrationPage'));
 const NotFound = lazy(() => import('@src/pages/Error'));
 const ContactUs = lazy(() => import('@src/pages/ContactUs'));
+const AuditLogs = lazy(() => import('@src/pages/AuditLogs'));
 
 export interface AppRoute {
   path: string;
@@ -96,6 +97,13 @@ export default [
   {
     path: routes.SUPPLIER_REGISTRATION,
     component: SupplierRegistration,
+    restricted: false,
+    isPrivate: true,
+    layout: 'main',
+  },
+  {
+    path: routes.AUDIT_LOGS,
+    component: AuditLogs,
     restricted: false,
     isPrivate: true,
     layout: 'main',

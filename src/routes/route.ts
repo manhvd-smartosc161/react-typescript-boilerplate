@@ -8,4 +8,5 @@ export default {
   SUPPLIER_REGISTRATION: '/supplier-registration',
   LEADS: '/leads',
   CONTACT_US: '/contact-us',
+  AUDIT_LOGS: '/audit-logs',
 };
