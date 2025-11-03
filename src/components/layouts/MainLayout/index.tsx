@@ -50,6 +50,11 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       label: t('common:leads'),
     },
     {
+      key: ROUTES.AUDIT_LOGS,
+      icon: <IconAtom name="article" size={collapsed ? 20 : 16} />,
+      label: t('common:auditLogs'),
+    },
+    {
       key: ROUTES.SETTINGS,
       icon: <IconAtom name="settings" size={collapsed ? 20 : 16} />,
       label: t('common:settings'),

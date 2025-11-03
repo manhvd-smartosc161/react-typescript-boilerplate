@@ -36,6 +36,8 @@ const AuthPageTemplate: FC<AuthPageTemplateProps> = ({ children }) => {
           return <>{t('common:settings')}</>;
         case ROUTES.SUPPLIER_REGISTRATION:
           return <>{t('common:partnerRegistration')}</>;
+        case ROUTES.AUDIT_LOGS:
+          return <>{t('common:auditLogs')}</>;
         default:
           return <>{t('common:dashboard')}</>;
       }
