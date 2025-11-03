@@ -52,7 +52,9 @@ const ReviewStep: React.FC = () => {
           title="General Information"
           subtitle="Company Details"
         >
-          <SupplierGeneralView data={information || {}} />
+          <Grid container spacing={isMobile ? 2 : 3}>
+            <SupplierGeneralView data={information || {}} />
+          </Grid>
         </FormSectionLayout>
 
         <Divider />
@@ -61,13 +63,15 @@ const ReviewStep: React.FC = () => {
           title="Representative"
           subtitle="Company Representative"
         >
-          <SupplierRepresentativeView
-            data={{
-              contactPersonName: information?.contactPersonName,
-              contactPersonEmail: information?.contactPersonEmail,
-              contactPersonPhone: information?.contactPersonPhone,
-            }}
-          />
+          <Grid container spacing={isMobile ? 2 : 3}>
+            <SupplierRepresentativeView
+              data={{
+                contactPersonName: information?.contactPersonName,
+                contactPersonEmail: information?.contactPersonEmail,
+                contactPersonPhone: information?.contactPersonPhone,
+              }}
+            />
+          </Grid>
         </FormSectionLayout>
 
         <Divider />
@@ -76,30 +80,36 @@ const ReviewStep: React.FC = () => {
           title="Product"
           subtitle="Product & Business Details"
         >
-          <SupplierProductView
-            data={{
-              productDivision: information?.productDivision,
-              productType: information?.productType,
-            }}
-          />
+          <Grid container spacing={isMobile ? 2 : 3}>
+            <SupplierProductView
+              data={{
+                productDivision: information?.productDivision,
+                productType: information?.productType,
+              }}
+            />
+          </Grid>
         </FormSectionLayout>
 
         <Divider />
 
         <FormSectionLayout title="Financial" subtitle="Financial Details">
-          <SupplierFinancialView
-            data={{
-              taxId: information?.taxId,
-              taxType: information?.taxType,
-              taxCountry: information?.taxCountry,
-            }}
-          />
+          <Grid container spacing={isMobile ? 2 : 3}>
+            <SupplierFinancialView
+              data={{
+                taxId: information?.taxId,
+                taxType: information?.taxType,
+                taxCountry: information?.taxCountry,
+              }}
+            />
+          </Grid>
         </FormSectionLayout>
 
         <Divider />
 
         <FormSectionLayout title="Documents" subtitle="Uploaded Documents">
-          <SupplierDocumentView data={{}} />
+          <Grid container spacing={isMobile ? 2 : 3}>
+            <SupplierDocumentView data={{}} />
+          </Grid>
         </FormSectionLayout>
 
         <Divider />
@@ -125,7 +135,7 @@ const ReviewStep: React.FC = () => {
                   </TextAtom>
                 }
               >
-                <Grid container>
+                <Grid container spacing={2}>
                   <SupplierAddressView data={address} />
                 </Grid>
               </CollapsibleCard>
@@ -156,7 +166,7 @@ const ReviewStep: React.FC = () => {
                   </TextAtom>
                 }
               >
-                <Grid container>
+                <Grid container spacing={2}>
                   <SupplierContactView data={contact} />
                 </Grid>
               </CollapsibleCard>
@@ -185,7 +195,7 @@ const ReviewStep: React.FC = () => {
                   </TextAtom>
                 }
               >
-                <Grid container>
+                <Grid container spacing={2}>
                   <SupplierPaymentView data={payment} />
                 </Grid>
               </CollapsibleCard>

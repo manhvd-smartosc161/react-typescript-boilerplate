@@ -26,7 +26,13 @@ const FormSectionLayout: React.FC<FormSectionLayoutProps> = ({
         <Stack spacing={1}>
           <HeadingAtom level={6}>{title}</HeadingAtom>
           {subtitle && (
-            <TextAtom fontSize={'16px'} color="default">
+            <TextAtom
+              fontSize={'16px'}
+              color="default"
+              sx={{
+                display: { xs: 'none', md: 'block' },
+              }}
+            >
               {subtitle}
             </TextAtom>
           )}

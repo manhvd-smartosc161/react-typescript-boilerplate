@@ -4,6 +4,7 @@ import { PaginatedResponse, SearchParams } from '@src/types';
 import {
   SupplierInfoItem,
   SupplierRegistrationFormValues,
+  SupplierSite,
 } from '@src/types/supplier';
 
 export interface CreateSupplierResponse {
@@ -37,12 +38,27 @@ export const supplierService = {
 
   updateSites: async (
     registrationId: string,
-    sites: any[],
+    sites: SupplierSite[],
   ): Promise<UpdateSitesResponse> => {
     try {
+      const normalizedSites = (sites || []).map((site) => {
+        const parsedMinOrderValue = Number(site.minOrderValue);
+        const parsedMinOrderQty = Number(site.minOrderQty);
+
+        return {
+          ...site,
+          ...(Number.isFinite(parsedMinOrderValue)
+            ? { minOrderValue: parsedMinOrderValue }
+            : {}),
+          ...(Number.isFinite(parsedMinOrderQty)
+            ? { minOrderQty: parsedMinOrderQty }
+            : {}),
+        } as SupplierSite;
+      });
+
       const response = await apiClient.put(
         `/registrations/${registrationId}/sites`,
-        { sites },
+        { sites: normalizedSites },
       );
       return response.data;
     } catch (error: any) {
@@ -67,11 +83,26 @@ export const supplierService = {
         }),
       );
 
+      const normalizedSites = (data.sites || []).map((site: SupplierSite) => {
+        const parsedMinOrderValue = Number(site.minOrderValue);
+        const parsedMinOrderQty = Number(site.minOrderQty);
+
+        return {
+          ...site,
+          ...(Number.isFinite(parsedMinOrderValue)
+            ? { minOrderValue: parsedMinOrderValue }
+            : {}),
+          ...(Number.isFinite(parsedMinOrderQty)
+            ? { minOrderQty: parsedMinOrderQty }
+            : {}),
+        } as SupplierSite;
+      });
+
       const payload = {
         ...data.information,
         numberOfEmp: Number(data.information.numberOfEmp) || 0,
         addresses: transformedAddresses,
-        sites: data.sites,
+        sites: normalizedSites,
       };
 
       const response = await apiClient.patch(

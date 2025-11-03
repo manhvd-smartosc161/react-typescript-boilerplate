@@ -40,24 +40,15 @@ const SupplierContactView: React.FC<SupplierContactViewProps> = ({ data }) => {
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair
-          label="Secondary Contact Name"
-          value={data.secondaryContactName}
-        />
+        <DataPair label="Secondary Contact Name" value={data.secondaryContactName} />
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair
-          label="Secondary Contact Email"
-          value={data.secondaryContactEmail}
-        />
+        <DataPair label="Secondary Contact Email" value={data.secondaryContactEmail} />
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair
-          label="Secondary Contact Phone"
-          value={data.secondaryContactPhone}
-        />
+        <DataPair label="Secondary Contact Phone" value={data.secondaryContactPhone} />
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>

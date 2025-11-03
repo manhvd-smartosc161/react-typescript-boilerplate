@@ -4,10 +4,14 @@ export const StyledFormSectionContainer = styled(Grid)(() => ({
   width: '100%',
 }));
 
-export const StyledSidebar = styled(Grid)(() => ({
+export const StyledSidebar = styled(Grid)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 4,
+  marginBottom: theme.spacing(1),
+  [theme.breakpoints.up('md')]: {
+    marginBottom: 0,
+  },
 }));
 
 export const StyledContentArea = styled(Grid)(() => ({
