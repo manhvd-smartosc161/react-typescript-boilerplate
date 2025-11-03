@@ -77,11 +77,11 @@ export const StyledMobileHeaderSection = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const StyledMobileHamburgerButton = styled(IconButton)(({ theme }) => ({
+export const StyledMobileHamburgerButton = styled(IconButton)(() => ({
   marginRight: 0.5,
 }));
 
-export const StyledRightSection = styled(Box)(({ theme }) => ({
+export const StyledRightSection = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
   gap: 1,

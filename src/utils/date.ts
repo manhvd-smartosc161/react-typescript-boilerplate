@@ -8,7 +8,7 @@ export const DATE_FORMATS = {
   // For display in UI (readable format)
   DISPLAY: 'MMM DD, YYYY',
   DISPLAY_WITH_TIME: 'MMM DD, YYYY HH:mm',
-
+  DISPLAY_DATE_FORMAT: 'DD/MM/YYYY',
   // For input fields (ISO format)
   INPUT: 'YYYY-MM-DD',
   INPUT_WITH_TIME: 'YYYY-MM-DDTHH:mm',
