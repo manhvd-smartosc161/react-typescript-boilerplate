@@ -15,6 +15,7 @@ const ContactUs = lazy(() => import('@src/pages/ContactUs'));
 const AuditLogs = lazy(() => import('@src/pages/AuditLogs'));
 const EmailSettings = lazy(() => import('@src/pages/EmailSettings'));
 const Contracts = lazy(() => import('@src/pages/Contracts'));
+const UserManagement = lazy(() => import('@src/pages/UserMangement'));
 
 export interface AppRoute {
   path: string;
@@ -78,6 +79,13 @@ export default [
   {
     path: routes.CONTACT_US,
     component: ContactUs,
+    restricted: false,
+    isPrivate: true,
+    layout: 'main',
+  },
+  {
+    path: routes.USERS,
+    component: UserManagement,
     restricted: false,
     isPrivate: true,
     layout: 'main',

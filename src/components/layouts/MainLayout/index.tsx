@@ -69,6 +69,11 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       icon: <IconAtom name="settings" size={collapsed ? 20 : 16} />,
       label: t('common:settings'),
     },
+    {
+      key: ROUTES.USERS,
+      icon: <IconAtom name="user" size={collapsed ? 20 : 16} />,
+      label: t('common:userManagement'),
+    },
   ];
 
   const handleCollapse = () => {

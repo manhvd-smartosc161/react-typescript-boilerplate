@@ -30,5 +30,12 @@
   "emailNotifications": "Email Notifications",
   "emailNotificationsDescription": "Receive important updates about your account and new leads",
   "marketingCommunications": "Marketing Communications",
-  "marketingCommunicationsDescription": "Receive news, offers, and promotions from CP Axtra."
+  "marketingCommunicationsDescription": "Receive news, offers, and promotions from CP Axtra.",
+  "userRoles": "User Roles",
+  "displayName": "Display Name",
+  "email": "Email",
+  "lastUpdated": "Last Updated",
+  "role": "Role",
+  "status": "status",
+  "id": "ID"
 }

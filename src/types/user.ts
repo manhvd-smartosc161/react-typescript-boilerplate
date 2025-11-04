@@ -52,3 +52,16 @@ export interface AuthState {
   token: string | null;
   refreshToken?: string;
 }
+
+export interface UserRolesItem {
+  id: string;
+  displayName: string;
+  email: string;
+  updatedAt: string;
+  role: string;
+  status: string;
+}
+
+export interface UpdateUserRoleData extends UserRolesItem {
+  sendEmail: boolean;
+}

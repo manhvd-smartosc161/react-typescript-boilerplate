@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 
 export const StyledDialogContainer = styled(Dialog)(({ theme }) => ({
   '& .MuiPaper-root': {
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: '24px',
     boxShadow: theme.shadows[3],
     border: `1px solid ${theme.palette.divider}`,
     padding: theme.spacing(4),
@@ -18,7 +18,7 @@ export const StyledHeaderWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'flex-start',
   justifyContent: 'space-between',
-  padding: theme.spacing(2, 2, 1.5, 2),
+  padding: theme.spacing(2, 2, 1.5, 0),
   svg: {
     cursor: 'pointer',
   },
@@ -34,6 +34,7 @@ export const StyledContentWrapper = styled(DialogContent)(({ theme }) => ({
   padding: theme.spacing(3, 0),
 }));
 
-export const StyledFooterWrapper = styled(DialogActions)(() => ({
+export const StyledFooterWrapper = styled(DialogActions)(({ theme }) => ({
   justifyContent: 'start',
+  padding: theme.spacing(2, 0),
 }));
