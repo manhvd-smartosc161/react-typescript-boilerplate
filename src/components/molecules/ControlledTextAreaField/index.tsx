@@ -22,6 +22,7 @@ export interface ControlledTextAreaFieldProps<
   rows?: number;
   maxRows?: number;
   minRows?: number;
+  maxLength?: number;
 }
 
 const ControlledTextAreaField = <
@@ -43,6 +44,7 @@ const ControlledTextAreaField = <
   rows,
   maxRows,
   minRows,
+  maxLength,
   ...inputProps
 }: ControlledTextAreaFieldProps<TFieldValues>) => {
   return (
@@ -73,6 +75,9 @@ const ControlledTextAreaField = <
             startIcon={startIcon}
             endIcon={endIcon}
             error={!!fieldState.error}
+            inputProps={{
+              maxLength,
+            }}
           />
           {(fieldState.error?.message || helperText) && (
             <FormHelperText>

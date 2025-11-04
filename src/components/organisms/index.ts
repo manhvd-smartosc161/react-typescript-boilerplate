@@ -15,6 +15,7 @@ export { default as TableOrganism } from './Table';
 export { default as CompanyInfoFormOrganism } from './RegistrationSteps/SupplierInfoForm';
 export { default as AddLeadModalOrganism } from './AddLeadModal';
 export { default as EditEmailModalOrganism } from './EditEmailModal';
+export { default as ContractTerminationModalOrganism } from './ContractTerminationModal';
 
 export * from './RegistrationSteps';
 export * from './SupplierForm';
