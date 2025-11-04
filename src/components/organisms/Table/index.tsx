@@ -28,11 +28,12 @@ import { useTranslation } from 'react-i18next';
 
 export interface Column<T = any> {
   key: keyof T;
-  label: string;
+  label: string | React.ReactNode;
   width?: string | number;
   align?: 'left' | 'center' | 'right';
   isSortable?: boolean;
   render?: (value: any, record: T, index: number) => React.ReactNode;
+  renderHeader?: () => React.ReactNode;
 }
 
 export interface TableProps<T = any> {
@@ -110,7 +111,9 @@ const TableOrganism = <T,>({
               style={{ width: column.width }}
               sortDirection={order && column.isSortable ? order : false}
             >
-              {column.isSortable ? (
+              {column.renderHeader ? (
+                column.renderHeader()
+              ) : column.isSortable ? (
                 <TableSortLabel
                   active={orderBy === column.key}
                   direction={
