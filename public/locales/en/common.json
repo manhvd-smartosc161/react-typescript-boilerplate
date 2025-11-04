@@ -10,6 +10,7 @@
   "auditLogs": "Audit Logs",
   "emailSettings": "Email Settings",
   "contracts": "Contracts",
+  "userManagement": "User Roles",
   "actions": "Actions",
   "edit": "Edit",
   "delete": "Delete",
@@ -23,5 +24,8 @@
   },
   "results": "Results",
   "rowsPerPage": "Rows Per Page",
-  "loadMore": "Load More"
+  "loadMore": "Load More",
+  "action": "Action",
+  "searchKeyword": "Search Keyword",
+  "clearSearch": "Clear Search"
 }

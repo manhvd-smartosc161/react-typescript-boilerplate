@@ -11,4 +11,5 @@ export default {
   AUDIT_LOGS: '/audit-logs',
   EMAIL_SETTINGS: '/email-settings',
   CONTRACTS: '/contracts',
+  USERS: '/users',
 };

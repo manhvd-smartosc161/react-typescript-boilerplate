@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Table,
   TableBody,
@@ -11,6 +11,7 @@ import {
   MenuItem,
   TableContainer,
   TableSortLabel,
+  Checkbox,
 } from '@mui/material';
 import {
   StyledTableContainer,
@@ -56,6 +57,10 @@ export interface TableProps<T = any> {
   onChangePage?: (page: number) => void;
   onChangeRowsPerPage?: (size: number) => void;
   onRequestSort?: (event: React.MouseEvent<unknown>, property: keyof T) => void;
+  selectable?: boolean;
+  selectedRows?: Array<string | number>;
+  onSelectedRowsChange?: (keys: Array<string | number>, records: T[]) => void;
+  toolbar?: React.ReactNode;
 }
 
 const TableOrganism = <T,>({
@@ -72,6 +77,10 @@ const TableOrganism = <T,>({
   onChangePage = () => {},
   onChangeRowsPerPage = () => {},
   onRequestSort,
+  selectable = false,
+  selectedRows: selectedRowsProp,
+  onSelectedRowsChange,
+  toolbar,
 }: TableProps<T>) => {
   const { t } = useTranslation();
   const handleRowClick = (record: T, index: number) => {
@@ -100,10 +109,93 @@ const TableOrganism = <T,>({
     return String(record[column.key]);
   };
 
+  // Returns a stable row ID (string or number) based on rowKey.
+  // Falls back to index if no valid key is found.
+  const getRowId = (record: T, index: number): string | number => {
+    const val = (record as any)?.[rowKey];
+    if (val === undefined || val === null) return index;
+    return typeof val === 'string' || typeof val === 'number'
+      ? val
+      : String(val);
+  };
+
+  // Emits selection changes to parent, including both selected IDs and selected row objects.
+  const emitSelection = (selected: Array<string | number>) => {
+    onSelectedRowsChange?.(
+      selected,
+      data.filter((r, idx) => selected.includes(getRowId(r, idx))),
+    );
+  };
+
+  // Supports both controlled and uncontrolled selection states.
+  const isControlled = selectedRowsProp !== undefined;
+  const [internalSelected, setInternalSelected] = useState<
+    Array<string | number>
+  >([]);
+  const selectedRows = isControlled
+    ? (selectedRowsProp as Array<string | number>)
+    : internalSelected;
+
+  // Updates selected keys (supports direct update or updater function).
+  // Calls emitSelection to notify parent about selection change.
+  const setSelectedRows = (
+    updater:
+      | Array<string | number>
+      | ((prev: Array<string | number>) => Array<string | number>),
+  ) => {
+    const next =
+      typeof updater === 'function' ? (updater as any)(selectedRows) : updater;
+    if (!isControlled) setInternalSelected(next);
+    emitSelection(next);
+  };
+
+  // calculate Select All states
+  const pageRowIds = data.map((r, idx) => getRowId(r, idx));
+  const selectedAll =
+    pageRowIds.length > 0 && selectedRows.length === pageRowIds.length;
+  const somePageSelected = selectedRows.length > 0 && !selectedAll;
+
+  const onSelectAllClick = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked } = e.target;
+    if (checked) {
+      const merged = Array.from(new Set([...selectedRows, ...pageRowIds]));
+      setSelectedRows(merged);
+    } else {
+      const left = selectedRows.filter((k) => !pageRowIds.includes(k));
+      setSelectedRows(left);
+    }
+  };
+
+  const onRowCheckboxChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    record: T,
+    index: number,
+  ) => {
+    e.stopPropagation();
+    const id = getRowId(record, index);
+
+    if (e.target.checked) {
+      setSelectedRows((prev) => (prev.includes(id) ? prev : [...prev, id]));
+    } else {
+      setSelectedRows((prev) => prev.filter((k) => k !== id));
+    }
+  };
+
   const renderTableHeader = () => {
     return (
       <StyledTableHead>
         <TableRow>
+          {selectable && (
+            <TableCell padding="checkbox">
+              <Checkbox
+                color="primary"
+                indeterminate={somePageSelected}
+                checked={selectedAll}
+                onChange={onSelectAllClick}
+                inputProps={{ 'aria-label': 'select all rows' }}
+              />
+            </TableCell>
+          )}
           {columns.map((column) => (
             <StyledTableCell
               key={String(column.key)}
@@ -144,19 +236,34 @@ const TableOrganism = <T,>({
       );
     }
 
-    return data.map((record, index) => (
-      <StyledTableRow
-        key={String(record[rowKey] || index)}
-        onClick={() => handleRowClick(record, index)}
-        style={{ cursor: onRowClick ? 'pointer' : 'default' }}
-      >
-        {columns.map((column) => (
-          <TableCell key={String(column.key)} align={column.align || 'left'}>
-            {renderCellContent(column, record, index)}
-          </TableCell>
-        ))}
-      </StyledTableRow>
-    ));
+    return data.map((record, index) => {
+      const id = getRowId(record, index);
+      const isItemSelected = selectedRows.includes(id);
+      const labelId = `enhanced-table-checkbox-${index}`;
+      return (
+        <StyledTableRow
+          key={String(record[rowKey] || index)}
+          onClick={() => handleRowClick(record, index)}
+          style={{ cursor: onRowClick ? 'pointer' : 'default' }}
+        >
+          {selectable && (
+            <TableCell padding="checkbox" onClick={(e) => e.stopPropagation()}>
+              <Checkbox
+                color="primary"
+                checked={isItemSelected}
+                onChange={(e) => onRowCheckboxChange(e, record, index)}
+                inputProps={{ 'aria-labelledby': labelId }}
+              />
+            </TableCell>
+          )}
+          {columns.map((column) => (
+            <TableCell key={String(column.key)} align={column.align || 'left'}>
+              {renderCellContent(column, record, index)}
+            </TableCell>
+          ))}
+        </StyledTableRow>
+      );
+    });
   };
 
   const renderPagination = () => {
@@ -212,6 +319,7 @@ const TableOrganism = <T,>({
       {tableTitle && (
         <TableHeader tableIcon={tableIcon} tableTitle={tableTitle} />
       )}
+      {toolbar}
       <Box padding={3}>
         <TableContainer>
           <Table>

@@ -30,5 +30,12 @@
   "emailNotifications": "การแจ้งเตือนทางอีเมล",
   "emailNotificationsDescription": "รับการอัปเดตที่สำคัญเกี่ยวกับบัญชีของคุณและลีดใหม่",
   "marketingCommunications": "การสื่อสารทางการตลาด",
-  "marketingCommunicationsDescription": "รับข่าวสาร ข้อเสนอ และโปรโมชั่นจาก CP Axtra"
+  "marketingCommunicationsDescription": "รับข่าวสาร ข้อเสนอ และโปรโมชั่นจาก CP Axtra",
+  "userRoles": "บทบาทผู้ใช้",
+  "displayName": "ชื่อที่แสดง",
+  "email": "อีเมล",
+  "lastUpdated": "อัปเดตล่าสุด",
+  "role": "บทบาท",
+  "status": "สถานะ",
+  "id": "ID"
 }

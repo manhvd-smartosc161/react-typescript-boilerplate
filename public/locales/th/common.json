@@ -10,6 +10,7 @@
   "auditLogs": "บันทึก",
   "emailSettings": "การตั้งค่าอีเมล",
   "contracts": "สัญญา",
+  "userManagement": "User Roles",
   "actions": "การดำเนินการ",
   "edit": "แก้ไข",
   "delete": "ลบ",
@@ -23,5 +24,8 @@
   },
   "results": "ผลลัพธ์",
   "rowsPerPage": "จำนวนแถวต่อหน้า",
-  "loadMore": "โหลดเพิ่มเติม"
+  "loadMore": "โหลดเพิ่มเติม",
+  "action": "การดำเนินการ",
+  "searchKeyword": "คำค้นหา",
+  "clearSearch": "ล้างการค้นหา"
 }
