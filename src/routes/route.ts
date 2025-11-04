@@ -10,4 +10,5 @@ export default {
   CONTACT_US: '/contact-us',
   AUDIT_LOGS: '/audit-logs',
   EMAIL_SETTINGS: '/email-settings',
+  CONTRACTS: '/contracts',
 };

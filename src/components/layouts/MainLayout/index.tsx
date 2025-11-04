@@ -60,6 +60,11 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       label: t('common:emailSettings'),
     },
     {
+      key: ROUTES.CONTRACTS,
+      icon: <IconAtom name="contract" size={collapsed ? 20 : 16} />,
+      label: t('common:contracts'),
+    },
+    {
       key: ROUTES.SETTINGS,
       icon: <IconAtom name="settings" size={collapsed ? 20 : 16} />,
       label: t('common:settings'),
