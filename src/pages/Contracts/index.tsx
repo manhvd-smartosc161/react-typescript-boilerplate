@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { Box } from '@mui/material';
-import { PageHeaderOrganism, TableOrganism } from '@src/components/organisms';
+import {
+  PageHeaderOrganism,
+  TableOrganism,
+  ContractTerminationModalOrganism,
+} from '@src/components/organisms';
 import { IconAtom, CheckBoxAtom } from '@src/components/atoms';
 import { ESortDirection } from '@src/constants';
 import { contractsData, ContractItem } from '@src/mock/contractsData';
+import { TerminationFormData } from '@src/components/organisms/ContractTerminationModal';
 import {
   StyledContentContainer,
   StyledFiltersContainer,
@@ -24,6 +29,7 @@ const Contracts: React.FC = () => {
   const [orderBy, setOrderBy] = useState<keyof ContractItem>('id');
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const [actionValue, setActionValue] = useState('');
+  const [isTerminationModalOpen, setIsTerminationModalOpen] = useState(false);
 
   // TODO: Filter will be handled by API call
   const filteredData = contractsData;
@@ -70,12 +76,33 @@ const Contracts: React.FC = () => {
     setActionValue(value);
 
     if (selectedRows.length > 0) {
-      console.log(`Bulk action: ${value} on rows:`, selectedRows);
-      // TODO: Implement bulk actions
-      // Reset after action is processed
-      setActionValue('');
+      if (value === 'terminate') {
+        setIsTerminationModalOpen(true);
+      } else {
+        console.log(`Bulk action: ${value} on rows:`, selectedRows);
+        // TODO: Implement bulk actions
+        // Reset after action is processed
+        setActionValue('');
+      }
     }
   };
+
+  const handleTerminationSubmit = (data: TerminationFormData) => {
+    const selectedContracts = filteredData.filter((item) =>
+      selectedRows.includes(item.id),
+    );
+    console.log('Terminate contracts:', {
+      contracts: selectedContracts,
+      formData: data,
+    });
+    // TODO: Implement termination API call
+    setSelectedRows([]);
+    setActionValue('');
+  };
+
+  const selectedContracts = filteredData.filter((item) =>
+    selectedRows.includes(item.id),
+  );
 
   const handleEdit = (id: number) => {
     console.log('Edit contract:', id);
@@ -266,6 +293,15 @@ const Contracts: React.FC = () => {
           onRequestSort={handleRequestSort}
         />
       </StyledContentContainer>
+      <ContractTerminationModalOrganism
+        open={isTerminationModalOpen}
+        onClose={() => {
+          setIsTerminationModalOpen(false);
+          setActionValue('');
+        }}
+        onSubmit={handleTerminationSubmit}
+        selectedContracts={selectedContracts}
+      />
     </Box>
   );
 };
