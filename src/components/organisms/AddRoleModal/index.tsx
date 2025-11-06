@@ -7,7 +7,6 @@ import {
   ModalDialog,
   ControlledAutocompleteMultiField,
 } from '@src/components/molecules';
-import { useCreateRoleMutation } from '@src/hooks/role/useCreateRoleMutation';
 import { RETAILER_TYPE } from '@src/constants';
 import { RoleDetailData, RoleFormData } from '@src/types';
 
@@ -26,7 +25,7 @@ const AddRoleModal: React.FC<AddRoleModalProps> = ({
   const formMethods = useForm<RoleFormData>({
     defaultValues: {
       retailerType: [],
-      displayName: '',
+      name: '',
       description: '',
     },
     mode: 'onSubmit',
@@ -36,7 +35,6 @@ const AddRoleModal: React.FC<AddRoleModalProps> = ({
   const handleSubmitNewRole = async (form: RoleFormData) => {
     const data = {
       ...form,
-      name: form.displayName,
       retailerType: form.retailerType.map((el) => el.id as string),
     };
     onSubmit(data);
@@ -92,7 +90,7 @@ const AddRoleModal: React.FC<AddRoleModalProps> = ({
             />
             <ControlledTextField
               control={control}
-              name="displayName"
+              name="name"
               label={t('roleName')}
               placeholder="John Doe"
               required

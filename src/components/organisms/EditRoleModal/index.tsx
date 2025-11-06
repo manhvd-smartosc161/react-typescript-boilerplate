@@ -29,7 +29,7 @@ const EditRoleModal: React.FC<EditRoleModalProps> = ({
       retailerType: RETAILER_TYPE.filter((el) =>
         data?.retailerType.includes(el.id as string),
       ),
-      displayName: data?.displayName,
+      name: data?.name,
       description: data?.description,
     },
     mode: 'onSubmit',
@@ -98,7 +98,7 @@ const EditRoleModal: React.FC<EditRoleModalProps> = ({
             />
             <ControlledTextField
               control={control}
-              name="displayName"
+              name="name"
               label={t('roleName')}
               placeholder="John Doe"
               required

@@ -13,20 +13,6 @@ interface UpdateRoleParams {
   data: RoleDetailData;
 }
 
-const clone = <T>(v: T): T => JSON.parse(JSON.stringify(v));
-
-function replaceItemById(
-  list: PaginatedResponse<RolePermissionItem>,
-  id: string,
-  patch: Partial<RolePermissionItem>,
-): PaginatedResponse<RolePermissionItem> {
-  const idx = list.items.findIndex((r) => r.id === id);
-  if (idx === -1) return list;
-  const next = clone(list);
-  next.items[idx] = { ...next.items[idx], ...patch };
-  return next;
-}
-
 export const useUpdateRoleMutation = () => {
   const qc = useQueryClient();
 
@@ -45,12 +31,13 @@ export const useUpdateRoleMutation = () => {
 
       snapshots.forEach(([key, old]) => {
         if (!old) return;
-        const updated = replaceItemById(
-          old,
-          id,
-          data as Partial<RolePermissionItem>,
-        );
-        if (updated !== old) qc.setQueryData(key, updated);
+        const updated = {
+          ...old,
+          items: old.items.map((item) =>
+            item.id === id ? { ...item, ...data } : item,
+          ),
+        };
+        qc.setQueryData(key, updated);
       });
 
       return { snapshots };

@@ -9,26 +9,32 @@ import {
   SearchParams,
 } from '@src/types';
 
-const clone = <T>(v: T): T => JSON.parse(JSON.stringify(v));
-
-function prependItemAndAdjust(
-  list: PaginatedResponse<RolePermissionItem>,
+const prependRoleItem = (
+  prev: PaginatedResponse<RolePermissionItem>,
   created: RolePermissionItem,
-): PaginatedResponse<RolePermissionItem> {
-  const perPage =
-    list.pagination.perPage || list.pagination.limit || list.items.length || 10;
-  const next = clone(list);
-  next.items = [created, ...next.items].slice(0, perPage);
+): PaginatedResponse<RolePermissionItem> => {
+  const {
+    items,
+    pagination: { perPage, total, currentPage },
+  } = prev;
 
-  const nextTotal = (list.pagination.total ?? 0) + 1;
-  next.pagination.total = nextTotal;
-  next.pagination.pagesCount = Math.max(1, Math.ceil(nextTotal / perPage));
-  next.pagination.to = next.pagination.from + next.items.length - 1;
-  next.pagination.hasMore =
-    next.pagination.currentPage < next.pagination.pagesCount;
+  const limit = perPage || items.length || 10;
+  const updatedItems = [created, ...items].slice(0, limit);
+  const updatedTotal = total + 1;
+  const updatedPagesCount = Math.max(1, Math.ceil(updatedTotal / limit));
 
-  return next;
-}
+  return {
+    ...prev,
+    items: updatedItems,
+    pagination: {
+      ...prev.pagination,
+      total: updatedTotal,
+      pagesCount: updatedPagesCount,
+      hasMore: currentPage < updatedPagesCount,
+      to: prev.pagination.from + updatedItems.length - 1,
+    },
+  };
+};
 
 export const useCreateRoleMutation = (currentParams: SearchParams) => {
   const qc = useQueryClient();
@@ -36,13 +42,13 @@ export const useCreateRoleMutation = (currentParams: SearchParams) => {
     mutationFn: (data: RoleDetailData) => {
       return roleService.create(data);
     },
-    onSuccess: (created) => {
+    onSuccess: (newRecord) => {
       const key = ['roleQuery', currentParams];
       const old = qc.getQueryData<PaginatedResponse<RolePermissionItem>>(key);
       if (!old) {
         const perPage = currentParams.limit || 10;
         qc.setQueryData<PaginatedResponse<RolePermissionItem>>(key, {
-          items: [created as RolePermissionItem],
+          items: [newRecord as RolePermissionItem],
           pagination: {
             pagesCount: 1,
             total: 1,
@@ -50,15 +56,12 @@ export const useCreateRoleMutation = (currentParams: SearchParams) => {
             perPage,
             from: 1,
             to: 1,
-            limit: perPage,
             hasMore: false,
           },
         });
       } else {
-        qc.setQueryData<PaginatedResponse<RolePermissionItem>>(
-          key,
-          prependItemAndAdjust(old, created as RolePermissionItem),
-        );
+        const updated = prependRoleItem(old, newRecord as RolePermissionItem);
+        qc.setQueryData<PaginatedResponse<RolePermissionItem>>(key, updated);
       }
 
       toast.success('Created!');
