@@ -1,6 +1,8 @@
+const REGISTRATIONS_PATH = '/registrations';
+
 export const SUPPLIER_ENDPOINT = {
-  CREATE: '/registrations',
-  UPDATE: (id: string) => `/registrations/${id}`,
-  GET_BY_ID: (id: string) => `/registrations/${id}`,
-  GET_LIST: () => `/registrations`,
+  CREATE: REGISTRATIONS_PATH,
+  UPDATE: (id: string) => `${REGISTRATIONS_PATH}/${id}`,
+  GET_BY_ID: (id: string) => `${REGISTRATIONS_PATH}/${id}`,
+  GET_LIST: () => REGISTRATIONS_PATH,
 } as const;

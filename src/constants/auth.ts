@@ -4,15 +4,17 @@ export const authKeys = {
 };
 
 // API Endpoints
+const AUTH_PATH = '/auth';
+
 export const AUTH_ENDPOINT = {
-  LOGIN: '/auth/login',
-  REGISTER: '/auth/register',
-  LOGOUT: '/auth/logout',
-  ME: '/auth/me',
-  FORGOT_PASSWORD: '/auth/forgot-password',
-  VALIDATE_RESET_TOKEN: '/auth/validate-reset-token',
-  RESET_PASSWORD: '/auth/reset-password',
-  PROFILE: '/auth/profile',
-  PASSWORD: '/auth/password',
-  NOTIFICATIONS: '/auth/notifications',
+  LOGIN: `${AUTH_PATH}/login`,
+  REGISTER: `${AUTH_PATH}/register`,
+  LOGOUT: `${AUTH_PATH}/logout`,
+  ME: `${AUTH_PATH}/me`,
+  FORGOT_PASSWORD: `${AUTH_PATH}/forgot-password`,
+  VALIDATE_RESET_TOKEN: `${AUTH_PATH}/validate-reset-token`,
+  RESET_PASSWORD: `${AUTH_PATH}/reset-password`,
+  PROFILE: `${AUTH_PATH}/profile`,
+  PASSWORD: `${AUTH_PATH}/password`,
+  NOTIFICATIONS: `${AUTH_PATH}/notifications`,
 } as const;
