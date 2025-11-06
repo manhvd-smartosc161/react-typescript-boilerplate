@@ -18,9 +18,7 @@ export const roleService = {
     return response.data;
   },
   update: async (id: string, data: RoleDetailData) => {
-    const response = await apiClient.put(ROLE_ENDPOINT.UPDATE(id), {
-      data,
-    });
+    const response = await apiClient.put(ROLE_ENDPOINT.UPDATE(id), data);
     return response.data;
   },
   create: async (data: RoleDetailData) => {

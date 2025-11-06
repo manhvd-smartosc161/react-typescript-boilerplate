@@ -21,7 +21,6 @@ export interface PaginatedResponse<T> {
     perPage: number;
     from: number;
     to: number;
-    limit: number;
     hasMore: boolean;
   };
 }

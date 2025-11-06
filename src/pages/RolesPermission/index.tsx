@@ -133,7 +133,7 @@ const RolesPermission: React.FC = () => {
       isSortable: false,
     },
     {
-      key: 'displayName' as keyof RolePermissionItem,
+      key: 'name' as keyof RolePermissionItem,
       label: t('roleName'),
       isSortable: true,
     },

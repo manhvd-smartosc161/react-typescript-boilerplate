@@ -13,14 +13,13 @@ export interface RolePermissionItem {
 
 export interface RoleDetailData {
   retailerType: string[];
-  displayName: string;
   description: string;
-  name?: string;
+  name: string;
 }
 
 export interface RoleFormData {
   retailerType: AutocompleteOption[];
-  displayName: string;
+  name: string;
   description: string;
 }
 
