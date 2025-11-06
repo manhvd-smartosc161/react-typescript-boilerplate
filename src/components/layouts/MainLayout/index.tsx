@@ -74,6 +74,11 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       icon: <IconAtom name="user" size={collapsed ? 20 : 16} />,
       label: t('common:userManagement'),
     },
+    {
+      key: ROUTES.ROLES_PERMISSION,
+      icon: <IconAtom name="user" size={collapsed ? 20 : 16} />,
+      label: t('common:rolesPermission'),
+    },
   ];
 
   const handleCollapse = () => {

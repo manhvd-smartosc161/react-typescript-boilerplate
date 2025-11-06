@@ -16,6 +16,10 @@ export { default as CompanyInfoFormOrganism } from './RegistrationSteps/Supplier
 export { default as AddLeadModalOrganism } from './AddLeadModal';
 export { default as EditEmailModalOrganism } from './EditEmailModal';
 export { default as ContractTerminationModalOrganism } from './ContractTerminationModal';
+export { default as AddRoleModalOrganism } from './AddRoleModal';
+export { default as EditRoleModalOrganism } from './EditRoleModal';
+export { default as EditRolePermissionModalOrganism } from './EditRolePermissionModal';
+export { default as EditUserModalOrganism } from './EditUserModal';
 
 export * from './RegistrationSteps';
 export * from './SupplierForm';

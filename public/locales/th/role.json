@@ -1,0 +1,23 @@
+{
+  "rolesPermission": "บทบาทและสิทธิ์การเข้าถึง",
+  "addRole": "เพิ่มบทบาท",
+  "id": "รหัส",
+  "roleName": "ชื่อบทบาท",
+  "description": "คำอธิบาย",
+  "retailerName": "ชื่อผู้ค้าปลีก",
+  "status": "สถานะ",
+  "edit": "แก้ไข",
+  "permission": "สิทธิ์การเข้าถึง",
+  "permissionDetails": "รายละเอียดสิทธิ์การเข้าถึง",
+  "create": "สร้าง",
+  "read": "อ่าน",
+  "update": "อัปเดต",
+  "delete": "ลบ",
+  "editRolePermission": "แก้ไขสิทธิ์ของบทบาท",
+  "addNewRole": "เพิ่มบทบาทใหม่",
+  "roleDescription": "คำอธิบายบทบาท",
+  "select": "เลือก",
+  "editRole": "แก้ไขบทบาท",
+  "deactivate": "ปิดการใช้งาน",
+  "activate": "เปิดการใช้งาน"
+}

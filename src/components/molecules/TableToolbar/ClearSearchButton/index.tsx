@@ -19,6 +19,7 @@ const ClearSearchButton: React.FC<ClearSearchButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
       size="large"
+      sx={{ minWidth: '140px !important' }}
     >
       {t('common:clearSearch')}
     </ButtonAtom>

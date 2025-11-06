@@ -1,0 +1,23 @@
+{
+  "rolesPermission": "Roles Permission",
+  "addRole": "Add Role",
+  "id": "ID",
+  "roleName": "Role Name",
+  "description": "Description",
+  "retailerName": "Retailer Name",
+  "status": "Status",
+  "edit": "Edit",
+  "permission": "Permission",
+  "permissionDetails": "Permission Details",
+  "create": "Create",
+  "read": "Read",
+  "update": "Update",
+  "delete": "Delete",
+  "editRolePermission": "Edit Role Permission",
+  "addNewRole": "Add New Role",
+  "roleDescription": "Role Description",
+  "select": "Select",
+  "editRole": "Edit Role",
+  "deactivate": "Deactivate",
+  "activate": "Activate"
+}

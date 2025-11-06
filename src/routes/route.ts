@@ -12,4 +12,5 @@ export default {
   EMAIL_SETTINGS: '/email-settings',
   CONTRACTS: '/contracts',
   USERS: '/users',
+  ROLES_PERMISSION: '/roles-permission',
 };

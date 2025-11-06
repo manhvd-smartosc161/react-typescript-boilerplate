@@ -5,7 +5,7 @@ import {
   ControlledDropdownField,
   ControlledTextField,
 } from '@src/components/molecules';
-import { ModalDialog } from '@src/components/molecules/ModalDialog';
+import { ModalDialog } from '@src/components/molecules';
 import { UpdateUserRoleData, UserRolesItem } from '@src/types';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 export interface EditUserModalProps {

@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography } from '@mui/material';
-import { ModalDialog } from '@src/components/molecules/ModalDialog';
+import { ModalDialog } from '@src/components/molecules';
 import { ButtonAtom } from '@src/components/atoms';
 import {
   ControlledDropdownField,
