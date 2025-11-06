@@ -22,12 +22,18 @@ apiClient.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
 
+    // Convert request body to snake_case
     if (
       config.data &&
       typeof config.data === 'object' &&
       !(config.data instanceof FormData)
     ) {
       config.data = camelToSnakeKeys(config.data);
+    }
+
+    // Convert query params to snake_case
+    if (config.params && typeof config.params === 'object') {
+      config.params = camelToSnakeKeys(config.params);
     }
 
     return config;

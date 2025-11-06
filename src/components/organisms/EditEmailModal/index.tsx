@@ -7,7 +7,7 @@ import {
   ControlledTextAreaField,
   ControlledTextField,
 } from '@src/components/molecules';
-import { EmailSettingItem } from '@src/mock/emailSettingsData';
+import { EmailSettingItem } from '@src/types/email';
 
 export interface EditEmailModalProps {
   open: boolean;

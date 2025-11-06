@@ -1,34 +1,67 @@
-import React, { useState } from 'react';
-import { Box } from '@mui/material';
+import React, { useMemo, useState } from 'react';
+import { Box, CircularProgress } from '@mui/material';
 import { PageHeaderOrganism, TableOrganism } from '@src/components/organisms';
 import { InputAtom, IconAtom } from '@src/components/atoms';
 import { ESortDirection } from '@src/constants';
-import {
-  emailSettingsData,
-  EmailSettingItem,
-} from '@src/mock/emailSettingsData';
+import { EmailSettingItem } from '@src/types/email';
 import { EditEmailModalOrganism } from '@src/components/organisms';
+import {
+  useGetEmailTemplates,
+  useUpdateEmailTemplateMutation,
+} from '@src/hooks';
+import { useDebounce } from '@src/hooks/common';
+import { formatDate } from '@src/utils/date';
+import { EmailTemplate } from '@src/types/email';
 
 const EmailSettings: React.FC = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
+  const debouncedSearchKeyword = useDebounce(searchKeyword, 500);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [order, setOrder] = useState<'asc' | 'desc'>(ESortDirection.ASC);
-  const [orderBy, setOrderBy] = useState<keyof EmailSettingItem>('id');
+  const [order, setOrder] = useState<'asc' | 'desc'>(ESortDirection.DESC);
+  const [orderBy, setOrderBy] = useState<keyof EmailSettingItem>('createdDate');
   const [openEditModal, setOpenEditModal] = useState(false);
   const [selectedEmail, setSelectedEmail] = useState<EmailSettingItem | null>(
     null,
   );
 
-  // TODO: Filter will be handled by API call
-  const filteredData = emailSettingsData;
+  const searchParams = useMemo(() => {
+    return {
+      page: currentPage,
+      limit: rowsPerPage,
+      ...(debouncedSearchKeyword && { searchTerms: debouncedSearchKeyword }),
+    };
+  }, [currentPage, rowsPerPage, debouncedSearchKeyword]);
 
-  const total = filteredData.length;
-  const pagesCount = Math.ceil(total / rowsPerPage);
-  const paginatedData = filteredData.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage,
-  );
+  const { data, isLoading, isError } = useGetEmailTemplates(searchParams);
+  const updateEmailMutation = useUpdateEmailTemplateMutation();
+
+  // Transform API data to component format
+  const transformedData = useMemo(() => {
+    if (!data?.items) return [];
+
+    return data.items.map((item: EmailTemplate): EmailSettingItem => {
+      // Format dates
+      const createdDate = formatDate(item.createdAt, 'YYYY-MM-DD HH:mm');
+      const updatedDate =
+        item.updatedAt && item.updatedAt !== '0001-01-01T00:00:00Z'
+          ? formatDate(item.updatedAt, 'YYYY-MM-DD HH:mm')
+          : '';
+
+      return {
+        id: item.id,
+        subject: item.subject,
+        remarks: item.remarks || '',
+        createdDate,
+        updatedDate,
+        emailEn: item.emailEn || '',
+        emailTh: item.emailTh || '',
+      };
+    });
+  }, [data]);
+
+  const total = data?.pagination?.total || 0;
+  const pagesCount = data?.pagination?.pagesCount || 0;
 
   const handleRequestSort = (
     _event: React.MouseEvent<unknown>,
@@ -39,8 +72,8 @@ const EmailSettings: React.FC = () => {
     setOrderBy(property);
   };
 
-  const handleEdit = (id: number) => {
-    const emailItem = emailSettingsData.find((item) => item.id === id);
+  const handleEdit = async (id: string | number) => {
+    const emailItem = transformedData.find((item) => item.id === id);
     if (emailItem) {
       setSelectedEmail(emailItem);
       setOpenEditModal(true);
@@ -52,14 +85,25 @@ const EmailSettings: React.FC = () => {
     setSelectedEmail(null);
   };
 
-  const handleUpdateEmail = (data: {
+  const handleUpdateEmail = (updateData: {
     subject: string;
     emailEn: string;
     emailTh: string;
     remark: string;
   }) => {
-    console.log('Update email:', data);
-    // TODO: Call API to update email
+    if (!selectedEmail) return;
+
+    updateEmailMutation.mutate(
+      {
+        id: String(selectedEmail.id),
+        data: updateData,
+      },
+      {
+        onSuccess: () => {
+          handleCloseModal();
+        },
+      },
+    );
   };
 
   const columns = [
@@ -122,6 +166,73 @@ const EmailSettings: React.FC = () => {
     },
   ];
 
+  const renderLoading = () => {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: 400,
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  };
+
+  const renderError = () => {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: 400,
+        }}
+      >
+        <Box>Error loading email templates. Please try again.</Box>
+      </Box>
+    );
+  };
+
+  const renderTable = () => {
+    return (
+      <TableOrganism<EmailSettingItem>
+        columns={columns}
+        data={transformedData}
+        rowKey="id"
+        order={order}
+        orderBy={orderBy}
+        pagination={{
+          currentPage,
+          rowsPerPage,
+          total,
+          pagesCount,
+          hasMore: data?.pagination?.hasMore || false,
+        }}
+        onChangePage={(page) => setCurrentPage(page)}
+        onChangeRowsPerPage={(size) => {
+          setRowsPerPage(size);
+          setCurrentPage(1);
+        }}
+        onRequestSort={handleRequestSort}
+      />
+    );
+  };
+
+  const renderContent = () => {
+    if (isLoading) {
+      return renderLoading();
+    }
+
+    if (isError) {
+      return renderError();
+    }
+
+    return renderTable();
+  };
+
   return (
     <Box>
       <PageHeaderOrganism title="Emails" />
@@ -136,26 +247,7 @@ const EmailSettings: React.FC = () => {
             sx={{ maxWidth: 400 }}
           />
         </Box>
-        <TableOrganism<EmailSettingItem>
-          columns={columns}
-          data={paginatedData}
-          rowKey="id"
-          order={order}
-          orderBy={orderBy}
-          pagination={{
-            currentPage,
-            rowsPerPage,
-            total,
-            pagesCount,
-            hasMore: false,
-          }}
-          onChangePage={(page) => setCurrentPage(page)}
-          onChangeRowsPerPage={(size) => {
-            setRowsPerPage(size);
-            setCurrentPage(1);
-          }}
-          onRequestSort={handleRequestSort}
-        />
+        {renderContent()}
       </Box>
       <EditEmailModalOrganism
         open={openEditModal}
