@@ -7,6 +7,7 @@ import { EmailSettingItem } from '@src/types/email';
 import { EditEmailModalOrganism } from '@src/components/organisms';
 import {
   useGetEmailTemplates,
+  useGetEmailTemplateById,
   useUpdateEmailTemplateMutation,
 } from '@src/hooks';
 import { useDebounce } from '@src/hooks/common';
@@ -21,9 +22,7 @@ const EmailSettings: React.FC = () => {
   const [order, setOrder] = useState<'asc' | 'desc'>(ESortDirection.DESC);
   const [orderBy, setOrderBy] = useState<keyof EmailSettingItem>('createdDate');
   const [openEditModal, setOpenEditModal] = useState(false);
-  const [selectedEmail, setSelectedEmail] = useState<EmailSettingItem | null>(
-    null,
-  );
+  const [selectedEmailId, setSelectedEmailId] = useState<string | null>(null);
 
   const searchParams = useMemo(() => {
     return {
@@ -35,6 +34,8 @@ const EmailSettings: React.FC = () => {
 
   const { data, isLoading, isError } = useGetEmailTemplates(searchParams);
   const updateEmailMutation = useUpdateEmailTemplateMutation();
+  const { data: emailDetail, isLoading: isLoadingDetail } =
+    useGetEmailTemplateById(selectedEmailId || undefined);
 
   // Transform API data to component format
   const transformedData = useMemo(() => {
@@ -72,18 +73,36 @@ const EmailSettings: React.FC = () => {
     setOrderBy(property);
   };
 
-  const handleEdit = async (id: string | number) => {
-    const emailItem = transformedData.find((item) => item.id === id);
-    if (emailItem) {
-      setSelectedEmail(emailItem);
-      setOpenEditModal(true);
-    }
+  const handleEdit = (id: string | number) => {
+    setSelectedEmailId(String(id));
+    setOpenEditModal(true);
   };
 
   const handleCloseModal = () => {
     setOpenEditModal(false);
-    setSelectedEmail(null);
+    setSelectedEmailId(null);
   };
+
+  // Transform email detail to component format
+  const selectedEmail = useMemo(() => {
+    if (!emailDetail) return null;
+
+    const createdDate = formatDate(emailDetail.createdAt, 'YYYY-MM-DD HH:mm');
+    const updatedDate =
+      emailDetail.updatedAt && emailDetail.updatedAt !== '0001-01-01T00:00:00Z'
+        ? formatDate(emailDetail.updatedAt, 'YYYY-MM-DD HH:mm')
+        : '';
+
+    return {
+      id: emailDetail.id,
+      subject: emailDetail.subject,
+      remarks: emailDetail.remarks || '',
+      createdDate,
+      updatedDate,
+      emailEn: emailDetail.emailEn || '',
+      emailTh: emailDetail.emailTh || '',
+    };
+  }, [emailDetail]);
 
   const handleUpdateEmail = (updateData: {
     subject: string;
@@ -250,7 +269,7 @@ const EmailSettings: React.FC = () => {
         {renderContent()}
       </Box>
       <EditEmailModalOrganism
-        open={openEditModal}
+        open={openEditModal && !!selectedEmail && !isLoadingDetail}
         onClose={handleCloseModal}
         onSubmit={handleUpdateEmail}
         initialData={selectedEmail}
