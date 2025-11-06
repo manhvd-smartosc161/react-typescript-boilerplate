@@ -11,6 +11,7 @@
   "emailSettings": "Email Settings",
   "contracts": "Contracts",
   "userManagement": "User Roles",
+  "rolesPermission": "Roles Permission",
   "actions": "Actions",
   "edit": "Edit",
   "delete": "Delete",
@@ -20,12 +21,18 @@
     "new": "New",
     "waiting": "Waiting",
     "rejected": "Rejected",
-    "approved": "approved"
+    "approved": "approved",
+    "active": "Active",
+    "inactive": "Inctive",
+    "deleted": "Deleted"
   },
   "results": "Results",
   "rowsPerPage": "Rows Per Page",
   "loadMore": "Load More",
   "action": "Action",
   "searchKeyword": "Search Keyword",
-  "clearSearch": "Clear Search"
+  "clearSearch": "Clear Search",
+  "add": "Add",
+  "cancel": "Cancel",
+  "update": "Update"
 }

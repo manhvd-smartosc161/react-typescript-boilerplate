@@ -21,7 +21,7 @@ export interface ModalDialogProps {
   hideCloseButton?: boolean;
 }
 
-export const ModalDialog: React.FC<ModalDialogProps> = ({
+const ModalDialog: React.FC<ModalDialogProps> = ({
   open,
   onClose,
   title,
@@ -61,3 +61,4 @@ export const ModalDialog: React.FC<ModalDialogProps> = ({
     </StyledDialogContainer>
   );
 };
+export default ModalDialog;

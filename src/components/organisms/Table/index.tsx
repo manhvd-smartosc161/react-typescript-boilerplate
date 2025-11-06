@@ -12,6 +12,8 @@ import {
   TableContainer,
   TableSortLabel,
   Checkbox,
+  SxProps,
+  Theme,
 } from '@mui/material';
 import {
   StyledTableContainer,
@@ -61,6 +63,7 @@ export interface TableProps<T = any> {
   selectedRows?: Array<string | number>;
   onSelectedRowsChange?: (keys: Array<string | number>, records: T[]) => void;
   toolbar?: React.ReactNode;
+  style?: SxProps<Theme>;
 }
 
 const TableOrganism = <T,>({
@@ -81,6 +84,7 @@ const TableOrganism = <T,>({
   selectedRows: selectedRowsProp,
   onSelectedRowsChange,
   toolbar,
+  style,
 }: TableProps<T>) => {
   const { t } = useTranslation();
   const handleRowClick = (record: T, index: number) => {
@@ -315,7 +319,7 @@ const TableOrganism = <T,>({
   };
 
   return (
-    <StyledTableContainer>
+    <StyledTableContainer sx={style}>
       {tableTitle && (
         <TableHeader tableIcon={tableIcon} tableTitle={tableTitle} />
       )}

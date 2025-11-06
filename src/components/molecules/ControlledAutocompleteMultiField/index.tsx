@@ -4,11 +4,7 @@ import { AutocompleteProps } from '@mui/material/Autocomplete';
 import { InputLabelAtom } from '@src/components/atoms';
 import { StyledFormControl } from '@src/components/atoms/Autocomplete/index.styled';
 import AutocompleteMultiAtom from '@src/components/atoms/AutocompleteMulti';
-
-export interface AutocompleteOption {
-  id: string;
-  label: string;
-}
+import { AutocompleteOption } from '@src/components/atoms/Autocomplete';
 
 interface ControlledAutocompleteMultiFieldProps<
   TFieldValues extends FieldValues,

@@ -7,6 +7,7 @@ export const StyledDialogContainer = styled(Dialog)(({ theme }) => ({
     boxShadow: theme.shadows[3],
     border: `1px solid ${theme.palette.divider}`,
     padding: theme.spacing(4),
+    backgroundColor: 'white',
     [theme.breakpoints.down('md')]: {
       margin: 0,
       width: '100%',

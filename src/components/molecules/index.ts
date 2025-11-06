@@ -27,3 +27,6 @@ export { default as Alert } from './Alert';
 export { default as LanguageSwitcher } from './LanguageSwitcher';
 export { default as CollapsibleCard } from './CollapsibleCard';
 export { default as StepButtonMolecule } from './StepButton';
+export { default as ModalDialog } from './ModalDialog';
+export { default as ControlledAutocompleteMultiField } from './ControlledAutocompleteMultiField';
+export { default as TableToolbar } from './TableToolbar';

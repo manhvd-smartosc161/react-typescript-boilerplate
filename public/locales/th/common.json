@@ -10,7 +10,8 @@
   "auditLogs": "บันทึก",
   "emailSettings": "การตั้งค่าอีเมล",
   "contracts": "สัญญา",
-  "userManagement": "User Roles",
+  "userManagement": "บทบาทผู้ใช้",
+  "rolesPermission": "บทบาทและสิทธิ์การเข้าถึง",
   "actions": "การดำเนินการ",
   "edit": "แก้ไข",
   "delete": "ลบ",
@@ -20,12 +21,18 @@
     "new": "ใหม่",
     "waiting": "ซึ่งรอคอย",
     "rejected": "ถูกปฏิเสธ",
-    "approved": "ที่ได้รับการอนุมัติ"
+    "approved": "ที่ได้รับการอนุมัติ",
+    "active": "ใช้งานอยู่",
+    "inactive": "ไม่ใช้งาน",
+    "deleted": "ถูกลบแล้ว"
   },
   "results": "ผลลัพธ์",
   "rowsPerPage": "จำนวนแถวต่อหน้า",
   "loadMore": "โหลดเพิ่มเติม",
   "action": "การดำเนินการ",
   "searchKeyword": "คำค้นหา",
-  "clearSearch": "ล้างการค้นหา"
+  "clearSearch": "ล้างการค้นหา",
+  "add": "เพิ่ม",
+  "cancel": "ยกเลิก",
+  "update": "อัปเดต"
 }

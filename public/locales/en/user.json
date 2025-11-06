@@ -37,5 +37,8 @@
   "lastUpdated": "Last Updated",
   "role": "Role",
   "status": "status",
-  "id": "ID"
+  "id": "ID",
+  "activate": "Activate",
+  "deactivate": "Deactivate",
+  "changeRole": "Change Role"
 }

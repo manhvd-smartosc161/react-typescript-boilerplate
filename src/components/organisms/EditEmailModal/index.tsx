@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Box } from '@mui/material';
 import { ButtonAtom } from '@src/components/atoms';
-import { ModalDialog } from '@src/components/molecules/ModalDialog';
+import { ModalDialog } from '@src/components/molecules';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
   ControlledTextAreaField,
