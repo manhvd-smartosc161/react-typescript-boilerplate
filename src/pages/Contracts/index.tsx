@@ -258,6 +258,7 @@ const Contracts: React.FC = () => {
             placeholder="Action"
             size="small"
             fullWidth={false}
+            disabled={selectedRows.length === 0}
             options={[
               { value: 'activate', label: 'Activate' },
               { value: 'terminate', label: 'Terminate' },
