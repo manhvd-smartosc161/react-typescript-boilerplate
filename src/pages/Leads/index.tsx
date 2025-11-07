@@ -17,7 +17,7 @@ const LeadsPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState<SortDirection>(ESortDirection.ASC);
-  const [orderBy, setOrderBy] = useState('nameEn');
+  const [orderBy, setOrderBy] = useState('name_en');
   const [openAddModal, setOpenAddModal] = useState<boolean>(false);
   const currentUser = useRecoilValue(currentUserState);
 
