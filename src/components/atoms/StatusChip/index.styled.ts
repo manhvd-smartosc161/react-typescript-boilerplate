@@ -15,6 +15,8 @@ export const StyledStatusChip = styled(Chip)<{ status: string }>(({
         return { bg: '#FEDFDE', color: '#424242' };
       case ERegistrationStatus.APPROVED:
         return { bg: '#96e0acff', color: '#424242' };
+      case ERegistrationStatus.ACTIVATED:
+        return { bg: '#BCDCFC', color: '#163E70' };
       default:
         return { bg: '#f5f5f5', color: '#757575' };
     }

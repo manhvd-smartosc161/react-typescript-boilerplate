@@ -46,6 +46,8 @@ const AuthPageTemplate: FC<AuthPageTemplateProps> = ({ children }) => {
           return <>{t('common:userManagement')}</>;
         case ROUTES.ROLES_PERMISSION:
           return <>{t('common:rolesPermission')}</>;
+        case ROUTES.ITEMS:
+          return <>{t('common:itemManagement')}</>;
         default:
           return <>{t('common:dashboard')}</>;
       }

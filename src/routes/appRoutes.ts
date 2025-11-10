@@ -17,6 +17,7 @@ const EmailSettings = lazy(() => import('@src/pages/EmailSettings'));
 const Contracts = lazy(() => import('@src/pages/Contracts'));
 const UserManagement = lazy(() => import('@src/pages/UserMangement'));
 const RolesPermission = lazy(() => import('@src/pages/RolesPermission'));
+const ItemManagement = lazy(() => import('@src/pages/ItemManagement'));
 
 export interface AppRoute {
   path: string;
@@ -136,6 +137,13 @@ export default [
   {
     path: routes.ROLES_PERMISSION,
     component: RolesPermission,
+    restricted: false,
+    isPrivate: true,
+    layout: 'main',
+  },
+  {
+    path: routes.ITEMS,
+    component: ItemManagement,
     restricted: false,
     isPrivate: true,
     layout: 'main',

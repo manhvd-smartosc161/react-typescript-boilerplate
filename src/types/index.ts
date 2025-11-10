@@ -6,3 +6,4 @@ export * from './lead';
 export * from './profile';
 export * from './supplier';
 export * from './role';
+export * from './item';
