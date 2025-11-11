@@ -131,3 +131,4 @@ export const contractsData: ContractItem[] = [
     status: 'Inactive',
   },
 ];
+
