@@ -1,26 +1,56 @@
-import React, { useState } from 'react';
-import { Box } from '@mui/material';
+import React, { useMemo, useState } from 'react';
+import { Box, CircularProgress } from '@mui/material';
 import { PageHeaderOrganism, TableOrganism } from '@src/components/organisms';
 import { InputAtom, IconAtom } from '@src/components/atoms';
 import { ESortDirection } from '@src/constants';
-import { auditLogsData, AuditLogItem } from '@src/mock/auditLogsData';
+import { AuditLogItem } from '@src/types/auditLog';
+import { useGetAuditLogs } from '@src/hooks';
+import { useDebounce } from '@src/hooks/common';
+import { formatDate } from '@src/utils/date';
+import { AuditLog } from '@src/types/auditLog';
 
 const AuditLogs: React.FC = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
+  const debouncedSearchKeyword = useDebounce(searchKeyword, 500);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [order, setOrder] = useState<'asc' | 'desc'>(ESortDirection.ASC);
-  const [orderBy, setOrderBy] = useState<keyof AuditLogItem>('id');
+  const [order, setOrder] = useState<'asc' | 'desc'>(ESortDirection.DESC);
+  const [orderBy, setOrderBy] = useState<keyof AuditLogItem>('timestamp');
 
-  // TODO: Filter will be handled by API call
-  const filteredData = auditLogsData;
+  const searchParams = useMemo(() => {
+    return {
+      page: currentPage,
+      limit: rowsPerPage,
+      orderBy,
+      order,
+      ...(debouncedSearchKeyword && { keyword: debouncedSearchKeyword }),
+    };
+  }, [currentPage, rowsPerPage, orderBy, order, debouncedSearchKeyword]);
 
-  const total = filteredData.length;
-  const pagesCount = Math.ceil(total / rowsPerPage);
-  const paginatedData = filteredData.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage,
-  );
+  const { data, isLoading, isError } = useGetAuditLogs(searchParams);
+
+  // Transform API data to component format
+  const transformedData = useMemo(() => {
+    if (!data?.items) return [];
+
+    return data.items.map((item: AuditLog): AuditLogItem => {
+      // Format timestamp
+      const timestamp = formatDate(item.timestamp, 'YYYY-MM-DD HH:mm');
+
+      return {
+        id: item.id,
+        timestamp,
+        user: item.userEmail || item.user || '',
+        role: item.role || '',
+        action: item.action || '',
+        menu: item.menu || '',
+        details: item.details || '',
+      };
+    });
+  }, [data]);
+
+  const total = data?.pagination?.total || 0;
+  const pagesCount = data?.pagination?.pagesCount || 0;
 
   const handleRequestSort = (
     _event: React.MouseEvent<unknown>,
@@ -83,6 +113,73 @@ const AuditLogs: React.FC = () => {
     },
   ];
 
+  const renderLoading = () => {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: 400,
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  };
+
+  const renderError = () => {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: 400,
+        }}
+      >
+        <Box>Error loading audit logs. Please try again.</Box>
+      </Box>
+    );
+  };
+
+  const renderTable = () => {
+    return (
+      <TableOrganism<AuditLogItem>
+        columns={columns}
+        data={transformedData}
+        rowKey="id"
+        order={order}
+        orderBy={orderBy}
+        pagination={{
+          currentPage,
+          rowsPerPage,
+          total,
+          pagesCount,
+          hasMore: data?.pagination?.hasMore || false,
+        }}
+        onChangePage={(page) => setCurrentPage(page)}
+        onChangeRowsPerPage={(size) => {
+          setRowsPerPage(size);
+          setCurrentPage(1);
+        }}
+        onRequestSort={handleRequestSort}
+      />
+    );
+  };
+
+  const renderContent = () => {
+    if (isLoading) {
+      return renderLoading();
+    }
+
+    if (isError) {
+      return renderError();
+    }
+
+    return renderTable();
+  };
+
   return (
     <Box>
       <PageHeaderOrganism title="Audit Logs" />
@@ -97,26 +194,7 @@ const AuditLogs: React.FC = () => {
             sx={{ maxWidth: 400 }}
           />
         </Box>
-        <TableOrganism<AuditLogItem>
-          columns={columns}
-          data={paginatedData}
-          rowKey="id"
-          order={order}
-          orderBy={orderBy}
-          pagination={{
-            currentPage,
-            rowsPerPage,
-            total,
-            pagesCount,
-            hasMore: false,
-          }}
-          onChangePage={(page) => setCurrentPage(page)}
-          onChangeRowsPerPage={(size) => {
-            setRowsPerPage(size);
-            setCurrentPage(1);
-          }}
-          onRequestSort={handleRequestSort}
-        />
+        {renderContent()}
       </Box>
     </Box>
   );
