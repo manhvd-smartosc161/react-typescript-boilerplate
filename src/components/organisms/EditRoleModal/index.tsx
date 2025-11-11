@@ -8,7 +8,7 @@ import {
   ModalDialog,
 } from '@src/components/molecules';
 import { RETAILER_TYPE } from '@src/constants';
-import { useUpdateRoleMutation } from '@src/hooks/role';
+import { useUpdateRoleMutation } from '@src/hooks';
 import { RolePermissionItem, RoleFormData } from '@src/types';
 
 export interface EditRoleModalProps {
