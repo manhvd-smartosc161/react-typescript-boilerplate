@@ -13,4 +13,5 @@ export default {
   CONTRACTS: '/contracts',
   USERS: '/users',
   ROLES_PERMISSION: '/roles-permission',
+  ITEMS: '/items',
 };

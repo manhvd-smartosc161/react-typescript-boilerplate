@@ -21,11 +21,13 @@ export type BulkActionItem = {
 export type BulkActionMenuProps = {
   actions: BulkActionItem[];
   disabled?: boolean;
+  label?: string;
 };
 
 const BulkActionMenu: React.FC<BulkActionMenuProps> = ({
   actions,
   disabled = false,
+  label,
 }) => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -66,7 +68,7 @@ const BulkActionMenu: React.FC<BulkActionMenuProps> = ({
             disabled={disabled}
             endIcon={<ArrowDropDownIcon />}
           >
-            {t('common:action')}
+            {label ?? t('common:action')}
           </Button>
         </span>
       </Tooltip>

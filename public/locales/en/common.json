@@ -12,6 +12,7 @@
   "contracts": "Contracts",
   "userManagement": "User Roles",
   "rolesPermission": "Roles Permission",
+  "itemManagement": "Item Management",
   "actions": "Actions",
   "edit": "Edit",
   "delete": "Delete",
@@ -24,7 +25,8 @@
     "approved": "approved",
     "active": "Active",
     "inactive": "Inctive",
-    "deleted": "Deleted"
+    "deleted": "Deleted",
+    "activated": "Activated"
   },
   "results": "Results",
   "rowsPerPage": "Rows Per Page",

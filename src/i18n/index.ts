@@ -12,7 +12,16 @@ void i18n
   .init({
     fallbackLng: 'en',
     supportedLngs: ['en', 'th'],
-    ns: ['auth', 'user', 'common', 'supplier', 'lead', 'contact-us', 'role'],
+    ns: [
+      'auth',
+      'user',
+      'common',
+      'supplier',
+      'lead',
+      'contact-us',
+      'role',
+      'item',
+    ],
     defaultNS,
     interpolation: { escapeValue: false },
     detection: {

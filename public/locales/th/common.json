@@ -12,6 +12,7 @@
   "contracts": "สัญญา",
   "userManagement": "บทบาทผู้ใช้",
   "rolesPermission": "บทบาทและสิทธิ์การเข้าถึง",
+  "itemManagement": "การจัดการสินค้า",
   "actions": "การดำเนินการ",
   "edit": "แก้ไข",
   "delete": "ลบ",
@@ -24,7 +25,8 @@
     "approved": "ที่ได้รับการอนุมัติ",
     "active": "ใช้งานอยู่",
     "inactive": "ไม่ใช้งาน",
-    "deleted": "ถูกลบแล้ว"
+    "deleted": "ถูกลบแล้ว",
+    "activated": "เปิดใช้งานแล้ว"
   },
   "results": "ผลลัพธ์",
   "rowsPerPage": "จำนวนแถวต่อหน้า",

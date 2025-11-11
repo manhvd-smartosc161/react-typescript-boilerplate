@@ -22,6 +22,7 @@ import EditNoteIcon from './assets/edit-note.svg';
 import CloseIcon from './assets/close.svg';
 import EmailIcon from './assets/email.svg';
 import ContractIcon from './assets/contract.svg';
+import FilterIcon from './assets/filter.svg';
 
 const iconMap = {
   home: HomeIcon,
@@ -48,6 +49,7 @@ const iconMap = {
   close: CloseIcon,
   email: EmailIcon,
   contract: ContractIcon,
+  filter: FilterIcon,
 };
 
 export default iconMap;
