@@ -19,7 +19,7 @@ import {
   useBulkUpdateRoleStatusMutation,
   useCreateRoleMutation,
   useGetRoles,
-} from '@src/hooks/role';
+} from '@src/hooks';
 
 type EditState = {
   open: boolean;
@@ -40,8 +40,14 @@ const RolesPermission: React.FC = () => {
   const [addModal, setAddModal] = useState({
     open: false,
   });
-  const [editPermissionModal, setEditPermissionModal] = useState({
+  const [editPermissionModal, setEditPermissionModal] = useState<{
+    roleId: string;
+    open: boolean;
+    permissionIds: string[];
+  }>({
+    roleId: '',
     open: false,
+    permissionIds: [],
   });
   const [selectedRows, setSelectedRows] = useState<Array<string | number>>([]);
   const searchParams = {
@@ -51,7 +57,7 @@ const RolesPermission: React.FC = () => {
     sortOrder: order,
     searchTerms: query,
   };
-  const { data } = useGetRoles(searchParams);
+  const { data, refetch } = useGetRoles(searchParams);
   const createRoleMutation = useCreateRoleMutation(searchParams).mutateAsync;
   const bulkUpdateStatusMutation =
     useBulkUpdateRoleStatusMutation().mutateAsync;
@@ -100,6 +106,11 @@ const RolesPermission: React.FC = () => {
       roleIds: selectedRows.map((el) => el.toString()),
       status: action,
     });
+    setSelectedRows([]);
+
+    if (action === EStatusUpdate.DELETED) {
+      refetch();
+    }
   };
 
   const actions: BulkActionItem[] = [
@@ -174,12 +185,18 @@ const RolesPermission: React.FC = () => {
       label: t('permission'),
       width: '120px',
       align: 'center' as const,
-      render: () => (
+      render: (id: string, record: RolePermissionItem) => (
         <StyledActionIconButton>
           <IconAtom
             name="edit"
             size={20}
-            onClick={() => setEditPermissionModal({ open: true })}
+            onClick={() =>
+              setEditPermissionModal({
+                roleId: id,
+                open: true,
+                permissionIds: record.permissionIds,
+              })
+            }
           />
         </StyledActionIconButton>
       ),
@@ -250,8 +267,16 @@ const RolesPermission: React.FC = () => {
       )}
       {editPermissionModal.open && (
         <EditRolePermissionModalOrganism
+          roleId={editPermissionModal.roleId}
           open={editPermissionModal.open}
-          onClose={() => setEditPermissionModal({ open: false })}
+          activePermission={editPermissionModal.permissionIds}
+          onClose={() =>
+            setEditPermissionModal({
+              roleId: '',
+              open: false,
+              permissionIds: [],
+            })
+          }
         />
       )}
     </Box>

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { getErrorMessage } from '@src/errors';
-import { roleService } from '@src/api/services/roleService';
+import { roleService } from '@src/api/services';
 import {
   PaginatedResponse,
   RoleDetailData,

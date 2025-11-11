@@ -1,10 +1,10 @@
+export interface ActionItem {
+  id: string;
+  action: string;
+  description: string;
+}
 export interface PermissionItem {
-  key: string;
-  label: string;
-  permissions: {
-    create: boolean;
-    read: boolean;
-    update: boolean;
-    delete: boolean;
-  };
+  name: string;
+  resource: string;
+  actions: ActionItem[];
 }

@@ -9,12 +9,14 @@ export interface RolePermissionItem {
   description: string;
   type: string;
   permissionIds: string[];
+  status: EStatusUpdate;
 }
 
 export interface RoleDetailData {
-  retailerType: string[];
-  description: string;
-  name: string;
+  retailerType?: string[];
+  description?: string;
+  name?: string;
+  permissionIds?: string[];
 }
 
 export interface RoleFormData {

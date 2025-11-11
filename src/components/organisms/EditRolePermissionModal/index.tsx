@@ -1,87 +1,82 @@
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PermissionItem } from '@src/types/permission';
+import { ActionItem, PermissionItem } from '@src/types/permission';
 import { ButtonAtom, CheckBoxAtom } from '@src/components/atoms';
-import { permissionList } from '@src/mock/permission';
 import TableOrganism from '../Table';
 import { ModalDialog } from '@src/components/molecules';
+import { useGetAllPermissions, useUpdateRoleMutation } from '@src/hooks';
 
 interface EditRolePermissionModalProps {
+  roleId: string;
   open: boolean;
+  activePermission: string[];
   onClose: () => void;
 }
 
 const EditRolePermissionModal: FC<EditRolePermissionModalProps> = ({
+  roleId,
   open,
+  activePermission,
   onClose,
 }) => {
   const { t } = useTranslation('role');
-  const [data, setData] = useState(permissionList);
+  const { data: permissions } = useGetAllPermissions();
+  const [accessList, setAccessList] = useState<string[]>(activePermission);
+  const updateRoleMutation = useUpdateRoleMutation().mutateAsync;
+  const handleChangeAccess = (id: string, checked: boolean) => {
+    if (checked && !accessList.includes(id)) {
+      setAccessList([...accessList, id]);
+    } else {
+      setAccessList(accessList.filter((el) => el !== id));
+    }
+  };
 
-  const handleChangeAccess = (key: string, updatedPermission: any) => {
-    let updated = data.map((item) =>
-      item.key === key
-        ? {
-            ...item,
-            permissions: { ...item.permissions, ...updatedPermission },
-          }
-        : item,
+  const handleSubmit = async () => {
+    await updateRoleMutation({
+      id: roleId,
+      data: {
+        permissionIds: accessList,
+      },
+    });
+    onClose();
+  };
+
+  const renderCheckBoxAction = (type: string, actions: ActionItem[]) => {
+    const action = actions.filter((el) => el.action === type)?.[0];
+    return (
+      <CheckBoxAtom
+        checked={action && accessList.includes(action.id)}
+        disabled={!action}
+        onChange={(e) => handleChangeAccess(action.id, e.target.checked)}
+      />
     );
-    setData(updated);
   };
 
   const columns = [
     {
-      key: 'label' as keyof PermissionItem,
+      key: 'name' as keyof PermissionItem,
       label: t('permissionDetails'),
     },
     {
-      key: 'permissions' as keyof PermissionItem,
+      key: 'actions' as keyof PermissionItem,
       label: t('create'),
-      render: (value: any, record: PermissionItem) => (
-        <CheckBoxAtom
-          checked={value.create}
-          onChange={(e) =>
-            handleChangeAccess(record.key, { create: e.target.checked })
-          }
-        />
-      ),
+      render: (actions: ActionItem[]) => renderCheckBoxAction('post', actions),
     },
     {
-      key: 'permissions' as keyof PermissionItem,
+      key: 'actions' as keyof PermissionItem,
       label: t('read'),
-      render: (value: any, record: PermissionItem) => (
-        <CheckBoxAtom
-          checked={value.read}
-          onChange={(e) =>
-            handleChangeAccess(record.key, { read: e.target.checked })
-          }
-        />
-      ),
+      render: (actions: ActionItem[]) => renderCheckBoxAction('get', actions),
     },
     {
-      key: 'permissions' as keyof PermissionItem,
+      key: 'actions' as keyof PermissionItem,
       label: t('update'),
-      render: (value: any, record: PermissionItem) => (
-        <CheckBoxAtom
-          checked={value.update}
-          onChange={(e) =>
-            handleChangeAccess(record.key, { update: e.target.checked })
-          }
-        />
-      ),
+      render: (actions: ActionItem[]) => renderCheckBoxAction('put', actions),
     },
     {
-      key: 'permissions' as keyof PermissionItem,
+      key: 'actions' as keyof PermissionItem,
       label: t('delete'),
-      render: (value: any, record: PermissionItem) => (
-        <CheckBoxAtom
-          checked={value.delete}
-          onChange={(e) =>
-            handleChangeAccess(record.key, { delete: e.target.checked })
-          }
-        />
-      ),
+      render: (actions: ActionItem[]) =>
+        renderCheckBoxAction('delete', actions),
     },
   ];
 
@@ -93,6 +88,7 @@ const EditRolePermissionModal: FC<EditRolePermissionModalProps> = ({
         sx={{ textTransform: 'none' }}
         type="submit"
         form="edit-role-form"
+        onClick={() => handleSubmit()}
       >
         {t('common:update')}
       </ButtonAtom>
@@ -119,7 +115,7 @@ const EditRolePermissionModal: FC<EditRolePermissionModalProps> = ({
     >
       <TableOrganism<PermissionItem>
         columns={columns}
-        data={data}
+        data={permissions || []}
         style={{ border: 'none' }}
       />
     </ModalDialog>
