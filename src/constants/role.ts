@@ -8,6 +8,7 @@ export const ROLE_ENDPOINT = {
   GET_BY_ID: (id: string) => `${ROLE_PATH}/${id}`,
   GET_LIST: ROLE_PATH,
   BULK_UPDATE: `${ROLE_PATH}/bulk-update-status`,
+  GET_ALL: `${ROLE_PATH}/all`,
 } as const;
 
 export enum ERetailerType {

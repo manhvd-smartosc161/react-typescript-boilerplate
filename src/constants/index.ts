@@ -14,3 +14,4 @@ export * from './message';
 export * from './regex';
 export * from './supplier';
 export * from './role';
+export * from './user';

@@ -40,5 +40,7 @@
   "id": "รหัส",
   "activate": "เปิดการใช้งาน",
   "deactivate": "ปิดการใช้งาน",
-  "changeRole": "เปลี่ยนบทบาท"
+  "changeRole": "เปลี่ยนบทบาท",
+  "sendEmailNotification": "ส่งการแจ้งเตือนทางอีเมล",
+  "editUser": "แก้ไขผู้ใช้"
 }

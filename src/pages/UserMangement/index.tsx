@@ -7,12 +7,14 @@ import {
   TableOrganism,
 } from '@src/components/organisms';
 import { ActionButtonAtom } from '@src/components/atoms';
-import { SortDirection, UserRolesItem } from '@src/types';
+import { RoleItem, SortDirection, UserRolesItem } from '@src/types';
 import { ESortDirection } from '@src/constants';
 import { DATE_FORMATS, formatDate } from '@src/utils';
 import { TableToolbar } from '@src/components/molecules';
 import { BulkActionItem } from '@src/components/molecules/TableToolbar/BulkActionMenu';
-import { usersData } from '@src/mock/usersData';
+import { useGetUsers } from '@src/hooks';
+import { EUserStatus } from '@src/constants/user';
+import { useBulkUpdateUserStatusMutation } from '@src/hooks/user/useBulkUpdateUserStatusMutation';
 
 type EditState = {
   open: boolean;
@@ -24,15 +26,24 @@ const UserManagement: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState<SortDirection>(ESortDirection.ASC);
-  const [orderBy, setOrderBy] = useState('displayName');
+  const [orderBy, setOrderBy] = useState('name');
   const [query, setQuery] = useState('');
   const [editState, setEditState] = useState<EditState>({
     open: false,
     data: null,
   });
   const [selectedRows, setSelectedRows] = useState<Array<string | number>>([]);
+  const searchParams = {
+    page: currentPage,
+    limit: rowsPerPage,
+    sortBy: orderBy,
+    sortOrder: order,
+    searchTerms: query,
+  };
+  const bulkUpdateUserStatusMutation =
+    useBulkUpdateUserStatusMutation().mutateAsync;
+  const { data } = useGetUsers(searchParams);
 
-  const data = usersData;
   const handleEditUser = (user: UserRolesItem) => {
     setEditState({
       open: true,
@@ -46,6 +57,34 @@ const UserManagement: React.FC = () => {
       data: null,
     });
   };
+
+  const handleBulkUpdateStatus = (status: number) => {
+    bulkUpdateUserStatusMutation({
+      status,
+      userIds: selectedRows.map((el) => el.toString()),
+    });
+    setSelectedRows([]);
+  };
+
+  const actions: BulkActionItem[] = [
+    {
+      key: 'deactivate',
+      label: t('deactivate'),
+      onClick: async () => handleBulkUpdateStatus(EUserStatus.INACTIVE),
+    },
+    {
+      key: 'activate',
+      label: t('activate'),
+      onClick: async () => handleBulkUpdateStatus(EUserStatus.ACTIVE),
+    },
+    {
+      key: 'changeRole',
+      label: t('changeRole'),
+      onClick: () => {
+        alert('The feature will be launched soon');
+      },
+    },
+  ];
 
   const handleRequestSort = (
     _event: React.MouseEvent<unknown>,
@@ -63,26 +102,35 @@ const UserManagement: React.FC = () => {
       isSortable: false,
     },
     {
-      key: 'displayName' as keyof UserRolesItem,
+      key: 'name' as keyof UserRolesItem,
       label: t('displayName'),
       isSortable: true,
     },
     {
       key: 'email' as keyof UserRolesItem,
       label: t('email'),
-      isSortable: false,
+      isSortable: true,
     },
     {
       key: 'updatedAt' as keyof UserRolesItem,
       label: t('lastUpdated'),
       render: (value: string) =>
         formatDate(value, DATE_FORMATS.DISPLAY_DATE_FORMAT),
-      isSortable: false,
+      isSortable: true,
+    },
+    {
+      key: 'role' as keyof UserRolesItem,
+      label: t('role'),
+      render: (value: RoleItem) => value?.name,
     },
     {
       key: 'status' as keyof UserRolesItem,
       label: t('lead:status'),
-      render: (value: string) => t(`common:status.${value.toLowerCase()}`),
+      render: (value: number) =>
+        t(
+          `common:status.${value === EUserStatus.ACTIVE ? 'active' : 'inactive'}`,
+        ),
+      isSortable: true,
     },
     {
       key: 'id' as keyof UserRolesItem,
@@ -97,32 +145,9 @@ const UserManagement: React.FC = () => {
           {t('common:edit')}
         </ActionButtonAtom>
       ),
-      isSortable: false,
     },
   ];
-  const actions: BulkActionItem[] = [
-    {
-      key: 'deactivate',
-      label: t('deactivate'),
-      onClick: async () => {
-        alert('Deactive clicked');
-      },
-    },
-    {
-      key: 'activate',
-      label: t('activate'),
-      onClick: async () => {
-        alert('activate clicked');
-      },
-    },
-    {
-      key: 'changeRole',
-      label: t('changeRole'),
-      onClick: () => {
-        alert('activate clicked');
-      },
-    },
-  ];
+
   return (
     <Box>
       <PageHeaderOrganism title={t('userRoles')} />
