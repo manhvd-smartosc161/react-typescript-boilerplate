@@ -41,7 +41,7 @@ const AuditLogs: React.FC = () => {
         id: item.id,
         timestamp,
         user: item.userEmail || item.user || '',
-        role: item.role || '',
+        role: item.userRole || '',
         action: item.action || '',
         menu: item.menu || '',
         details: item.details || '',

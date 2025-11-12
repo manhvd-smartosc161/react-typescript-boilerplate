@@ -4,7 +4,7 @@ export interface AuditLog {
   id: number;
   timestamp: string;
   user: string;
-  role: string;
+  userRole: string;
   action: string;
   menu: string;
   details: string;
