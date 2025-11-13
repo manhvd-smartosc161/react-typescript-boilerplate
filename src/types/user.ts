@@ -53,15 +53,34 @@ export interface AuthState {
   refreshToken?: string;
 }
 
-export interface UserRolesItem {
+export interface RoleItem {
   id: string;
-  displayName: string;
-  email: string;
-  updatedAt: string;
-  role: string;
-  status: string;
+  name: string;
 }
 
-export interface UpdateUserRoleData extends UserRolesItem {
-  sendEmail: boolean;
+export interface UserRolesItem {
+  id: string;
+  avatar?: string;
+  name: string;
+  surname?: string;
+  email: string;
+  emailNotifications: boolean;
+  language?: string;
+  marketingNotifications?: boolean;
+  updatedAt?: string;
+  role?: RoleItem;
+  status?: number;
+}
+
+export interface UserRoleFormData {
+  id: string;
+  name: string;
+  emailNotifications: boolean;
+  roleId?: string;
+  status: number;
+}
+
+export interface BulkUpdateUserStatus {
+  status: number;
+  userIds: string[];
 }

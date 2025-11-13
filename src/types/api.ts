@@ -43,3 +43,10 @@ export interface SearchParams extends PaginationParams {
   searchTerms?: string;
   filters?: Record<string, any>;
 }
+
+export interface BulkUpdateResponse {
+  failedIds: string[];
+  failureCount: number;
+  successCount: number;
+  totalCount: number;
+}

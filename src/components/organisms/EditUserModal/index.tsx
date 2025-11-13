@@ -1,3 +1,6 @@
+import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Box } from '@mui/material';
 import { ButtonAtom, InputLabelAtom, SwitchAtom } from '@src/components/atoms';
 import {
@@ -6,8 +9,11 @@ import {
   ControlledTextField,
 } from '@src/components/molecules';
 import { ModalDialog } from '@src/components/molecules';
-import { UpdateUserRoleData, UserRolesItem } from '@src/types';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { EUserStatus } from '@src/constants/user';
+import { useGetAllRoles } from '@src/hooks';
+import { useUpdateUserMutation } from '@src/hooks/user/useUpdateUserMutation';
+import { userSchema } from '@src/schemas';
+import { UserRoleFormData, UserRolesItem } from '@src/types';
 export interface EditUserModalProps {
   data: UserRolesItem | null;
   open: boolean;
@@ -19,18 +25,26 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
   open,
   onClose,
 }) => {
-  const formMethods = useForm<UpdateUserRoleData>({
+  const { t } = useTranslation('user');
+  const { data: allRoles } = useGetAllRoles();
+  const updateUserMutation = useUpdateUserMutation().mutateAsync;
+  const formMethods = useForm<UserRoleFormData>({
+    resolver: yupResolver(userSchema),
+    mode: 'onBlur',
+    reValidateMode: 'onSubmit',
     defaultValues: {
+      id: data?.id,
       status: data?.status,
-      role: data?.role,
-      displayName: data?.displayName,
-      sendEmail: false,
+      roleId: data?.role?.id,
+      name: data?.name,
+      emailNotifications: data?.emailNotifications,
     },
-    mode: 'onSubmit',
   });
   const { handleSubmit, control } = formMethods;
-  const handleSubmitEditUser = (form: UpdateUserRoleData) => {
-    alert(JSON.stringify(form));
+
+  const handleSubmitEditUser = (form: UserRoleFormData) => {
+    updateUserMutation(form);
+    onClose();
   };
 
   const footer = (
@@ -42,7 +56,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
         type="submit"
         form="edit-user-form"
       >
-        Update
+        {t('common:update')}
       </ButtonAtom>
       <ButtonAtom
         variant="secondary"
@@ -50,7 +64,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
         onClick={onClose}
         sx={{ textTransform: 'none' }}
       >
-        Cancel
+        {t('common:cancel')}
       </ButtonAtom>
     </>
   );
@@ -58,7 +72,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
     <ModalDialog
       open={open}
       onClose={onClose}
-      title="Edit User"
+      title={t('editUser')}
       footer={footer}
       showFooter
       fullWidth
@@ -72,47 +86,42 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
         >
           <Box display="flex" flexDirection="column" gap={3}>
             <Box display="flex" gap={2}>
-              <InputLabelAtom>Status</InputLabelAtom>
+              <InputLabelAtom>{t('status')}</InputLabelAtom>
               <Controller
                 name="status"
                 control={control}
                 render={({ field: { value, onChange } }) => (
                   <SwitchAtom
-                    checked={Boolean(value)}
-                    onChange={(e) => onChange(e.target.checked)}
+                    checked={value === EUserStatus.ACTIVE}
+                    onChange={(e) =>
+                      onChange(
+                        e.target.checked
+                          ? EUserStatus.ACTIVE
+                          : EUserStatus.INACTIVE,
+                      )
+                    }
                   />
                 )}
               />
             </Box>
             <ControlledDropdownField
               control={control}
-              name="role"
-              label="Role"
+              name="roleId"
+              label={t('role')}
               size="medium"
-              options={[
-                {
-                  value: 'QA',
-                  label: 'QA',
-                },
-                {
-                  value: 'SUPPERADMIN',
-                  label: 'SUPPERADMIN',
-                },
-                {
-                  value: 'ADMIN',
-                  label: 'ADMIN',
-                },
-              ]}
+              options={
+                allRoles?.map((el) => ({ value: el.id, label: el.name })) ?? []
+              }
             />
             <ControlledTextField
               control={control}
-              name="displayName"
-              label="Display Name"
+              name="name"
+              label={t('displayName')}
             />
             <ControlledCheckBoxField
               control={control}
-              name="sendEmail"
-              label="Send email notification"
+              name="emailNotifications"
+              label={t('sendEmailNotification')}
               single
             />
           </Box>
