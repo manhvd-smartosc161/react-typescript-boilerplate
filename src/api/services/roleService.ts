@@ -12,45 +12,25 @@ export const roleService = {
   getList: async (
     searchParams: SearchParams,
   ): Promise<PaginatedResponse<RolePermissionItem>> => {
-    try {
-      const response = await apiClient.get(ROLE_ENDPOINT.GET_LIST, {
-        params: searchParams,
-      });
-      return response.data;
-    } catch (error: any) {
-      throw error;
-    }
+    const response = await apiClient.get(ROLE_ENDPOINT.GET_LIST, {
+      params: searchParams,
+    });
+    return response.data;
   },
   update: async (id: string, data: RoleDetailData) => {
-    try {
-      const response = await apiClient.put(ROLE_ENDPOINT.UPDATE(id), data);
-      return response.data;
-    } catch (error: any) {
-      throw error;
-    }
+    const response = await apiClient.put(ROLE_ENDPOINT.UPDATE(id), data);
+    return response.data;
   },
   create: async (data: RoleDetailData) => {
-    try {
-      const response = await apiClient.post(ROLE_ENDPOINT.CREATE, data);
-      return response.data;
-    } catch (error: any) {
-      throw error;
-    }
+    const response = await apiClient.post(ROLE_ENDPOINT.CREATE, data);
+    return response.data;
   },
   bulkUpdate: async (params: BulkUpdateRole) => {
-    try {
-      const response = await apiClient.put(ROLE_ENDPOINT.BULK_UPDATE, params);
-      return response.data;
-    } catch (error: any) {
-      throw error;
-    }
+    const response = await apiClient.put(ROLE_ENDPOINT.BULK_UPDATE, params);
+    return response.data;
   },
   getAll: async (): Promise<RolePermissionItem[]> => {
-    try {
-      const response = await apiClient.get(ROLE_ENDPOINT.GET_ALL);
-      return response.data.roles;
-    } catch (error: any) {
-      throw error;
-    }
+    const response = await apiClient.get(ROLE_ENDPOINT.GET_ALL);
+    return response.data.roles;
   },
 };

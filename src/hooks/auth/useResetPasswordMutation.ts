@@ -1,11 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import {
-  authService,
-  ResetPasswordRequest,
-  AuthError,
-} from '@src/api/services';
+import { authService, ResetPasswordRequest } from '@src/api/services';
+import { ApiError } from '@src/api/ApiError';
 
 export const useResetPasswordMutation = () => {
   const navigate = useNavigate();
@@ -16,7 +13,7 @@ export const useResetPasswordMutation = () => {
       toast.success('Password reset successfully! Redirecting to login...');
       setTimeout(() => navigate('/login'), 2000);
     },
-    onError: (error: AuthError) => {
+    onError: (error: ApiError) => {
       console.error('Reset password error:', error);
     },
   });

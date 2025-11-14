@@ -14,39 +14,25 @@ export const emailService = {
   getEmailTemplates: async (
     searchParams: SearchParams,
   ): Promise<PaginatedResponse<EmailTemplate>> => {
-    try {
-      const response = await apiClient.get(EMAIL_ENDPOINT.GET_TEMPLATES, {
-        params: searchParams,
-      });
-      return response.data;
-    } catch (error: any) {
-      throw error;
-    }
+    const response = await apiClient.get(EMAIL_ENDPOINT.GET_TEMPLATES, {
+      params: searchParams,
+    });
+    return response.data;
   },
 
   getEmailTemplateById: async (id: string): Promise<EmailTemplate> => {
-    try {
-      const response = await apiClient.get(
-        EMAIL_ENDPOINT.GET_TEMPLATE_BY_ID(id),
-      );
-      return response.data;
-    } catch (error: any) {
-      throw error;
-    }
+    const response = await apiClient.get(EMAIL_ENDPOINT.GET_TEMPLATE_BY_ID(id));
+    return response.data;
   },
 
   updateEmailTemplate: async (
     id: string,
     data: UpdateEmailTemplateRequest,
   ): Promise<EmailTemplate> => {
-    try {
-      const response = await apiClient.patch(
-        EMAIL_ENDPOINT.UPDATE_TEMPLATE(id),
-        data,
-      );
-      return response.data;
-    } catch (error: any) {
-      throw error;
-    }
+    const response = await apiClient.patch(
+      EMAIL_ENDPOINT.UPDATE_TEMPLATE(id),
+      data,
+    );
+    return response.data;
   },
 };
