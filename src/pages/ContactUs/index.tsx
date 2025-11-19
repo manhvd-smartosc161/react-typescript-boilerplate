@@ -20,14 +20,18 @@ import {
 } from '@src/components';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useCreateInquiryMutation } from '@src/hooks';
+
 interface ContactUsFormData {
   name: string;
   email: string;
   question: string;
 }
+
 const ContactUs: React.FC = () => {
   const { t } = useTranslation();
-  const { control } = useForm<ContactUsFormData>({
+  const createInquiryMutation = useCreateInquiryMutation();
+  const { control, handleSubmit, reset } = useForm<ContactUsFormData>({
     mode: 'onBlur',
     reValidateMode: 'onSubmit',
     defaultValues: {
@@ -36,6 +40,15 @@ const ContactUs: React.FC = () => {
       question: '',
     },
   });
+
+  const onSubmit = async (data: ContactUsFormData) => {
+    await createInquiryMutation.mutateAsync({
+      name: data.name,
+      email: data.email,
+      message: data.question,
+    });
+    reset();
+  };
 
   return (
     <StyledContainer>
@@ -73,7 +86,11 @@ const ContactUs: React.FC = () => {
               <StyledSectionTitle variant="h2">
                 {t('contact-us:contactUs')}
               </StyledSectionTitle>
-              <Box component="form" autoComplete="off">
+              <Box
+                component="form"
+                autoComplete="off"
+                onSubmit={handleSubmit(onSubmit)}
+              >
                 <Stack spacing={2}>
                   <Box>
                     <ControlledTextField
@@ -81,6 +98,7 @@ const ContactUs: React.FC = () => {
                       control={control}
                       label={t('contact-us:name')}
                       placeholder={t('contact-us:enterYourName')}
+                      required
                     />
                   </Box>
                   <Box>
@@ -89,6 +107,8 @@ const ContactUs: React.FC = () => {
                       control={control}
                       label={t('contact-us:email')}
                       placeholder="your@email.com"
+                      type="email"
+                      required
                     />
                   </Box>
                   <Box>
@@ -97,18 +117,28 @@ const ContactUs: React.FC = () => {
                       control={control}
                       label={t('contact-us:question')}
                       rows={3}
+                      required
                     />
                   </Box>
 
                   <StyledActions direction="row">
-                    <ButtonAtom variant="primary" type="submit" size="medium">
-                      {t('contact-us:save')}
+                    <ButtonAtom
+                      variant="primary"
+                      type="submit"
+                      size="medium"
+                      disabled={createInquiryMutation.isPending}
+                    >
+                      {createInquiryMutation.isPending
+                        ? t('common:submitting') || 'Submitting...'
+                        : t('contact-us:save')}
                     </ButtonAtom>
                     <ButtonAtom
                       variant="secondary"
                       type="button"
                       size="medium"
                       sx={{ bgcolor: '#E8E8E8', color: '#000000' }}
+                      onClick={() => reset()}
+                      disabled={createInquiryMutation.isPending}
                     >
                       {t('contact-us:cancel')}
                     </ButtonAtom>

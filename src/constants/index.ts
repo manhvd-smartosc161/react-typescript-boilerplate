@@ -9,6 +9,7 @@ export * from './product';
 export * from './auth';
 export * from './auditLog';
 export * from './email';
+export * from './inquiry';
 export * from './language';
 export * from './message';
 export * from './regex';

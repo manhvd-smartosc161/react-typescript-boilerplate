@@ -2,6 +2,7 @@ export * from './common';
 export * from './auth';
 export * from './auditLog';
 export * from './email';
+export * from './inquiry';
 export * from './user';
 export * from './supplier';
 export * from './role';
