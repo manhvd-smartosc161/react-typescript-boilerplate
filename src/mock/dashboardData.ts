@@ -1,160 +1,145 @@
-import PersonIcon from '@mui/icons-material/Person';
-import GroupIcon from '@mui/icons-material/Group';
-import EventIcon from '@mui/icons-material/Event';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import CategoryIcon from '@mui/icons-material/Category';
 
 export { mockUser, mockUsers } from './authData';
 
 export const mockStats = [
   {
-    title: 'Total Employees',
-    value: 156,
-    icon: PersonIcon,
+    title: 'Total Items',
+    value: 1248,
+    icon: InventoryIcon,
     color: 'primary' as const,
   },
   {
-    title: 'New Employees',
-    value: 12,
-    icon: GroupIcon,
+    title: 'Active Items',
+    value: 1120,
+    icon: CheckCircleIcon,
     color: 'success' as const,
   },
   {
-    title: 'Leave Days',
-    value: 8,
-    icon: EventIcon,
+    title: 'Inactive Items',
+    value: 128,
+    icon: CancelIcon,
     color: 'warning' as const,
   },
   {
-    title: 'Total Salary',
-    value: '125M',
-    icon: AttachMoneyIcon,
-    color: 'danger' as const,
-    suffix: ' USD',
+    title: 'Categories',
+    value: 15,
+    icon: CategoryIcon,
+    color: 'info' as const,
   },
 ];
 
-export const mockEmployees = [
+// Latest Items List
+export const mockLatestItems = [
   {
-    id: 1,
-    name: 'John Smith',
-    position: 'Developer',
-    department: 'IT',
-    email: 'john.smith@company.com',
-    phone: '0123456789',
+    id: '0001',
+    name: 'Wireless Headphones Pro',
+    category: 'Electronics',
+    status: 'Active',
+    stock: 245,
+    orders: 156,
+    addedDate: '2025-01-20',
   },
   {
-    id: 2,
-    name: 'Sarah Johnson',
-    position: 'Designer',
-    department: 'Design',
-    email: 'sarah.johnson@company.com',
-    phone: '0123456790',
+    id: '0002',
+    name: 'Cotton T-Shirt Premium',
+    category: 'Clothing',
+    status: 'Active',
+    stock: 189,
+    orders: 234,
+    addedDate: '2025-01-19',
   },
   {
-    id: 3,
-    name: 'Mike Wilson',
-    position: 'Manager',
-    department: 'HR',
-    email: 'mike.wilson@company.com',
-    phone: '0123456791',
+    id: '0003',
+    name: 'Organic Coffee Beans',
+    category: 'Food & Beverage',
+    status: 'Active',
+    stock: 156,
+    orders: 89,
+    addedDate: '2025-01-18',
   },
   {
-    id: 4,
-    name: 'Emily Davis',
-    position: 'Marketing Specialist',
-    department: 'Marketing',
-    email: 'emily.davis@company.com',
-    phone: '0123456792',
+    id: '0004',
+    name: 'Garden Tool Set',
+    category: 'Home & Garden',
+    status: 'Active',
+    stock: 142,
+    orders: 67,
+    addedDate: '2025-01-17',
   },
   {
-    id: 5,
-    name: 'David Brown',
-    position: 'Sales Executive',
-    department: 'Sales',
-    email: 'david.brown@company.com',
-    phone: '0123456793',
+    id: '0005',
+    name: 'Yoga Mat Professional',
+    category: 'Sports',
+    status: 'Active',
+    stock: 128,
+    orders: 145,
+    addedDate: '2025-01-16',
   },
   {
-    id: 6,
-    name: 'Lisa Anderson',
-    position: 'QA Engineer',
-    department: 'IT',
-    email: 'lisa.anderson@company.com',
-    phone: '0123456794',
+    id: '0006',
+    name: 'Programming Book Collection',
+    category: 'Books',
+    status: 'Active',
+    stock: 198,
+    orders: 278,
+    addedDate: '2025-01-15',
   },
   {
-    id: 7,
-    name: 'Robert Taylor',
-    position: 'Financial Analyst',
-    department: 'Finance',
-    email: 'robert.taylor@company.com',
-    phone: '0123456795',
+    id: '0007',
+    name: 'Building Blocks Set',
+    category: 'Toys',
+    status: 'Inactive',
+    stock: 190,
+    orders: 123,
+    addedDate: '2025-01-14',
   },
   {
-    id: 8,
-    name: 'Jennifer Lee',
-    position: 'UX Designer',
-    department: 'Design',
-    email: 'jennifer.lee@company.com',
-    phone: '0123456796',
-  },
-  {
-    id: 9,
-    name: 'Michael Chen',
-    position: 'DevOps Engineer',
-    department: 'IT',
-    email: 'michael.chen@company.com',
-    phone: '0123456797',
-  },
-  {
-    id: 10,
-    name: 'Amanda White',
-    position: 'HR Coordinator',
-    department: 'HR',
-    email: 'amanda.white@company.com',
-    phone: '0123456798',
-  },
-  {
-    id: 11,
-    name: 'James Rodriguez',
-    position: 'Product Manager',
-    department: 'Product',
-    email: 'james.rodriguez@company.com',
-    phone: '0123456799',
-  },
-  {
-    id: 12,
-    name: 'Maria Garcia',
-    position: 'Content Writer',
-    department: 'Marketing',
-    email: 'maria.garcia@company.com',
-    phone: '0123456800',
+    id: '0008',
+    name: 'Smart Watch Series 5',
+    category: 'Electronics',
+    status: 'Active',
+    stock: 98,
+    orders: 312,
+    addedDate: '2025-01-13',
   },
 ];
 
-export const mockChartOptions = {
+// Chart: Item by Category (Latest)
+export const mockItemByCategoryChartOptions = {
   chart: {
     type: 'column',
     height: 320,
   },
   title: {
-    text: 'Employee Count by Department',
+    text: 'Item by Category (Latest)',
     style: { fontSize: '18px' },
   },
   xAxis: {
-    categories: ['IT', 'Design', 'HR', 'Marketing', 'Sales'],
-    title: { text: 'Department' },
+    categories: [
+      'Electronics',
+      'Clothing',
+      'Food & Beverage',
+      'Home & Garden',
+      'Sports',
+      'Books',
+      'Toys',
+    ],
+    title: { text: 'Category' },
   },
   yAxis: {
     min: 0,
-    title: { text: 'Number of Employees' },
+    title: { text: 'Number of Items' },
     allowDecimals: false,
   },
   series: [
     {
-      name: 'Employees',
+      name: 'Items',
       type: 'column',
-      data: [60, 30, 20, 25, 21],
+      data: [245, 189, 156, 142, 128, 198, 190],
       colorByPoint: true,
     },
   ],
@@ -170,3 +155,117 @@ export const mockChartOptions = {
     },
   },
 };
+
+// Chart: Item Status by Category (Active/Inactive)
+export const mockItemStatusByCategoryChartOptions = {
+  chart: {
+    type: 'column',
+    height: 320,
+  },
+  title: {
+    text: 'Item Status by Category (Active/Inactive)',
+    style: { fontSize: '18px' },
+  },
+  xAxis: {
+    categories: [
+      'Electronics',
+      'Clothing',
+      'Food & Beverage',
+      'Home & Garden',
+      'Sports',
+      'Books',
+      'Toys',
+    ],
+    title: { text: 'Category' },
+  },
+  yAxis: {
+    min: 0,
+    title: { text: 'Number of Items' },
+    allowDecimals: false,
+  },
+  series: [
+    {
+      name: 'Active',
+      type: 'column',
+      data: [220, 170, 140, 128, 115, 178, 169],
+      color: '#4caf50',
+    },
+    {
+      name: 'Inactive',
+      type: 'column',
+      data: [25, 19, 16, 14, 13, 20, 21],
+      color: '#ff9800',
+    },
+  ],
+  legend: {
+    enabled: true,
+  },
+  credits: {
+    enabled: false,
+  },
+  plotOptions: {
+    column: {
+      borderRadius: 4,
+    },
+  },
+};
+
+// Chart: Item Creation Lead Times
+export const mockItemLeadTimesChartOptions = {
+  chart: {
+    type: 'line',
+    height: 320,
+  },
+  title: {
+    text: 'Item Creation Lead Times',
+    style: { fontSize: '18px' },
+  },
+  xAxis: {
+    categories: [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ],
+    title: { text: 'Month' },
+  },
+  yAxis: {
+    min: 0,
+    title: { text: 'Lead Time (Days)' },
+    allowDecimals: true,
+  },
+  series: [
+    {
+      name: 'Average Lead Time',
+      type: 'line',
+      data: [5.2, 4.8, 5.5, 4.9, 5.1, 4.7, 5.3, 4.6, 5.0, 4.8, 5.2, 4.9],
+      color: '#2196f3',
+      marker: {
+        enabled: true,
+        radius: 4,
+      },
+    },
+  ],
+  legend: {
+    enabled: false,
+  },
+  credits: {
+    enabled: false,
+  },
+  plotOptions: {
+    line: {
+      lineWidth: 3,
+    },
+  },
+};
+
+// Legacy chart options for backward compatibility
+export const mockChartOptions = mockItemByCategoryChartOptions;

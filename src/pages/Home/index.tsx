@@ -1,38 +1,39 @@
-import React, { useMemo, useState } from 'react';
-import { Stack, Box, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import React, { useMemo } from 'react';
+import { Box, Typography, Chip, Grid } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { StatsGridOrganism, ChartCardOrganism } from '@src/components';
-import { ActionButtonAtom } from '@src/components/atoms';
+import {
+  StatsGridOrganism,
+  ChartCardOrganism,
+  TableOrganism,
+} from '@src/components';
 import { PageHeaderOrganism } from '@src/components/organisms';
 import {
   mockStats,
-  mockEmployees,
-  mockChartOptions,
+  mockLatestItems,
+  mockItemByCategoryChartOptions,
+  mockItemStatusByCategoryChartOptions,
+  mockItemLeadTimesChartOptions,
 } from '@src/mock/dashboardData';
 import {
   StyledContainer,
   StyledPaper,
   StyledChartSection,
+  StyledTableSection,
 } from './index.styled';
 
-interface EmployeeData {
-  id: number;
+interface ItemData {
+  id: string;
   name: string;
-  position: string;
-  department: string;
-  email: string;
-  phone: string;
+  category: string;
+  status: string;
+  stock: number;
+  orders: number;
+  addedDate: string;
 }
 
 const Home: React.FC = () => {
-  const { t } = useTranslation();
-  const [currentPage, setCurrentPage] = useState(1);
-
   const stats = useMemo(
     () =>
       mockStats.map((stat) => ({
@@ -42,25 +43,20 @@ const Home: React.FC = () => {
     [],
   );
 
-  const recentEmployees = useMemo(() => mockEmployees, []);
+  const latestItems = useMemo(() => mockLatestItems, []);
 
-  const chartOptions = useMemo(() => mockChartOptions, []);
-
-  const handleEdit = (id: number) => {
-    console.log('Edit employee:', id);
-    // TODO: Implement edit functionality
-  };
-
-  const handleDelete = (id: number) => {
-    console.log('Delete employee:', id);
-    // TODO: Implement delete functionality
-  };
+  const itemByCategoryChart = useMemo(() => mockItemByCategoryChartOptions, []);
+  const itemStatusChart = useMemo(
+    () => mockItemStatusByCategoryChartOptions,
+    [],
+  );
+  const leadTimesChart = useMemo(() => mockItemLeadTimesChartOptions, []);
 
   const columns = useMemo(
     () => [
       {
-        key: 'name' as keyof EmployeeData,
-        label: t('user:name'),
+        key: 'name' as keyof ItemData,
+        label: 'Item Name',
         render: (value: string) => (
           <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
             {value}
@@ -68,54 +64,43 @@ const Home: React.FC = () => {
         ),
       },
       {
-        key: 'position' as keyof EmployeeData,
-        label: t('user:position'),
+        key: 'category' as keyof ItemData,
+        label: 'Category',
       },
       {
-        key: 'department' as keyof EmployeeData,
-        label: t('user:department'),
-      },
-      {
-        key: 'email' as keyof EmployeeData,
-        label: t('auth:email'),
-      },
-      {
-        key: 'phone' as keyof EmployeeData,
-        label: t('user:phone'),
-      },
-      {
-        key: 'actions' as keyof EmployeeData,
-        label: t('common:actions'),
-        width: '200px',
-        align: 'center' as const,
-        render: (value: any, record: EmployeeData) => (
-          <Stack direction="row" spacing={1}>
-            <ActionButtonAtom
-              variant="details"
-              startIcon={<EditIcon />}
-              onClick={() => handleEdit(record.id)}
-            >
-              {t('common:edit')}
-            </ActionButtonAtom>
-            <ActionButtonAtom
-              variant="danger"
-              startIcon={<DeleteIcon />}
-              onClick={() => handleDelete(record.id)}
-            >
-              {t('common:delete')}
-            </ActionButtonAtom>
-          </Stack>
+        key: 'status' as keyof ItemData,
+        label: 'Status',
+        render: (value: string) => (
+          <Chip
+            label={value}
+            color={value === 'Active' ? 'success' : 'warning'}
+            size="small"
+          />
         ),
       },
+      {
+        key: 'stock' as keyof ItemData,
+        label: 'Stock',
+        align: 'right' as const,
+      },
+      {
+        key: 'orders' as keyof ItemData,
+        label: 'Orders',
+        align: 'right' as const,
+      },
+      {
+        key: 'addedDate' as keyof ItemData,
+        label: 'Added Date',
+      },
     ],
-    [t],
+    [],
   );
 
   return (
     <StyledContainer>
       <StyledPaper>
         <PageHeaderOrganism
-          title={t('common:dashboard')}
+          title="Item Dashboard"
           leading={<DashboardIcon sx={{ color: '#1976d2', fontSize: 28 }} />}
         />
 
@@ -123,10 +108,44 @@ const Home: React.FC = () => {
           <StatsGridOrganism stats={stats} />
 
           <StyledChartSection>
-            <ChartCardOrganism>
-              <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-            </ChartCardOrganism>
+            <Grid container spacing={2}>
+              <Grid size={{ xs: 12, md: 6 }}>
+                <ChartCardOrganism>
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={itemByCategoryChart}
+                  />
+                </ChartCardOrganism>
+              </Grid>
+              <Grid size={{ xs: 12, md: 6 }}>
+                <ChartCardOrganism>
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={itemStatusChart}
+                  />
+                </ChartCardOrganism>
+              </Grid>
+              <Grid size={{ xs: 12 }}>
+                <ChartCardOrganism>
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={leadTimesChart}
+                  />
+                </ChartCardOrganism>
+              </Grid>
+            </Grid>
           </StyledChartSection>
+
+          <StyledTableSection>
+            <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
+              Item List (Latest)
+            </Typography>
+            <TableOrganism<ItemData>
+              columns={columns}
+              data={latestItems}
+              rowKey="id"
+            />
+          </StyledTableSection>
         </Box>
       </StyledPaper>
     </StyledContainer>
