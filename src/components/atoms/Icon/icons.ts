@@ -23,6 +23,7 @@ import CloseIcon from './assets/close.svg';
 import EmailIcon from './assets/email.svg';
 import ContractIcon from './assets/contract.svg';
 import FilterIcon from './assets/filter.svg';
+import RolePermissionIcon from './assets/role-permission.svg';
 
 const iconMap = {
   home: HomeIcon,
@@ -50,6 +51,7 @@ const iconMap = {
   email: EmailIcon,
   contract: ContractIcon,
   filter: FilterIcon,
+  rolePermission: RolePermissionIcon,
 };
 
 export default iconMap;
