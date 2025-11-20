@@ -26,7 +26,8 @@
     "active": "Active",
     "inactive": "Inctive",
     "deleted": "Deleted",
-    "activated": "Activated"
+    "activated": "Activated",
+    "draft": "Draft"
   },
   "results": "Results",
   "rowsPerPage": "Rows Per Page",
