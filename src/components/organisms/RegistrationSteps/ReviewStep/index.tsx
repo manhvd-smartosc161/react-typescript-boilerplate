@@ -1,5 +1,6 @@
 import React from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import {
   Stack,
   Box,
@@ -24,6 +25,7 @@ import {
 } from '../../SupplierView';
 
 const ReviewStep: React.FC = () => {
+  const { t } = useTranslation('supplier');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { control } = useFormContext<SupplierRegistrationFormValues>();
@@ -49,8 +51,8 @@ const ReviewStep: React.FC = () => {
     <Stack spacing={isMobile ? 3 : 4}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <FormSectionLayout
-          title="General Information"
-          subtitle="Company Details"
+          title={t('form.review.generalInformation')}
+          subtitle={t('form.review.companyDetails')}
         >
           <Grid container spacing={isMobile ? 2 : 3}>
             <SupplierGeneralView data={information || {}} />
@@ -60,8 +62,8 @@ const ReviewStep: React.FC = () => {
         <Divider />
 
         <FormSectionLayout
-          title="Representative"
-          subtitle="Company Representative"
+          title={t('form.review.representative')}
+          subtitle={t('form.review.companyRepresentative')}
         >
           <Grid container spacing={isMobile ? 2 : 3}>
             <SupplierRepresentativeView
@@ -77,8 +79,8 @@ const ReviewStep: React.FC = () => {
         <Divider />
 
         <FormSectionLayout
-          title="Product"
-          subtitle="Product & Business Details"
+          title={t('form.review.product')}
+          subtitle={t('form.review.productBusinessDetails')}
         >
           <Grid container spacing={isMobile ? 2 : 3}>
             <SupplierProductView
@@ -92,7 +94,10 @@ const ReviewStep: React.FC = () => {
 
         <Divider />
 
-        <FormSectionLayout title="Financial" subtitle="Financial Details">
+        <FormSectionLayout
+          title={t('form.review.financial')}
+          subtitle={t('form.review.financialDetails')}
+        >
           <Grid container spacing={isMobile ? 2 : 3}>
             <SupplierFinancialView
               data={{
@@ -106,7 +111,10 @@ const ReviewStep: React.FC = () => {
 
         <Divider />
 
-        <FormSectionLayout title="Documents" subtitle="Uploaded Documents">
+        <FormSectionLayout
+          title={t('form.review.documents')}
+          subtitle={t('form.review.uploadedDocuments')}
+        >
           <Grid container spacing={isMobile ? 2 : 3}>
             <SupplierDocumentView data={{}} />
           </Grid>
@@ -115,8 +123,8 @@ const ReviewStep: React.FC = () => {
         <Divider />
 
         <FormSectionLayout
-          title="Addresses"
-          subtitle={`${information?.addresses?.length} address(es)`}
+          title={t('form.review.addresses')}
+          subtitle={`${information?.addresses?.length || 0} ${t('form.review.addressesCount')}`}
         >
           <Box
             sx={{
@@ -131,7 +139,8 @@ const ReviewStep: React.FC = () => {
                 key={address.id || index}
                 title={
                   <TextAtom weight="bold" sx={{ mb: 2 }}>
-                    {address.name || `Address ${index + 1}`}
+                    {address.name ||
+                      `${t('form.fields.addressNumber')}${index + 1}`}
                   </TextAtom>
                 }
               >
@@ -146,8 +155,8 @@ const ReviewStep: React.FC = () => {
         <Divider />
 
         <FormSectionLayout
-          title="Contacts"
-          subtitle={`${information?.contacts?.length} contact(s)`}
+          title={t('form.review.contacts')}
+          subtitle={`${information?.contacts?.length || 0} ${t('form.review.contactsCount')}`}
         >
           <Box
             sx={{
@@ -175,8 +184,8 @@ const ReviewStep: React.FC = () => {
         </FormSectionLayout>
 
         <FormSectionLayout
-          title="Payments"
-          subtitle={`${information?.payments?.length} payment(s)`}
+          title={t('form.review.payments')}
+          subtitle={`${information?.payments?.length || 0} ${t('form.review.paymentsCount')}`}
         >
           <Box
             sx={{
@@ -191,7 +200,8 @@ const ReviewStep: React.FC = () => {
                 key={payment.id || index}
                 title={
                   <TextAtom weight="bold" sx={{ mb: 2 }}>
-                    {payment.accountName || `Payment ${index + 1}`}
+                    {payment.accountName ||
+                      `${t('form.fields.paymentNumber')}${index + 1}`}
                   </TextAtom>
                 }
               >
@@ -206,7 +216,10 @@ const ReviewStep: React.FC = () => {
         {information?.remark && (
           <>
             <Divider />
-            <FormSectionLayout title="Remarks" subtitle="Additional Notes">
+            <FormSectionLayout
+              title={t('form.review.remarks')}
+              subtitle={t('form.review.additionalNotes')}
+            >
               <TextAtom variant="body1">{information.remark}</TextAtom>
             </FormSectionLayout>
           </>
@@ -217,8 +230,8 @@ const ReviewStep: React.FC = () => {
         <>
           <Divider sx={{ my: 2 }} />
           <FormSectionLayout
-            title="Sites Information"
-            subtitle={`${sites.length} site(s) registered`}
+            title={t('form.review.sitesInformation')}
+            subtitle={`${sites.length} ${t('form.review.sitesRegistered')}`}
           >
             <Stack spacing={2}>
               {sites.map((site, index) => (
@@ -226,7 +239,8 @@ const ReviewStep: React.FC = () => {
                   key={site.id || index}
                   title={
                     <TextAtom weight="bold">
-                      Site #{index + 1} - {site.name || 'Unnamed Site'}
+                      {t('form.fields.siteNumber')}
+                      {index + 1} - {site.name || t('form.review.unnamedSite')}
                     </TextAtom>
                   }
                   defaultExpanded={index === 0}
@@ -248,7 +262,7 @@ const ReviewStep: React.FC = () => {
           <Divider sx={{ my: 2 }} />
           <Box sx={{ py: 3, textAlign: 'center' }}>
             <TextAtom variant="body2" sx={{ color: 'text.secondary' }}>
-              No sites information available
+              {t('form.review.noSitesInformationAvailable')}
             </TextAtom>
           </Box>
         </>

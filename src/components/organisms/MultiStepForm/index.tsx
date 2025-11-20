@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Stack, Box, useMediaQuery, useTheme } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { ActionButtonsGroup } from '@src/components/molecules';
 import { ButtonAtom } from '@src/components/atoms';
 import { StepperOrganism } from '@src/components';
@@ -14,7 +15,7 @@ export interface StepDefinition {
 interface MultiStepFormProps {
   steps: StepDefinition[];
   isLoading?: boolean;
-  onSubmit: () => void | Promise<void>;
+  onSubmit?: () => void | Promise<void>;
   onSaveDraft: () => void | Promise<void>;
 }
 
@@ -26,6 +27,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
   onSubmit,
   onSaveDraft,
 }) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -116,7 +118,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
               size={isMobile ? 'medium' : 'large'}
               disabled={isLoading}
             >
-              Back
+              {t('common:registration.back')}
             </ButtonAtom>
           )}
 
@@ -128,7 +130,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
               size={isMobile ? 'medium' : 'large'}
               disabled={isLoading}
             >
-              Save Draft
+              {t('common:registration.saveDraft')}
             </ButtonAtom>
           )}
 
@@ -140,7 +142,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
               size={isMobile ? 'medium' : 'large'}
               disabled={isLoading || formState.isSubmitting}
             >
-              Submit
+              {t('common:registration.submit')}
             </ButtonAtom>
           ) : (
             <ButtonAtom
@@ -150,7 +152,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
               size={isMobile ? 'medium' : 'large'}
               disabled={isLoading}
             >
-              Next
+              {t('common:registration.next')}
             </ButtonAtom>
           )}
         </ActionButtonsGroup>

@@ -37,5 +37,20 @@
   "clearSearch": "Clear Search",
   "add": "Add",
   "cancel": "Cancel",
-  "update": "Update"
+  "update": "Update",
+  "registration": {
+    "title": "Registration",
+    "steps": {
+      "companyInformation": "Company Information",
+      "sitesInformation": "Sites Information",
+      "reviewAndSubmit": "Review and Submit"
+    },
+    "back": "Back",
+    "next": "Next",
+    "saveDraft": "Save Draft",
+    "submit": "Submit",
+    "loading": "Loading...",
+    "submitSuccess": "Registration submitted successfully!",
+    "submitError": "Failed to submit registration. Please try again."
+  }
 }

@@ -1,4 +1,5 @@
 import { Box, Button, Grid, IconButton } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { ButtonAtom, IconAtom, TextAtom } from '@src/components/atoms';
 import {
   CollapsibleCard,
@@ -24,6 +25,7 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
   control,
   sectionPrefix,
 }) => {
+  const { t } = useTranslation('supplier');
   const {
     fields: addressFields,
     append: appendAddress,
@@ -67,8 +69,8 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
             required
             name={`${sectionPrefix}.addresses.${index}.type`}
             control={control}
-            label="Address Type"
-            placeholder="Select address type"
+            label={t('form.fields.addressType')}
+            placeholder={t('form.fields.addressTypePlaceholder')}
             options={addressTypeOptions}
           />
         </Grid>
@@ -79,8 +81,8 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
             required
             name={`${sectionPrefix}.addresses.${index}.name`}
             control={control}
-            label="Address Name"
-            placeholder="Enter address name (e.g., Main Office)"
+            label={t('form.fields.addressName')}
+            placeholder={t('form.fields.addressNamePlaceholder')}
           />
         </Grid>
 
@@ -90,8 +92,8 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
             required
             name={`${sectionPrefix}.addresses.${index}.line1`}
             control={control}
-            label="Address Line 1"
-            placeholder="Enter street address"
+            label={t('form.fields.addressLine1')}
+            placeholder={t('form.fields.addressLine1Placeholder')}
           />
         </Grid>
 
@@ -100,8 +102,8 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
             variant="outlined"
             name={`${sectionPrefix}.addresses.${index}.line2`}
             control={control}
-            label="Address Line 2"
-            placeholder="Enter building/floor details (optional)"
+            label={t('form.fields.addressLine2')}
+            placeholder={t('form.fields.addressLine2Placeholder')}
           />
         </Grid>
 
@@ -111,8 +113,8 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
             required
             name={`${sectionPrefix}.addresses.${index}.city`}
             control={control}
-            label="City"
-            placeholder="Enter city"
+            label={t('form.fields.city')}
+            placeholder={t('form.fields.cityPlaceholder')}
           />
         </Grid>
 
@@ -122,8 +124,8 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
             required
             name={`${sectionPrefix}.addresses.${index}.state`}
             control={control}
-            label="State/Province"
-            placeholder="Enter state/province"
+            label={t('form.fields.stateProvince')}
+            placeholder={t('form.fields.stateProvincePlaceholder')}
           />
         </Grid>
 
@@ -133,8 +135,8 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
             required
             name={`${sectionPrefix}.addresses.${index}.postalCode`}
             control={control}
-            label="Postal Code"
-            placeholder="Enter postal code"
+            label={t('form.fields.postalCode')}
+            placeholder={t('form.fields.postalCodePlaceholder')}
           />
         </Grid>
 
@@ -144,8 +146,8 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
             required
             name={`${sectionPrefix}.addresses.${index}.country`}
             control={control}
-            label="Country"
-            placeholder="Select country"
+            label={t('form.fields.country')}
+            placeholder={t('form.fields.countryPlaceholder')}
             options={countryOptions}
           />
         </Grid>
@@ -155,8 +157,8 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
             variant="outlined"
             name={`${sectionPrefix}.addresses.${index}.phone`}
             control={control}
-            label="Phone"
-            placeholder="Enter phone number"
+            label={t('form.fields.phone')}
+            placeholder={t('form.fields.phonePlaceholder')}
           />
         </Grid>
 
@@ -165,8 +167,8 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
             variant="outlined"
             name={`${sectionPrefix}.addresses.${index}.email`}
             control={control}
-            label="Email"
-            placeholder="Enter email address"
+            label={t('form.fields.email')}
+            placeholder={t('form.fields.emailPlaceholder')}
             type="email"
           />
         </Grid>
@@ -176,8 +178,8 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
             variant="outlined"
             name={`${sectionPrefix}.addresses.${index}.fax`}
             control={control}
-            label="Fax"
-            placeholder="Enter fax number"
+            label={t('form.fields.fax')}
+            placeholder={t('form.fields.faxPlaceholder')}
           />
         </Grid>
 
@@ -185,8 +187,11 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
           <ControlledCheckBoxField
             control={control}
             name={`${sectionPrefix}.addresses.${index}.purpose`}
-            label="Address Purpose"
-            options={addressPurposeOptions}
+            label={t('form.fields.addressPurpose')}
+            options={addressPurposeOptions.map((option) => ({
+              ...option,
+              label: t(`form.view.${option.value.toLowerCase()}`) || option.label,
+            }))}
             columns={3}
           />
         </Grid>
@@ -196,8 +201,8 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
             variant="outlined"
             name={`${sectionPrefix}.addresses.${index}.shipToLocation`}
             control={control}
-            label="Ship To Location"
-            placeholder="Enter ship to location code"
+            label={t('form.fields.shipToLocation')}
+            placeholder={t('form.fields.shipToLocationPlaceholder')}
           />
         </Grid>
 
@@ -206,8 +211,8 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
             variant="outlined"
             name={`${sectionPrefix}.addresses.${index}.billToLocation`}
             control={control}
-            label="Bill To Location"
-            placeholder="Enter bill to location code"
+            label={t('form.fields.billToLocation')}
+            placeholder={t('form.fields.billToLocationPlaceholder')}
           />
         </Grid>
 
@@ -217,8 +222,8 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
             required
             name={`${sectionPrefix}.addresses.${index}.status`}
             control={control}
-            label="Status"
-            placeholder="Select status"
+            label={t('form.fields.status')}
+            placeholder={t('form.fields.statusPlaceholder')}
             options={addressStatusOptions}
           />
         </Grid>
@@ -246,7 +251,7 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
                 startIcon={<IconAtom name="edit" />}
                 onClick={() => duplicateAddress(index)}
               >
-                Duplicate Address
+                {t('form.fields.duplicateAddress')}
               </ButtonAtom>
               <IconButton
                 sx={{
@@ -260,7 +265,12 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
               </IconButton>
             </>
           }
-          title={<TextAtom weight={'bold'}>Address #{index + 1}</TextAtom>}
+          title={
+            <TextAtom weight={'bold'}>
+              {t('form.fields.addressNumber')}
+              {index + 1}
+            </TextAtom>
+          }
         >
           {RenderAddressItem(index)}
         </CollapsibleCard>
@@ -268,7 +278,7 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
 
       {addressFields.length === 0 && (
         <TextAtom variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-          No addresses added yet. Click "Add Address" to get started.
+          {t('form.fields.noAddressesAdded')}
         </TextAtom>
       )}
 
@@ -278,7 +288,7 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
         onClick={addNewAddress}
         sx={{ mt: 2 }}
       >
-        Add Address
+        {t('form.fields.addAddress')}
       </Button>
     </Box>
   );

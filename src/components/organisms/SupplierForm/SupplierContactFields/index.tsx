@@ -1,4 +1,5 @@
 import { Box, Button, Grid, IconButton } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { ButtonAtom, IconAtom, TextAtom } from '@src/components/atoms';
 import {
   CollapsibleCard,
@@ -24,6 +25,7 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
   control,
   sectionPrefix,
 }) => {
+  const { t } = useTranslation('supplier');
   const {
     fields: contactFields,
     append: appendContact,
@@ -77,7 +79,7 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
           <ControlledAutocompleteField
             control={control}
             name={`${sectionPrefix}.contacts.${index}.addressIds`}
-            label="Associated Addresses"
+            label={t('form.fields.associatedAddresses')}
             options={addressOptions}
           />
         </Grid>
@@ -89,8 +91,8 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
             required
             name={`${sectionPrefix}.contacts.${index}.department`}
             control={control}
-            label="Department"
-            placeholder="Enter department"
+            label={t('form.fields.department')}
+            placeholder={t('form.fields.departmentPlaceholder')}
           />
         </Grid>
 
@@ -101,8 +103,8 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
             required
             name={`${sectionPrefix}.contacts.${index}.salutation`}
             control={control}
-            label="Salutation"
-            placeholder="Select salutation"
+            label={t('form.fields.salutation')}
+            placeholder={t('form.fields.salutationPlaceholder')}
             options={salutationOptions}
           />
         </Grid>
@@ -114,8 +116,8 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
             required
             name={`${sectionPrefix}.contacts.${index}.firstName`}
             control={control}
-            label="First Name"
-            placeholder="Enter first name"
+            label={t('form.fields.firstName')}
+            placeholder={t('form.fields.firstNamePlaceholder')}
           />
         </Grid>
 
@@ -125,8 +127,8 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
             variant="outlined"
             name={`${sectionPrefix}.contacts.${index}.middleName`}
             control={control}
-            label="Middle Name"
-            placeholder="Enter middle name (optional)"
+            label={t('form.fields.middleName')}
+            placeholder={t('form.fields.middleNamePlaceholder')}
           />
         </Grid>
 
@@ -137,8 +139,8 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
             required
             name={`${sectionPrefix}.contacts.${index}.lastName`}
             control={control}
-            label="Last Name"
-            placeholder="Enter last name"
+            label={t('form.fields.lastName')}
+            placeholder={t('form.fields.lastNamePlaceholder')}
           />
         </Grid>
 
@@ -149,8 +151,8 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
             required
             name={`${sectionPrefix}.contacts.${index}.jobTitle`}
             control={control}
-            label="Job Title"
-            placeholder="Enter job title"
+            label={t('form.fields.jobTitle')}
+            placeholder={t('form.fields.jobTitlePlaceholder')}
           />
         </Grid>
 
@@ -161,8 +163,8 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
             required
             name={`${sectionPrefix}.contacts.${index}.role`}
             control={control}
-            label="Role"
-            placeholder="Select role"
+            label={t('form.fields.role')}
+            placeholder={t('form.fields.rolePlaceholder')}
             options={contactRoleOptions}
           />
         </Grid>
@@ -174,8 +176,8 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
             required
             name={`${sectionPrefix}.contacts.${index}.phone`}
             control={control}
-            label="Phone"
-            placeholder="Enter phone number"
+            label={t('form.fields.phone')}
+            placeholder={t('form.fields.phonePlaceholder')}
           />
         </Grid>
 
@@ -186,8 +188,8 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
             required
             name={`${sectionPrefix}.contacts.${index}.email`}
             control={control}
-            label="Email"
-            placeholder="Enter email address"
+            label={t('form.fields.email')}
+            placeholder={t('form.fields.emailPlaceholder')}
             type="email"
           />
         </Grid>
@@ -199,8 +201,8 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
             required
             name={`${sectionPrefix}.contacts.${index}.isPrimary`}
             control={control}
-            label="Is Primary Contact"
-            placeholder="Select if primary"
+            label={t('form.fields.isPrimaryContact')}
+            placeholder={t('form.fields.isPrimaryContactPlaceholder')}
             options={yesNoOptions}
           />
         </Grid>
@@ -212,8 +214,8 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
             required
             name={`${sectionPrefix}.contacts.${index}.status`}
             control={control}
-            label="Status"
-            placeholder="Select status"
+            label={t('form.fields.status')}
+            placeholder={t('form.fields.statusPlaceholder')}
             options={contactStatusOptions}
           />
         </Grid>
@@ -225,8 +227,8 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
             required
             name={`${sectionPrefix}.contacts.${index}.receivePoByEmail`}
             control={control}
-            label="Receive PO by Email"
-            placeholder="Select preference"
+            label={t('form.fields.receivePoByEmail')}
+            placeholder={t('form.fields.receivePoByEmailPlaceholder')}
             options={yesNoOptions}
           />
         </Grid>
@@ -238,8 +240,8 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
             required
             name={`${sectionPrefix}.contacts.${index}.receiveRemittance`}
             control={control}
-            label="Receive Remittance"
-            placeholder="Select preference"
+            label={t('form.fields.receiveRemittance')}
+            placeholder={t('form.fields.receiveRemittancePlaceholder')}
             options={yesNoOptions}
           />
         </Grid>
@@ -267,7 +269,7 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
                 startIcon={<IconAtom name="edit" />}
                 onClick={() => duplicateContact(index)}
               >
-                Duplicate Contact
+                {t('form.fields.duplicateContact')}
               </ButtonAtom>
               <IconButton
                 sx={{
@@ -281,7 +283,12 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
               </IconButton>
             </>
           }
-          title={<TextAtom weight={'bold'}>Contact #{index + 1}</TextAtom>}
+          title={
+            <TextAtom weight={'bold'}>
+              {t('form.fields.contactNumber')}
+              {index + 1}
+            </TextAtom>
+          }
         >
           {RenderContactItem(index)}
         </CollapsibleCard>
@@ -289,7 +296,7 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
 
       {contactFields.length === 0 && (
         <TextAtom variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-          No contacts added yet. Click "Add Contact" to get started.
+          {t('form.fields.noContactsAdded')}
         </TextAtom>
       )}
 
@@ -299,7 +306,7 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
         onClick={addNewContact}
         sx={{ mt: 2 }}
       >
-        Add Contact
+        {t('form.fields.addContact')}
       </Button>
     </Box>
   );

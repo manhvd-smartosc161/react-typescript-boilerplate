@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import {
   ControlledDropdownField,
   ControlledTextField,
@@ -19,6 +20,8 @@ const SupplierFinancialFields: React.FC<SupplierFinancialFieldsProps> = ({
   control,
   sectionPrefix,
 }) => {
+  const { t } = useTranslation('supplier');
+
   return (
     <>
       <Grid size={{ xs: 12, md: 4 }}>
@@ -27,8 +30,8 @@ const SupplierFinancialFields: React.FC<SupplierFinancialFieldsProps> = ({
           required
           name={`${sectionPrefix}.taxId`}
           control={control}
-          label="Tax ID"
-          placeholder="Enter tax ID (13 digits)"
+          label={t('form.fields.taxId')}
+          placeholder={t('form.fields.taxIdPlaceholder')}
         />
       </Grid>
       <Grid size={{ xs: 12, md: 4 }}>
@@ -37,8 +40,8 @@ const SupplierFinancialFields: React.FC<SupplierFinancialFieldsProps> = ({
           required
           name={`${sectionPrefix}.taxType`}
           control={control}
-          label="Tax Type"
-          placeholder="Select tax type"
+          label={t('form.fields.taxType')}
+          placeholder={t('form.fields.taxTypePlaceholder')}
           options={juristicTypeOptions}
         />
       </Grid>
@@ -48,8 +51,8 @@ const SupplierFinancialFields: React.FC<SupplierFinancialFieldsProps> = ({
           required
           name={`${sectionPrefix}.taxCountry`}
           control={control}
-          label="Tax Country"
-          placeholder="Enter tax country code (e.g., TH)"
+          label={t('form.fields.taxCountry')}
+          placeholder={t('form.fields.taxCountryPlaceholder')}
         />
       </Grid>
       <Grid size={{ xs: 12, md: 6 }}>
@@ -58,8 +61,8 @@ const SupplierFinancialFields: React.FC<SupplierFinancialFieldsProps> = ({
           required
           name={`${sectionPrefix}.commercialTax`}
           control={control}
-          label="Commercial Tax"
-          placeholder="Select commercial tax"
+          label={t('form.fields.commercialTax')}
+          placeholder={t('form.fields.commercialTaxPlaceholder')}
           options={commercialTaxOptions}
         />
       </Grid>
@@ -69,8 +72,8 @@ const SupplierFinancialFields: React.FC<SupplierFinancialFieldsProps> = ({
           required
           name={`${sectionPrefix}.withholdingTax`}
           control={control}
-          label="Withholding Tax"
-          placeholder="Select withholding tax"
+          label={t('form.fields.withholdingTax')}
+          placeholder={t('form.fields.withholdingTaxPlaceholder')}
           options={withholdingTaxOptions}
         />
       </Grid>

@@ -1,4 +1,5 @@
 import { Box, Button, Grid, IconButton } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { ButtonAtom, IconAtom, TextAtom } from '@src/components/atoms';
 import {
   CollapsibleCard,
@@ -27,6 +28,7 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
   control,
   sectionPrefix,
 }) => {
+  const { t } = useTranslation('supplier');
   const {
     fields: paymentFields,
     append: appendPayment,
@@ -72,8 +74,8 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
             required
             name={`${sectionPrefix}.payments.${index}.method`}
             control={control}
-            label="Payment Method"
-            placeholder="Enter payment method"
+            label={t('form.fields.paymentMethod')}
+            placeholder={t('form.fields.paymentMethodPlaceholder')}
           />
         </Grid>
 
@@ -83,8 +85,8 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
             required
             name={`${sectionPrefix}.payments.${index}.currency`}
             control={control}
-            label="Currency"
-            placeholder="Select currency"
+            label={t('form.fields.currency')}
+            placeholder={t('form.fields.currencyPlaceholder')}
             options={currencyOptions}
           />
         </Grid>
@@ -95,8 +97,8 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
             required
             name={`${sectionPrefix}.payments.${index}.bankName`}
             control={control}
-            label="Bank Name"
-            placeholder="Enter bank name"
+            label={t('form.fields.bankName')}
+            placeholder={t('form.fields.bankNamePlaceholder')}
           />
         </Grid>
 
@@ -106,8 +108,8 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
             required
             name={`${sectionPrefix}.payments.${index}.bankBranch`}
             control={control}
-            label="Bank Branch"
-            placeholder="Enter bank branch"
+            label={t('form.fields.bankBranch')}
+            placeholder={t('form.fields.bankBranchPlaceholder')}
           />
         </Grid>
 
@@ -117,8 +119,8 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
             required
             name={`${sectionPrefix}.payments.${index}.accountNumber`}
             control={control}
-            label="Account Number"
-            placeholder="Enter account number"
+            label={t('form.fields.accountNumber')}
+            placeholder={t('form.fields.accountNumberPlaceholder')}
           />
         </Grid>
 
@@ -128,8 +130,8 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
             required
             name={`${sectionPrefix}.payments.${index}.accountName`}
             control={control}
-            label="Account Name"
-            placeholder="Enter account name"
+            label={t('form.fields.accountName')}
+            placeholder={t('form.fields.accountNamePlaceholder')}
           />
         </Grid>
 
@@ -139,8 +141,8 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
             required
             name={`${sectionPrefix}.payments.${index}.accountType`}
             control={control}
-            label="Account Type"
-            placeholder="Select account type"
+            label={t('form.fields.accountType')}
+            placeholder={t('form.fields.accountTypePlaceholder')}
             options={accountTypeOptions}
           />
         </Grid>
@@ -151,8 +153,8 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
             required
             name={`${sectionPrefix}.payments.${index}.proofAttached`}
             control={control}
-            label="Proof Attached"
-            placeholder="Select if proof attached"
+            label={t('form.fields.proofAttached')}
+            placeholder={t('form.fields.proofAttachedPlaceholder')}
             options={yesNoOptions}
           />
         </Grid>
@@ -163,8 +165,8 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
             required
             name={`${sectionPrefix}.payments.${index}.remittanceEmail`}
             control={control}
-            label="Remittance Email"
-            placeholder="Enter remittance email"
+            label={t('form.fields.remittanceEmail')}
+            placeholder={t('form.fields.remittanceEmailPlaceholder')}
             type="email"
           />
         </Grid>
@@ -175,8 +177,8 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
             required
             name={`${sectionPrefix}.payments.${index}.payeeName`}
             control={control}
-            label="Payee Name"
-            placeholder="Enter payee name"
+            label={t('form.fields.payeeName')}
+            placeholder={t('form.fields.payeeNamePlaceholder')}
           />
         </Grid>
 
@@ -186,8 +188,8 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
             required
             name={`${sectionPrefix}.payments.${index}.apType`}
             control={control}
-            label="AP Type"
-            placeholder="Select AP type"
+            label={t('form.fields.apType')}
+            placeholder={t('form.fields.apTypePlaceholder')}
             options={apTypeOptions}
           />
         </Grid>
@@ -198,8 +200,8 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
             required
             name={`${sectionPrefix}.payments.${index}.paymentTerm`}
             control={control}
-            label="Payment Term"
-            placeholder="Enter payment term (e.g., 45D)"
+            label={t('form.fields.paymentTerm')}
+            placeholder={t('form.fields.paymentTermPlaceholder')}
           />
         </Grid>
 
@@ -207,8 +209,8 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
           <ControlledTextAreaField
             name={`${sectionPrefix}.payments.${index}.additionalPaymentTerm`}
             control={control}
-            label="Additional Payment Term"
-            placeholder="Enter additional payment terms (optional)"
+            label={t('form.fields.additionalPaymentTerm')}
+            placeholder={t('form.fields.additionalPaymentTermPlaceholder')}
             rows={3}
           />
         </Grid>
@@ -219,8 +221,8 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
             required
             name={`${sectionPrefix}.payments.${index}.invoiceSubmitChannel`}
             control={control}
-            label="Invoice Submit Channel"
-            placeholder="Select submit channel"
+            label={t('form.fields.invoiceSubmitChannel')}
+            placeholder={t('form.fields.invoiceSubmitChannelPlaceholder')}
             options={invoiceSubmitChannelOptions}
           />
         </Grid>
@@ -231,8 +233,8 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
             required
             name={`${sectionPrefix}.payments.${index}.vendorTraints`}
             control={control}
-            label="Vendor Traits"
-            placeholder="Select vendor traits"
+            label={t('form.fields.vendorTraits')}
+            placeholder={t('form.fields.vendorTraitsPlaceholder')}
             options={vendorTraintsOptions}
           />
         </Grid>
@@ -243,8 +245,8 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
             required
             name={`${sectionPrefix}.payments.${index}.sendRemittanceAdvise`}
             control={control}
-            label="Send Remittance Advise"
-            placeholder="Select preference"
+            label={t('form.fields.sendRemittanceAdvise')}
+            placeholder={t('form.fields.sendRemittanceAdvisePlaceholder')}
             options={yesNoOptions}
           />
         </Grid>
@@ -255,8 +257,8 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
             required
             name={`${sectionPrefix}.payments.${index}.status`}
             control={control}
-            label="Status"
-            placeholder="Select status"
+            label={t('form.fields.status')}
+            placeholder={t('form.fields.statusPlaceholder')}
             options={paymentStatusOptions}
           />
         </Grid>
@@ -284,7 +286,7 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
                 startIcon={<IconAtom name="edit" />}
                 onClick={() => duplicatePayment(index)}
               >
-                Duplicate Payment
+                {t('form.fields.duplicatePayment')}
               </ButtonAtom>
               <IconButton
                 sx={{
@@ -298,7 +300,12 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
               </IconButton>
             </>
           }
-          title={<TextAtom weight={'bold'}>Payment #{index + 1}</TextAtom>}
+          title={
+            <TextAtom weight={'bold'}>
+              {t('form.fields.paymentNumber')}
+              {index + 1}
+            </TextAtom>
+          }
         >
           {RenderPaymentItem(index)}
         </CollapsibleCard>
@@ -306,7 +313,7 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
 
       {paymentFields.length === 0 && (
         <TextAtom variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-          No payments added yet. Click "Add Payment" to get started.
+          {t('form.fields.noPaymentsAdded')}
         </TextAtom>
       )}
 
@@ -316,7 +323,7 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
         onClick={addNewPayment}
         sx={{ mt: 2 }}
       >
-        Add Payment
+        {t('form.fields.addPayment')}
       </Button>
     </Box>
   );

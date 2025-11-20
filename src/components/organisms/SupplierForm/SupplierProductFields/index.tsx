@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import {
   ControlledDropdownField,
   ControlledTextField,
@@ -19,6 +20,8 @@ const SupplierProductFields: React.FC<SupplierProductFieldsProps> = ({
   control,
   sectionPrefix,
 }) => {
+  const { t } = useTranslation('supplier');
+
   return (
     <>
       <Grid size={{ xs: 12, md: 4 }}>
@@ -27,8 +30,8 @@ const SupplierProductFields: React.FC<SupplierProductFieldsProps> = ({
           required
           name={`${sectionPrefix}.productDivision`}
           control={control}
-          label="Product Division"
-          placeholder="Select product division"
+          label={t('form.fields.productDivision')}
+          placeholder={t('form.fields.productDivisionPlaceholder')}
           options={productDivisionOptions}
         />
       </Grid>
@@ -37,8 +40,8 @@ const SupplierProductFields: React.FC<SupplierProductFieldsProps> = ({
           variant="outlined"
           name={`${sectionPrefix}.productType`}
           control={control}
-          label="Product Type"
-          placeholder="Enter product type"
+          label={t('form.fields.productType')}
+          placeholder={t('form.fields.productTypePlaceholder')}
         />
       </Grid>
 
@@ -48,8 +51,8 @@ const SupplierProductFields: React.FC<SupplierProductFieldsProps> = ({
           required
           name={`${sectionPrefix}.distributionArea`}
           control={control}
-          label="Distribution Area"
-          placeholder="Select distribution area"
+          label={t('form.fields.distributionArea')}
+          placeholder={t('form.fields.distributionAreaPlaceholder')}
           options={distributionAreaOptions}
         />
       </Grid>

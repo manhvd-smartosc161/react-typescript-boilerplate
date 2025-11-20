@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import {
   ControlledDropdownField,
   ControlledTextField,
@@ -23,6 +24,8 @@ const SupplierGeneralFields: React.FC<SupplierGeneralFieldsProps> = ({
   control,
   sectionPrefix,
 }) => {
+  const { t } = useTranslation('supplier');
+
   return (
     <>
       <Grid size={{ xs: 12, md: 6 }}>
@@ -31,8 +34,8 @@ const SupplierGeneralFields: React.FC<SupplierGeneralFieldsProps> = ({
           required
           name={`${sectionPrefix}.nameTh`}
           control={control}
-          label="Company Name (Thai)"
-          placeholder="Enter company name in Thai"
+          label={t('form.fields.companyNameThai')}
+          placeholder={t('form.fields.companyNameThaiPlaceholder')}
         />
       </Grid>
       <Grid size={{ xs: 12, md: 6 }}>
@@ -41,8 +44,8 @@ const SupplierGeneralFields: React.FC<SupplierGeneralFieldsProps> = ({
           required
           name={`${sectionPrefix}.nameEn`}
           control={control}
-          label="Company Name (English)"
-          placeholder="Enter company name in English"
+          label={t('form.fields.companyNameEnglish')}
+          placeholder={t('form.fields.companyNameEnglishPlaceholder')}
         />
       </Grid>
 
@@ -52,8 +55,8 @@ const SupplierGeneralFields: React.FC<SupplierGeneralFieldsProps> = ({
           required
           name={`${sectionPrefix}.businessRelationship`}
           control={control}
-          label="Business Relationship"
-          placeholder="Select relationship"
+          label={t('form.fields.businessRelationship')}
+          placeholder={t('form.fields.businessRelationshipPlaceholder')}
           options={businessRelationshipOptions}
         />
       </Grid>
@@ -64,8 +67,8 @@ const SupplierGeneralFields: React.FC<SupplierGeneralFieldsProps> = ({
           required
           name={`${sectionPrefix}.supType`}
           control={control}
-          label="Supplier Type"
-          placeholder="Select supplier type"
+          label={t('form.fields.supplierType')}
+          placeholder={t('form.fields.supplierTypePlaceholder')}
           options={supplierTypeOptions}
         />
       </Grid>
@@ -76,8 +79,8 @@ const SupplierGeneralFields: React.FC<SupplierGeneralFieldsProps> = ({
           required
           name={`${sectionPrefix}.supTradingType`}
           control={control}
-          label="Supplier Trading Type"
-          placeholder="Select trading type"
+          label={t('form.fields.supplierTradingType')}
+          placeholder={t('form.fields.supplierTradingTypePlaceholder')}
           options={supplierTradingTypeOptions}
         />
       </Grid>
@@ -88,8 +91,8 @@ const SupplierGeneralFields: React.FC<SupplierGeneralFieldsProps> = ({
           required
           name={`${sectionPrefix}.smeFlag`}
           control={control}
-          label="SME Flag"
-          placeholder="Select SME status"
+          label={t('form.fields.smeFlag')}
+          placeholder={t('form.fields.smeFlagPlaceholder')}
           options={smeFlagOptions}
         />
       </Grid>
@@ -100,8 +103,8 @@ const SupplierGeneralFields: React.FC<SupplierGeneralFieldsProps> = ({
           required
           name={`${sectionPrefix}.numberOfEmp`}
           control={control}
-          label="Number of Employees"
-          placeholder="Enter number of employees"
+          label={t('form.fields.numberOfEmployees')}
+          placeholder={t('form.fields.numberOfEmployeesPlaceholder')}
           type="number"
         />
       </Grid>
@@ -113,8 +116,8 @@ const SupplierGeneralFields: React.FC<SupplierGeneralFieldsProps> = ({
           multiple
           name={`${sectionPrefix}.businessUnits`}
           control={control}
-          label="Business Units"
-          placeholder="Select business units"
+          label={t('form.fields.businessUnits')}
+          placeholder={t('form.fields.businessUnitsPlaceholder')}
           options={businessUnitOptions}
         />
       </Grid>
@@ -125,8 +128,8 @@ const SupplierGeneralFields: React.FC<SupplierGeneralFieldsProps> = ({
           required
           name={`${sectionPrefix}.commuLanguage`}
           control={control}
-          label="Communication Language"
-          placeholder="Select language"
+          label={t('form.fields.communicationLanguage')}
+          placeholder={t('form.fields.communicationLanguagePlaceholder')}
           options={communicationLanguageOptions}
         />
       </Grid>
@@ -137,8 +140,8 @@ const SupplierGeneralFields: React.FC<SupplierGeneralFieldsProps> = ({
           required
           name={`${sectionPrefix}.incorporationCountry`}
           control={control}
-          label="Incorporation Country"
-          placeholder="Enter country code (e.g., TH)"
+          label={t('form.fields.incorporationCountry')}
+          placeholder={t('form.fields.incorporationCountryPlaceholder')}
         />
       </Grid>
 
@@ -148,8 +151,8 @@ const SupplierGeneralFields: React.FC<SupplierGeneralFieldsProps> = ({
           required
           name={`${sectionPrefix}.businessCountry`}
           control={control}
-          label="Business Country"
-          placeholder="Enter country code (e.g., TH)"
+          label={t('form.fields.businessCountry')}
+          placeholder={t('form.fields.businessCountryPlaceholder')}
         />
       </Grid>
 
@@ -159,8 +162,8 @@ const SupplierGeneralFields: React.FC<SupplierGeneralFieldsProps> = ({
           required
           name={`${sectionPrefix}.connectionType`}
           control={control}
-          label="Connection Type"
-          placeholder="Select connection type"
+          label={t('form.fields.connectionType')}
+          placeholder={t('form.fields.connectionTypePlaceholder')}
           options={connectionTypeOptions}
         />
       </Grid>

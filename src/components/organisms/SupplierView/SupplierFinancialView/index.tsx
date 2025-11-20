@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { DataPair } from '@src/components/molecules';
 import { SupplierInfo } from '@src/types';
 import React from 'react';
@@ -19,47 +20,58 @@ interface SupplierFinancialViewProps {
 const SupplierFinancialView: React.FC<SupplierFinancialViewProps> = ({
   data,
 }) => {
+  const { t } = useTranslation('supplier');
+
   return (
     <>
       <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair label="Tax ID" value={data.taxId} />
+        <DataPair label={t('form.fields.taxId')} value={data.taxId} />
       </Grid>
       <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair label="VAT Registration No." value={data.vatRegNo} />
+        <DataPair
+          label={t('form.view.vatRegistrationNo')}
+          value={data.vatRegNo}
+        />
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>
         <DataPair
-          label="Registered Capital"
+          label={t('form.view.registeredCapital')}
           value={data.registeredCapital?.toLocaleString()}
         />
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair label="Currency" value={data.currency} />
+        <DataPair label={t('form.fields.currency')} value={data.currency} />
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>
         <DataPair
-          label="Annual Revenue"
+          label={t('form.view.annualRevenue')}
           value={data.annualRevenue?.toLocaleString()}
         />
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair label="Bank Name" value={data.bankName} />
+        <DataPair label={t('form.fields.bankName')} value={data.bankName} />
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair label="Bank Account No." value={data.bankAccountNo} />
+        <DataPair
+          label={t('form.view.bankAccountNo')}
+          value={data.bankAccountNo}
+        />
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair label="Bank Account Name" value={data.bankAccountName} />
+        <DataPair
+          label={t('form.view.bankAccountName')}
+          value={data.bankAccountName}
+        />
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair label="Bank Branch" value={data.bankBranch} />
+        <DataPair label={t('form.fields.bankBranch')} value={data.bankBranch} />
       </Grid>
     </>
   );

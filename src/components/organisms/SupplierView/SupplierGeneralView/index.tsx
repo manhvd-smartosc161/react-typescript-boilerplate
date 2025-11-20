@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { DataPair } from '@src/components/molecules';
 import {
   BusinessRelationshipLabels,
@@ -22,18 +23,26 @@ interface SupplierGeneralViewProps {
 }
 
 const SupplierGeneralView: React.FC<SupplierGeneralViewProps> = ({ data }) => {
+  const { t } = useTranslation('supplier');
+
   return (
     <>
       <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair label="Company Name (Thai)" value={data.nameTh} />
+        <DataPair
+          label={t('form.fields.companyNameThai')}
+          value={data.nameTh}
+        />
       </Grid>
       <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair label="Company Name (English)" value={data.nameEn} />
+        <DataPair
+          label={t('form.fields.companyNameEnglish')}
+          value={data.nameEn}
+        />
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>
         <DataPair
-          label="Business Relationship"
+          label={t('form.fields.businessRelationship')}
           value={
             data.businessRelationship
               ? BusinessRelationshipLabels[
@@ -46,7 +55,7 @@ const SupplierGeneralView: React.FC<SupplierGeneralViewProps> = ({ data }) => {
 
       <Grid size={{ xs: 12, md: 6 }}>
         <DataPair
-          label="Supplier Type"
+          label={t('form.fields.supplierType')}
           value={
             data.supType
               ? SupplierTypeLabels[data.supType as ESupplierType]
@@ -57,7 +66,7 @@ const SupplierGeneralView: React.FC<SupplierGeneralViewProps> = ({ data }) => {
 
       <Grid size={{ xs: 12, md: 6 }}>
         <DataPair
-          label="Supplier Trading Type"
+          label={t('form.fields.supplierTradingType')}
           value={
             data.supTradingType
               ? SupplierTradingTypeLabels[
@@ -70,7 +79,7 @@ const SupplierGeneralView: React.FC<SupplierGeneralViewProps> = ({ data }) => {
 
       <Grid size={{ xs: 12, md: 6 }}>
         <DataPair
-          label="SME Flag"
+          label={t('form.fields.smeFlag')}
           value={
             data.smeFlag
               ? SmeFlagLabels[data.smeFlag as EBooleanFlag]
@@ -80,12 +89,15 @@ const SupplierGeneralView: React.FC<SupplierGeneralViewProps> = ({ data }) => {
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair label="Number of Employees" value={data.numberOfEmp} />
+        <DataPair
+          label={t('form.fields.numberOfEmployees')}
+          value={data.numberOfEmp}
+        />
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>
         <DataPair
-          label="Business Units"
+          label={t('form.fields.businessUnits')}
           value={
             Array.isArray(data.businessUnits)
               ? data.businessUnits.join(', ')
@@ -96,7 +108,7 @@ const SupplierGeneralView: React.FC<SupplierGeneralViewProps> = ({ data }) => {
 
       <Grid size={{ xs: 12, md: 6 }}>
         <DataPair
-          label="Communication Language"
+          label={t('form.fields.communicationLanguage')}
           value={
             data.commuLanguage
               ? CommunicationLanguageLabels[
@@ -109,18 +121,21 @@ const SupplierGeneralView: React.FC<SupplierGeneralViewProps> = ({ data }) => {
 
       <Grid size={{ xs: 12, md: 6 }}>
         <DataPair
-          label="Incorporation Country"
+          label={t('form.fields.incorporationCountry')}
           value={data.incorporationCountry}
         />
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair label="Business Country" value={data.businessCountry} />
+        <DataPair
+          label={t('form.fields.businessCountry')}
+          value={data.businessCountry}
+        />
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>
         <DataPair
-          label="Connection Type"
+          label={t('form.fields.connectionType')}
           value={
             data.connectionType
               ? ConnectionTypeLabels[data.connectionType as EConnectionType]

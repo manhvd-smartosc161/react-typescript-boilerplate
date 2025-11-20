@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { DataPair } from '@src/components/molecules';
 import { SupplierInfo } from '@src/types';
 import React from 'react';
@@ -12,20 +13,25 @@ interface SupplierProductViewProps {
 }
 
 const SupplierProductView: React.FC<SupplierProductViewProps> = ({ data }) => {
+  const { t } = useTranslation('supplier');
+
   return (
     <>
       <Grid size={{ xs: 12, md: 6 }}>
         <DataPair
-          label="Product Category"
+          label={t('form.view.productCategory')}
           value={data.productCategory?.map((cat) => cat.label).join(', ')}
         />
       </Grid>
       <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair label="Brand Names" value={data.brandNames} />
+        <DataPair label={t('form.view.brandNames')} value={data.brandNames} />
       </Grid>
 
       <Grid size={{ xs: 12 }}>
-        <DataPair label="Product Description" value={data.productDescription} />
+        <DataPair
+          label={t('form.view.productDescription')}
+          value={data.productDescription}
+        />
       </Grid>
     </>
   );

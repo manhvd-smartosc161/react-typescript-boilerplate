@@ -37,5 +37,20 @@
   "clearSearch": "ล้างการค้นหา",
   "add": "เพิ่ม",
   "cancel": "ยกเลิก",
-  "update": "อัปเดต"
+  "update": "อัปเดต",
+  "registration": {
+    "title": "การลงทะเบียน",
+    "steps": {
+      "companyInformation": "ข้อมูลบริษัท",
+      "sitesInformation": "ข้อมูลไซต์",
+      "reviewAndSubmit": "ตรวจสอบและส่ง"
+    },
+    "back": "ย้อนกลับ",
+    "next": "ถัดไป",
+    "saveDraft": "บันทึกแบบร่าง",
+    "submit": "ส่ง",
+    "loading": "กำลังโหลด...",
+    "submitSuccess": "ส่งการลงทะเบียนสำเร็จ!",
+    "submitError": "ส่งการลงทะเบียนไม่สำเร็จ กรุณาลองอีกครั้ง"
+  }
 }

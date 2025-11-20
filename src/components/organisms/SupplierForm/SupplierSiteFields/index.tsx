@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Button, Grid, IconButton, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { ButtonAtom, IconAtom, TextAtom } from '@src/components/atoms';
 import {
   CollapsibleCard,
@@ -31,6 +32,7 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
   control,
   sectionPrefix,
 }) => {
+  const { t } = useTranslation('supplier');
   const { watch } = useFormContext();
 
   const {
@@ -93,8 +95,8 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
               variant="outlined"
               name={`${sectionPrefix}.${siteIndex}.percentOffInvoice.${invoiceIndex}.amount`}
               control={control}
-              label="Amount (%)"
-              placeholder="0.0"
+              label={t('form.fields.amountPercent')}
+              placeholder={t('form.fields.amountPercentPlaceholder')}
               type="number"
             />
           </Grid>
@@ -102,14 +104,14 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
             <ControlledDatePickerField
               name={`${sectionPrefix}.${siteIndex}.percentOffInvoice.${invoiceIndex}.start_date`}
               control={control}
-              label="Start Date"
+              label={t('form.fields.startDate')}
             />
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
             <ControlledDatePickerField
               name={`${sectionPrefix}.${siteIndex}.percentOffInvoice.${invoiceIndex}.end_date`}
               control={control}
-              label="End Date"
+              label={t('form.fields.endDate')}
             />
           </Grid>
         </Grid>
@@ -154,8 +156,8 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
               required
               name={`${sectionPrefix}.${index}.name`}
               control={control}
-              label="Site Name"
-              placeholder="Enter site name"
+              label={t('form.fields.siteName')}
+              placeholder={t('form.fields.siteNamePlaceholder')}
             />
           </Grid>
 
@@ -165,8 +167,8 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
               required
               name={`${sectionPrefix}.${index}.addressId`}
               control={control}
-              label="Address"
-              placeholder="Select address"
+              label={t('form.fields.address')}
+              placeholder={t('form.fields.addressPlaceholder')}
               options={addressOptions}
             />
           </Grid>
@@ -175,7 +177,7 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
             <ControlledCheckBoxField
               control={control}
               name={`${sectionPrefix}.${index}.paymentIds`}
-              label="Associated Payments"
+              label={t('form.fields.associatedPayments')}
               options={paymentOptions}
               columns={3}
             />
@@ -187,8 +189,8 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
               required
               name={`${sectionPrefix}.${index}.returnableSupplier`}
               control={control}
-              label="Returnable Supplier"
-              placeholder="Select if returnable"
+              label={t('form.fields.returnableSupplier')}
+              placeholder={t('form.fields.returnableSupplierPlaceholder')}
               options={yesNoOptions}
             />
           </Grid>
@@ -199,8 +201,8 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
               required
               name={`${sectionPrefix}.${index}.deliveryMode`}
               control={control}
-              label="Delivery Mode"
-              placeholder="Select delivery mode"
+              label={t('form.fields.deliveryMode')}
+              placeholder={t('form.fields.deliveryModePlaceholder')}
               options={deliveryModeOptions}
             />
           </Grid>
@@ -210,8 +212,8 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
               variant="outlined"
               name={`${sectionPrefix}.${index}.previousTradeNames`}
               control={control}
-              label="Previous Trade Names"
-              placeholder="Enter previous trade names (optional)"
+              label={t('form.fields.previousTradeNames')}
+              placeholder={t('form.fields.previousTradeNamesPlaceholder')}
             />
           </Grid>
 
@@ -219,8 +221,11 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
             <ControlledCheckBoxField
               control={control}
               name={`${sectionPrefix}.${index}.preferredOrderDay`}
-              label="Preferred Order Days"
-              options={dayOptions}
+              label={t('form.fields.preferredOrderDays')}
+              options={dayOptions.map((option) => ({
+                ...option,
+                label: t(`form.view.${option.value.toLowerCase()}`) || option.label,
+              }))}
               columns={4}
             />
           </Grid>
@@ -229,8 +234,11 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
             <ControlledCheckBoxField
               control={control}
               name={`${sectionPrefix}.${index}.preferredDeliveryDay`}
-              label="Preferred Delivery Days"
-              options={dayOptions}
+              label={t('form.fields.preferredDeliveryDays')}
+              options={dayOptions.map((option) => ({
+                ...option,
+                label: t(`form.view.${option.value.toLowerCase()}`) || option.label,
+              }))}
               columns={4}
             />
           </Grid>
@@ -240,8 +248,8 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
               variant="outlined"
               name={`${sectionPrefix}.${index}.minOrderValue`}
               control={control}
-              label="Minimum Order Value"
-              placeholder="0.00"
+              label={t('form.fields.minimumOrderValue')}
+              placeholder={t('form.fields.minimumOrderValuePlaceholder')}
               type="number"
             />
           </Grid>
@@ -251,8 +259,8 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
               variant="outlined"
               name={`${sectionPrefix}.${index}.minOrderQty`}
               control={control}
-              label="Minimum Order Quantity"
-              placeholder="0.0"
+              label={t('form.fields.minimumOrderQuantity')}
+              placeholder={t('form.fields.minimumOrderQuantityPlaceholder')}
               type="number"
             />
           </Grid>
@@ -263,8 +271,8 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
               required
               name={`${sectionPrefix}.${index}.overReceivingFlag`}
               control={control}
-              label="Over Receiving Flag"
-              placeholder="Select flag"
+              label={t('form.fields.overReceivingFlag')}
+              placeholder={t('form.fields.overReceivingFlagPlaceholder')}
               options={yesNoOptions}
             />
           </Grid>
@@ -275,8 +283,8 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
               required
               name={`${sectionPrefix}.${index}.status`}
               control={control}
-              label="Status"
-              placeholder="Select status"
+              label={t('form.fields.status')}
+              placeholder={t('form.fields.statusPlaceholder')}
               options={siteStatusOptions}
             />
           </Grid>
@@ -284,7 +292,7 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
 
         <Box sx={{ mt: 3 }}>
           <Typography variant="h6" gutterBottom>
-            Percent Off Invoice
+            {t('form.fields.percentOffInvoice')}
           </Typography>
           <PercentOffInvoiceList siteIndex={index} />
           <Button
@@ -297,7 +305,7 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
             }}
             sx={{ mt: 1 }}
           >
-            Add Percent Off Invoice
+            {t('form.fields.addPercentOffInvoice')}
           </Button>
         </Box>
       </Box>
@@ -324,7 +332,7 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
                 startIcon={<IconAtom name="edit" />}
                 onClick={() => duplicateSite(index)}
               >
-                Duplicate Site
+                {t('form.fields.duplicateSite')}
               </ButtonAtom>
               <IconButton
                 sx={{
@@ -338,7 +346,12 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
               </IconButton>
             </>
           }
-          title={<TextAtom weight={'bold'}>Site #{index + 1}</TextAtom>}
+          title={
+            <TextAtom weight={'bold'}>
+              {t('form.fields.siteNumber')}
+              {index + 1}
+            </TextAtom>
+          }
         >
           {RenderSiteItem(index)}
         </CollapsibleCard>
@@ -346,7 +359,7 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
 
       {siteFields.length === 0 && (
         <TextAtom variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-          No sites added yet. Click "Add Site" to get started.
+          {t('form.fields.noSitesAdded')}
         </TextAtom>
       )}
 
@@ -356,7 +369,7 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
         onClick={addNewSite}
         sx={{ mt: 2 }}
       >
-        Add Site
+        {t('form.fields.addSite')}
       </Button>
     </Box>
   );

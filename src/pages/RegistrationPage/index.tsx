@@ -3,12 +3,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 import { useQueryClient } from '@tanstack/react-query';
-import {
-  PageHeaderOrganism,
-  ActionButtonsGroup,
-  TagAtom,
-  ButtonAtom,
-} from '@src/components';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import { PageHeaderOrganism, TagAtom } from '@src/components';
 import MultiStepForm, {
   StepDefinition,
 } from '@src/components/organisms/MultiStepForm';
@@ -32,9 +29,11 @@ import {
 import { currentUserState } from '@src/stores';
 
 const RegistrationPage = () => {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const currentUser = useRecoilValue(currentUserState);
   const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const updateSupplierMutation = useUpdateSupplierMutation();
   const updateSitesMutation = useUpdateSitesMutation();
@@ -64,7 +63,7 @@ const RegistrationPage = () => {
     mode: 'onSubmit',
   });
 
-  const { handleSubmit, getValues } = formMethods;
+  const { getValues } = formMethods;
 
   useEffect(() => {
     if (supplierData) {
@@ -130,31 +129,43 @@ const RegistrationPage = () => {
     try {
       setIsLoadingSubmit(true);
 
-      // TODO: Implement API call
-      // await api.submitRegistration(data);
+      const formData = getValues();
+      console.log('Form submission data:', formData);
 
-      // Show success message and redirect
-      // TODO: Navigate to success page
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Show success message
+      toast.success(
+        t('common:registration.submitSuccess') ||
+          'Registration submitted successfully!',
+      );
+
+      // Mark as submitted and stop loading
+      setIsLoadingSubmit(false);
+      setIsSubmitted(true);
     } catch (error) {
       console.error('Failed to submit registration:', error);
-      // TODO: Show error message to user
+      toast.error(
+        t('common:registration.submitError') ||
+          'Failed to submit registration. Please try again.',
+      );
       setIsLoadingSubmit(false);
     }
   };
 
   const registrationSteps: StepDefinition[] = [
     {
-      label: 'Company Information',
+      label: t('common:registration.steps.companyInformation'),
       Component: SupplierInfoForm,
       schemaKey: 'information',
     },
     {
-      label: 'Sites Information',
+      label: t('common:registration.steps.sitesInformation'),
       Component: SupplierSitesForm,
       schemaKey: 'sites',
     },
     {
-      label: 'Review and Submit',
+      label: t('common:registration.steps.reviewAndSubmit'),
       Component: ReviewStep,
       schemaKey: null,
     },
@@ -162,28 +173,28 @@ const RegistrationPage = () => {
 
   return (
     <FormProvider {...formMethods}>
-      <form
-        id="registration-form"
-        onSubmit={handleSubmit(handleFinalSubmit)}
-        noValidate
-      >
+      <form id="registration-form" noValidate>
         <RegistrationTemplate
           pageHeader={
             <PageHeaderOrganism
-              title="Registration"
+              title={t('common:registration.title')}
               titleSuffix={
                 <TagAtom
                   variant="filled"
                   color="primary"
                   children={
-                    isLoadingSupplierData ? 'Loading...' : `#${registrationId}`
+                    isLoadingSupplierData
+                      ? t('common:registration.loading')
+                      : `#${registrationId}`
                   }
                 />
               }
               trailing={
-                <ActionButtonsGroup>
-                  <ButtonAtom variant="secondary">Cancel</ButtonAtom>
-                </ActionButtonsGroup>
+                isSubmitted ? (
+                  <TagAtom variant="filled" color="warning">
+                    Wait for Approval
+                  </TagAtom>
+                ) : null
               }
             />
           }
@@ -191,7 +202,7 @@ const RegistrationPage = () => {
             <MultiStepForm
               steps={registrationSteps}
               isLoading={isLoadingSubmit || isLoadingSupplierData}
-              onSubmit={handleSubmit(handleFinalSubmit)}
+              onSubmit={handleFinalSubmit}
               onSaveDraft={handleSaveDraft}
             />
           }

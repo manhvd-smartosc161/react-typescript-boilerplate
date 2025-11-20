@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { ControlledTextField } from '@src/components/molecules';
 import { Control } from 'react-hook-form';
 
@@ -11,6 +12,8 @@ const SupplierRepresentativeFields: React.FC<CompanyRepresentativeProps> = ({
   control,
   sectionPrefix,
 }) => {
+  const { t } = useTranslation('supplier');
+
   return (
     <>
       <Grid size={{ xs: 12, md: 4 }}>
@@ -19,8 +22,8 @@ const SupplierRepresentativeFields: React.FC<CompanyRepresentativeProps> = ({
           required
           name={`${sectionPrefix}.contactPersonName`}
           control={control}
-          label="Contact Person Name"
-          placeholder="Enter contact person name"
+          label={t('form.fields.contactPersonName')}
+          placeholder={t('form.fields.contactPersonNamePlaceholder')}
         />
       </Grid>
       <Grid size={{ xs: 12, md: 4 }}>
@@ -29,8 +32,8 @@ const SupplierRepresentativeFields: React.FC<CompanyRepresentativeProps> = ({
           required
           name={`${sectionPrefix}.contactPersonEmail`}
           control={control}
-          label="Contact Person Email"
-          placeholder="contact@example.com"
+          label={t('form.fields.contactPersonEmail')}
+          placeholder={t('form.fields.contactPersonEmailPlaceholder')}
           type="email"
         />
       </Grid>
@@ -41,8 +44,8 @@ const SupplierRepresentativeFields: React.FC<CompanyRepresentativeProps> = ({
           required
           name={`${sectionPrefix}.contactPersonPhone`}
           control={control}
-          label="Contact Person Phone"
-          placeholder="Enter phone number"
+          label={t('form.fields.contactPersonPhone')}
+          placeholder={t('form.fields.contactPersonPhonePlaceholder')}
         />
       </Grid>
     </>

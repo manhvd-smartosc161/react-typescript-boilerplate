@@ -1,4 +1,5 @@
 import { Box, Grid, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { DataPair, ReviewOptionList } from '@src/components/molecules';
 import { YES_NO_MAP, DELIVERY_MODE_MAP, dayOptions } from '@src/constants';
 import { SupplierSite, PercentOffInvoice } from '@src/types';
@@ -15,11 +16,17 @@ const SupplierSiteView: React.FC<SupplierSiteViewProps> = ({
   addressLabel,
   paymentOptions = [],
 }) => {
-  const weekDayOptions = dayOptions;
+  const { t } = useTranslation('supplier');
+  const weekDayOptions = dayOptions.map((option) => ({
+    ...option,
+    label: t(`form.view.${option.value.toLowerCase()}`) || option.label,
+  }));
 
   const renderPercentOffInvoice = (invoices?: PercentOffInvoice[]) => {
     if (!invoices || invoices.length === 0) {
-      return <DataPair label="" value="No percent off invoice entries" />;
+      return (
+        <DataPair label="" value={t('form.view.noPercentOffInvoiceEntries')} />
+      );
     }
 
     return (
@@ -35,13 +42,22 @@ const SupplierSiteView: React.FC<SupplierSiteViewProps> = ({
           >
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, md: 4 }}>
-                <DataPair label="Amount" value={`${invoice.amount}%`} />
+                <DataPair
+                  label={t('form.view.amount')}
+                  value={`${invoice.amount}%`}
+                />
               </Grid>
               <Grid size={{ xs: 12, md: 4 }}>
-                <DataPair label="Start Date" value={invoice.startDate} />
+                <DataPair
+                  label={t('form.fields.startDate')}
+                  value={invoice.startDate}
+                />
               </Grid>
               <Grid size={{ xs: 12, md: 4 }}>
-                <DataPair label="End Date" value={invoice.endDate} />
+                <DataPair
+                  label={t('form.fields.endDate')}
+                  value={invoice.endDate}
+                />
               </Grid>
             </Grid>
           </Box>
@@ -54,17 +70,17 @@ const SupplierSiteView: React.FC<SupplierSiteViewProps> = ({
     <Box>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 6 }}>
-          <DataPair label="Site Name" value={data.name} />
+          <DataPair label={t('form.fields.siteName')} value={data.name} />
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>
-          <DataPair label="Address" value={addressLabel} />
+          <DataPair label={t('form.fields.address')} value={addressLabel} />
         </Grid>
 
         {paymentOptions.length > 0 && (
           <Grid size={{ xs: 12 }}>
             <ReviewOptionList
-              label="Associated Payments"
+              label={t('form.fields.associatedPayments')}
               type="checkbox"
               allOptions={paymentOptions}
               selected={data.paymentIds || []}
@@ -75,7 +91,7 @@ const SupplierSiteView: React.FC<SupplierSiteViewProps> = ({
 
         <Grid size={{ xs: 12, md: 6 }}>
           <DataPair
-            label="Returnable Supplier"
+            label={t('form.fields.returnableSupplier')}
             value={
               data.returnableSupplier
                 ? YES_NO_MAP[data.returnableSupplier]
@@ -86,7 +102,7 @@ const SupplierSiteView: React.FC<SupplierSiteViewProps> = ({
 
         <Grid size={{ xs: 12, md: 6 }}>
           <DataPair
-            label="Delivery Mode"
+            label={t('form.fields.deliveryMode')}
             value={
               data.deliveryMode
                 ? DELIVERY_MODE_MAP[data.deliveryMode]
@@ -97,14 +113,14 @@ const SupplierSiteView: React.FC<SupplierSiteViewProps> = ({
 
         <Grid size={{ xs: 12 }}>
           <DataPair
-            label="Previous Trade Names"
+            label={t('form.fields.previousTradeNames')}
             value={data.previousTradeNames}
           />
         </Grid>
 
         <Grid size={{ xs: 12 }}>
           <ReviewOptionList
-            label="Preferred Order Days"
+            label={t('form.fields.preferredOrderDays')}
             type="checkbox"
             allOptions={weekDayOptions}
             selected={data.preferredOrderDay || []}
@@ -114,7 +130,7 @@ const SupplierSiteView: React.FC<SupplierSiteViewProps> = ({
 
         <Grid size={{ xs: 12 }}>
           <ReviewOptionList
-            label="Preferred Delivery Days"
+            label={t('form.fields.preferredDeliveryDays')}
             type="checkbox"
             allOptions={weekDayOptions}
             selected={data.preferredDeliveryDay || []}
@@ -124,21 +140,21 @@ const SupplierSiteView: React.FC<SupplierSiteViewProps> = ({
 
         <Grid size={{ xs: 12, md: 6 }}>
           <DataPair
-            label="Minimum Order Value"
+            label={t('form.fields.minimumOrderValue')}
             value={data.minOrderValue?.toLocaleString()}
           />
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>
           <DataPair
-            label="Minimum Order Quantity"
+            label={t('form.fields.minimumOrderQuantity')}
             value={data.minOrderQty?.toLocaleString()}
           />
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>
           <DataPair
-            label="Over Receiving Flag"
+            label={t('form.fields.overReceivingFlag')}
             value={
               data.overReceivingFlag
                 ? YES_NO_MAP[data.overReceivingFlag]
@@ -151,7 +167,7 @@ const SupplierSiteView: React.FC<SupplierSiteViewProps> = ({
       {/* Percent Off Invoice Section */}
       <Box sx={{ mt: 3 }}>
         <Typography variant="h6" gutterBottom>
-          Percent Off Invoice
+          {t('form.fields.percentOffInvoice')}
         </Typography>
         {renderPercentOffInvoice(data.percentOffInvoice)}
       </Box>
