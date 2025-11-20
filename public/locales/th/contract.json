@@ -1,0 +1,18 @@
+{
+  "id": "รหัส",
+  "supplierName": "ชื่อซัพพลายเออร์",
+  "email": "อีเมล",
+  "startDate": "วันที่เริ่มต้น",
+  "endDate": "วันที่สิ้นสุด",
+  "leadOwner": "เจ้าของลีด",
+  "status": "สถานะ",
+  "action": "การดำเนินการ",
+  "activate": "เปิดใช้งาน",
+  "terminate": "ยกเลิก",
+  "delete": "ลบ",
+  "confirmDelete": "ยืนยันการลบ",
+  "confirmDeleteMessage": "คุณแน่ใจหรือไม่ว่าต้องการลบสัญญา {{count}} รายการ? การกระทำนี้ไม่สามารถยกเลิกได้",
+  "activatedSuccess": "เปิดใช้งานสัญญา {{count}} รายการสำเร็จแล้ว",
+  "terminatedSuccess": "ยกเลิกสัญญา {{count}} รายการสำเร็จแล้ว",
+  "deletedSuccess": "ลบสัญญา {{count}} รายการสำเร็จแล้ว"
+}

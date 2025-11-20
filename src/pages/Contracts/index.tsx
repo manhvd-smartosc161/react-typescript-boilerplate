@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
-import { Box } from '@mui/material';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Box, Typography } from '@mui/material';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
+import { useDebounce } from '@src/hooks/common';
 import {
   PageHeaderOrganism,
   TableOrganism,
   ContractTerminationModalOrganism,
 } from '@src/components/organisms';
-import { IconAtom, CheckBoxAtom, StatusChipAtom } from '@src/components/atoms';
+import {
+  IconAtom,
+  CheckBoxAtom,
+  StatusChipAtom,
+  ButtonAtom,
+} from '@src/components/atoms';
+import { ModalDialog } from '@src/components/molecules';
 import { ESortDirection } from '@src/constants';
 import { contractsData, ContractItem } from '@src/mock/contractsData';
 import { TerminationFormData } from '@src/components/organisms/ContractTerminationModal';
@@ -21,6 +30,7 @@ import {
 } from './index.styled';
 
 const Contracts: React.FC = () => {
+  const { t } = useTranslation();
   const [searchKeyword, setSearchKeyword] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -29,9 +39,31 @@ const Contracts: React.FC = () => {
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const [actionValue, setActionValue] = useState('');
   const [isTerminationModalOpen, setIsTerminationModalOpen] = useState(false);
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
+  const [contracts, setContracts] = useState<ContractItem[]>(contractsData);
+  const debouncedSearchKeyword = useDebounce(searchKeyword, 300);
 
-  // TODO: Filter will be handled by API call
-  const filteredData = contractsData;
+  // Filter contracts based on search keyword
+  const filteredData = useMemo(() => {
+    if (!debouncedSearchKeyword.trim()) {
+      return contracts;
+    }
+
+    const keyword = debouncedSearchKeyword.toLowerCase().trim();
+    return contracts.filter((contract) => {
+      return (
+        contract.contractId.toLowerCase().includes(keyword) ||
+        contract.companyName.toLowerCase().includes(keyword) ||
+        contract.email.toLowerCase().includes(keyword) ||
+        contract.leadOwner.toLowerCase().includes(keyword)
+      );
+    });
+  }, [contracts, debouncedSearchKeyword]);
+
+  // Reset to page 1 when search changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debouncedSearchKeyword]);
 
   const total = filteredData.length;
   const pagesCount = Math.ceil(total / rowsPerPage);
@@ -69,21 +101,33 @@ const Contracts: React.FC = () => {
     }
   };
 
-  const handleActionChange = (value: string) => {
-    if (!value) return;
+  const handleActivate = () => {
+    setContracts((prevContracts) =>
+      prevContracts.map((contract) =>
+        selectedRows.includes(contract.id)
+          ? { ...contract, status: 'Active' as const }
+          : contract,
+      ),
+    );
+    toast.success(
+      t('contract:activatedSuccess', { count: selectedRows.length }),
+    );
+    setSelectedRows([]);
+    setActionValue('');
+  };
 
-    setActionValue(value);
+  const handleDeleteConfirm = () => {
+    setContracts((prevContracts) =>
+      prevContracts.filter((contract) => !selectedRows.includes(contract.id)),
+    );
+    toast.success(t('contract:deletedSuccess', { count: selectedRows.length }));
+    setSelectedRows([]);
+    setActionValue('');
+    setIsDeleteConfirmOpen(false);
+  };
 
-    if (selectedRows.length > 0) {
-      if (value === 'terminate') {
-        setIsTerminationModalOpen(true);
-      } else {
-        console.log(`Bulk action: ${value} on rows:`, selectedRows);
-        // TODO: Implement bulk actions
-        // Reset after action is processed
-        setActionValue('');
-      }
-    }
+  const handleDelete = () => {
+    setIsDeleteConfirmOpen(true);
   };
 
   const handleTerminationSubmit = (data: TerminationFormData) => {
@@ -94,9 +138,38 @@ const Contracts: React.FC = () => {
       contracts: selectedContracts,
       formData: data,
     });
-    // TODO: Implement termination API call
+
+    // Update status to Inactive
+    setContracts((prevContracts) =>
+      prevContracts.map((contract) =>
+        selectedRows.includes(contract.id)
+          ? { ...contract, status: 'Inactive' as const }
+          : contract,
+      ),
+    );
+
+    toast.success(
+      t('contract:terminatedSuccess', { count: selectedRows.length }),
+    );
+
     setSelectedRows([]);
     setActionValue('');
+  };
+
+  const handleActionChange = (value: string) => {
+    if (!value) return;
+
+    setActionValue(value);
+
+    if (selectedRows.length > 0) {
+      if (value === 'terminate') {
+        setIsTerminationModalOpen(true);
+      } else if (value === 'activate') {
+        handleActivate();
+      } else if (value === 'delete') {
+        handleDelete();
+      }
+    }
   };
 
   const selectedContracts = filteredData.filter((item) =>
@@ -136,7 +209,7 @@ const Contracts: React.FC = () => {
     },
     {
       key: 'contractId' as keyof ContractItem,
-      label: 'ID',
+      label: t('contract:id'),
       width: '15%',
       align: 'left' as const,
       isSortable: true,
@@ -154,7 +227,7 @@ const Contracts: React.FC = () => {
     },
     {
       key: 'companyName' as keyof ContractItem,
-      label: 'Supplier Name',
+      label: t('contract:supplierName'),
       width: '18%',
       align: 'left' as const,
       isSortable: true,
@@ -164,35 +237,35 @@ const Contracts: React.FC = () => {
     },
     {
       key: 'email' as keyof ContractItem,
-      label: 'Email',
+      label: t('contract:email'),
       width: '15%',
       align: 'left' as const,
       isSortable: true,
     },
     {
       key: 'startDate' as keyof ContractItem,
-      label: 'Start date',
+      label: t('contract:startDate'),
       width: '12%',
       align: 'left' as const,
       isSortable: true,
     },
     {
       key: 'endDate' as keyof ContractItem,
-      label: 'End date',
+      label: t('contract:endDate'),
       width: '12%',
       align: 'left' as const,
       isSortable: true,
     },
     {
       key: 'leadOwner' as keyof ContractItem,
-      label: 'Lead Owner',
+      label: t('contract:leadOwner'),
       width: '15%',
       align: 'left' as const,
       isSortable: true,
     },
     {
       key: 'status' as keyof ContractItem,
-      label: 'Status',
+      label: t('contract:status'),
       width: '10%',
       align: 'left' as const,
       isSortable: true,
@@ -202,7 +275,7 @@ const Contracts: React.FC = () => {
     },
     {
       key: 'id' as keyof ContractItem,
-      label: 'Action',
+      label: t('contract:action'),
       width: '8%',
       align: 'center' as const,
       isSortable: false,
@@ -246,24 +319,24 @@ const Contracts: React.FC = () => {
 
   return (
     <Box>
-      <PageHeaderOrganism title="Contracts" />
+      <PageHeaderOrganism title={t('common:contracts')} />
       <StyledContentContainer>
         <StyledFiltersContainer>
           <StyledActionDropdown
             value={actionValue}
             onChange={(e) => handleActionChange(e.target.value as string)}
-            placeholder="Action"
+            placeholder={t('common:action')}
             size="small"
             fullWidth={false}
             disabled={selectedRows.length === 0}
             options={[
-              { value: 'activate', label: 'Activate' },
-              { value: 'terminate', label: 'Terminate' },
-              { value: 'delete', label: 'Delete' },
+              { value: 'activate', label: t('contract:activate') },
+              { value: 'terminate', label: t('contract:terminate') },
+              { value: 'delete', label: t('contract:delete') },
             ]}
           />
           <StyledSearchInput
-            placeholder="Search keyword"
+            placeholder={t('common:searchKeyword')}
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
             endIcon={<IconAtom name="search" size={20} />}
@@ -300,6 +373,42 @@ const Contracts: React.FC = () => {
         onSubmit={handleTerminationSubmit}
         selectedContracts={selectedContracts}
       />
+      <ModalDialog
+        open={isDeleteConfirmOpen}
+        onClose={() => {
+          setIsDeleteConfirmOpen(false);
+          setActionValue('');
+        }}
+        title={t('contract:confirmDelete')}
+        footer={
+          <>
+            <ButtonAtom
+              variant="primary"
+              color="error"
+              onClick={handleDeleteConfirm}
+            >
+              {t('contract:delete')}
+            </ButtonAtom>
+            <ButtonAtom
+              variant="secondary"
+              color="inherit"
+              onClick={() => {
+                setIsDeleteConfirmOpen(false);
+                setActionValue('');
+              }}
+            >
+              {t('common:cancel')}
+            </ButtonAtom>
+          </>
+        }
+        showFooter
+        fullWidth
+        maxWidth="sm"
+      >
+        <Typography variant="body1">
+          {t('contract:confirmDeleteMessage', { count: selectedRows.length })}
+        </Typography>
+      </ModalDialog>
     </Box>
   );
 };

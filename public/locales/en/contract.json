@@ -1,0 +1,18 @@
+{
+  "id": "ID",
+  "supplierName": "Supplier Name",
+  "email": "Email",
+  "startDate": "Start date",
+  "endDate": "End date",
+  "leadOwner": "Lead Owner",
+  "status": "Status",
+  "action": "Action",
+  "activate": "Activate",
+  "terminate": "Terminate",
+  "delete": "Delete",
+  "confirmDelete": "Confirm Delete",
+  "confirmDeleteMessage": "Are you sure you want to delete {{count}} contract(s)? This action cannot be undone.",
+  "activatedSuccess": "{{count}} contract(s) have been activated successfully.",
+  "terminatedSuccess": "{{count}} contract(s) have been terminated successfully.",
+  "deletedSuccess": "{{count}} contract(s) have been deleted successfully."
+}

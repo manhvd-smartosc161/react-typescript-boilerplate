@@ -21,6 +21,7 @@ void i18n
       'contact-us',
       'role',
       'item',
+      'contract',
     ],
     defaultNS,
     interpolation: { escapeValue: false },
