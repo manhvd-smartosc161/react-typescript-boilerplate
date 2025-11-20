@@ -7,7 +7,7 @@ import {
   ControlledTextField,
   ControlledCheckBoxField,
 } from '@src/components/molecules';
-import { Control, useFieldArray } from 'react-hook-form';
+import { Control, useFieldArray, useFormContext } from 'react-hook-form';
 import { Add as AddIcon } from '@mui/icons-material';
 import {
   addressTypeOptions,
@@ -26,6 +26,7 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
   sectionPrefix,
 }) => {
   const { t } = useTranslation('supplier');
+  const { getValues } = useFormContext();
   const {
     fields: addressFields,
     append: appendAddress,
@@ -36,8 +37,13 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
   });
 
   const duplicateAddress = (index: number) => {
-    const newAddress = addressFields[index];
-    appendAddress(newAddress);
+    const currentAddress = getValues(`${sectionPrefix}.addresses.${index}`);
+    if (currentAddress) {
+      // Remove id to create a new address
+      const addressData = { ...currentAddress };
+      delete addressData.id;
+      appendAddress(addressData);
+    }
   };
 
   const addNewAddress = () => {
@@ -190,7 +196,8 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
             label={t('form.fields.addressPurpose')}
             options={addressPurposeOptions.map((option) => ({
               ...option,
-              label: t(`form.view.${option.value.toLowerCase()}`) || option.label,
+              label:
+                t(`form.view.${option.value.toLowerCase()}`) || option.label,
             }))}
             columns={3}
           />

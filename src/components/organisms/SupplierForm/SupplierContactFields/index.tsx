@@ -7,7 +7,12 @@ import {
   ControlledTextField,
   ControlledAutocompleteField,
 } from '@src/components/molecules';
-import { Control, useFieldArray, useWatch } from 'react-hook-form';
+import {
+  Control,
+  useFieldArray,
+  useWatch,
+  useFormContext,
+} from 'react-hook-form';
 import { Add as AddIcon } from '@mui/icons-material';
 import {
   salutationOptions,
@@ -26,6 +31,7 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
   sectionPrefix,
 }) => {
   const { t } = useTranslation('supplier');
+  const { getValues } = useFormContext();
   const {
     fields: contactFields,
     append: appendContact,
@@ -48,8 +54,13 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
     })) || [];
 
   const duplicateContact = (index: number) => {
-    const newContact = contactFields[index];
-    appendContact(newContact);
+    const currentContact = getValues(`${sectionPrefix}.contacts.${index}`);
+    if (currentContact) {
+      // Remove id to create a new contact
+      const contactData = { ...currentContact };
+      delete contactData.id;
+      appendContact(contactData);
+    }
   };
 
   const addNewContact = () => {

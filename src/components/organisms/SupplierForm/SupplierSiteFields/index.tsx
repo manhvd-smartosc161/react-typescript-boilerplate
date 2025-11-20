@@ -33,7 +33,7 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
   sectionPrefix,
 }) => {
   const { t } = useTranslation('supplier');
-  const { watch } = useFormContext();
+  const { watch, getValues } = useFormContext();
 
   const {
     fields: siteFields,
@@ -60,8 +60,13 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
     })) || [];
 
   const duplicateSite = (index: number) => {
-    const newSite = siteFields[index];
-    appendSite(newSite);
+    const currentSite = getValues(`${sectionPrefix}.${index}`);
+    if (currentSite) {
+      // Remove id to create a new site
+      const siteData = { ...currentSite };
+      delete siteData.id;
+      appendSite(siteData);
+    }
   };
 
   const addNewSite = () => {

@@ -7,7 +7,7 @@ import {
   ControlledTextField,
   ControlledTextAreaField,
 } from '@src/components/molecules';
-import { Control, useFieldArray } from 'react-hook-form';
+import { Control, useFieldArray, useFormContext } from 'react-hook-form';
 import { Add as AddIcon } from '@mui/icons-material';
 import {
   yesNoOptions,
@@ -29,6 +29,7 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
   sectionPrefix,
 }) => {
   const { t } = useTranslation('supplier');
+  const { getValues } = useFormContext();
   const {
     fields: paymentFields,
     append: appendPayment,
@@ -39,8 +40,13 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
   });
 
   const duplicatePayment = (index: number) => {
-    const newPayment = paymentFields[index];
-    appendPayment(newPayment);
+    const currentPayment = getValues(`${sectionPrefix}.payments.${index}`);
+    if (currentPayment) {
+      // Remove id to create a new payment
+      const paymentData = { ...currentPayment };
+      delete paymentData.id;
+      appendPayment(paymentData);
+    }
   };
 
   const addNewPayment = () => {
