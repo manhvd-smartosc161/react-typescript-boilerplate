@@ -6,9 +6,9 @@ import {
   PageHeaderOrganism,
   TableOrganism,
 } from '@src/components/organisms';
-import { ActionButtonAtom } from '@src/components/atoms';
+import { ActionButtonAtom, StatusChipAtom } from '@src/components/atoms';
 import { RoleItem, SortDirection, UserRolesItem } from '@src/types';
-import { ESortDirection } from '@src/constants';
+import { ESortDirection, EStatus } from '@src/constants';
 import { DATE_FORMATS, formatDate } from '@src/utils';
 import { TableToolbar } from '@src/components/molecules';
 import { BulkActionItem } from '@src/components/molecules/TableToolbar/BulkActionMenu';
@@ -126,10 +126,13 @@ const UserManagement: React.FC = () => {
     {
       key: 'status' as keyof UserRolesItem,
       label: t('lead:status'),
-      render: (value: number) =>
-        t(
-          `common:status.${value === EUserStatus.ACTIVE ? 'active' : 'inactive'}`,
-        ),
+      render: (value: number) => (
+        <StatusChipAtom
+          status={
+            value === EUserStatus.ACTIVE ? EStatus.ACTIVE : EStatus.INACTIVE
+          }
+        />
+      ),
       isSortable: true,
     },
     {

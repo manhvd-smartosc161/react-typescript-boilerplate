@@ -5,7 +5,7 @@ import {
   TableOrganism,
   ContractTerminationModalOrganism,
 } from '@src/components/organisms';
-import { IconAtom, CheckBoxAtom } from '@src/components/atoms';
+import { IconAtom, CheckBoxAtom, StatusChipAtom } from '@src/components/atoms';
 import { ESortDirection } from '@src/constants';
 import { contractsData, ContractItem } from '@src/mock/contractsData';
 import { TerminationFormData } from '@src/components/organisms/ContractTerminationModal';
@@ -14,7 +14,6 @@ import {
   StyledFiltersContainer,
   StyledContractIdLink,
   StyledCompanyNameText,
-  StyledStatusBadge,
   StyledActionContainer,
   StyledActionIconButton,
   StyledActionDropdown,
@@ -197,10 +196,8 @@ const Contracts: React.FC = () => {
       width: '10%',
       align: 'left' as const,
       isSortable: true,
-      render: (_value: any, record: ContractItem) => (
-        <StyledStatusBadge $isActive={record.status === 'Active'}>
-          {record.status}
-        </StyledStatusBadge>
+      render: (value: string) => (
+        <StatusChipAtom status={value.toUpperCase()} />
       ),
     },
     {

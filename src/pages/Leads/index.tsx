@@ -76,7 +76,8 @@ const LeadsPage: React.FC = () => {
     {
       key: 'status' as keyof SupplierInfoItem,
       label: t('lead:status'),
-      render: (value: string) => <StatusChipAtom status={value} size="small" />,
+      render: (value: string) =>
+        value ? <StatusChipAtom status={value} size="small" /> : null,
       isSortable: true,
     },
     {

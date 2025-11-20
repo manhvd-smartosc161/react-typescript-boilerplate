@@ -15,7 +15,7 @@ const ContactUs = lazy(() => import('@src/pages/ContactUs'));
 const AuditLogs = lazy(() => import('@src/pages/AuditLogs'));
 const EmailSettings = lazy(() => import('@src/pages/EmailSettings'));
 const Contracts = lazy(() => import('@src/pages/Contracts'));
-const UserManagement = lazy(() => import('@src/pages/UserMangement'));
+const UserManagement = lazy(() => import('@src/pages/UserManagement'));
 const RolesPermission = lazy(() => import('@src/pages/RolesPermission'));
 const ItemManagement = lazy(() => import('@src/pages/ItemManagement'));
 

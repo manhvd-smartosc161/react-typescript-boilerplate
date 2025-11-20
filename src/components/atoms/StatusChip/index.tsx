@@ -16,6 +16,8 @@ const StatusChipAtom: React.FC<StatusChipProps> = ({
 
   const getTranslatedStatus = (statusValue: string) => {
     switch (statusValue.toUpperCase()) {
+      case ERegistrationStatus.DRAFT:
+        return t('common:status.draft');
       case ERegistrationStatus.NEW:
         return t('common:status.new');
       case ERegistrationStatus.WAITING:
@@ -26,6 +28,10 @@ const StatusChipAtom: React.FC<StatusChipProps> = ({
         return t('common:status.approved');
       case ERegistrationStatus.ACTIVATED:
         return t('common:status.activated');
+      case ERegistrationStatus.ACTIVE:
+        return t('common:status.active');
+      case ERegistrationStatus.INACTIVE:
+        return t('common:status.inactive');
       default:
         return statusValue;
     }

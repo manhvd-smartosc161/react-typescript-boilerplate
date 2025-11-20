@@ -8,7 +8,11 @@ import {
   AddRoleModalOrganism,
   EditRoleModalOrganism,
 } from '@src/components/organisms';
-import { ActionButtonAtom, IconAtom } from '@src/components/atoms';
+import {
+  ActionButtonAtom,
+  IconAtom,
+  StatusChipAtom,
+} from '@src/components/atoms';
 import { SortDirection, RolePermissionItem, RoleDetailData } from '@src/types';
 import { ESortDirection, EStatusUpdate } from '@src/constants';
 import { TableToolbar } from '@src/components/molecules';
@@ -162,7 +166,7 @@ const RolesPermission: React.FC = () => {
     {
       key: 'status' as keyof RolePermissionItem,
       label: t('status'),
-      render: (value: string) => t(`common:status.${value.toLowerCase()}`),
+      render: (value: string) => <StatusChipAtom status={value} />,
     },
     {
       key: 'id' as keyof RolePermissionItem,

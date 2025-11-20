@@ -29,25 +29,6 @@ export const StyledCompanyNameText = styled('span')(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-interface StyledStatusBadgeProps {
-  $isActive: boolean;
-}
-
-export const StyledStatusBadge = styled('span')<StyledStatusBadgeProps>(
-  ({ theme, $isActive }) => ({
-    padding: '4px 12px',
-    borderRadius: '16px',
-    fontSize: '0.75rem',
-    fontWeight: 600,
-    backgroundColor: $isActive
-      ? theme.palette.success.light
-      : theme.palette.action.disabledBackground,
-    color: $isActive
-      ? theme.palette.success.dark
-      : theme.palette.text.secondary,
-  }),
-);
-
 export const StyledActionContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
