@@ -54,7 +54,7 @@ const ControlledAutocompleteField = <
         return (
           <StyledFormControl
             fullWidth={fullWidth}
-            error={!!fieldState.error}
+            error={!!fieldState.error?.message}
             disabled={disabled}
             required={required}
             variant={variant}
@@ -76,6 +76,7 @@ const ControlledAutocompleteField = <
               placeholder={placeholder}
               id={field.name}
               size={size}
+              onBlur={field.onBlur}
             />
             {(fieldState.error?.message || helperText) &&
               (fieldState.isTouched || formState.isSubmitted) && (

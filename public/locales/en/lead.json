@@ -7,5 +7,22 @@
   "remarks": "Remarks",
   "assign": "Assign",
   "assigned": "Assigned",
-  "leadDetails": "Lead Details"
+  "leadDetails": "Lead Details",
+  "addNewLead": "Add New Lead",
+  "saleAt": "Sale At",
+  "selectSales": "Select sales",
+  "email": "Email",
+  "companyName": "Company Name",
+  "companySuplierName": "Company / Supplier Name",
+  "productCategory": "Product Category",
+  "selectProductCategory": "Select product category",
+  "remarksLabel": "Remarks (Reason / USP / Differentiators)",
+  "remarksPlaceholder": "What makes this lead unique (organic, high margin, innovative, ...)",
+  "add": "Add",
+  "cancel": "Cancel",
+  "leadOwnerMakro": "Lead Owner (Makro)",
+  "leadOwnerLotus": "Lead Owner (Lotus)",
+  "leadAssignment": "Lead Assignment",
+  "select": "Select",
+  "save": "Save"
 }

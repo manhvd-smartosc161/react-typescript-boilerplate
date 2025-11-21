@@ -61,6 +61,7 @@ export const SuccessButton = createStyledButton({
   hoverColor: '#218838',
   minWidth: '100px',
   padding: '6px 12px',
+  borderRadius: '8px',
 });
 
 export const ActionButton = createStyledButton({

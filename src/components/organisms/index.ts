@@ -21,6 +21,7 @@ export { default as EditRoleModalOrganism } from './EditRoleModal';
 export { default as EditRolePermissionModalOrganism } from './EditRolePermissionModal';
 export { default as EditUserModalOrganism } from './EditUserModal';
 export { default as TableItemToolbarOrganism } from './TableItemToolbar';
+export { default as AssignLeadModalOrganism } from './AssignLeadModal';
 
 export * from './RegistrationSteps';
 export * from './SupplierForm';

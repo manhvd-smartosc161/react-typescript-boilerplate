@@ -1,5 +1,7 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography } from '@mui/material';
 import { ButtonAtom } from '@src/components/atoms';
 import {
@@ -7,12 +9,15 @@ import {
   ControlledAutocompleteMultiField,
   ControlledTextField,
   ControlledTextAreaField,
+  ControlledAutocompleteField,
 } from '@src/components/molecules';
+import { leadSchema } from '@src/schemas';
+import { AddLeadFormValue } from '@src/types';
 
 export interface AddLeadModalProps {
   open: boolean;
   onClose: () => void;
-  onSubmit: () => void;
+  onSubmit: (data: AddLeadFormValue) => void;
 }
 
 const AddLeadModal: React.FC<AddLeadModalProps> = ({
@@ -20,20 +25,24 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
   onClose,
   onSubmit,
 }) => {
+  const { t } = useTranslation('lead');
   const formMethods = useForm({
+    resolver: yupResolver(leadSchema),
+    mode: 'onBlur',
+    reValidateMode: 'onSubmit',
     defaultValues: {
       saleAt: [],
       email: '',
-      companyName: [],
+      companyName: '',
       productCategory: [],
       remarks: '',
     },
-    mode: 'onSubmit',
   });
   const { handleSubmit, control } = formMethods;
 
-  const handleSubmitAddLead = () => {
-    console.log('submmit');
+  const handleSubmitAddLead = async (form: AddLeadFormValue) => {
+    onSubmit(form);
+    onClose();
   };
 
   const footer = (
@@ -41,10 +50,11 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
       <ButtonAtom
         variant="primary"
         color="primary"
-        onClick={onSubmit}
         sx={{ textTransform: 'none' }}
+        type="submit"
+        form="add-lead-form"
       >
-        Add
+        {t('add')}
       </ButtonAtom>
       <ButtonAtom
         variant="secondary"
@@ -52,7 +62,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
         onClick={onClose}
         sx={{ textTransform: 'none' }}
       >
-        Cancel
+        {t('cancel')}
       </ButtonAtom>
     </>
   );
@@ -61,7 +71,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
     <ModalDialog
       open={open}
       onClose={onClose}
-      title="Add New Lead"
+      title={t('addNewLead')}
       footer={footer}
       showFooter
       fullWidth
@@ -69,7 +79,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
     >
       <FormProvider {...formMethods}>
         <form
-          id="registration-form"
+          id="add-lead-form"
           onSubmit={handleSubmit(handleSubmitAddLead)}
           noValidate
         >
@@ -92,9 +102,9 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
                 },
               ]}
               control={control}
-              label="Sale At"
+              label={t('saleAt')}
               required
-              placeholder="Select sales"
+              placeholder={t('selectSales')}
             />
 
             {/* Email */}
@@ -102,28 +112,28 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
               required
               fullWidth
               name="email"
-              label="Email"
+              label={t('email')}
               placeholder="email@address.com"
               control={control}
             />
 
             {/* Company Name */}
-            <ControlledAutocompleteMultiField
+            <ControlledAutocompleteField
               name="companyName"
               options={[
                 {
-                  id: 'companyName1',
-                  label: 'companyName1',
+                  id: 'SOSC',
+                  label: 'SOSC',
                 },
                 {
-                  id: 'companyName2',
-                  label: 'companyName2',
+                  id: 'LOTUS',
+                  label: 'LOTUS',
                 },
               ]}
               control={control}
-              label="Company Name"
+              label={t('companyName')}
               required
-              placeholder="Company / Supplier Name"
+              placeholder={t('companySuplierName')}
             />
 
             {/* Product Category */}
@@ -144,9 +154,9 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
                 },
               ]}
               control={control}
-              label="Product Category"
+              label={t('productCategory')}
               required
-              placeholder="Select product category"
+              placeholder={t('selectProductCategory')}
             />
 
             {/* Remarks */}
@@ -156,14 +166,14 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
                 color="text.secondary"
                 sx={{ mb: 0.5 }}
               >
-                Remarks (Reason / USP / Differentiators)
+                {t('remarksLabel')}
               </Typography>
               <ControlledTextAreaField
                 fullWidth
                 minRows={3}
                 control={control}
                 name="remarks"
-                placeholder="What makes this lead unique (organic, high margin, innovative, ...)"
+                placeholder={t('remarksPlaceholder')}
               />
             </Box>
           </Box>

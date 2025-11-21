@@ -2,26 +2,40 @@ import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, generatePath } from 'react-router-dom';
-import { PageHeaderOrganism } from '@src/components/organisms';
+import {
+  AssignLeadModalOrganism,
+  PageHeaderOrganism,
+} from '@src/components/organisms';
 import { TableOrganism } from '@src/components/organisms';
 import { StatusChipAtom, ActionButtonAtom } from '@src/components/atoms';
-import { SortDirection, SupplierInfoItem } from '@src/types';
+import { AddLeadFormValue, SortDirection, SupplierInfoItem } from '@src/types';
 import { useGetSuppliers } from '@src/hooks/supplier/useGetSuppliers';
 import { useRecoilValue } from 'recoil';
 import { currentUserState } from '@src/stores';
 import { ESortDirection, LANGUAGE_CODES } from '@src/constants';
 import { DATE_FORMATS, formatDate } from '@src/utils';
 import { AddLeadModalOrganism } from '@src/components/organisms';
+import { useAddNewLeadMutation, useAssignLeadMutation } from '@src/hooks';
+
+type AssignModalState = {
+  isOpen: boolean;
+  data: SupplierInfoItem | null;
+};
+
 import ROUTES from '@src/routes/route';
 
 const LeadsPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('lead');
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState<SortDirection>(ESortDirection.ASC);
   const [orderBy, setOrderBy] = useState('name_en');
   const [openAddModal, setOpenAddModal] = useState<boolean>(false);
+  const [openAssignModal, setOpenAssignModal] = useState<AssignModalState>({
+    isOpen: false,
+    data: null,
+  });
   const currentUser = useRecoilValue(currentUserState);
 
   const { data } = useGetSuppliers({
@@ -31,8 +45,18 @@ const LeadsPage: React.FC = () => {
     sortOrder: order,
   });
 
+  const createSupplierMutation = useAddNewLeadMutation().mutateAsync;
+  const assignLeadMuatation = useAssignLeadMutation().mutateAsync;
+
   const handleViewDetails = (id: string) => {
     navigate(generatePath(ROUTES.LEAD_DETAIL, { id }));
+  };
+
+  const handleAssignLead = (record: SupplierInfoItem) => {
+    setOpenAssignModal({
+      isOpen: true,
+      data: record,
+    });
   };
 
   const handleClickAddLead = () => {
@@ -40,6 +64,30 @@ const LeadsPage: React.FC = () => {
   };
   const handleCloseAddNewLead = () => {
     setOpenAddModal(false);
+  };
+
+  const handleSubmitAddNew = (newLead: AddLeadFormValue) => {
+    createSupplierMutation({
+      id: crypto.randomUUID(),
+      nameTh: newLead.companyName,
+      nameEn: newLead.companyName,
+      annualRevenue: 0,
+      createdAt: Date.now().toString(),
+      updatedAt: Date.now().toString(),
+      remark: newLead?.remarks,
+      status: 'DRAFT',
+    });
+  };
+
+  const handleCloseAssignModal = () => {
+    setOpenAssignModal({
+      isOpen: false,
+      data: null,
+    });
+  };
+
+  const handleSubmitAssignModal = (lead: SupplierInfoItem) => {
+    assignLeadMuatation(lead);
   };
 
   const handleRequestSort = (
@@ -103,6 +151,29 @@ const LeadsPage: React.FC = () => {
       ),
       isSortable: false,
     },
+    {
+      key: 'id' as keyof SupplierInfoItem,
+      label: t('assign'),
+      width: '120px',
+      align: 'center' as const,
+      render: (_value: number, record: SupplierInfoItem) => (
+        <>
+          {record?.isAssigned ? (
+            <ActionButtonAtom variant="assigned">
+              {t('assigned')}
+            </ActionButtonAtom>
+          ) : (
+            <ActionButtonAtom
+              variant="details"
+              onClick={() => handleAssignLead(record)}
+            >
+              {t('assign')}
+            </ActionButtonAtom>
+          )}
+        </>
+      ),
+      isSortable: false,
+    },
   ];
 
   return (
@@ -140,11 +211,21 @@ const LeadsPage: React.FC = () => {
           onRequestSort={handleRequestSort}
         />
       </Box>
-      <AddLeadModalOrganism
-        open={openAddModal}
-        onClose={handleCloseAddNewLead}
-        onSubmit={() => {}}
-      />
+      {openAddModal && (
+        <AddLeadModalOrganism
+          open={openAddModal}
+          onClose={handleCloseAddNewLead}
+          onSubmit={handleSubmitAddNew}
+        />
+      )}
+      {openAssignModal.isOpen && (
+        <AssignLeadModalOrganism
+          open={openAssignModal.isOpen}
+          onClose={handleCloseAssignModal}
+          onSubmit={handleSubmitAssignModal}
+          data={openAssignModal.data}
+        />
+      )}
     </Box>
   );
 };
