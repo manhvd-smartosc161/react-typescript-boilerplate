@@ -29,8 +29,8 @@ const LeadsPage: React.FC = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [order, setOrder] = useState<SortDirection>(ESortDirection.ASC);
-  const [orderBy, setOrderBy] = useState('name_en');
+  const [order, setOrder] = useState<SortDirection>(ESortDirection.DESC);
+  const [orderBy, setOrderBy] = useState('created_at');
   const [openAddModal, setOpenAddModal] = useState<boolean>(false);
   const [openAssignModal, setOpenAssignModal] = useState<AssignModalState>({
     isOpen: false,
