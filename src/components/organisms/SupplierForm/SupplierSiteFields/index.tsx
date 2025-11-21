@@ -231,7 +231,8 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
               label={t('form.fields.preferredOrderDays')}
               options={dayOptions.map((option) => ({
                 ...option,
-                label: t(`form.view.${option.value.toLowerCase()}`) || option.label,
+                label:
+                  t(`form.view.${option.value.toLowerCase()}`) || option.label,
               }))}
               columns={4}
             />
@@ -244,7 +245,8 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
               label={t('form.fields.preferredDeliveryDays')}
               options={dayOptions.map((option) => ({
                 ...option,
-                label: t(`form.view.${option.value.toLowerCase()}`) || option.label,
+                label:
+                  t(`form.view.${option.value.toLowerCase()}`) || option.label,
               }))}
               columns={4}
             />

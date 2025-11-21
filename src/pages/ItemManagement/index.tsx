@@ -17,8 +17,8 @@ const ItemManagement: FC = () => {
   const { t } = useTranslation('item');
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [order, setOrder] = useState<ESortDirection>(ESortDirection.ASC);
-  const [orderBy, setOrderBy] = useState('productNameEn');
+  const [order] = useState<ESortDirection>(ESortDirection.ASC);
+  const [orderBy] = useState('productNameEn');
   const [selectedRows, setSelectedRows] = useState<Array<string | number>>([]);
   const data = productList;
   const columns = [

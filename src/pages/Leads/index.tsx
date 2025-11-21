@@ -137,7 +137,7 @@ const LeadsPage: React.FC = () => {
       isSortable: false,
     },
     {
-      key: 'id' as keyof SupplierInfoItem,
+      key: 'actions' as keyof SupplierInfoItem,
       label: t('common:actions'),
       width: '120px',
       align: 'center' as const,
@@ -152,11 +152,11 @@ const LeadsPage: React.FC = () => {
       isSortable: false,
     },
     {
-      key: 'id' as keyof SupplierInfoItem,
+      key: 'assign' as keyof SupplierInfoItem,
       label: t('assign'),
       width: '120px',
       align: 'center' as const,
-      render: (_value: number, record: SupplierInfoItem) => (
+      render: (value: any, record: SupplierInfoItem) => (
         <>
           {record?.isAssigned ? (
             <ActionButtonAtom variant="assigned">

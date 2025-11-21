@@ -43,17 +43,11 @@ const SupplierContactView: React.FC<SupplierContactViewProps> = ({ data }) => {
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair
-          label={t('form.fields.jobTitle')}
-          value={data.jobTitle}
-        />
+        <DataPair label={t('form.fields.jobTitle')} value={data.jobTitle} />
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair
-          label={t('form.fields.department')}
-          value={data.department}
-        />
+        <DataPair label={t('form.fields.department')} value={data.department} />
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>

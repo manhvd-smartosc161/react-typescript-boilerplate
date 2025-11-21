@@ -17,7 +17,9 @@ interface SupplierInfoFormProps {
   readOnly?: boolean;
 }
 
-const SupplierInfoForm: React.FC<SupplierInfoFormProps> = ({ readOnly = false }) => {
+const SupplierInfoForm: React.FC<SupplierInfoFormProps> = ({
+  readOnly = false,
+}) => {
   const { t } = useTranslation('supplier');
   const sectionPrefix = 'information';
   const { control } = useFormContext();

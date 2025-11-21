@@ -3,9 +3,13 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Box, CircularProgress } from '@mui/material';
-import { PageHeaderOrganism, SupplierInfoForm, SupplierSitesForm } from '@src/components/organisms';
+import {
+  PageHeaderOrganism,
+  SupplierInfoForm,
+  SupplierSitesForm,
+} from '@src/components/organisms';
 import { useGetSupplierById } from '@src/hooks';
-import { StyledTabs, StyledTab, StyledTabPanel, StyledContentContainer } from './index.styled';
+import { StyledTabs, StyledTab, StyledContentContainer } from './index.styled';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -58,7 +62,12 @@ const LeadDetail: React.FC = () => {
 
   if (isLoading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="400px"
+      >
         <CircularProgress />
       </Box>
     );
@@ -67,10 +76,12 @@ const LeadDetail: React.FC = () => {
   return (
     <Box>
       <PageHeaderOrganism title={t('lead:leadDetails')} />
-      
+
       <StyledContentContainer>
         <StyledTabs value={activeTab} onChange={handleTabChange}>
-          <StyledTab label={t('common:registration.steps.companyInformation')} />
+          <StyledTab
+            label={t('common:registration.steps.companyInformation')}
+          />
           <StyledTab label={t('common:registration.steps.sitesInformation')} />
         </StyledTabs>
 
@@ -93,4 +104,3 @@ const LeadDetail: React.FC = () => {
 };
 
 export default LeadDetail;
-
