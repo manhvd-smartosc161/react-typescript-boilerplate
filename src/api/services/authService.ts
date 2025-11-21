@@ -45,6 +45,7 @@ export interface ResetPasswordResponse {
 }
 
 export interface RegisterResponse {
+  token: string;
   user: User;
 }
 
@@ -104,16 +105,26 @@ export const authService = {
     };
 
     const response = await apiClient.post(AUTH_ENDPOINT.REGISTER, dataToSend);
-    const user = response.data;
+
+    const responseData = response.data;
+    const token = responseData.accessToken;
+    const userDataFromResponse = responseData.user;
+
+    tokenService.saveToken(token);
 
     return {
+      token,
       user: {
-        id: user.id,
-        username: user.name,
-        name: user.name,
-        email: user.email,
-        surname: user.surname,
-        ...(user.language && { language: user.language }),
+        id: userDataFromResponse.id,
+        username: userDataFromResponse.name,
+        name: userDataFromResponse.name,
+        email: userDataFromResponse.email,
+        surname: userDataFromResponse.surname || '',
+        language: userDataFromResponse.language,
+        emailNotifications: userDataFromResponse.emailNotifications,
+        marketingNotifications: userDataFromResponse.marketingNotifications,
+        avatar: userDataFromResponse.avatar,
+        registrationId: userDataFromResponse.registrationId,
       },
     };
   },

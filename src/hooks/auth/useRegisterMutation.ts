@@ -2,9 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { authService, RegisterRequest } from '@src/api/services';
+import { authService, tokenService, RegisterRequest } from '@src/api/services';
 import { authState } from '@src/stores';
-import ROUTES from '@src/routes/route';
 
 export const useRegisterMutation = () => {
   const setAuthState = useSetRecoilState(authState);
@@ -16,18 +15,17 @@ export const useRegisterMutation = () => {
     },
     onSuccess: (data) => {
       const newAuthState = {
-        isAuthenticated: false,
+        isAuthenticated: true,
         user: data.user,
-        token: null,
+        token: data.token,
       };
 
       setAuthState(newAuthState);
 
-      toast.success('Redirecting to login page...');
+      tokenService.saveToken(data.token);
 
-      setTimeout(() => {
-        navigate(ROUTES.LOGIN);
-      }, 1500);
+      toast.success('Registration successful! Redirecting...');
+      setTimeout(() => navigate('/'), 800);
     },
     onError: () => {},
   });
