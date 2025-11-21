@@ -44,15 +44,13 @@ const ControlledAutocompleteMultiField = <TFieldValues extends FieldValues>({
         return (
           <StyledFormControl
             fullWidth={fullWidth}
-            error={!!fieldState.error}
+            error={!!fieldState.error?.message}
             disabled={disabled}
             required={required}
             variant={variant}
           >
             {label && (
-              <InputLabelAtom htmlFor={field.name} required={required}>
-                {label}
-              </InputLabelAtom>
+              <InputLabelAtom htmlFor={field.name}>{label}</InputLabelAtom>
             )}
 
             <AutocompleteMultiAtom
@@ -61,6 +59,7 @@ const ControlledAutocompleteMultiField = <TFieldValues extends FieldValues>({
               onChange={field.onChange}
               id={name}
               placeholder={placeholder}
+              onBlur={field.onBlur}
             />
 
             {(fieldState.error?.message || helperText) &&
