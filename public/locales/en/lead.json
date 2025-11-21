@@ -6,5 +6,6 @@
   "status": "Status",
   "remarks": "Remarks",
   "assign": "Assign",
-  "assigned": "Assigned"
+  "assigned": "Assigned",
+  "leadDetails": "Lead Details"
 }

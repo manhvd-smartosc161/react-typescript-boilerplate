@@ -13,9 +13,11 @@ import {
   SupplierPaymentFields,
 } from '../../SupplierForm';
 
-interface SupplierInfoFormProps {}
+interface SupplierInfoFormProps {
+  readOnly?: boolean;
+}
 
-const SupplierInfoForm: React.FC<SupplierInfoFormProps> = ({}) => {
+const SupplierInfoForm: React.FC<SupplierInfoFormProps> = ({ readOnly = false }) => {
   const { t } = useTranslation('supplier');
   const sectionPrefix = 'information';
   const { control } = useFormContext();
@@ -89,6 +91,7 @@ const SupplierInfoForm: React.FC<SupplierInfoFormProps> = ({}) => {
         <SupplierAddressFields
           control={control}
           sectionPrefix={sectionPrefix}
+          readOnly={readOnly}
         />
       </FormSectionLayout>
 
@@ -101,6 +104,7 @@ const SupplierInfoForm: React.FC<SupplierInfoFormProps> = ({}) => {
         <SupplierContactFields
           control={control}
           sectionPrefix={sectionPrefix}
+          readOnly={readOnly}
         />
       </FormSectionLayout>
 
@@ -113,6 +117,7 @@ const SupplierInfoForm: React.FC<SupplierInfoFormProps> = ({}) => {
         <SupplierPaymentFields
           control={control}
           sectionPrefix={sectionPrefix}
+          readOnly={readOnly}
         />
       </FormSectionLayout>
 

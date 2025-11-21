@@ -1,16 +1,6 @@
 import { styled } from '@mui/material/styles';
 import { Box, Paper } from '@mui/material';
 
-export const StyledContainer = styled(Box)(({ theme }) => ({
-  padding: '16px',
-  backgroundColor: '#f5f5f5',
-  minHeight: '100vh',
-  [theme.breakpoints.down('sm')]: {
-    padding: '12px',
-    backgroundColor: '#ffffff',
-  },
-}));
-
 export const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: '16px',
   borderRadius: '8px',

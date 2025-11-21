@@ -17,7 +17,6 @@ import {
   mockItemLeadTimesChartOptions,
 } from '@src/mock/dashboardData';
 import {
-  StyledContainer,
   StyledPaper,
   StyledChartSection,
   StyledTableSection,
@@ -97,58 +96,56 @@ const Home: React.FC = () => {
   );
 
   return (
-    <StyledContainer>
-      <StyledPaper>
-        <PageHeaderOrganism
-          title="Item Dashboard"
-          leading={<DashboardIcon sx={{ color: '#1976d2', fontSize: 28 }} />}
-        />
+    <StyledPaper>
+      <PageHeaderOrganism
+        title="Item Dashboard"
+        leading={<DashboardIcon sx={{ color: '#1976d2', fontSize: 28 }} />}
+      />
 
-        <Box sx={{ mt: 3 }}>
-          <StatsGridOrganism stats={stats} />
+      <Box sx={{ mt: 3 }}>
+        <StatsGridOrganism stats={stats} />
 
-          <StyledChartSection>
-            <Grid container spacing={2}>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <ChartCardOrganism>
-                  <HighchartsReact
-                    highcharts={Highcharts}
-                    options={itemByCategoryChart}
-                  />
-                </ChartCardOrganism>
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <ChartCardOrganism>
-                  <HighchartsReact
-                    highcharts={Highcharts}
-                    options={itemStatusChart}
-                  />
-                </ChartCardOrganism>
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <ChartCardOrganism>
-                  <HighchartsReact
-                    highcharts={Highcharts}
-                    options={leadTimesChart}
-                  />
-                </ChartCardOrganism>
-              </Grid>
+        <StyledChartSection>
+          <Grid container spacing={2}>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <ChartCardOrganism>
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={itemByCategoryChart}
+                />
+              </ChartCardOrganism>
             </Grid>
-          </StyledChartSection>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <ChartCardOrganism>
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={itemStatusChart}
+                />
+              </ChartCardOrganism>
+            </Grid>
+            <Grid size={{ xs: 12 }}>
+              <ChartCardOrganism>
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={leadTimesChart}
+                />
+              </ChartCardOrganism>
+            </Grid>
+          </Grid>
+        </StyledChartSection>
 
-          <StyledTableSection>
-            <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
-              Item List (Latest)
-            </Typography>
-            <TableOrganism<ItemData>
-              columns={columns}
-              data={latestItems}
-              rowKey="id"
-            />
-          </StyledTableSection>
-        </Box>
-      </StyledPaper>
-    </StyledContainer>
+        <StyledTableSection>
+          <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
+            Item List (Latest)
+          </Typography>
+          <TableOrganism<ItemData>
+            columns={columns}
+            data={latestItems}
+            rowKey="id"
+          />
+        </StyledTableSection>
+      </Box>
+    </StyledPaper>
   );
 };
 

@@ -26,11 +26,13 @@ import {
 interface SupplierSupplierSiteFieldsProps {
   control: Control<any>;
   sectionPrefix: string;
+  readOnly?: boolean;
 }
 
 const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
   control,
   sectionPrefix,
+  readOnly = false,
 }) => {
   const { t } = useTranslation('supplier');
   const { watch, getValues } = useFormContext();
@@ -300,18 +302,20 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
             {t('form.fields.percentOffInvoice')}
           </Typography>
           <PercentOffInvoiceList siteIndex={index} />
-          <Button
-            variant="outlined"
-            size="small"
-            startIcon={<AddIcon />}
-            onClick={() => {
-              // TODO: Implement dynamic addition of percent off invoice items
-              // This requires a more complex form state management approach
-            }}
-            sx={{ mt: 1 }}
-          >
-            {t('form.fields.addPercentOffInvoice')}
-          </Button>
+          {!readOnly && (
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<AddIcon />}
+              onClick={() => {
+                // TODO: Implement dynamic addition of percent off invoice items
+                // This requires a more complex form state management approach
+              }}
+              sx={{ mt: 1 }}
+            >
+              {t('form.fields.addPercentOffInvoice')}
+            </Button>
+          )}
         </Box>
       </Box>
     );
@@ -364,18 +368,20 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
 
       {siteFields.length === 0 && (
         <TextAtom variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-          {t('form.fields.noSitesAdded')}
+          {readOnly ? t('form.fields.noSites') : t('form.fields.noSitesAdded')}
         </TextAtom>
       )}
 
-      <Button
-        variant="outlined"
-        startIcon={<AddIcon />}
-        onClick={addNewSite}
-        sx={{ mt: 2 }}
-      >
-        {t('form.fields.addSite')}
-      </Button>
+      {!readOnly && (
+        <Button
+          variant="outlined"
+          startIcon={<AddIcon />}
+          onClick={addNewSite}
+          sx={{ mt: 2 }}
+        >
+          {t('form.fields.addSite')}
+        </Button>
+      )}
     </Box>
   );
 };

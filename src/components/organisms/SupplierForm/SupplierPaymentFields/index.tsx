@@ -22,11 +22,13 @@ import {
 interface SupplierPaymentFieldsProps {
   control: Control<any>;
   sectionPrefix: string;
+  readOnly?: boolean;
 }
 
 const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
   control,
   sectionPrefix,
+  readOnly = false,
 }) => {
   const { t } = useTranslation('supplier');
   const { getValues } = useFormContext();
@@ -319,18 +321,22 @@ const SupplierPaymentFields: React.FC<SupplierPaymentFieldsProps> = ({
 
       {paymentFields.length === 0 && (
         <TextAtom variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-          {t('form.fields.noPaymentsAdded')}
+          {readOnly
+            ? t('form.fields.noPayments')
+            : t('form.fields.noPaymentsAdded')}
         </TextAtom>
       )}
 
-      <Button
-        variant="outlined"
-        startIcon={<AddIcon />}
-        onClick={addNewPayment}
-        sx={{ mt: 2 }}
-      >
-        {t('form.fields.addPayment')}
-      </Button>
+      {!readOnly && (
+        <Button
+          variant="outlined"
+          startIcon={<AddIcon />}
+          onClick={addNewPayment}
+          sx={{ mt: 2 }}
+        >
+          {t('form.fields.addPayment')}
+        </Button>
+      )}
     </Box>
   );
 };

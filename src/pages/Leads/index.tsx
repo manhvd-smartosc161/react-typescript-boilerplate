@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useNavigate, generatePath } from 'react-router-dom';
 import { PageHeaderOrganism } from '@src/components/organisms';
 import { TableOrganism } from '@src/components/organisms';
 import { StatusChipAtom, ActionButtonAtom } from '@src/components/atoms';
@@ -11,9 +12,11 @@ import { currentUserState } from '@src/stores';
 import { ESortDirection, LANGUAGE_CODES } from '@src/constants';
 import { DATE_FORMATS, formatDate } from '@src/utils';
 import { AddLeadModalOrganism } from '@src/components/organisms';
+import ROUTES from '@src/routes/route';
 
 const LeadsPage: React.FC = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState<SortDirection>(ESortDirection.ASC);
@@ -29,8 +32,7 @@ const LeadsPage: React.FC = () => {
   });
 
   const handleViewDetails = (id: string) => {
-    console.log('View details for lead:', id);
-    // TODO: Implement navigation to details page
+    navigate(generatePath(ROUTES.LEAD_DETAIL, { id }));
   };
 
   const handleClickAddLead = () => {

@@ -24,11 +24,13 @@ import {
 interface SupplierContactFieldsProps {
   control: Control<any>;
   sectionPrefix: string;
+  readOnly?: boolean;
 }
 
 const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
   control,
   sectionPrefix,
+  readOnly = false,
 }) => {
   const { t } = useTranslation('supplier');
   const { getValues } = useFormContext();
@@ -307,18 +309,22 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
 
       {contactFields.length === 0 && (
         <TextAtom variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-          {t('form.fields.noContactsAdded')}
+          {readOnly
+            ? t('form.fields.noContacts')
+            : t('form.fields.noContactsAdded')}
         </TextAtom>
       )}
 
-      <Button
-        variant="outlined"
-        startIcon={<AddIcon />}
-        onClick={addNewContact}
-        sx={{ mt: 2 }}
-      >
-        {t('form.fields.addContact')}
-      </Button>
+      {!readOnly && (
+        <Button
+          variant="outlined"
+          startIcon={<AddIcon />}
+          onClick={addNewContact}
+          sx={{ mt: 2 }}
+        >
+          {t('form.fields.addContact')}
+        </Button>
+      )}
     </Box>
   );
 };

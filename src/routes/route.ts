@@ -7,6 +7,7 @@ export default {
   SETTINGS: '/settings',
   SUPPLIER_REGISTRATION: '/supplier-registration',
   LEADS: '/leads',
+  LEAD_DETAIL: '/leads/:id',
   CONTACT_US: '/contact-us',
   AUDIT_LOGS: '/audit-logs',
   EMAIL_SETTINGS: '/email-settings',

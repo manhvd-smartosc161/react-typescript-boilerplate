@@ -4,9 +4,11 @@ import { FormSectionLayout } from '@src/components/molecules';
 import { useFormContext } from 'react-hook-form';
 import SupplierSiteFields from '../../SupplierForm/SupplierSiteFields';
 
-interface SupplierSitesFormProps {}
+interface SupplierSitesFormProps {
+  readOnly?: boolean;
+}
 
-const SupplierSitesForm: React.FC<SupplierSitesFormProps> = () => {
+const SupplierSitesForm: React.FC<SupplierSitesFormProps> = ({ readOnly = false }) => {
   const { t } = useTranslation('supplier');
   const sectionPrefix = 'sites';
   const { control } = useFormContext();
@@ -17,7 +19,7 @@ const SupplierSitesForm: React.FC<SupplierSitesFormProps> = () => {
         title={t('form.fields.sites')}
         subtitle={t('form.fields.supplierSitesInformation')}
       >
-        <SupplierSiteFields control={control} sectionPrefix={sectionPrefix} />
+        <SupplierSiteFields control={control} sectionPrefix={sectionPrefix} readOnly={readOnly} />
       </FormSectionLayout>
     </Box>
   );

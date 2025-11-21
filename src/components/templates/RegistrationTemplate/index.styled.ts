@@ -2,10 +2,12 @@ import { styled, Box, Stack } from '@mui/material';
 
 export const StyledRegistrationTemplate = styled(Stack)(({ theme }) => ({
   height: '100%',
-  backgroundColor: '#f5f5f5',
+  backgroundColor: '#FFFFFF',
   overflowY: 'scroll',
   overflowX: 'hidden',
   padding: `${theme.spacing(0)} ${theme.spacing(1.5)} ${theme.spacing(1.5)} ${theme.spacing(1.5)}`,
+  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+  borderRadius: '10px',
 }));
 
 export const StyledRegistrationContent = styled(Box)(() => ({
@@ -21,7 +23,7 @@ export const StyledStickyHeaderContainer = styled(Box)(({ theme }) => ({
   zIndex: theme.zIndex.appBar,
   paddingTop: theme.spacing(2),
   borderBottom: `1px solid ${theme.palette.divider}`,
-  backgroundColor: '#f5f5f5',
+  backgroundColor: '#FFFFFF',
 }));
 
 export const StyledStickyHeader = styled(Box)(({ theme }) => ({

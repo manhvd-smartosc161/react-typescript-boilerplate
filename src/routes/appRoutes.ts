@@ -18,6 +18,7 @@ const Contracts = lazy(() => import('@src/pages/Contracts'));
 const UserManagement = lazy(() => import('@src/pages/UserManagement'));
 const RolesPermission = lazy(() => import('@src/pages/RolesPermission'));
 const ItemManagement = lazy(() => import('@src/pages/ItemManagement'));
+const LeadDetail = lazy(() => import('@src/pages/LeadDetail'));
 
 export interface AppRoute {
   path: string;
@@ -144,6 +145,13 @@ export default [
   {
     path: routes.ITEMS,
     component: ItemManagement,
+    restricted: false,
+    isPrivate: true,
+    layout: 'main',
+  },
+  {
+    path: routes.LEAD_DETAIL,
+    component: LeadDetail,
     restricted: false,
     isPrivate: true,
     layout: 'main',

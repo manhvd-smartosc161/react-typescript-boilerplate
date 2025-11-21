@@ -19,11 +19,13 @@ import {
 interface SupplierAddressFieldsProps {
   control: Control<any>;
   sectionPrefix: string;
+  readOnly?: boolean;
 }
 
 const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
   control,
   sectionPrefix,
+  readOnly = false,
 }) => {
   const { t } = useTranslation('supplier');
   const { getValues } = useFormContext();
@@ -285,18 +287,22 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
 
       {addressFields.length === 0 && (
         <TextAtom variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-          {t('form.fields.noAddressesAdded')}
+          {readOnly
+            ? t('form.fields.noAddresses')
+            : t('form.fields.noAddressesAdded')}
         </TextAtom>
       )}
 
-      <Button
-        variant="outlined"
-        startIcon={<AddIcon />}
-        onClick={addNewAddress}
-        sx={{ mt: 2 }}
-      >
-        {t('form.fields.addAddress')}
-      </Button>
+      {!readOnly && (
+        <Button
+          variant="outlined"
+          startIcon={<AddIcon />}
+          onClick={addNewAddress}
+          sx={{ mt: 2 }}
+        >
+          {t('form.fields.addAddress')}
+        </Button>
+      )}
     </Box>
   );
 };
