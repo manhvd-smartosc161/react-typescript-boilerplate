@@ -13,7 +13,7 @@ import { useGetSuppliers } from '@src/hooks/supplier/useGetSuppliers';
 import { useRecoilValue } from 'recoil';
 import { currentUserState } from '@src/stores';
 import { ESortDirection, LANGUAGE_CODES } from '@src/constants';
-import { DATE_FORMATS, formatDate } from '@src/utils';
+import { camelToSnake, DATE_FORMATS, formatDate } from '@src/utils';
 import { AddLeadModalOrganism } from '@src/components/organisms';
 import { useAddNewLeadMutation, useAssignLeadMutation } from '@src/hooks';
 
@@ -96,7 +96,7 @@ const LeadsPage: React.FC = () => {
   ) => {
     const isAsc = orderBy === property && order === ESortDirection.ASC;
     setOrder(isAsc ? ESortDirection.DESC : ESortDirection.ASC);
-    setOrderBy(property);
+    setOrderBy(camelToSnake(property));
   };
 
   const columns = [
