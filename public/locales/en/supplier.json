@@ -226,7 +226,11 @@
       "sitesInformation": "Sites Information",
       "sitesRegistered": "site(s) registered",
       "unnamedSite": "Unnamed Site",
-      "noSitesInformationAvailable": "No sites information available"
+      "noSitesInformationAvailable": "No sites information available",
+      "agreeToTerms": "By selecting the button below, I agree to the",
+      "termsAndConditions": "Terms and Conditions",
+      "and": "and",
+      "privacyPolicy": "Privacy Policy"
     },
     "view": {
       "title": "Title",

@@ -226,7 +226,11 @@
       "sitesInformation": "ข้อมูลไซต์",
       "sitesRegistered": "ไซต์ที่ลงทะเบียน",
       "unnamedSite": "ไซต์ที่ไม่มีชื่อ",
-      "noSitesInformationAvailable": "ไม่มีข้อมูลไซต์"
+      "noSitesInformationAvailable": "ไม่มีข้อมูลไซต์",
+      "agreeToTerms": "การเลือกปุ่มด้านล่างนี้ ข้าพเจ้ายินยอมตาม",
+      "termsAndConditions": "ข้อกำหนดและเงื่อนไข",
+      "and": "และ",
+      "privacyPolicy": "นโยบายความเป็นส่วนตัว"
     },
     "view": {
       "title": "คำนำหน้า",

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
@@ -8,6 +8,9 @@ import {
   useMediaQuery,
   useTheme,
   Grid,
+  Checkbox,
+  FormControlLabel,
+  Link,
 } from '@mui/material';
 import { FormSectionLayout, CollapsibleCard } from '@src/components/molecules';
 import { TextAtom } from '@src/components/atoms';
@@ -24,11 +27,16 @@ import {
   SupplierSiteView,
 } from '../../SupplierView';
 
-const ReviewStep: React.FC = () => {
+interface ReviewStepProps {
+  onTermsAcceptedChange?: (accepted: boolean) => void;
+}
+
+const ReviewStep: React.FC<ReviewStepProps> = ({ onTermsAcceptedChange }) => {
   const { t } = useTranslation('supplier');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { control } = useFormContext<SupplierRegistrationFormValues>();
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   const information = useWatch({ control, name: 'information' });
   const sites = useWatch({ control, name: 'sites' });
@@ -45,6 +53,12 @@ const ReviewStep: React.FC = () => {
       label: `${payment.method} (${payment.accountName})`,
       value: payment.id || '',
     }));
+  };
+
+  const handleTermsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked;
+    setTermsAccepted(checked);
+    onTermsAcceptedChange?.(checked);
   };
 
   return (
@@ -267,6 +281,33 @@ const ReviewStep: React.FC = () => {
           </Box>
         </>
       )}
+
+      {/* Terms and Conditions Checkbox */}
+      <Divider sx={{ my: 2 }} />
+      <Box sx={{ py: 2 }}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={termsAccepted}
+              onChange={handleTermsChange}
+              color="primary"
+            />
+          }
+          label={
+            <TextAtom variant="body2">
+              {t('form.review.agreeToTerms')}{' '}
+              <Link href="#" underline="always" color="primary">
+                {t('form.review.termsAndConditions')}
+              </Link>{' '}
+              {t('form.review.and')}{' '}
+              <Link href="#" underline="always" color="primary">
+                {t('form.review.privacyPolicy')}
+              </Link>
+              .
+            </TextAtom>
+          }
+        />
+      </Box>
     </Stack>
   );
 };

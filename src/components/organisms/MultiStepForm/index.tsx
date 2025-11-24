@@ -8,7 +8,7 @@ import { StepperOrganism } from '@src/components';
 
 export interface StepDefinition {
   label: string;
-  Component: React.FC;
+  Component: React.ComponentType<any>;
   schemaKey: 'information' | 'sites' | null;
 }
 
@@ -43,12 +43,20 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
   };
 
   const [currentStep, setCurrentStep] = useState(getInitialStep);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const { formState } = useFormContext();
 
   // Save step to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem(STEP_STORAGE_KEY, currentStep.toString());
   }, [currentStep]);
+
+  // Reset terms acceptance when navigating away from the last step
+  useEffect(() => {
+    if (currentStep !== steps.length - 1) {
+      setTermsAccepted(false);
+    }
+  }, [currentStep, steps.length]);
 
   const isLastStep = currentStep === steps.length - 1;
   const CurrentStepComponent = steps[currentStep].Component;
@@ -79,6 +87,10 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
     }
   };
 
+  const handleTermsAcceptedChange = (accepted: boolean) => {
+    setTermsAccepted(accepted);
+  };
+
   return (
     <Stack spacing={isMobile ? 2 : 4}>
       <StepperOrganism
@@ -91,7 +103,11 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
       />
 
       <Box>
-        <CurrentStepComponent />
+        <CurrentStepComponent
+          onTermsAcceptedChange={
+            isLastStep ? handleTermsAcceptedChange : undefined
+          }
+        />
       </Box>
 
       <Stack
@@ -140,7 +156,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
               onClick={onSubmit}
               fullWidth={isMobile}
               size={isMobile ? 'medium' : 'large'}
-              disabled={isLoading || formState.isSubmitting}
+              disabled={isLoading || formState.isSubmitting || !termsAccepted}
             >
               {t('common:registration.submit')}
             </ButtonAtom>
