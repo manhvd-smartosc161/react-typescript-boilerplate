@@ -51,6 +51,13 @@
     "submit": "Submit",
     "loading": "Loading...",
     "submitSuccess": "Registration submitted successfully!",
-    "submitError": "Failed to submit registration. Please try again."
+    "submitError": "Failed to submit registration. Please try again.",
+    "errors": {
+      "atLeastOneSiteRequired": "At least one site is required",
+      "atLeastOneAddressRequired": "At least one address is required",
+      "atLeastOnePaymentRequired": "At least one payment method is required",
+      "fillRequiredFieldsSites": "Please fill in all required fields in the sites form",
+      "checkFormErrors": "Please check the form for errors"
+    }
   }
 }

@@ -42,6 +42,7 @@ const ControlledDropdownField = <
   multiple = false,
   ...selectProps
 }: ControlledDropdownFieldProps<TFieldValues>) => {
+  const formState = control._formState;
   return (
     <Controller
       name={name}
@@ -79,11 +80,14 @@ const ControlledDropdownField = <
               error={!!fieldState.error}
               value={selectValue}
             />
-            {(fieldState.error?.message || helperText) && (
-              <FormHelperText>
-                {fieldState.error?.message || helperText}
-              </FormHelperText>
-            )}
+            {(fieldState.error?.message || helperText) &&
+              (fieldState.isTouched ||
+                formState.isSubmitted ||
+                (fieldState.error && formState.errors)) && (
+                <FormHelperText>
+                  {fieldState.error?.message || helperText}
+                </FormHelperText>
+              )}
           </FormControl>
         );
       }}

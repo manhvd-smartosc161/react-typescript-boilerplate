@@ -23,4 +23,11 @@ export const MESSAGES = {
   MSG_014: 'Password reset link is expired.',
   MSG_015:
     'Password must not be identical with one of your most 3 recent used passwords.',
+  MSG_016: 'At least one address is required',
+  MSG_017: 'At least one payment method is required',
+  MSG_018: 'At least one site is required',
+  MSG_019: 'At least one business unit is required',
+  MSG_020: 'At least one address must be selected',
+  MSG_021: 'At least one payment must be selected',
+  MSG_022: 'At least one purpose is required',
 } as const;

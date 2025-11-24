@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Stack, Box, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { ActionButtonsGroup } from '@src/components/molecules';
 import { ButtonAtom } from '@src/components/atoms';
 import { StepperOrganism } from '@src/components';
+import { MESSAGES } from '@src/constants';
 
 export interface StepDefinition {
   label: string;
@@ -44,14 +46,12 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
 
   const [currentStep, setCurrentStep] = useState(getInitialStep);
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const { formState } = useFormContext();
+  const { formState, trigger, setFocus, getValues } = useFormContext();
 
-  // Save step to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem(STEP_STORAGE_KEY, currentStep.toString());
   }, [currentStep]);
 
-  // Reset terms acceptance when navigating away from the last step
   useEffect(() => {
     if (currentStep !== steps.length - 1) {
       setTermsAccepted(false);
@@ -61,15 +61,90 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
   const isLastStep = currentStep === steps.length - 1;
   const CurrentStepComponent = steps[currentStep].Component;
 
+  const getTranslatedErrorMessage = (message: string): string => {
+    const translations: Record<string, string> = {
+      [MESSAGES.MSG_016]: t(
+        'common:registration.errors.atLeastOneAddressRequired',
+      ),
+      [MESSAGES.MSG_017]: t(
+        'common:registration.errors.atLeastOnePaymentRequired',
+      ),
+      [MESSAGES.MSG_018]: t(
+        'common:registration.errors.atLeastOneSiteRequired',
+      ),
+    };
+    return translations[message] || message;
+  };
+
+  const handleValidationErrors = (
+    currentSchemaKey: string,
+    errors: any,
+  ): boolean => {
+    if (errors && typeof errors === 'object') {
+      const fieldErrors = Object.keys(errors).filter(
+        (key) => key !== 'addresses' && key !== 'payments',
+      );
+
+      if (fieldErrors.length > 0) {
+        setFocus(`${currentSchemaKey}.${fieldErrors[0]}` as any);
+        return true;
+      }
+
+      const addressError = errors.addresses as any;
+      if (addressError?.message) {
+        toast.error(getTranslatedErrorMessage(addressError.message));
+        return true;
+      }
+
+      const paymentError = errors.payments as any;
+      if (paymentError?.message) {
+        toast.error(getTranslatedErrorMessage(paymentError.message));
+        return true;
+      }
+
+      if (currentSchemaKey === 'sites' && Array.isArray(errors)) {
+        if (errors.filter(Boolean).length > 0) {
+          toast.error(t('common:registration.errors.fillRequiredFieldsSites'));
+          return true;
+        }
+      }
+    } else {
+      const sitesError = formState.errors.sites as any;
+      if (currentSchemaKey === 'sites' && sitesError?.message) {
+        toast.error(
+          getTranslatedErrorMessage(sitesError.message) ||
+            t('common:registration.errors.atLeastOneSiteRequired'),
+        );
+        return true;
+      }
+      toast.error(t('common:registration.errors.checkFormErrors'));
+    }
+
+    return false;
+  };
+
   const handleNext = async () => {
     const currentSchemaKey = steps[currentStep].schemaKey;
 
     if (currentSchemaKey) {
-      // NOTE: Remove comment when yup schema validation is implemented
-      // const isValid = await trigger();
-      // if (!isValid) {
-      //   return;
-      // }
+      if (currentSchemaKey === 'sites') {
+        const formValues = getValues();
+        const sites = formValues.sites || [];
+        if (!sites || sites.length === 0) {
+          toast.error(t('common:registration.errors.atLeastOneSiteRequired'));
+          return;
+        }
+      }
+
+      const isValid = await trigger(currentSchemaKey);
+
+      if (!isValid) {
+        const errors = formState.errors[currentSchemaKey];
+        const hasError = handleValidationErrors(currentSchemaKey, errors);
+        if (hasError) return;
+      }
+
+      await onSaveDraft();
     }
 
     const nextStep = Math.min(currentStep + 1, steps.length - 1);

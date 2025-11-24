@@ -60,7 +60,7 @@ const RegistrationPage = () => {
   const formMethods = useForm<SupplierRegistrationFormValues>({
     resolver: yupResolver(registrationMasterSchema) as any,
     defaultValues: defaultRegistrationValues,
-    mode: 'onSubmit',
+    mode: 'onChange',
   });
 
   const { getValues } = formMethods;

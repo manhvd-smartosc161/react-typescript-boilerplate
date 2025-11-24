@@ -75,7 +75,9 @@ const ControlledTextField = <TFieldValues extends FieldValues = FieldValues>({
             autoComplete="off"
           />
           {(fieldState.error?.message || helperText) &&
-            (fieldState.isTouched || formState.isSubmitted) && (
+            (fieldState.isTouched ||
+              formState.isSubmitted ||
+              (fieldState.error && formState.errors)) && (
               <FormHelperText>
                 {fieldState.error?.message || helperText}
               </FormHelperText>

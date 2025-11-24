@@ -16,6 +16,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { LanguageSwitcher } from '@src/components/molecules';
 import { useTranslation } from 'react-i18next';
+import { useQueryClient } from '@tanstack/react-query';
 import { authState, currentUserState, isAuthenticatedState } from '@src/stores';
 import {
   StyledAppBar,
@@ -49,6 +50,7 @@ const Header: FC<HeaderProps> = ({ collapsed, onMobileToggle }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
   const setAuthState = useSetRecoilState(authState);
+  const queryClient = useQueryClient();
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -60,13 +62,17 @@ const Header: FC<HeaderProps> = ({ collapsed, onMobileToggle }) => {
 
   const handleLogout = () => {
     tokenService.removeToken();
-
+    queryClient.clear();
+    localStorage.clear();
+    sessionStorage.clear();
     setAuthState({
       isAuthenticated: false,
       user: null,
       token: null,
     });
+
     toast.success('Logout successfully!');
+    navigate(ROUTES.LOGIN);
   };
 
   return (

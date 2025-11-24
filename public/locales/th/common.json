@@ -51,6 +51,13 @@
     "submit": "ส่ง",
     "loading": "กำลังโหลด...",
     "submitSuccess": "ส่งการลงทะเบียนสำเร็จ!",
-    "submitError": "ส่งการลงทะเบียนไม่สำเร็จ กรุณาลองอีกครั้ง"
+    "submitError": "ส่งการลงทะเบียนไม่สำเร็จ กรุณาลองอีกครั้ง",
+    "errors": {
+      "atLeastOneSiteRequired": "ต้องมีอย่างน้อยหนึ่งไซต์",
+      "atLeastOneAddressRequired": "ต้องมีอย่างน้อยหนึ่งที่อยู่",
+      "atLeastOnePaymentRequired": "ต้องมีอย่างน้อยหนึ่งวิธีการชำระเงิน",
+      "fillRequiredFieldsSites": "กรุณากรอกข้อมูลที่จำเป็นทั้งหมดในแบบฟอร์มไซต์",
+      "checkFormErrors": "กรุณาตรวจสอบข้อผิดพลาดในแบบฟอร์ม"
+    }
   }
 }

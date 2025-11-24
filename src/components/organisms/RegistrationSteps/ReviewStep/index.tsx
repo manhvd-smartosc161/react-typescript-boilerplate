@@ -18,9 +18,9 @@ import { SupplierRegistrationFormValues } from '@src/types/supplier';
 import {
   SupplierGeneralView,
   SupplierRepresentativeView,
-  SupplierProductView,
+  // SupplierProductView,
   SupplierFinancialView,
-  SupplierDocumentView,
+  // SupplierDocumentView,
   SupplierAddressView,
   SupplierContactView,
   SupplierPaymentView,
@@ -90,8 +90,8 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ onTermsAcceptedChange }) => {
           </Grid>
         </FormSectionLayout>
 
-        <Divider />
-
+        {/* Product Section - Hidden for now */}
+        {/* <Divider />
         <FormSectionLayout
           title={t('form.review.product')}
           subtitle={t('form.review.productBusinessDetails')}
@@ -104,7 +104,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ onTermsAcceptedChange }) => {
               }}
             />
           </Grid>
-        </FormSectionLayout>
+        </FormSectionLayout> */}
 
         <Divider />
 
@@ -118,13 +118,18 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ onTermsAcceptedChange }) => {
                 taxId: information?.taxId,
                 taxType: information?.taxType,
                 taxCountry: information?.taxCountry,
+                // Map bank details from the first payment method if available
+                bankName: information?.payments?.[0]?.bankName,
+                bankAccountNo: information?.payments?.[0]?.accountNumber,
+                bankAccountName: information?.payments?.[0]?.accountName,
+                bankBranch: information?.payments?.[0]?.bankBranch,
               }}
             />
           </Grid>
         </FormSectionLayout>
 
-        <Divider />
-
+        {/* Documents Section - Hidden for now */}
+        {/* <Divider />
         <FormSectionLayout
           title={t('form.review.documents')}
           subtitle={t('form.review.uploadedDocuments')}
@@ -132,7 +137,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ onTermsAcceptedChange }) => {
           <Grid container spacing={isMobile ? 2 : 3}>
             <SupplierDocumentView data={{}} />
           </Grid>
-        </FormSectionLayout>
+        </FormSectionLayout> */}
 
         <Divider />
 

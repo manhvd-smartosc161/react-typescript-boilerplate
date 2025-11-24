@@ -47,7 +47,7 @@ export const supplierAddressSchema: yup.ObjectSchema<SupplierAddress> =
           .oneOf(['ORDERING', 'REMIT', 'RFQ', 'SHIPPING', 'BILLING'])
           .required(),
       )
-      .min(1, 'At least one purpose is required')
+      .min(1, MESSAGES.MSG_022)
       .optional(),
     shipToLocation: yup.string().optional(),
     billToLocation: yup.string().optional(),
@@ -64,7 +64,7 @@ export const supplierContactSchema: yup.ObjectSchema<SupplierContact> =
     addressIds: yup
       .array()
       .of(yup.string().required())
-      .min(1, 'At least one address must be selected')
+      .min(1, MESSAGES.MSG_020)
       .required(MESSAGES.MSG_001),
     department: yup.string().required(MESSAGES.MSG_001),
     salutation: yup
@@ -176,10 +176,10 @@ export const supplierSiteSchema: yup.ObjectSchema<SupplierSite> = yup.object({
   paymentIds: yup
     .array()
     .of(yup.string().required())
-    .min(1, 'At least one payment must be selected')
+    .min(1, MESSAGES.MSG_021)
     .required(MESSAGES.MSG_001),
   percentOffInvoice: yup.array().of(percentOffInvoiceSchema).optional(),
-  dnbFinance: dnbFinanceSchema.optional(),
+  // dnbFinance: dnbFinanceSchema.optional(),
   returnableSupplier: yup.string().oneOf(['Y', 'N']).required(MESSAGES.MSG_001),
   deliveryMode: yup
     .string()
@@ -261,8 +261,8 @@ export const supplierInfoSchema = yup.object<SupplierInfo>({
     .matches(REGEX.EMAIL_FORMAT, 'Invalid email format'),
   contactPersonPhone: yup.string().required(MESSAGES.MSG_001),
 
-  buyerId: yup.string().required(MESSAGES.MSG_001),
-  buyerPhone: yup.string().required(MESSAGES.MSG_001),
+  buyerId: yup.string(),
+  buyerPhone: yup.string(),
   remark: yup.string().optional(),
 
   juristicType: yup.string().required(MESSAGES.MSG_001),
@@ -275,18 +275,30 @@ export const supplierInfoSchema = yup.object<SupplierInfo>({
   businessUnits: yup
     .array()
     .of(yup.string().oneOf(Object.values(EBusinessUnit)).required())
-    .min(1, 'At least one business unit is required')
+    .min(1, MESSAGES.MSG_019)
     .required(MESSAGES.MSG_001),
 
-  addresses: yup.array().of(supplierAddressSchema).optional().default([]),
+  addresses: yup
+    .array()
+    .of(supplierAddressSchema)
+    .min(1, MESSAGES.MSG_016)
+    .required(MESSAGES.MSG_001),
   contacts: yup.array().of(supplierContactSchema).optional().default([]),
-  payments: yup.array().of(supplierPaymentSchema).optional().default([]),
+  payments: yup
+    .array()
+    .of(supplierPaymentSchema)
+    .min(1, MESSAGES.MSG_017)
+    .required(MESSAGES.MSG_001),
 });
 
 export const registrationMasterSchema =
   yup.object<SupplierRegistrationFormValues>({
     information: supplierInfoSchema,
-    sites: yup.array().of(supplierSiteSchema).optional().default([]),
+    sites: yup
+      .array()
+      .of(supplierSiteSchema)
+      .min(1, MESSAGES.MSG_018)
+      .required(MESSAGES.MSG_001),
   });
 
 export const registrationSchemaType = registrationMasterSchema;

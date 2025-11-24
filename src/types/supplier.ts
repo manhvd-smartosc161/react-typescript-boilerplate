@@ -92,7 +92,7 @@ export interface SupplierSite {
   addressId: string;
   paymentIds: string[];
   percentOffInvoice?: PercentOffInvoice[];
-  dnbFinance?: DnbFinance;
+  // dnbFinance?: DnbFinance;
   returnableSupplier: 'Y' | 'N';
   deliveryMode: 'STANDARD_DELIVERY' | 'EXPRESS_DELIVERY' | 'PICKUP';
   previousTradeNames?: string;
