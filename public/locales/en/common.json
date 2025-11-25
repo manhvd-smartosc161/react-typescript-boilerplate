@@ -59,5 +59,6 @@
       "fillRequiredFieldsSites": "Please fill in all required fields in the sites form",
       "checkFormErrors": "Please check the form for errors"
     }
-  }
+  },
+  "done": "Done"
 }

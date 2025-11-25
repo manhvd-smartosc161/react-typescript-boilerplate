@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 import {
@@ -7,7 +7,7 @@ import {
   StatusChipAtom,
   TableOrganism,
 } from '@src/components';
-import { ProductDetail } from '@src/types';
+import { PaginatedResponse, ProductDetail } from '@src/types';
 import { StyledActionIconButton } from '../Contracts/index.styled';
 import { ESortDirection } from '@src/constants';
 import { productList } from '@src/mock/itemData';
@@ -17,10 +17,96 @@ const ItemManagement: FC = () => {
   const { t } = useTranslation('item');
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [order] = useState<ESortDirection>(ESortDirection.ASC);
-  const [orderBy] = useState('productNameEn');
+  const [order, setOrder] = useState<ESortDirection>(ESortDirection.ASC);
+  const [orderBy, setOrderBy] = useState<keyof ProductDetail>('productNameEn');
   const [selectedRows, setSelectedRows] = useState<Array<string | number>>([]);
-  const data = productList;
+  const [keyword, setKeyword] = useState('');
+  const [filter, setFilter] = useState({
+    area: '',
+    status: '',
+  });
+  const [data, setData] = useState<PaginatedResponse<ProductDetail>>({
+    items: productList.slice(0, rowsPerPage),
+    pagination: {
+      currentPage,
+      from: 0,
+      to: rowsPerPage,
+      hasMore: true,
+      pagesCount: Math.ceil(productList.length / rowsPerPage),
+      perPage: rowsPerPage,
+      total: productList.length,
+    },
+  });
+  const sortLocal = (
+    list: ProductDetail[],
+    prop: keyof ProductDetail,
+    orderDirection: 'asc' | 'desc',
+  ) => {
+    return [...list].sort((a, b) => {
+      const valueA = a[prop];
+      const valueB = b[prop];
+
+      if (valueA == null) return 1;
+      if (valueB == null) return -1;
+
+      if (orderDirection === 'asc') {
+        return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
+      } else {
+        return valueA < valueB ? 1 : valueA > valueB ? -1 : 0;
+      }
+    });
+  };
+  useEffect(() => {
+    const sorted = sortLocal(productList, orderBy, order);
+    const items = sorted.filter(
+      (el: ProductDetail) =>
+        (el.area === filter.area || filter.area === '') &&
+        (el.status === filter.status || filter.status === '') &&
+        (el.productNameEn.includes(keyword) ||
+          el.productNameTh.includes(keyword) ||
+          keyword === ''),
+    );
+    setData({
+      items: items.slice(
+        (currentPage - 1) * rowsPerPage,
+        rowsPerPage * currentPage,
+      ),
+      pagination: {
+        currentPage,
+        from: (currentPage - 1) * rowsPerPage + 1,
+        to: rowsPerPage * currentPage,
+        hasMore: true,
+        pagesCount: Math.ceil(items.length / rowsPerPage),
+        perPage: rowsPerPage,
+        total: items.length,
+      },
+    });
+  }, [currentPage, rowsPerPage, filter, keyword, order, orderBy]);
+
+  const handleChangeFilter = (key: keyof ProductDetail, value: string) => {
+    setFilter({ ...filter, [key]: value });
+    setCurrentPage(1);
+  };
+
+  const handleRequestSort = (
+    _event: React.MouseEvent<unknown>,
+    property: keyof ProductDetail,
+  ) => {
+    const isAsc = orderBy === property && order === ESortDirection.ASC;
+    setOrder(isAsc ? ESortDirection.DESC : ESortDirection.ASC);
+    setOrderBy(property);
+  };
+
+  const handleBulkAction = (action: string) => {
+    const status = action === 'enable' ? 'ACTIVATED' : 'REJECTED';
+    setData({
+      ...data,
+      items: data.items.map((el) =>
+        selectedRows.includes(el.id) ? { ...el, status } : el,
+      ),
+    });
+    setSelectedRows([]);
+  };
   const columns = [
     {
       key: 'id' as keyof ProductDetail,
@@ -37,14 +123,17 @@ const ItemManagement: FC = () => {
     {
       key: 'area' as keyof ProductDetail,
       label: t('area'),
+      isSortable: true,
     },
     {
       key: 'productNameEn' as keyof ProductDetail,
       label: t('productNameEn'),
+      isSortable: true,
     },
     {
       key: 'productNameTh' as keyof ProductDetail,
       label: t('productNameTh'),
+      isSortable: true,
     },
     {
       key: 'pack' as keyof ProductDetail,
@@ -57,6 +146,7 @@ const ItemManagement: FC = () => {
     {
       key: 'stock' as keyof ProductDetail,
       label: t('stock'),
+      isSortable: true,
     },
     {
       key: 'orders' as keyof ProductDetail,
@@ -65,6 +155,7 @@ const ItemManagement: FC = () => {
     {
       key: 'addedDate' as keyof ProductDetail,
       label: t('addedDate'),
+      isSortable: true,
     },
     {
       key: 'status' as keyof ProductDetail,
@@ -119,23 +210,27 @@ const ItemManagement: FC = () => {
           onSelectedRowsChange={(newKeys) => {
             setSelectedRows(newKeys);
           }}
+          onRequestSort={handleRequestSort}
           toolbar={
             <TableItemToolbarOrganism
-              keyword=""
-              onClearSearch={() => {}}
-              onKeywordChange={() => {}}
+              keyword={keyword}
+              onClearSearch={() => setKeyword('')}
+              onKeywordChange={(key) => {
+                setKeyword(key);
+              }}
+              onChangeFilter={handleChangeFilter}
               selectedCount={selectedRows.length}
               searchPlaceholder={t('common:searchKeyword')}
               actions={[
                 {
                   key: 'enable',
-                  label: 'Enable',
-                  onClick: () => alert('enabled'),
+                  label: t('enable'),
+                  onClick: () => handleBulkAction('enable'),
                 },
                 {
                   key: 'disable',
-                  label: 'Disable',
-                  onClick: () => alert('Disabled'),
+                  label: t('disable'),
+                  onClick: () => handleBulkAction('disable'),
                 },
               ]}
             />

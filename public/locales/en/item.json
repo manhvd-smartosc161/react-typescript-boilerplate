@@ -20,5 +20,12 @@
   "addedDate": "Added Date",
   "action": "action",
   "ascending": "Ascending",
-  "descending": "Descending"
+  "descending": "Descending",
+  "importFile": "Import File",
+  "downloadTemplate": "Download Template",
+  "upload": "Upload",
+  "cancel": "Cancel",
+  "enable": "Enable",
+  "disable": "Disable",
+  "all": "All"
 }

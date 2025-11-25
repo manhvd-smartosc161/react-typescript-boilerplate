@@ -20,5 +20,12 @@
   "addedDate": "วันที่เพิ่ม",
   "action": "การดำเนินการ",
   "ascending": "น้อยไปมาก",
-  "descending": "มากไปน้อย"
+  "descending": "มากไปน้อย",
+  "importFile": "นำเข้าไฟล์",
+  "downloadTemplate": "ดาวน์โหลดเทมเพลต",
+  "upload": "อัปโหลด",
+  "cancel": "ยกเลิก",
+  "enable": "เปิดใช้งาน",
+  "disable": "ปิดใช้งาน",
+  "all": "ทั้งหมด"
 }
