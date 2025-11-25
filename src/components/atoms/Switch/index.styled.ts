@@ -15,7 +15,7 @@ export const StyledSwitch = styled(Switch, {
     ),
 })(({ theme, ...props }: { theme: any } & StyledSwitchProps) => {
   const {
-    activeColor = '#4b43ea',
+    activeColor = '#0071CD',
     inactiveColor,
     thumbColor = '#fff',
     customSize = 'medium',
