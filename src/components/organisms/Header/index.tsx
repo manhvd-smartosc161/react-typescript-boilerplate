@@ -151,13 +151,12 @@ const Header: FC<HeaderProps> = ({ collapsed, onMobileToggle }) => {
                   </Stack>
                 </StyledMenuHeader>
                 <Divider />
-                <MenuItem onClick={handleMenuClose}>
-                  <ListItemIcon>
-                    <PersonIcon fontSize="small" />
-                  </ListItemIcon>
-                  {t('user:profile')}
-                </MenuItem>
-                <MenuItem onClick={handleMenuClose}>
+                <MenuItem
+                  onClick={() => {
+                    handleMenuClose();
+                    navigate(ROUTES.SETTINGS);
+                  }}
+                >
                   <ListItemIcon>
                     <SettingsIcon fontSize="small" />
                   </ListItemIcon>
