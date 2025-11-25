@@ -94,9 +94,10 @@ const LeadsPage: React.FC = () => {
     _event: React.MouseEvent<unknown>,
     property: keyof SupplierInfoItem,
   ) => {
-    const isAsc = orderBy === property && order === ESortDirection.ASC;
+    const propSnakeCase = camelToSnake(property);
+    const isAsc = orderBy === propSnakeCase && order === ESortDirection.ASC;
     setOrder(isAsc ? ESortDirection.DESC : ESortDirection.ASC);
-    setOrderBy(camelToSnake(property));
+    setOrderBy(propSnakeCase);
   };
 
   const columns = [
