@@ -312,6 +312,7 @@ const SupplierSupplierSiteFields: React.FC<SupplierSupplierSiteFieldsProps> = ({
               onClick={() => {
                 // TODO: Implement dynamic addition of percent off invoice items
                 // This requires a more complex form state management approach
+                alert('The feature will be launched soon');
               }}
               sx={{ mt: 1 }}
             >

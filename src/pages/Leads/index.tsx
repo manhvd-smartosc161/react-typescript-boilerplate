@@ -62,13 +62,14 @@ const LeadsPage: React.FC = () => {
   const handleClickAddLead = () => {
     setOpenAddModal(true);
   };
+
   const handleCloseAddNewLead = () => {
     setOpenAddModal(false);
   };
 
   const handleSubmitAddNew = (newLead: AddLeadFormValue) => {
     createSupplierMutation({
-      id: crypto.randomUUID(),
+      id: Date.now().toString(),
       nameTh: newLead.companyName,
       nameEn: newLead.companyName,
       annualRevenue: 0,
