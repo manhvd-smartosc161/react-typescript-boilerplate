@@ -53,9 +53,16 @@
     "submitSuccess": "Registration submitted successfully!",
     "submitError": "Failed to submit registration. Please try again.",
     "errors": {
+      "requiredField": "This is a required field.",
       "atLeastOneSiteRequired": "At least one site is required",
       "atLeastOneAddressRequired": "At least one address is required",
       "atLeastOnePaymentRequired": "At least one payment method is required",
+      "atLeastOneBusinessUnitRequired": "At least one business unit is required",
+      "mustBeAtLeast1": "Must be at least 1",
+      "mustBeInteger": "Must be integer",
+      "taxIdMustBe13Digits": "Tax ID must be 13 digits",
+      "invalidTaxId": "Invalid tax identification number",
+      "remarksMaxLength": "Remarks must be less than 500 characters",
       "fillRequiredFieldsSites": "Please fill in all required fields in the sites form",
       "checkFormErrors": "Please check the form for errors"
     }

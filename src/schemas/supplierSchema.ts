@@ -235,8 +235,7 @@ export const supplierInfoSchema = yup.object<SupplierInfo>({
   taxId: yup
     .string()
     .required(MESSAGES.MSG_001)
-    .matches(REGEX.TAX_ID_FORMAT, 'Tax ID must be 13 digits')
-    .isValidTaxId('Invalid tax identification number'),
+    .matches(REGEX.TAX_ID_FORMAT, MESSAGES.MSG_025),
 
   businessRelationship: yup.string().required(MESSAGES.MSG_001),
   supType: yup.string().required(MESSAGES.MSG_001),
@@ -246,8 +245,8 @@ export const supplierInfoSchema = yup.object<SupplierInfo>({
     .number()
     .typeError(MESSAGES.MSG_001)
     .required(MESSAGES.MSG_001)
-    .integer('Must be integer')
-    .min(1, 'Must be at least 1'),
+    .integer(MESSAGES.MSG_024)
+    .min(1, MESSAGES.MSG_023),
 
   productDivision: yup.string().required(MESSAGES.MSG_001),
   productType: yup.string().required(MESSAGES.MSG_001),

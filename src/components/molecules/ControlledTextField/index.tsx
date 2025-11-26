@@ -1,6 +1,8 @@
 import { Control, Controller, FieldPath, FieldValues } from 'react-hook-form';
 import { FormControl, FormHelperText } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { InputAtom, InputLabelAtom } from '@src/components/atoms';
+import { getTranslatedValidationMessage } from '@src/utils';
 
 export interface ControlledTextFieldProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -42,6 +44,7 @@ const ControlledTextField = <TFieldValues extends FieldValues = FieldValues>({
   maxRows,
   ...inputProps
 }: ControlledTextFieldProps<TFieldValues>) => {
+  const { t } = useTranslation();
   const formState = control._formState;
   return (
     <Controller
@@ -77,9 +80,11 @@ const ControlledTextField = <TFieldValues extends FieldValues = FieldValues>({
           {(fieldState.error?.message || helperText) &&
             (fieldState.isTouched ||
               formState.isSubmitted ||
-              (fieldState.error && formState.errors)) && (
+              fieldState.error) && (
               <FormHelperText>
-                {fieldState.error?.message || helperText}
+                {fieldState.error?.message
+                  ? getTranslatedValidationMessage(fieldState.error.message, t)
+                  : helperText}
               </FormHelperText>
             )}
         </FormControl>

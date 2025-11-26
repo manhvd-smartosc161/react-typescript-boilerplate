@@ -53,9 +53,16 @@
     "submitSuccess": "ส่งการลงทะเบียนสำเร็จ!",
     "submitError": "ส่งการลงทะเบียนไม่สำเร็จ กรุณาลองอีกครั้ง",
     "errors": {
+      "requiredField": "นี่เป็นฟิลด์ที่จำเป็น",
       "atLeastOneSiteRequired": "ต้องมีอย่างน้อยหนึ่งไซต์",
       "atLeastOneAddressRequired": "ต้องมีอย่างน้อยหนึ่งที่อยู่",
       "atLeastOnePaymentRequired": "ต้องมีอย่างน้อยหนึ่งวิธีการชำระเงิน",
+      "atLeastOneBusinessUnitRequired": "ต้องมีอย่างน้อยหนึ่งหน่วยธุรกิจ",
+      "mustBeAtLeast1": "ต้องมีอย่างน้อย 1",
+      "mustBeInteger": "ต้องเป็นจำนวนเต็ม",
+      "taxIdMustBe13Digits": "เลขประจำตัวผู้เสียภาษีต้องมี 13 หลัก",
+      "invalidTaxId": "เลขประจำตัวผู้เสียภาษีไม่ถูกต้อง",
+      "remarksMaxLength": "หมายเหตุต้องไม่เกิน 500 ตัวอักษร",
       "fillRequiredFieldsSites": "กรุณากรอกข้อมูลที่จำเป็นทั้งหมดในแบบฟอร์มไซต์",
       "checkFormErrors": "กรุณาตรวจสอบข้อผิดพลาดในแบบฟอร์ม"
     }

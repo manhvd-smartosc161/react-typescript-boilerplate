@@ -2,17 +2,12 @@ import * as yup from 'yup';
 import { MESSAGES } from '@src/constants';
 import { AddLeadFormValue, LeadAssignmentForm } from '@src/types';
 
-const optionSchema = yup.object({
-  id: yup.string().required(),
-  label: yup.string().required(),
-});
-
 export const leadSchema: yup.ObjectSchema<AddLeadFormValue> = yup
   .object()
   .shape({
     saleAt: yup
       .array()
-      .of(optionSchema)
+      .of(yup.string().required())
       .min(1, MESSAGES.MSG_001)
       .required(MESSAGES.MSG_001),
 
@@ -22,15 +17,11 @@ export const leadSchema: yup.ObjectSchema<AddLeadFormValue> = yup
 
     productCategory: yup
       .array()
-      .of(optionSchema)
+      .of(yup.string().required())
       .min(1, MESSAGES.MSG_001)
       .required(),
 
-    remarks: yup
-      .string()
-      .trim()
-      .max(500, 'Remarks must be less than 500 characters')
-      .optional(),
+    remarks: yup.string().trim().max(500, MESSAGES.MSG_027).optional(),
   });
 
 export const leadAsignmentSchema: yup.ObjectSchema<LeadAssignmentForm> = yup

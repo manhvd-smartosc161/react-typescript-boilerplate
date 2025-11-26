@@ -41,6 +41,22 @@ const ControlledAutocompleteMultiField = <TFieldValues extends FieldValues>({
       name={name}
       control={control}
       render={({ field, fieldState, formState }) => {
+        // Transform field.value (array of IDs) to array of AutocompleteOption objects
+        const selectedOptions: AutocompleteOption[] =
+          Array.isArray(field.value) && field.value.length > 0
+            ? (field.value
+                .map((id: string | number) =>
+                  options.find(
+                    (option: AutocompleteOption) => option.id === id,
+                  ),
+                )
+                .filter(
+                  (
+                    option: AutocompleteOption | undefined,
+                  ): option is AutocompleteOption => option !== undefined,
+                ) as AutocompleteOption[])
+            : [];
+
         return (
           <StyledFormControl
             fullWidth={fullWidth}
@@ -50,13 +66,19 @@ const ControlledAutocompleteMultiField = <TFieldValues extends FieldValues>({
             variant={variant}
           >
             {label && (
-              <InputLabelAtom htmlFor={field.name}>{label}</InputLabelAtom>
+              <InputLabelAtom htmlFor={field.name} required={required}>
+                {label}
+              </InputLabelAtom>
             )}
 
             <AutocompleteMultiAtom
               options={options}
-              value={field.value}
-              onChange={field.onChange}
+              value={selectedOptions}
+              onChange={(newValue: AutocompleteOption[]) => {
+                // Always transform to array of IDs
+                const ids = newValue.map((option) => option.id);
+                field.onChange(ids);
+              }}
               id={name}
               placeholder={placeholder}
               onBlur={field.onBlur}

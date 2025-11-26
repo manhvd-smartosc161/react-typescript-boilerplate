@@ -1,6 +1,8 @@
 import DropdownAtom, { DropdownOption } from '@src/components/atoms/Dropdown';
 import { Control, Controller, FieldPath, FieldValues } from 'react-hook-form';
 import { FormControl, FormHelperText } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { getTranslatedValidationMessage } from '@src/utils';
 import { InputLabelAtom } from '@src/components/atoms';
 
 export interface ControlledDropdownFieldProps<
@@ -42,6 +44,7 @@ const ControlledDropdownField = <
   multiple = false,
   ...selectProps
 }: ControlledDropdownFieldProps<TFieldValues>) => {
+  const { t } = useTranslation();
   const formState = control._formState;
   return (
     <Controller
@@ -85,7 +88,12 @@ const ControlledDropdownField = <
                 formState.isSubmitted ||
                 (fieldState.error && formState.errors)) && (
                 <FormHelperText>
-                  {fieldState.error?.message || helperText}
+                  {fieldState.error?.message
+                    ? getTranslatedValidationMessage(
+                        fieldState.error.message,
+                        t,
+                      )
+                    : helperText}
                 </FormHelperText>
               )}
           </FormControl>

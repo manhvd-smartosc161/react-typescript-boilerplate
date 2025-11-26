@@ -5,7 +5,7 @@ import {
   CollapsibleCard,
   ControlledDropdownField,
   ControlledTextField,
-  ControlledAutocompleteField,
+  ControlledAutocompleteMultiField,
 } from '@src/components/molecules';
 import {
   Control,
@@ -52,7 +52,7 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
   const addressOptions =
     addresses?.map((address: any) => ({
       label: `${address.name}`,
-      value: address.id,
+      id: address.id,
     })) || [];
 
   const duplicateContact = (index: number) => {
@@ -89,11 +89,12 @@ const SupplierContactFields: React.FC<SupplierContactFieldsProps> = ({
       <Grid key={index} container spacing={3}>
         {/* Address Selection */}
         <Grid size={{ xs: 12 }}>
-          <ControlledAutocompleteField
+          <ControlledAutocompleteMultiField
             control={control}
             name={`${sectionPrefix}.contacts.${index}.addressIds`}
             label={t('form.fields.associatedAddresses')}
             options={addressOptions}
+            required
           />
         </Grid>
 

@@ -6,8 +6,10 @@ import {
   FormControl,
   FormHelperText,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { InputAtom, InputLabelAtom } from '@src/components/atoms';
+import { getTranslatedValidationMessage } from '@src/utils';
 
 export interface ControlledPasswordFieldProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -44,6 +46,7 @@ const ControlledPasswordField = <
   showToggleVisibility = true,
   ...inputProps
 }: ControlledPasswordFieldProps<TFieldValues>) => {
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const formState = control._formState;
 
@@ -97,7 +100,9 @@ const ControlledPasswordField = <
           {(fieldState.error?.message || helperText) &&
             (fieldState.isTouched || formState.isSubmitted) && (
               <FormHelperText>
-                {fieldState.error?.message || helperText}
+                {fieldState.error?.message
+                  ? getTranslatedValidationMessage(fieldState.error.message, t)
+                  : helperText}
               </FormHelperText>
             )}
         </FormControl>

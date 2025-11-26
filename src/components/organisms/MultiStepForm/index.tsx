@@ -63,6 +63,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
 
   const getTranslatedErrorMessage = (message: string): string => {
     const translations: Record<string, string> = {
+      [MESSAGES.MSG_001]: t('common:registration.errors.requiredField'),
       [MESSAGES.MSG_016]: t(
         'common:registration.errors.atLeastOneAddressRequired',
       ),
@@ -72,6 +73,14 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
       [MESSAGES.MSG_018]: t(
         'common:registration.errors.atLeastOneSiteRequired',
       ),
+      [MESSAGES.MSG_019]: t(
+        'common:registration.errors.atLeastOneBusinessUnitRequired',
+      ),
+      [MESSAGES.MSG_023]: t('common:registration.errors.mustBeAtLeast1'),
+      [MESSAGES.MSG_024]: t('common:registration.errors.mustBeInteger'),
+      [MESSAGES.MSG_025]: t('common:registration.errors.taxIdMustBe13Digits'),
+      [MESSAGES.MSG_026]: t('common:registration.errors.invalidTaxId'),
+      [MESSAGES.MSG_027]: t('common:registration.errors.remarksMaxLength'),
     };
     return translations[message] || message;
   };

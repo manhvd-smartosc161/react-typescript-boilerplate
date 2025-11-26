@@ -30,4 +30,9 @@ export const MESSAGES = {
   MSG_020: 'At least one address must be selected',
   MSG_021: 'At least one payment must be selected',
   MSG_022: 'At least one purpose is required',
+  MSG_023: 'Must be at least 1',
+  MSG_024: 'Must be integer',
+  MSG_025: 'Tax ID must be 13 digits',
+  MSG_026: 'Invalid tax identification number',
+  MSG_027: 'Remarks must be less than 500 characters',
 } as const;

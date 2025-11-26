@@ -199,10 +199,10 @@ export interface SupplierInfoItem {
 }
 
 export interface AddLeadFormValue {
-  saleAt: AutocompleteOption[];
+  saleAt: string[];
   email: string;
   companyName: string;
-  productCategory: AutocompleteOption[];
+  productCategory: string[];
   remarks?: string;
 }
 
