@@ -110,6 +110,7 @@ const LeadsPage: React.FC = () => {
     {
       key: 'contactPersonName' as keyof SupplierInfoItem,
       label: t('lead:customerName'),
+      render: (value: string) => value || '',
       isSortable: false,
     },
     {
