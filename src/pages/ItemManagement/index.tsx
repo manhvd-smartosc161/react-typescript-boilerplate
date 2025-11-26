@@ -172,12 +172,13 @@ const ItemManagement: FC = () => {
       width: '120px',
       align: 'center' as const,
       isSortable: false,
-      render: (_value: string, record: ProductDetail) => (
+      // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+      render: (_value: string) => (
         <StyledActionIconButton>
           <IconAtom
             name="edit"
             size={20}
-            onClick={() => alert(JSON.stringify(record))}
+            onClick={() => alert('The feature will be launched soon')}
           />
         </StyledActionIconButton>
       ),
