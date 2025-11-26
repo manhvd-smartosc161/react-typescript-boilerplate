@@ -7,6 +7,7 @@ import { ActionButtonsGroup } from '@src/components/molecules';
 import { ButtonAtom } from '@src/components/atoms';
 import { StepperOrganism } from '@src/components';
 import { MESSAGES } from '@src/constants';
+import { scrollToFirstError, findFirstErrorField } from './formErrorScroll';
 
 export interface StepDefinition {
   label: string;
@@ -91,29 +92,45 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
   ): boolean => {
     if (errors && typeof errors === 'object') {
       const fieldErrors = Object.keys(errors).filter(
-        (key) => key !== 'addresses' && key !== 'payments',
+        (key) =>
+          key !== 'addresses' && key !== 'payments' && key !== 'contacts',
       );
 
       if (fieldErrors.length > 0) {
-        setFocus(`${currentSchemaKey}.${fieldErrors[0]}` as any);
+        const firstField = `${currentSchemaKey}.${fieldErrors[0]}`;
+        setFocus(firstField as any);
+        scrollToFirstError(firstField);
+        return true;
+      }
+
+      // Check for nested errors (addresses, payments, contacts)
+      const firstErrorField = findFirstErrorField(errors, currentSchemaKey);
+      if (firstErrorField) {
+        setFocus(firstErrorField as any);
+        scrollToFirstError(firstErrorField);
         return true;
       }
 
       const addressError = errors.addresses as any;
       if (addressError?.message) {
         toast.error(getTranslatedErrorMessage(addressError.message));
+        // Try to scroll to addresses section
+        scrollToFirstError(`${currentSchemaKey}.addresses`);
         return true;
       }
 
       const paymentError = errors.payments as any;
       if (paymentError?.message) {
         toast.error(getTranslatedErrorMessage(paymentError.message));
+        // Try to scroll to payments section
+        scrollToFirstError(`${currentSchemaKey}.payments`);
         return true;
       }
 
       if (currentSchemaKey === 'sites' && Array.isArray(errors)) {
         if (errors.filter(Boolean).length > 0) {
           toast.error(t('common:registration.errors.fillRequiredFieldsSites'));
+          scrollToFirstError(`${currentSchemaKey}[0]`);
           return true;
         }
       }
@@ -124,6 +141,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
           getTranslatedErrorMessage(sitesError.message) ||
             t('common:registration.errors.atLeastOneSiteRequired'),
         );
+        scrollToFirstError('sites');
         return true;
       }
       toast.error(t('common:registration.errors.checkFormErrors'));
