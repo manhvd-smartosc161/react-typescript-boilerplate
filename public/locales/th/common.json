@@ -53,7 +53,7 @@
     "submitSuccess": "ส่งการลงทะเบียนสำเร็จ!",
     "submitError": "ส่งการลงทะเบียนไม่สำเร็จ กรุณาลองอีกครั้ง",
     "errors": {
-      "requiredField": "นี่เป็นฟิลด์ที่จำเป็น",
+      "requiredField": "กรุณากรอกข้อมูล",
       "atLeastOneSiteRequired": "ต้องมีอย่างน้อยหนึ่งไซต์",
       "atLeastOneAddressRequired": "ต้องมีอย่างน้อยหนึ่งที่อยู่",
       "atLeastOnePaymentRequired": "ต้องมีอย่างน้อยหนึ่งวิธีการชำระเงิน",
