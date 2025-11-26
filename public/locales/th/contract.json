@@ -14,5 +14,6 @@
   "confirmDeleteMessage": "คุณแน่ใจหรือไม่ว่าต้องการลบสัญญา {{count}} รายการ? การกระทำนี้ไม่สามารถยกเลิกได้",
   "activatedSuccess": "เปิดใช้งานสัญญา {{count}} รายการสำเร็จแล้ว",
   "terminatedSuccess": "ยกเลิกสัญญา {{count}} รายการสำเร็จแล้ว",
-  "deletedSuccess": "ลบสัญญา {{count}} รายการสำเร็จแล้ว"
+  "deletedSuccess": "ลบสัญญา {{count}} รายการสำเร็จแล้ว",
+  "downloadError": "ดาวน์โหลดสัญญาล้มเหลว"
 }

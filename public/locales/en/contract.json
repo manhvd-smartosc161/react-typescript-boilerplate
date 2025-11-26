@@ -14,5 +14,6 @@
   "confirmDeleteMessage": "Are you sure you want to delete {{count}} contract(s)? This action cannot be undone.",
   "activatedSuccess": "{{count}} contract(s) have been activated successfully.",
   "terminatedSuccess": "{{count}} contract(s) have been terminated successfully.",
-  "deletedSuccess": "{{count}} contract(s) have been deleted successfully."
+  "deletedSuccess": "{{count}} contract(s) have been deleted successfully.",
+  "downloadError": "Failed to download contract."
 }

@@ -176,14 +176,22 @@ const Contracts: React.FC = () => {
     selectedRows.includes(item.id),
   );
 
-  const handleEdit = (id: number) => {
-    console.log('Edit contract:', id);
-    // TODO: Implement edit functionality
-  };
-
-  const handleDownload = (id: number) => {
-    console.log('Download contract:', id);
-    // TODO: Implement download functionality
+  const handleDownload = async () => {
+    try {
+      const response = await fetch('/contract.pdf');
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'contract.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading contract:', error);
+      toast.error(t('contract:downloadError'));
+    }
   };
 
   const isAllSelected =
@@ -279,20 +287,12 @@ const Contracts: React.FC = () => {
       width: '8%',
       align: 'center' as const,
       isSortable: false,
-      render: (_value: any, record: ContractItem) => (
+      render: () => (
         <StyledActionContainer>
           <StyledActionIconButton
             onClick={(e) => {
               e.stopPropagation();
-              handleEdit(record.id);
-            }}
-          >
-            <IconAtom name="edit" size={20} />
-          </StyledActionIconButton>
-          <StyledActionIconButton
-            onClick={(e) => {
-              e.stopPropagation();
-              handleDownload(record.id);
+              handleDownload();
             }}
           >
             <IconAtom name="download" size={20} />
