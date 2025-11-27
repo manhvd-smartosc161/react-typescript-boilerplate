@@ -18,3 +18,13 @@ export const AUTH_ENDPOINT = {
   PASSWORD: `${AUTH_PATH}/password`,
   NOTIFICATIONS: `${AUTH_PATH}/notifications`,
 } as const;
+
+export enum EUserRole {
+  SUPPLIER = 'supplier',
+  BUYER = 'buyer',
+  MERCHANDISE = 'merchandise',
+  LEGAL = 'legal',
+  ACCOUNTING = 'accounting',
+  MDG = 'mdg',
+  QUALITY_ASSURANCE = 'quality_assurance',
+}

@@ -21,6 +21,9 @@ import {
   StyledChartSection,
   StyledTableSection,
 } from './index.styled';
+import { useRecoilValue } from 'recoil';
+import { currentUserState } from '@src/stores';
+import { EUserRole } from '@src/constants';
 
 interface ItemData {
   id: string;
@@ -33,6 +36,7 @@ interface ItemData {
 }
 
 const Home: React.FC = () => {
+  const currentUser = useRecoilValue(currentUserState);
   const stats = useMemo(
     () =>
       mockStats.map((stat) => ({
@@ -107,43 +111,50 @@ const Home: React.FC = () => {
 
         <StyledChartSection>
           <Grid container spacing={2}>
-            <Grid size={{ xs: 12, md: 6 }}>
-              <ChartCardOrganism>
-                <HighchartsReact
-                  highcharts={Highcharts}
-                  options={itemByCategoryChart}
-                />
-              </ChartCardOrganism>
-            </Grid>
-            <Grid size={{ xs: 12, md: 6 }}>
-              <ChartCardOrganism>
-                <HighchartsReact
-                  highcharts={Highcharts}
-                  options={itemStatusChart}
-                />
-              </ChartCardOrganism>
-            </Grid>
-            <Grid size={{ xs: 12 }}>
-              <ChartCardOrganism>
-                <HighchartsReact
-                  highcharts={Highcharts}
-                  options={leadTimesChart}
-                />
-              </ChartCardOrganism>
-            </Grid>
+            {currentUser?.role === EUserRole.SUPPLIER && (
+              <Grid size={{ xs: 12 }}>
+                <ChartCardOrganism>
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={itemByCategoryChart}
+                  />
+                </ChartCardOrganism>
+              </Grid>
+            )}
+            {currentUser?.role === EUserRole.BUYER && (
+              <Grid size={{ xs: 12 }}>
+                <ChartCardOrganism>
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={itemStatusChart}
+                  />
+                </ChartCardOrganism>
+              </Grid>
+            )}
+            {currentUser?.role === EUserRole.BUYER && (
+              <Grid size={{ xs: 12 }}>
+                <ChartCardOrganism>
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={leadTimesChart}
+                  />
+                </ChartCardOrganism>
+              </Grid>
+            )}
           </Grid>
         </StyledChartSection>
-
-        <StyledTableSection>
-          <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
-            Item List (Latest)
-          </Typography>
-          <TableOrganism<ItemData>
-            columns={columns}
-            data={latestItems}
-            rowKey="id"
-          />
-        </StyledTableSection>
+        {currentUser?.role === EUserRole.SUPPLIER && (
+          <StyledTableSection>
+            <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
+              Item List (Latest)
+            </Typography>
+            <TableOrganism<ItemData>
+              columns={columns}
+              data={latestItems}
+              rowKey="id"
+            />
+          </StyledTableSection>
+        )}
       </Box>
     </StyledPaper>
   );

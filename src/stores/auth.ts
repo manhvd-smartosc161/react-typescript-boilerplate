@@ -12,6 +12,7 @@ export interface User {
   marketingNotifications?: boolean;
   avatar?: string;
   registrationId?: string;
+  role?: string;
 }
 
 export interface AuthState {
