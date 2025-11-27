@@ -42,6 +42,7 @@ const SupplierProductFields: React.FC<SupplierProductFieldsProps> = ({
           control={control}
           label={t('form.fields.productType')}
           placeholder={t('form.fields.productTypePlaceholder')}
+          required
         />
       </Grid>
 

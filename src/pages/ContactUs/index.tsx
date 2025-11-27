@@ -21,17 +21,15 @@ import {
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useCreateInquiryMutation } from '@src/hooks';
-
-interface ContactUsFormData {
-  name: string;
-  email: string;
-  question: string;
-}
+import { yupResolver } from '@hookform/resolvers/yup';
+import { ContactUsFormData } from '@src/types/contactUs';
+import { contactUsSchema } from '@src/schemas/contactUsSchema';
 
 const ContactUs: React.FC = () => {
   const { t } = useTranslation();
   const createInquiryMutation = useCreateInquiryMutation();
   const { control, handleSubmit, reset } = useForm<ContactUsFormData>({
+    resolver: yupResolver(contactUsSchema),
     mode: 'onBlur',
     reValidateMode: 'onSubmit',
     defaultValues: {
