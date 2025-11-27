@@ -9,7 +9,6 @@ import {
   ControlledAutocompleteMultiField,
   ControlledTextField,
   ControlledTextAreaField,
-  ControlledAutocompleteField,
 } from '@src/components/molecules';
 import { leadSchema } from '@src/schemas';
 import { AddLeadFormValue } from '@src/types';
@@ -118,22 +117,13 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
             />
 
             {/* Company Name */}
-            <ControlledAutocompleteField
-              name="companyName"
-              options={[
-                {
-                  id: 'SOSC',
-                  label: 'SOSC',
-                },
-                {
-                  id: 'LOTUS',
-                  label: 'LOTUS',
-                },
-              ]}
-              control={control}
-              label={t('companyName')}
+            <ControlledTextField
               required
+              fullWidth
+              name="companyName"
+              label={t('companyName')}
               placeholder={t('companySuplierName')}
+              control={control}
             />
 
             {/* Product Category */}

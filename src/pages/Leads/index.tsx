@@ -68,13 +68,15 @@ const LeadsPage: React.FC = () => {
   };
 
   const handleSubmitAddNew = (newLead: AddLeadFormValue) => {
+    const isoString = new Date().toISOString();
     createSupplierMutation({
       id: Date.now().toString(),
       nameTh: newLead.companyName,
       nameEn: newLead.companyName,
+      contactPersonEmail: newLead.email,
       annualRevenue: 0,
-      createdAt: Date.now().toString(),
-      updatedAt: Date.now().toString(),
+      createdAt: isoString,
+      updatedAt: isoString,
       remark: newLead?.remarks,
       status: 'DRAFT',
     });
@@ -114,9 +116,8 @@ const LeadsPage: React.FC = () => {
       isSortable: false,
     },
     {
-      key: 'annualRevenue' as keyof SupplierInfoItem,
-      label: t('lead:annualRevenue'),
-      render: (value: number) => `$${value}`,
+      key: 'contactPersonEmail' as keyof SupplierInfoItem,
+      label: t('lead:email'),
       isSortable: false,
     },
     {
