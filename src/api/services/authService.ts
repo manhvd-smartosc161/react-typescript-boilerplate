@@ -90,6 +90,7 @@ export const authService = {
         marketingNotifications: userData.marketingNotifications,
         avatar: userData.avatar,
         registrationId: userData.registrationId,
+        role: userData?.role?.name,
       },
     };
   },
@@ -145,6 +146,7 @@ export const authService = {
       marketingNotifications: userData.marketingNotifications,
       avatar: userData.avatar,
       registrationId: userData.registrationId,
+      role: userData?.role?.name,
     };
   },
 
