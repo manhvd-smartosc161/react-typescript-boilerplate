@@ -202,6 +202,7 @@ const SupplierAddressFields: React.FC<SupplierAddressFieldsProps> = ({
                 t(`form.view.${option.value.toLowerCase()}`) || option.label,
             }))}
             columns={3}
+            required
           />
         </Grid>
 
