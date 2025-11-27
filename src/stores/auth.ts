@@ -1,19 +1,6 @@
 import { atom, selector } from 'recoil';
 import { tokenService } from '@src/api/services';
-
-export interface User {
-  id: number;
-  username: string;
-  name: string;
-  email: string;
-  surname: string;
-  language?: string;
-  emailNotifications?: boolean;
-  marketingNotifications?: boolean;
-  avatar?: string;
-  registrationId?: string;
-  role?: string;
-}
+import { User } from '@src/types';
 
 export interface AuthState {
   isAuthenticated: boolean;

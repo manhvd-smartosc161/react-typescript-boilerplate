@@ -1,4 +1,5 @@
 export { useLoginMutation } from './useLoginMutation';
+export { useOneClickLoginMutation } from './useOneClickLoginMutation';
 export { useRegisterMutation } from './useRegisterMutation';
 export { useForgotPasswordMutation } from './useForgotPasswordMutation';
 export { useResetPasswordMutation } from './useResetPasswordMutation';

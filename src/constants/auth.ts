@@ -8,6 +8,7 @@ const AUTH_PATH = '/auth';
 
 export const AUTH_ENDPOINT = {
   LOGIN: `${AUTH_PATH}/login`,
+  ONE_CLICK_LOGIN: `${AUTH_PATH}/one-login`,
   REGISTER: `${AUTH_PATH}/register`,
   LOGOUT: `${AUTH_PATH}/logout`,
   ME: `${AUTH_PATH}/me`,

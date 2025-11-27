@@ -1,3 +1,8 @@
+export interface Role {
+  id: string;
+  name: string;
+}
+
 export interface User {
   id: number;
   username: string;
@@ -9,7 +14,7 @@ export interface User {
   marketingNotifications?: boolean;
   avatar?: string;
   registrationId?: string;
-  role?: string;
+  role?: Role;
 }
 
 export interface UserProfile extends User {
@@ -31,7 +36,13 @@ export interface AuthUser {
   permissions: string[];
 }
 
-export type UserRole = 'admin' | 'manager' | 'employee' | 'guest';
+export type UserRole =
+  | 'admin'
+  | 'manager'
+  | 'employee'
+  | 'guest'
+  | 'buyer'
+  | 'supplier';
 
 export interface LoginCredentials {
   email: string;

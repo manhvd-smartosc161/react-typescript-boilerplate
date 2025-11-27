@@ -1,14 +1,14 @@
 import { FC, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Typography, Alert } from '@mui/material';
+import { Box, Typography, Alert, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ButtonAtom, TextAtom, TextLinkAtom } from '@src/components/atoms';
 import {
   ControlledTextField,
   ControlledPasswordField,
 } from '@src/components/molecules';
-import { useLoginMutation } from '@src/hooks';
+import { useLoginMutation, useOneClickLoginMutation } from '@src/hooks';
 import { loginSchema } from '@src/schemas/authSchema';
 import { LoginFormData } from '@src/types';
 import { getErrorMessage } from '@src/errors';
@@ -18,6 +18,7 @@ import { StyledLoginForm } from './index.styled';
 const LoginForm: FC = () => {
   const { t } = useTranslation();
   const loginMutation = useLoginMutation();
+  const oneClickLoginMutation = useOneClickLoginMutation();
   const [showWarning, setShowWarning] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -51,6 +52,10 @@ const LoginForm: FC = () => {
       email: data.email,
       password: data.password,
     });
+  };
+
+  const handleOneLogin = () => {
+    oneClickLoginMutation.mutate();
   };
 
   return (
@@ -122,6 +127,33 @@ const LoginForm: FC = () => {
           }}
         >
           {t('auth:signIn')}
+        </ButtonAtom>
+
+        <Box sx={{ my: 2 }}>
+          <Divider>
+            <TextAtom variant="body2" sx={{ color: 'text.secondary', px: 1 }}>
+              {t('auth:or') || 'OR'}
+            </TextAtom>
+          </Divider>
+        </Box>
+
+        <ButtonAtom
+          variant="secondary"
+          onClick={handleOneLogin}
+          loading={oneClickLoginMutation.isPending}
+          fullWidth
+          size="large"
+          sx={{
+            mb: 2,
+            border: '1px solid #0071CD',
+            color: '#0071CD',
+            '&:hover': {
+              border: '1px solid #005a9e',
+              background: 'rgba(0, 113, 205, 0.04)',
+            },
+          }}
+        >
+          {t('auth:signInWithOneLogin')}
         </ButtonAtom>
 
         <Box sx={{ textAlign: 'center', mt: 1 }}>

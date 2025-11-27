@@ -23,7 +23,7 @@ import {
 } from './index.styled';
 import { useRecoilValue } from 'recoil';
 import { currentUserState } from '@src/stores';
-import { EUserRole } from '@src/constants';
+import { EUserRole } from '@src/constants/auth';
 
 interface ItemData {
   id: string;
@@ -111,7 +111,7 @@ const Home: React.FC = () => {
 
         <StyledChartSection>
           <Grid container spacing={2}>
-            {currentUser?.role === EUserRole.SUPPLIER && (
+            {currentUser?.role?.name === EUserRole.SUPPLIER && (
               <Grid size={{ xs: 12 }}>
                 <ChartCardOrganism>
                   <HighchartsReact
@@ -121,7 +121,7 @@ const Home: React.FC = () => {
                 </ChartCardOrganism>
               </Grid>
             )}
-            {currentUser?.role === EUserRole.BUYER && (
+            {currentUser?.role?.name === EUserRole.BUYER && (
               <Grid size={{ xs: 12 }}>
                 <ChartCardOrganism>
                   <HighchartsReact
@@ -131,7 +131,7 @@ const Home: React.FC = () => {
                 </ChartCardOrganism>
               </Grid>
             )}
-            {currentUser?.role === EUserRole.BUYER && (
+            {currentUser?.role?.name === EUserRole.BUYER && (
               <Grid size={{ xs: 12 }}>
                 <ChartCardOrganism>
                   <HighchartsReact
@@ -143,7 +143,7 @@ const Home: React.FC = () => {
             )}
           </Grid>
         </StyledChartSection>
-        {currentUser?.role === EUserRole.SUPPLIER && (
+        {currentUser?.role?.name === EUserRole.SUPPLIER && (
           <StyledTableSection>
             <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
               Item List (Latest)

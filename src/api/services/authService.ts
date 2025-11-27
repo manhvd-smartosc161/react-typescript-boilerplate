@@ -18,6 +18,12 @@ export interface LoginResponse {
   user: User;
 }
 
+export interface OneClickLoginResponse {
+  access_token: string;
+  expires_at: number;
+  user?: User;
+}
+
 export interface RegisterRequest {
   email: string;
   password: string;
@@ -54,7 +60,7 @@ const TOKEN_EXPIRY_DAYS = 7;
 
 export const tokenService = {
   saveToken: (token: string): void => {
-    const expiryTime = TOKEN_EXPIRY_DAYS * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+    const expiryTime = TOKEN_EXPIRY_DAYS * 24 * 60 * 60 * 1000;
     setCookie(TOKEN_COOKIE_KEY, token, expiryTime);
   },
 
@@ -90,7 +96,7 @@ export const authService = {
         marketingNotifications: userData.marketingNotifications,
         avatar: userData.avatar,
         registrationId: userData.registrationId,
-        role: userData?.role?.name,
+        role: userData.role,
       },
     };
   },
@@ -126,6 +132,7 @@ export const authService = {
         marketingNotifications: userDataFromResponse.marketingNotifications,
         avatar: userDataFromResponse.avatar,
         registrationId: userDataFromResponse.registrationId,
+        role: userDataFromResponse.role,
       },
     };
   },
@@ -146,7 +153,7 @@ export const authService = {
       marketingNotifications: userData.marketingNotifications,
       avatar: userData.avatar,
       registrationId: userData.registrationId,
-      role: userData?.role?.name,
+      role: userData.role,
     };
   },
 
@@ -215,5 +222,43 @@ export const authService = {
     marketingNotifications: boolean;
   }): Promise<void> => {
     await apiClient.put(AUTH_ENDPOINT.NOTIFICATIONS, data);
+  },
+
+  oneClickLogin: async (): Promise<LoginResponse> => {
+    const response = await apiClient.post(AUTH_ENDPOINT.ONE_CLICK_LOGIN);
+
+    const responseData = response.data;
+    const token = responseData.accessToken || responseData.access_token;
+
+    tokenService.saveToken(token);
+
+    let userData;
+    if (responseData.user) {
+      userData = responseData.user;
+    } else {
+      const userResponse = await apiClient.get(AUTH_ENDPOINT.ME, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      userData = userResponse.data;
+    }
+
+    return {
+      token,
+      user: {
+        id: userData.id,
+        username: userData.name,
+        name: userData.name,
+        email: userData.email,
+        surname: userData.surname || '',
+        language: userData.language,
+        emailNotifications: userData.emailNotifications,
+        marketingNotifications: userData.marketingNotifications,
+        avatar: userData.avatar,
+        registrationId: userData.registrationId,
+        role: userData.role,
+      },
+    };
   },
 };
