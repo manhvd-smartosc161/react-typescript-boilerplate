@@ -27,6 +27,7 @@ import {
   useUpdateSitesMutation,
 } from '@src/hooks';
 import { currentUserState } from '@src/stores';
+import { getErrorMessage } from '@src/errors';
 
 const RegistrationPage = () => {
   const { t } = useTranslation();
@@ -91,23 +92,34 @@ const RegistrationPage = () => {
       switch (currentStep) {
         case 0:
           // Step 1 (Company Information) - call supplier update API
-          await updateSupplierMutation.mutateAsync({
-            id: registrationId,
-            data: formData,
-          });
+          try {
+            await updateSupplierMutation.mutateAsync({
+              id: registrationId,
+              data: formData,
+            });
 
-          // Refetch supplier data after step 1 update to get latest information
-          queryClient.invalidateQueries({
-            queryKey: ['supplier', registrationId],
-          });
+            // Refetch supplier data after step 1 update to get latest information
+            queryClient.invalidateQueries({
+              queryKey: ['supplier', registrationId],
+            });
+            toast.success('Save draft successfully!');
+          } catch (err) {
+            toast.error(getErrorMessage(err) || 'Failed to save!');
+          }
+
           break;
 
         case 1:
-          // Step 2 (Sites Information) - call site update API
-          await updateSitesMutation.mutateAsync({
-            registrationId,
-            sites: formData.sites || [],
-          });
+          try {
+            // Step 2 (Sites Information) - call site update API
+            await updateSitesMutation.mutateAsync({
+              registrationId,
+              sites: formData.sites || [],
+            });
+            toast.success('Sites updated successfully!');
+          } catch (err) {
+            toast.error(getErrorMessage(err) || 'Failed to save!');
+          }
           break;
 
         case 2:
