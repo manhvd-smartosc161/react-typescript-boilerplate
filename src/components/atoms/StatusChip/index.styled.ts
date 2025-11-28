@@ -10,8 +10,8 @@ export const StyledStatusChip = styled(Chip)<{ status: string }>(({
     switch (statusValue) {
       case ERegistrationStatus.NEW:
         return { bg: '#EDEDED', color: '#424242' };
-      case ERegistrationStatus.WAITING:
-        return { bg: '##FD965', color: '#424242' };
+      case ERegistrationStatus.WAITING_FOR_APPROVAL:
+        return { bg: '#FFF3E0', color: '#E65100' };
       case ERegistrationStatus.REJECTED:
         return { bg: '#FEDFDE', color: '#D50600' };
       case ERegistrationStatus.APPROVED:

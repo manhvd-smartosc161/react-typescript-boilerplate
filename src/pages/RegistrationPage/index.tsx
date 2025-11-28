@@ -26,6 +26,7 @@ import {
   useCreateSupplierMutation,
   useUpdateSitesMutation,
 } from '@src/hooks';
+import { supplierService } from '@src/api/services';
 import { currentUserState } from '@src/stores';
 
 const RegistrationPage = () => {
@@ -132,7 +133,7 @@ const RegistrationPage = () => {
       const formData = getValues();
       console.log('Form submission data:', formData);
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await supplierService.submitSupplier(registrationId);
 
       // Show success message
       toast.success(
@@ -191,8 +192,8 @@ const RegistrationPage = () => {
               }
               trailing={
                 isSubmitted ? (
-                  <TagAtom variant="filled" color="warning">
-                    Wait for Approval
+                  <TagAtom variant="filled" color="waiting">
+                    {t('common:status.waitingForApproval')}
                   </TagAtom>
                 ) : null
               }

@@ -21,6 +21,7 @@
   "status": {
     "new": "New",
     "waiting": "Waiting",
+    "waitingForApproval": "Wait for Approval",
     "rejected": "Rejected",
     "approved": "approved",
     "active": "Active",

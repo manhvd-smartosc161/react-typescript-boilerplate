@@ -37,7 +37,7 @@ export const enum ESortDirection {
 export const enum ERegistrationStatus {
   NEW = 'NEW',
   DRAFT = 'DRAFT',
-  WAITING = 'WAITING',
+  WAITING_FOR_APPROVAL = 'WAITING_FOR_APPROVAL',
   REJECTED = 'REJECTED',
   APPROVED = 'APPROVED',
   INACTIVE = 'INACTIVE',

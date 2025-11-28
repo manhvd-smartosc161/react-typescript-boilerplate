@@ -13,6 +13,7 @@ export interface TagProps
     | 'warning'
     | 'error'
     | 'info'
+    | 'waiting'
     | 'default';
   size?: 'small' | 'medium';
   closable?: boolean;

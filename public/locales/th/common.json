@@ -21,6 +21,7 @@
   "status": {
     "new": "ใหม่",
     "waiting": "ซึ่งรอคอย",
+    "waitingForApproval": "รอการอนุมัติ",
     "rejected": "ถูกปฏิเสธ",
     "approved": "ที่ได้รับการอนุมัติ",
     "active": "ใช้งานอยู่",

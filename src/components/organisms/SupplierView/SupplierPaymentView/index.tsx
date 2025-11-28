@@ -5,9 +5,7 @@ import { SupplierPayment } from '@src/types';
 import React from 'react';
 
 interface SupplierPaymentViewProps {
-  data: Partial<SupplierPayment> & {
-    creditLimit?: number;
-  };
+  data: Partial<SupplierPayment>;
 }
 
 const SupplierPaymentView: React.FC<SupplierPaymentViewProps> = ({ data }) => {
@@ -44,13 +42,6 @@ const SupplierPaymentView: React.FC<SupplierPaymentViewProps> = ({ data }) => {
         <DataPair
           label={t('form.fields.accountName')}
           value={data.accountName}
-        />
-      </Grid>
-
-      <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair
-          label={t('form.view.creditLimit')}
-          value={data.creditLimit?.toLocaleString()}
         />
       </Grid>
 

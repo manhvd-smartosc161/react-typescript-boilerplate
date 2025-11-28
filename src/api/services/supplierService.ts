@@ -101,6 +101,10 @@ export const supplierService = {
     return response.data;
   },
 
+  submitSupplier: async (id: string): Promise<void> => {
+    await apiClient.post(SUPPLIER_ENDPOINT.SUBMIT(id), {});
+  },
+
   getSupplierById: async (id: string): Promise<GetSupplierResponse> => {
     const response = await apiClient.get(SUPPLIER_ENDPOINT.GET_BY_ID(id));
     const apiData = response.data;

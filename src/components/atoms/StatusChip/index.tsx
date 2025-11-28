@@ -20,8 +20,8 @@ const StatusChipAtom: React.FC<StatusChipProps> = ({
         return t('common:status.draft');
       case ERegistrationStatus.NEW:
         return t('common:status.new');
-      case ERegistrationStatus.WAITING:
-        return t('common:status.waiting');
+      case ERegistrationStatus.WAITING_FOR_APPROVAL:
+        return t('common:status.waitingForApproval');
       case ERegistrationStatus.REJECTED:
         return t('common:status.rejected');
       case ERegistrationStatus.APPROVED:

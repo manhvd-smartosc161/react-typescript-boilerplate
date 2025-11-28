@@ -6,10 +6,6 @@ import React from 'react';
 
 interface SupplierFinancialViewProps {
   data: Partial<Pick<SupplierInfo, 'taxId' | 'taxType' | 'taxCountry'>> & {
-    vatRegNo?: string;
-    registeredCapital?: number;
-    currency?: string;
-    annualRevenue?: number;
     bankName?: string;
     bankAccountNo?: string;
     bankAccountName?: string;
@@ -26,30 +22,6 @@ const SupplierFinancialView: React.FC<SupplierFinancialViewProps> = ({
     <>
       <Grid size={{ xs: 12, md: 6 }}>
         <DataPair label={t('form.fields.taxId')} value={data.taxId} />
-      </Grid>
-      <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair
-          label={t('form.view.vatRegistrationNo')}
-          value={data.vatRegNo}
-        />
-      </Grid>
-
-      <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair
-          label={t('form.view.registeredCapital')}
-          value={data.registeredCapital?.toLocaleString()}
-        />
-      </Grid>
-
-      <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair label={t('form.fields.currency')} value={data.currency} />
-      </Grid>
-
-      <Grid size={{ xs: 12, md: 6 }}>
-        <DataPair
-          label={t('form.view.annualRevenue')}
-          value={data.annualRevenue?.toLocaleString()}
-        />
       </Grid>
 
       <Grid size={{ xs: 12, md: 6 }}>

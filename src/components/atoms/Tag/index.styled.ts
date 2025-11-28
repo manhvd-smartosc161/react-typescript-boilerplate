@@ -9,6 +9,7 @@ interface StyledTagProps {
     | 'warning'
     | 'error'
     | 'info'
+    | 'waiting'
     | 'default';
 }
 
@@ -47,6 +48,11 @@ export const StyledTag = styled(Chip)<StyledTagProps>(({
         return {
           backgroundColor: theme.palette.info.light,
           color: theme.palette.info.dark,
+        };
+      case 'waiting':
+        return {
+          backgroundColor: '#FFF3E0',
+          color: '#E65100',
         };
       default:
         return {
