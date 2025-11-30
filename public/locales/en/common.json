@@ -68,5 +68,6 @@
       "checkFormErrors": "Please check the form for errors"
     }
   },
-  "done": "Done"
+  "done": "Done",
+  "save": "Save"
 }

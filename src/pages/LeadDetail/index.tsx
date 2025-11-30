@@ -2,20 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm, FormProvider } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, CircularProgress } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  Stack,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 import {
   PageHeaderOrganism,
   SupplierInfoForm,
   SupplierSitesForm,
 } from '@src/components/organisms';
-import { useGetSupplierById } from '@src/hooks';
+import {
+  useGetSupplierById,
+  useUpdateSitesMutation,
+  useUpdateSupplierMutation,
+} from '@src/hooks';
 import { StyledTabs, StyledTab, StyledContentContainer } from './index.styled';
-import { ButtonAtom } from '@src/components';
+import { ActionButtonsGroup, ButtonAtom } from '@src/components';
 import { SupplierRegistrationFormValues } from '@src/types';
 import { registrationMasterSchema } from '@src/schemas';
 import { scrollToFirstError } from '@src/components/organisms/MultiStepForm/formErrorScroll';
+
+import { getErrorMessage } from '@src/errors';
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -39,11 +52,16 @@ const TabPanel = (props: TabPanelProps) => {
 };
 
 const LeadDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
+  const theme = useTheme();
+  const { id } = useParams<{ id: string }>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState(0);
 
   const { data: supplierData, isLoading } = useGetSupplierById(id || '');
+  const updateSupplierMutation = useUpdateSupplierMutation();
+  const updateSitesMutation = useUpdateSitesMutation();
 
   const formMethods = useForm<SupplierRegistrationFormValues>({
     resolver: yupResolver(registrationMasterSchema) as any,
@@ -53,7 +71,7 @@ const LeadDetail: React.FC = () => {
     },
     mode: 'onChange',
   });
-  const { handleSubmit, formState, setFocus } = formMethods;
+  const { formState, handleSubmit, setFocus, getValues } = formMethods;
 
   useEffect(() => {
     if (supplierData) {
@@ -91,8 +109,25 @@ const LeadDetail: React.FC = () => {
     setActiveTab(newValue);
   };
 
-  const handleSave = () => {
-    toast.success('Save successfully!');
+  const handleSave = async () => {
+    if (!id || id === '') return;
+    const formData = getValues();
+    try {
+      await updateSupplierMutation.mutateAsync({
+        id,
+        data: formData,
+      });
+      await updateSitesMutation.mutateAsync({
+        registrationId: id,
+        sites: formData.sites || [],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['supplier', id],
+      });
+      toast.success('Save successfully!');
+    } catch (err) {
+      toast.error(getErrorMessage(err) || 'Failed to save!');
+    }
   };
 
   if (isLoading) {
@@ -110,14 +145,7 @@ const LeadDetail: React.FC = () => {
 
   return (
     <Box>
-      <PageHeaderOrganism
-        title={t('lead:leadDetails')}
-        trailing={
-          <ButtonAtom type="submit" form="detail-lead">
-            Save
-          </ButtonAtom>
-        }
-      />
+      <PageHeaderOrganism title={t('lead:leadDetails')} />
 
       <StyledContentContainer>
         <StyledTabs value={activeTab} onChange={handleTabChange}>
@@ -138,6 +166,27 @@ const LeadDetail: React.FC = () => {
             <TabPanel value={activeTab} index={1}>
               <SupplierSitesForm />
             </TabPanel>
+            <Stack
+              direction={isMobile ? 'column' : 'row'}
+              justifyContent="flex-end"
+              spacing={isMobile ? 1 : 2}
+              sx={{
+                margin: `${theme.spacing(1)} -${theme.spacing(1)}`,
+                ...(isMobile && {
+                  position: 'sticky',
+                  bottom: 0,
+                  backgroundColor: theme.palette.background.paper,
+                  padding: theme.spacing(2),
+                  borderTop: `1px solid ${theme.palette.divider}`,
+                }),
+              }}
+            >
+              <ActionButtonsGroup>
+                <ButtonAtom type="submit" form="detail-lead">
+                  {t('common:save')}
+                </ButtonAtom>
+              </ActionButtonsGroup>
+            </Stack>
           </form>
         </FormProvider>
       </StyledContentContainer>

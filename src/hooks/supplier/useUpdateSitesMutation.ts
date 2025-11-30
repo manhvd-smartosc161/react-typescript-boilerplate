@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
 import {
   supplierService,
   UpdateSitesResponse,
@@ -20,12 +19,6 @@ export const useUpdateSitesMutation = () => {
       } catch (error: any) {
         throw error;
       }
-    },
-    onSuccess: () => {
-      toast.success('Sites updated successfully!');
-    },
-    onError: (error) => {
-      console.error('Failed to update sites:', error);
     },
   });
 };
