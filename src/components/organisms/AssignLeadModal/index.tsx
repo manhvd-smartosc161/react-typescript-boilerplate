@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Box } from '@mui/material';
+import { Box, FormControl, FormHelperText } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ButtonAtom } from '@src/components/atoms';
 import { AutocompleteOption } from '@src/components/atoms/Autocomplete';
@@ -53,7 +53,7 @@ const AssignLeadModal: React.FC<AssignLeadModalProps> = ({
       leadOwnerLotus: '',
     },
   });
-  const { handleSubmit, control } = formMethods;
+  const { handleSubmit, control, formState } = formMethods;
 
   const handleSubmitAssign = () => {
     if (data) onSubmit(data);
@@ -106,7 +106,6 @@ const AssignLeadModal: React.FC<AssignLeadModalProps> = ({
               size="medium"
               options={LEAD_OWNER}
               placeholder={t('select')}
-              required
             />
             <ControlledAutocompleteField
               control={control}
@@ -115,8 +114,14 @@ const AssignLeadModal: React.FC<AssignLeadModalProps> = ({
               size="medium"
               options={LEAD_OWNER}
               placeholder={t('select')}
-              required
             />
+            <FormControl error={!!formState?.errors}>
+              {formState?.errors && (
+                <FormHelperText>
+                  {(formState?.errors as any)?.atLeastOneOwner?.message}
+                </FormHelperText>
+              )}
+            </FormControl>
           </Box>
         </form>
       </FormProvider>

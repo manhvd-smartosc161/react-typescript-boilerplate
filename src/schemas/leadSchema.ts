@@ -23,10 +23,17 @@ export const leadSchema: yup.ObjectSchema<AddLeadFormValue> = yup
 
     remarks: yup.string().trim().max(500, MESSAGES.MSG_027).optional(),
   });
-
 export const leadAsignmentSchema: yup.ObjectSchema<LeadAssignmentForm> = yup
-  .object()
-  .shape({
-    leadOwnerMakro: yup.string().required(MESSAGES.MSG_001),
-    leadOwnerLotus: yup.string().required(MESSAGES.MSG_001),
+  .object({
+    leadOwnerMakro: yup.string().optional(),
+    leadOwnerLotus: yup.string().optional(),
+  })
+  .test('atLeastOneOwner', MESSAGES.MSG_001, function (value) {
+    const valid = Boolean(value?.leadOwnerMakro || value?.leadOwnerLotus);
+    if (valid) return true;
+
+    return this.createError({
+      path: 'atLeastOneOwner',
+      message: MESSAGES.MSG_028,
+    });
   });
