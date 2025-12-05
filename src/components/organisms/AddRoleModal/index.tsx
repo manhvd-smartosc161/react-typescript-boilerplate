@@ -34,8 +34,11 @@ const AddRoleModal: React.FC<AddRoleModalProps> = ({
 
   const handleSubmitNewRole = async (form: RoleFormData) => {
     const data = {
-      ...form,
-      retailerType: form.retailerType.map((el) => el.id as string),
+      name: form.name,
+      description: form.description,
+      retailerType: (form.retailerType as unknown as (string | number)[]).map(
+        (id) => String(id),
+      ),
     };
     onSubmit(data);
   };

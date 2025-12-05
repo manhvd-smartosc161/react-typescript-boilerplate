@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ButtonAtom } from '@src/components/atoms';
+import { AutocompleteOption } from '@src/components/atoms/Autocomplete';
 import {
   ControlledTextField,
   ControlledAutocompleteMultiField,
@@ -26,11 +27,10 @@ const EditRoleModal: React.FC<EditRoleModalProps> = ({
   const updateRoleMutation = useUpdateRoleMutation().mutateAsync;
   const formMethods = useForm<RoleFormData>({
     defaultValues: {
-      retailerType: RETAILER_TYPE.filter((el) =>
-        data?.retailerType.includes(el.id as string),
-      ),
-      name: data?.name,
-      description: data?.description,
+      retailerType: (data?.retailerType ||
+        []) as unknown as AutocompleteOption[],
+      name: data?.name || '',
+      description: data?.description || '',
     },
     mode: 'onSubmit',
   });
@@ -41,8 +41,11 @@ const EditRoleModal: React.FC<EditRoleModalProps> = ({
       await updateRoleMutation({
         id: data.id,
         data: {
-          ...form,
-          retailerType: form.retailerType.map((el) => el.id as string),
+          name: form.name,
+          description: form.description,
+          retailerType: (
+            form.retailerType as unknown as (string | number)[]
+          ).map((id) => String(id)),
         },
       });
       onClose();
