@@ -207,6 +207,6 @@ export interface AddLeadFormValue {
 }
 
 export interface LeadAssignmentForm {
-  leadOwnerMakro: string;
-  leadOwnerLotus: string;
+  leadOwnerMakro?: string;
+  leadOwnerLotus?: string;
 }

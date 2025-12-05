@@ -35,4 +35,5 @@ export const MESSAGES = {
   MSG_025: 'Tax ID must be 13 digits',
   MSG_026: 'Invalid tax identification number',
   MSG_027: 'Remarks must be less than 500 characters',
+  MSG_028: 'Please select at least one of the two fields above.',
 } as const;
