@@ -27,5 +27,24 @@
   "cancel": "ยกเลิก",
   "enable": "เปิดใช้งาน",
   "disable": "ปิดใช้งาน",
-  "all": "ทั้งหมด"
+  "all": "ทั้งหมด",
+  "dashboard": {
+    "title": "แดชบอร์ดสินค้า",
+    "itemListLatest": "รายการสินค้า (ล่าสุด)",
+    "itemName": "ชื่อสินค้า",
+    "category": "หมวดหมู่",
+    "totalItems": "สินค้าทั้งหมด",
+    "activeItems": "สินค้าที่ใช้งาน",
+    "inactiveItems": "สินค้าที่ไม่ใช้งาน",
+    "categories": "หมวดหมู่",
+    "itemByCategory": "สินค้าตามหมวดหมู่ (ล่าสุด)",
+    "itemStatusByCategory": "สถานะสินค้าตามหมวดหมู่ (ใช้งาน/ไม่ใช้งาน)",
+    "itemCreationLeadTimes": "ระยะเวลาการสร้างสินค้า",
+    "numberOfItems": "จำนวนสินค้า",
+    "leadTimeDays": "ระยะเวลา (วัน)",
+    "month": "เดือน",
+    "averageLeadTime": "ระยะเวลาเฉลี่ย",
+    "active": "ใช้งาน",
+    "inactive": "ไม่ใช้งาน"
+  }
 }

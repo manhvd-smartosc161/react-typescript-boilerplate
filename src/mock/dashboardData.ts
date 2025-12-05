@@ -2,30 +2,31 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CategoryIcon from '@mui/icons-material/Category';
+import type { TFunction } from 'i18next';
 
 export { mockUser, mockUsers } from './authData';
 
-export const mockStats = [
+export const getMockStats = (t: TFunction) => [
   {
-    title: 'Total Items',
+    title: t('dashboard.totalItems'),
     value: 1248,
     icon: InventoryIcon,
     color: 'primary' as const,
   },
   {
-    title: 'Active Items',
+    title: t('dashboard.activeItems'),
     value: 1120,
     icon: CheckCircleIcon,
     color: 'success' as const,
   },
   {
-    title: 'Inactive Items',
+    title: t('dashboard.inactiveItems'),
     value: 128,
     icon: CancelIcon,
     color: 'warning' as const,
   },
   {
-    title: 'Categories',
+    title: t('dashboard.categories'),
     value: 15,
     icon: CategoryIcon,
     color: 'info' as const,
@@ -109,13 +110,13 @@ export const mockLatestItems = [
 ];
 
 // Chart: Item by Category (Latest)
-export const mockItemByCategoryChartOptions = {
+export const getMockItemByCategoryChartOptions = (t: TFunction) => ({
   chart: {
     type: 'column',
     height: 320,
   },
   title: {
-    text: 'Item by Category (Latest)',
+    text: t('dashboard.itemByCategory'),
     style: { fontSize: '18px' },
   },
   xAxis: {
@@ -128,16 +129,16 @@ export const mockItemByCategoryChartOptions = {
       'Books',
       'Toys',
     ],
-    title: { text: 'Category' },
+    title: { text: t('dashboard.category') },
   },
   yAxis: {
     min: 0,
-    title: { text: 'Number of Items' },
+    title: { text: t('dashboard.numberOfItems') },
     allowDecimals: false,
   },
   series: [
     {
-      name: 'Items',
+      name: t('items'),
       type: 'column',
       data: [245, 189, 156, 142, 128, 198, 190],
       colorByPoint: true,
@@ -154,16 +155,16 @@ export const mockItemByCategoryChartOptions = {
       borderRadius: 4,
     },
   },
-};
+});
 
 // Chart: Item Status by Category (Active/Inactive)
-export const mockItemStatusByCategoryChartOptions = {
+export const getMockItemStatusByCategoryChartOptions = (t: TFunction) => ({
   chart: {
     type: 'column',
     height: 320,
   },
   title: {
-    text: 'Item Status by Category (Active/Inactive)',
+    text: t('dashboard.itemStatusByCategory'),
     style: { fontSize: '18px' },
   },
   xAxis: {
@@ -176,22 +177,22 @@ export const mockItemStatusByCategoryChartOptions = {
       'Books',
       'Toys',
     ],
-    title: { text: 'Category' },
+    title: { text: t('dashboard.category') },
   },
   yAxis: {
     min: 0,
-    title: { text: 'Number of Items' },
+    title: { text: t('dashboard.numberOfItems') },
     allowDecimals: false,
   },
   series: [
     {
-      name: 'Active',
+      name: t('dashboard.active'),
       type: 'column',
       data: [220, 170, 140, 128, 115, 178, 169],
       color: '#4caf50',
     },
     {
-      name: 'Inactive',
+      name: t('dashboard.inactive'),
       type: 'column',
       data: [25, 19, 16, 14, 13, 20, 21],
       color: '#ff9800',
@@ -208,16 +209,16 @@ export const mockItemStatusByCategoryChartOptions = {
       borderRadius: 4,
     },
   },
-};
+});
 
 // Chart: Item Creation Lead Times
-export const mockItemLeadTimesChartOptions = {
+export const getMockItemLeadTimesChartOptions = (t: TFunction) => ({
   chart: {
     type: 'line',
     height: 320,
   },
   title: {
-    text: 'Item Creation Lead Times',
+    text: t('dashboard.itemCreationLeadTimes'),
     style: { fontSize: '18px' },
   },
   xAxis: {
@@ -235,16 +236,16 @@ export const mockItemLeadTimesChartOptions = {
       'Nov',
       'Dec',
     ],
-    title: { text: 'Month' },
+    title: { text: t('dashboard.month') },
   },
   yAxis: {
     min: 0,
-    title: { text: 'Lead Time (Days)' },
+    title: { text: t('dashboard.leadTimeDays') },
     allowDecimals: true,
   },
   series: [
     {
-      name: 'Average Lead Time',
+      name: t('dashboard.averageLeadTime'),
       type: 'line',
       data: [5.2, 4.8, 5.5, 4.9, 5.1, 4.7, 5.3, 4.6, 5.0, 4.8, 5.2, 4.9],
       color: '#2196f3',
@@ -265,7 +266,8 @@ export const mockItemLeadTimesChartOptions = {
       lineWidth: 3,
     },
   },
-};
+});
 
-// Legacy chart options for backward compatibility
-export const mockChartOptions = mockItemByCategoryChartOptions;
+// Legacy chart options for backward compatibility (deprecated, use getMockItemByCategoryChartOptions instead)
+export const getMockChartOptions = (t: TFunction) =>
+  getMockItemByCategoryChartOptions(t);

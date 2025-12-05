@@ -27,5 +27,24 @@
   "cancel": "Cancel",
   "enable": "Enable",
   "disable": "Disable",
-  "all": "All"
+  "all": "All",
+  "dashboard": {
+    "title": "Item Dashboard",
+    "itemListLatest": "Item List (Latest)",
+    "itemName": "Item Name",
+    "category": "Category",
+    "totalItems": "Total Items",
+    "activeItems": "Active Items",
+    "inactiveItems": "Inactive Items",
+    "categories": "Categories",
+    "itemByCategory": "Item by Category (Latest)",
+    "itemStatusByCategory": "Item Status by Category (Active/Inactive)",
+    "itemCreationLeadTimes": "Item Creation Lead Times",
+    "numberOfItems": "Number of Items",
+    "leadTimeDays": "Lead Time (Days)",
+    "month": "Month",
+    "averageLeadTime": "Average Lead Time",
+    "active": "Active",
+    "inactive": "Inactive"
+  }
 }

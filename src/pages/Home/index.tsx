@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, Typography, Chip, Grid } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import Highcharts from 'highcharts';
@@ -10,11 +11,11 @@ import {
 } from '@src/components';
 import { PageHeaderOrganism } from '@src/components/organisms';
 import {
-  mockStats,
+  getMockStats,
   mockLatestItems,
-  mockItemByCategoryChartOptions,
-  mockItemStatusByCategoryChartOptions,
-  mockItemLeadTimesChartOptions,
+  getMockItemByCategoryChartOptions,
+  getMockItemStatusByCategoryChartOptions,
+  getMockItemLeadTimesChartOptions,
 } from '@src/mock/dashboardData';
 import {
   StyledPaper,
@@ -36,30 +37,39 @@ interface ItemData {
 }
 
 const Home: React.FC = () => {
+  const { t } = useTranslation('item');
+  const { t: tCommon } = useTranslation('common');
   const currentUser = useRecoilValue(currentUserState);
+
   const stats = useMemo(
     () =>
-      mockStats.map((stat) => ({
+      getMockStats(t).map((stat) => ({
         ...stat,
         icon: <stat.icon />,
       })),
-    [],
+    [t],
   );
 
   const latestItems = useMemo(() => mockLatestItems, []);
 
-  const itemByCategoryChart = useMemo(() => mockItemByCategoryChartOptions, []);
-  const itemStatusChart = useMemo(
-    () => mockItemStatusByCategoryChartOptions,
-    [],
+  const itemByCategoryChart = useMemo(
+    () => getMockItemByCategoryChartOptions(t),
+    [t],
   );
-  const leadTimesChart = useMemo(() => mockItemLeadTimesChartOptions, []);
+  const itemStatusChart = useMemo(
+    () => getMockItemStatusByCategoryChartOptions(t),
+    [t],
+  );
+  const leadTimesChart = useMemo(
+    () => getMockItemLeadTimesChartOptions(t),
+    [t],
+  );
 
   const columns = useMemo(
     () => [
       {
         key: 'name' as keyof ItemData,
-        label: 'Item Name',
+        label: t('dashboard.itemName'),
         render: (value: string) => (
           <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
             {value}
@@ -68,41 +78,45 @@ const Home: React.FC = () => {
       },
       {
         key: 'category' as keyof ItemData,
-        label: 'Category',
+        label: t('dashboard.category'),
       },
       {
         key: 'status' as keyof ItemData,
-        label: 'Status',
-        render: (value: string) => (
-          <Chip
-            label={value}
-            color={value === 'Active' ? 'success' : 'warning'}
-            size="small"
-          />
-        ),
+        label: t('status'),
+        render: (value: string) => {
+          const isActive = value === 'Active';
+          const statusKey = isActive ? 'status.active' : 'status.inactive';
+          return (
+            <Chip
+              label={tCommon(statusKey)}
+              color={isActive ? 'success' : 'warning'}
+              size="small"
+            />
+          );
+        },
       },
       {
         key: 'stock' as keyof ItemData,
-        label: 'Stock',
+        label: t('stock'),
         align: 'right' as const,
       },
       {
         key: 'orders' as keyof ItemData,
-        label: 'Orders',
+        label: t('orders'),
         align: 'right' as const,
       },
       {
         key: 'addedDate' as keyof ItemData,
-        label: 'Added Date',
+        label: t('addedDate'),
       },
     ],
-    [],
+    [t, tCommon],
   );
 
   return (
     <StyledPaper>
       <PageHeaderOrganism
-        title="Item Dashboard"
+        title={t('dashboard.title')}
         leading={<DashboardIcon sx={{ color: '#1976d2', fontSize: 28 }} />}
       />
 
@@ -146,7 +160,7 @@ const Home: React.FC = () => {
         {currentUser?.role?.name === EUserRole.SUPPLIER && (
           <StyledTableSection>
             <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
-              Item List (Latest)
+              {t('dashboard.itemListLatest')}
             </Typography>
             <TableOrganism<ItemData>
               columns={columns}
