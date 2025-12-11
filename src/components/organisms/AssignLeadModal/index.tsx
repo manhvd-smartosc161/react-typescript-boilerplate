@@ -21,7 +21,7 @@ interface AssignLeadModalProps {
 const LEAD_OWNER: AutocompleteOption[] = [
   {
     id: 'LEAD1',
-    label: 'Samark',
+    label: 'Buyer',
   },
   {
     id: 'LEAD2',
