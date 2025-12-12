@@ -32,6 +32,8 @@ const StatusChipAtom: React.FC<StatusChipProps> = ({
         return t('common:status.active');
       case ERegistrationStatus.INACTIVE:
         return t('common:status.inactive');
+      case ERegistrationStatus.PENDING:
+        return t('common:status.pending');
       default:
         return statusValue;
     }

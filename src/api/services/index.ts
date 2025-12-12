@@ -6,3 +6,4 @@ export * from './supplierService';
 export * from './roleService';
 export * from './permissionService';
 export * from './userService';
+export * from './workflowsService';

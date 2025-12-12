@@ -8,13 +8,13 @@ import {
   ControlledAutocompleteField,
   ModalDialog,
 } from '@src/components/molecules';
-import { SupplierInfoItem } from '@src/types';
+import { AssignmentLeadFormData, SupplierInfoItem } from '@src/types';
 import { leadAsignmentSchema } from '@src/schemas';
 
 interface AssignLeadModalProps {
   open: boolean;
   onClose: () => void;
-  onSubmit: (data: SupplierInfoItem) => void;
+  onSubmit: (data: AssignmentLeadFormData) => void;
   data: SupplierInfoItem | null;
 }
 
@@ -56,8 +56,7 @@ const AssignLeadModal: React.FC<AssignLeadModalProps> = ({
   const { handleSubmit, control, formState } = formMethods;
 
   const handleSubmitAssign = () => {
-    if (data) onSubmit(data);
-    onClose();
+    if (data) onSubmit({ registrationId: data.id });
   };
 
   const footer = (

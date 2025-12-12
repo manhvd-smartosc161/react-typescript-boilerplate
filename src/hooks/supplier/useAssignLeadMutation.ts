@@ -1,22 +1,33 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { PaginatedResponse, SupplierInfoItem } from '@src/types';
+import {
+  AssignmentLeadFormData,
+  PaginatedResponse,
+  SupplierInfoItem,
+} from '@src/types';
+import { workflowsService } from '@src/api/services';
+import { ERegistrationStatus } from '@src/constants';
 
 export const useAssignLeadMutation = () => {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: async (newSupplier: SupplierInfoItem) => newSupplier,
+    mutationFn: async (payload: AssignmentLeadFormData) => {
+      return workflowsService.assignLead(payload);
+    },
 
-    onSuccess: (newSupplier) => {
+    onSuccess: (lead) => {
       qc.setQueriesData<PaginatedResponse<SupplierInfoItem>>(
         { queryKey: ['suppliersSearch'] },
         (oldData) => {
+          console.log(lead, 'leadleadlead');
           if (!oldData) return oldData;
           return {
             ...oldData,
             items: oldData.items.map((el) =>
-              el.id === newSupplier.id ? { ...el, isAssigned: true } : el,
+              el.id === lead.registrationId
+                ? { ...el, status: ERegistrationStatus.PENDING }
+                : el,
             ),
           };
         },
