@@ -8,3 +8,8 @@ export interface LeadData {
   remarks: string;
   assigned: boolean;
 }
+
+export interface AssignmentLeadFormData {
+  assigneeId?: string;
+  registrationId: string;
+}

@@ -28,7 +28,8 @@
     "inactive": "Inctive",
     "deleted": "Deleted",
     "activated": "Activated",
-    "draft": "Draft"
+    "draft": "Draft",
+    "pending": "Pending"
   },
   "results": "Results",
   "rowsPerPage": "Rows Per Page",

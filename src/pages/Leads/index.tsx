@@ -8,11 +8,20 @@ import {
 } from '@src/components/organisms';
 import { TableOrganism } from '@src/components/organisms';
 import { StatusChipAtom, ActionButtonAtom } from '@src/components/atoms';
-import { AddLeadFormValue, SortDirection, SupplierInfoItem } from '@src/types';
+import {
+  AddLeadFormValue,
+  AssignmentLeadFormData,
+  SortDirection,
+  SupplierInfoItem,
+} from '@src/types';
 import { useGetSuppliers } from '@src/hooks/supplier/useGetSuppliers';
 import { useRecoilValue } from 'recoil';
 import { currentUserState } from '@src/stores';
-import { ESortDirection, LANGUAGE_CODES } from '@src/constants';
+import {
+  ERegistrationStatus,
+  ESortDirection,
+  LANGUAGE_CODES,
+} from '@src/constants';
 import { camelToSnake, DATE_FORMATS, formatDate } from '@src/utils';
 import { AddLeadModalOrganism } from '@src/components/organisms';
 import { useAddNewLeadMutation, useAssignLeadMutation } from '@src/hooks';
@@ -89,8 +98,9 @@ const LeadsPage: React.FC = () => {
     });
   };
 
-  const handleSubmitAssignModal = (lead: SupplierInfoItem) => {
-    assignLeadMuatation(lead);
+  const handleSubmitAssignModal = async (payload: AssignmentLeadFormData) => {
+    await assignLeadMuatation(payload);
+    handleCloseAssignModal();
   };
 
   const handleRequestSort = (
@@ -162,7 +172,7 @@ const LeadsPage: React.FC = () => {
       align: 'center' as const,
       render: (value: any, record: SupplierInfoItem) => (
         <>
-          {record?.isAssigned ? (
+          {record?.status === ERegistrationStatus.PENDING ? (
             <ActionButtonAtom variant="assigned">
               {t('assigned')}
             </ActionButtonAtom>

@@ -195,7 +195,6 @@ export interface SupplierInfoItem {
   status: string;
   createdAt: string;
   updatedAt: string;
-  isAssigned?: boolean;
 }
 
 export interface AddLeadFormValue {

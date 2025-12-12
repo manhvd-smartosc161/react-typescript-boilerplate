@@ -43,4 +43,5 @@ export const enum ERegistrationStatus {
   INACTIVE = 'INACTIVE',
   ACTIVE = 'ACTIVE',
   ACTIVATED = 'ACTIVATED',
+  PENDING = 'PENDING',
 }
