@@ -207,7 +207,11 @@ const RegistrationPage = () => {
                   <TagAtom variant="filled" color="waiting">
                     {t('common:status.waitingForApproval')}
                   </TagAtom>
-                ) : null
+                ) : (
+                  <TagAtom variant="filled" color="waiting">
+                    <strong>{t('common:status.draft')}</strong>
+                  </TagAtom>
+                )
               }
             />
           }
