@@ -75,5 +75,6 @@
   "unsavedChanges": "Unsaved Changes",
   "unsavedChangesMessage": "You have unsaved changes. Are you sure you want to leave? Your changes will be lost.",
   "stayOnPage": "Stay on Page",
-  "leaveWithoutSaving": "Leave Without Saving"
+  "leaveWithoutSaving": "Leave Without Saving",
+  "noDataToDisplay": "There is no data to display"
 }

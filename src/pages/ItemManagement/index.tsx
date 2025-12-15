@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
+import { useRecoilValue } from 'recoil';
 import {
   IconAtom,
   PageHeaderOrganism,
@@ -12,9 +13,11 @@ import { StyledActionIconButton } from '../Contracts/index.styled';
 import { ESortDirection } from '@src/constants';
 import { productList } from '@src/mock/itemData';
 import { TableItemToolbarOrganism } from '@src/components/organisms';
+import { currentUserState } from '@src/stores';
 
 const ItemManagement: FC = () => {
   const { t } = useTranslation('item');
+  const currentUser = useRecoilValue(currentUserState);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState<ESortDirection>(ESortDirection.ASC);
@@ -57,30 +60,45 @@ const ItemManagement: FC = () => {
     });
   };
   useEffect(() => {
-    const sorted = sortLocal(productList, orderBy, order);
-    const items = sorted.filter(
-      (el: ProductDetail) =>
-        (el.area === filter.area || filter.area === '') &&
-        (el.status === filter.status || filter.status === '') &&
-        (el.productNameEn.includes(keyword) ||
-          el.productNameTh.includes(keyword) ||
-          keyword === ''),
-    );
-    setData({
-      items: items.slice(
-        (currentPage - 1) * rowsPerPage,
-        rowsPerPage * currentPage,
-      ),
-      pagination: {
-        currentPage,
-        from: (currentPage - 1) * rowsPerPage + 1,
-        to: rowsPerPage * currentPage,
-        hasMore: true,
-        pagesCount: Math.ceil(items.length / rowsPerPage),
-        perPage: rowsPerPage,
-        total: items.length,
-      },
-    });
+    if (currentUser?.email === 'test_supplier_lotuss@yopmail.com') {
+      const sorted = sortLocal(productList, orderBy, order);
+      const items = sorted.filter(
+        (el: ProductDetail) =>
+          (el.area === filter.area || filter.area === '') &&
+          (el.status === filter.status || filter.status === '') &&
+          (el.productNameEn.includes(keyword) ||
+            el.productNameTh.includes(keyword) ||
+            keyword === ''),
+      );
+      setData({
+        items: items.slice(
+          (currentPage - 1) * rowsPerPage,
+          rowsPerPage * currentPage,
+        ),
+        pagination: {
+          currentPage,
+          from: (currentPage - 1) * rowsPerPage + 1,
+          to: rowsPerPage * currentPage,
+          hasMore: true,
+          pagesCount: Math.ceil(items.length / rowsPerPage),
+          perPage: rowsPerPage,
+          total: items.length,
+        },
+      });
+    } else {
+      setData({
+        items: [],
+        pagination: {
+          currentPage: 1,
+          from: 0,
+          to: 0,
+          hasMore: false,
+          pagesCount: 0,
+          perPage: rowsPerPage,
+          total: 0,
+        },
+      });
+    }
   }, [currentPage, rowsPerPage, filter, keyword, order, orderBy]);
 
   const handleChangeFilter = (key: keyof ProductDetail, value: string) => {

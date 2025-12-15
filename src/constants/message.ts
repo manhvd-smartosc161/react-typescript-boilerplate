@@ -11,8 +11,7 @@ export const MESSAGES = {
   MSG_006:
     'Password must be 8-32 characters including uppercase, lowercase, alphanumeric and special characters.',
   MSG_007: 'Confirm Password does not match Password.',
-  MSG_008:
-    'Name must be 3-32 characters, only allow latin characters and thai characters.',
+  MSG_008: 'Only allow latin characters and thai characters.',
   MSG_009: 'Please select checkbox to proceed register.',
   MSG_010: 'Email already in use. Please log in or sign up with another email.',
   MSG_011:

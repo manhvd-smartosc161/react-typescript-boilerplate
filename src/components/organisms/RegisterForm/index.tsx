@@ -37,7 +37,6 @@ const RegisterForm: FC = () => {
       password: '',
       confirmPassword: '',
       name: '',
-      surname: '',
       agreedTerms: false,
     },
   });
@@ -68,7 +67,6 @@ const RegisterForm: FC = () => {
       email: data.email,
       password: data.password,
       name: data.name,
-      surname: data.surname || undefined,
       agreedTerms: data.agreedTerms,
     });
   };
@@ -140,18 +138,9 @@ const RegisterForm: FC = () => {
           <ControlledTextField
             name="name"
             control={control}
-            label={t('auth:name')}
+            label={t('auth:contactPersonName')}
             placeholder={t('auth:namePlaceholder')}
             required
-          />
-        </Box>
-
-        <Box>
-          <ControlledTextField
-            name="surname"
-            control={control}
-            label={t('auth:surname')}
-            placeholder={t('auth:surnamePlaceholder')}
           />
         </Box>
 

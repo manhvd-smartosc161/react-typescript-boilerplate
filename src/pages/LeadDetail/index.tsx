@@ -24,13 +24,14 @@ import {
   useUpdateSupplierMutation,
 } from '@src/hooks';
 import { StyledTabs, StyledTab, StyledContentContainer } from './index.styled';
-import { ActionButtonsGroup, ButtonAtom } from '@src/components';
+import { ActionButtonsGroup, ButtonAtom, TagAtom } from '@src/components';
 import { SupplierRegistrationFormValues } from '@src/types';
 import { registrationMasterSchema } from '@src/schemas';
 import { scrollToFirstError } from '@src/components/organisms/MultiStepForm/formErrorScroll';
 import { ModalDialog } from '@src/components/molecules';
 
 import { getErrorMessage } from '@src/errors';
+import { ERegistrationStatus } from '@src/constants';
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -169,7 +170,16 @@ const LeadDetail: React.FC = () => {
 
   return (
     <Box>
-      <PageHeaderOrganism title={t('lead:leadDetails')} />
+      <PageHeaderOrganism
+        title={t('lead:leadDetails')}
+        trailing={
+          supplierData?.status === ERegistrationStatus.DRAFT && (
+            <TagAtom variant="filled" color="waiting">
+              <strong>{t('common:status.draft')}</strong>
+            </TagAtom>
+          )
+        }
+      />
 
       <StyledContentContainer>
         <StyledTabs value={activeTab} onChange={handleTabChange}>

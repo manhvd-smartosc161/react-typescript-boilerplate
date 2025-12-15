@@ -18,6 +18,7 @@ export const AUTH_ENDPOINT = {
   PROFILE: `${AUTH_PATH}/profile`,
   PASSWORD: `${AUTH_PATH}/password`,
   NOTIFICATIONS: `${AUTH_PATH}/notifications`,
+  SIGN_UP_RESET_PASSWORD: `${AUTH_PATH}/sign-up-reset-password`,
 } as const;
 
 export enum EUserRole {

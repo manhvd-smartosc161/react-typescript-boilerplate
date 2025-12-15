@@ -239,6 +239,20 @@ const TableOrganism = <T,>({
         </TableRow>
       );
     }
+    if (data.length === 0) {
+      return (
+        <TableCell colSpan={columns.length + (selectable ? 1 : 0)}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            align="center"
+            sx={{ py: 3 }}
+          >
+            {t('common:noDataToDisplay')}
+          </Typography>
+        </TableCell>
+      );
+    }
 
     return data.map((record, index) => {
       const id = getRowId(record, index);

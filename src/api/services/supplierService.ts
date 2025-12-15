@@ -22,6 +22,7 @@ export interface UpdateSitesResponse {
 
 export interface GetSupplierResponse {
   id: string;
+  status: string;
   information: any;
   sites: any[];
 }
@@ -116,6 +117,7 @@ export const supplierService = {
 
     const transformedData: GetSupplierResponse = {
       id: apiData.id,
+      status: apiData.status,
       information: {
         nameTh: apiData.nameTh || '',
         nameEn: apiData.nameEn || '',
