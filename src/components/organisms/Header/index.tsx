@@ -91,9 +91,7 @@ const Header: FC<HeaderProps> = ({ collapsed, onMobileToggle }) => {
           </Box>
         </StyledMobileHeaderSection>
 
-        <StyledHeaderContent>
-          <Typography>Auto CN Collection</Typography>
-        </StyledHeaderContent>
+        <StyledHeaderContent></StyledHeaderContent>
 
         <StyledRightSection>
           <LanguageSwitcher />
