@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box } from '@mui/material';
+import React, { useState, useMemo } from 'react';
+import { Box, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, generatePath } from 'react-router-dom';
 import {
@@ -7,7 +7,13 @@ import {
   PageHeaderOrganism,
 } from '@src/components/organisms';
 import { TableOrganism } from '@src/components/organisms';
-import { StatusChipAtom, ActionButtonAtom } from '@src/components/atoms';
+import {
+  StatusChipAtom,
+  ActionButtonAtom,
+  DropdownAtom,
+  InputAtom,
+  IconAtom,
+} from '@src/components/atoms';
 import {
   AddLeadFormValue,
   AssignmentLeadFormData,
@@ -40,6 +46,8 @@ const LeadsPage: React.FC = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState<SortDirection>(ESortDirection.DESC);
   const [orderBy, setOrderBy] = useState('created_at');
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('');
   const [openAddModal, setOpenAddModal] = useState<boolean>(false);
   const [openAssignModal, setOpenAssignModal] = useState<AssignModalState>({
     isOpen: false,
@@ -47,11 +55,31 @@ const LeadsPage: React.FC = () => {
   });
   const currentUser = useRecoilValue(currentUserState);
 
+  // Status filter options
+  const statusOptions = useMemo(
+    () => [
+      { value: ERegistrationStatus.NEW, label: 'New' },
+      { value: ERegistrationStatus.DRAFT, label: 'Draft' },
+      {
+        value: ERegistrationStatus.WAITING_FOR_APPROVAL,
+        label: 'Waiting for Approval',
+      },
+      { value: ERegistrationStatus.REJECTED, label: 'Rejected' },
+      { value: ERegistrationStatus.APPROVED, label: 'Approved' },
+      { value: ERegistrationStatus.INACTIVE, label: 'Inactive' },
+      { value: ERegistrationStatus.ACTIVE, label: 'Active' },
+      { value: ERegistrationStatus.ARCHIVED, label: 'Archived' },
+    ],
+    [],
+  );
+
   const { data } = useGetSuppliers({
     page: currentPage,
     limit: rowsPerPage,
     sortBy: orderBy,
     sortOrder: order,
+    ...(searchKeyword && { searchTerms: searchKeyword }),
+    ...(statusFilter && { status: statusFilter }),
   });
 
   const createSupplierMutation = useAddNewLeadMutation().mutateAsync;
@@ -111,6 +139,11 @@ const LeadsPage: React.FC = () => {
     const isAsc = orderBy === propSnakeCase && order === ESortDirection.ASC;
     setOrder(isAsc ? ESortDirection.DESC : ESortDirection.ASC);
     setOrderBy(propSnakeCase);
+  };
+
+  const handleClearSearch = () => {
+    setSearchKeyword('');
+    setStatusFilter('');
   };
 
   const columns = [
@@ -223,6 +256,62 @@ const LeadsPage: React.FC = () => {
           onChangePage={(page) => setCurrentPage(page)}
           onChangeRowsPerPage={(size) => setRowsPerPage(size)}
           onRequestSort={handleRequestSort}
+          toolbar={
+            <Box sx={{ padding: 2 }}>
+              <Stack
+                direction={{ xs: 'column', md: 'row' }}
+                spacing={2}
+                alignItems={{ xs: 'stretch', md: 'center' }}
+              >
+                <Stack
+                  direction={{ xs: 'column', md: 'row' }}
+                  spacing={2}
+                  alignItems={{ xs: 'stretch', md: 'center' }}
+                >
+                  <DropdownAtom
+                    placeholder="Status"
+                    options={statusOptions}
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value as string)}
+                    fullWidth={false}
+                    sx={{
+                      minWidth: '100%',
+                      backgroundColor: 'white',
+                      '& .MuiSelect-select': {
+                        paddingTop: 1.5,
+                        paddingBottom: 1.5,
+                      },
+                      '@media (min-width: 900px)': {
+                        minWidth: 200,
+                      },
+                    }}
+                  />
+                </Stack>
+                <Stack
+                  direction={{ xs: 'column', md: 'row' }}
+                  spacing={2}
+                  alignItems={{ xs: 'stretch', md: 'center' }}
+                >
+                  <Box sx={{ width: { xs: '100%', md: 300 } }}>
+                    <InputAtom
+                      placeholder={t('common:searchKeyword')}
+                      value={searchKeyword}
+                      onChange={(e) => setSearchKeyword(e.target.value)}
+                      endIcon={<IconAtom name="search" size={20} />}
+                      fullWidth
+                    />
+                  </Box>
+                  <ActionButtonAtom
+                    variant="details"
+                    onClick={handleClearSearch}
+                    disabled={!searchKeyword && !statusFilter}
+                  >
+                    Clear Search
+                  </ActionButtonAtom>
+                </Stack>
+              </Stack>
+            </Box>
+          }
         />
       </Box>
       {openAddModal && (
