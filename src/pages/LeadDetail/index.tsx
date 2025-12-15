@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,6 +9,7 @@ import {
   Stack,
   useMediaQuery,
   useTheme,
+  Typography,
 } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
@@ -27,6 +28,7 @@ import { ActionButtonsGroup, ButtonAtom } from '@src/components';
 import { SupplierRegistrationFormValues } from '@src/types';
 import { registrationMasterSchema } from '@src/schemas';
 import { scrollToFirstError } from '@src/components/organisms/MultiStepForm/formErrorScroll';
+import { ModalDialog } from '@src/components/molecules';
 
 import { getErrorMessage } from '@src/errors';
 interface TabPanelProps {
@@ -55,9 +57,11 @@ const LeadDetail: React.FC = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState(0);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const { data: supplierData, isLoading } = useGetSupplierById(id || '');
   const updateSupplierMutation = useUpdateSupplierMutation();
@@ -130,6 +134,26 @@ const LeadDetail: React.FC = () => {
     }
   };
 
+  const handleBack = () => {
+    const isDirty = formState.isDirty;
+    const hasDirtyFields = Object.keys(formState.dirtyFields).length > 0;
+
+    if (isDirty || hasDirtyFields) {
+      setShowConfirmDialog(true);
+    } else {
+      navigate(-1);
+    }
+  };
+
+  const handleConfirmLeave = () => {
+    setShowConfirmDialog(false);
+    navigate(-1);
+  };
+
+  const handleCancelLeave = () => {
+    setShowConfirmDialog(false);
+  };
+
   if (isLoading) {
     return (
       <Box
@@ -182,6 +206,14 @@ const LeadDetail: React.FC = () => {
               }}
             >
               <ActionButtonsGroup>
+                <ButtonAtom
+                  variant="ghost"
+                  color="inherit"
+                  onClick={handleBack}
+                  type="button"
+                >
+                  {t('common:back')}
+                </ButtonAtom>
                 <ButtonAtom type="submit" form="detail-lead">
                   {t('common:save')}
                 </ButtonAtom>
@@ -190,6 +222,41 @@ const LeadDetail: React.FC = () => {
           </form>
         </FormProvider>
       </StyledContentContainer>
+
+      {/* Confirmation Dialog */}
+      <ModalDialog
+        open={showConfirmDialog}
+        onClose={handleCancelLeave}
+        title={t('common:unsavedChanges')}
+        maxWidth="sm"
+        fullWidth
+        footer={
+          <Stack
+            direction="row"
+            spacing={2}
+            justifyContent="flex-end"
+            width="100%"
+          >
+            <ButtonAtom
+              onClick={handleCancelLeave}
+              variant="ghost"
+              color="inherit"
+            >
+              {t('common:stayOnPage')}
+            </ButtonAtom>
+            <ButtonAtom onClick={handleConfirmLeave} color="error" autoFocus>
+              {t('common:leaveWithoutSaving')}
+            </ButtonAtom>
+          </Stack>
+        }
+        showFooter
+      >
+        <Box>
+          <Typography variant="body1" color="text.secondary">
+            {t('common:unsavedChangesMessage')}
+          </Typography>
+        </Box>
+      </ModalDialog>
     </Box>
   );
 };

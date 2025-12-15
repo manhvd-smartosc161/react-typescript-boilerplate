@@ -40,6 +40,14 @@ void i18n
     load: 'languageOnly',
     // Preload languages on init
     preload: ['en', 'th'],
+    // React specific options
+    react: {
+      useSuspense: true, // Enable Suspense for waiting translations to load
+      bindI18n: 'languageChanged loaded',
+      bindI18nStore: 'added',
+    },
+    // Ensure all namespaces are loaded before rendering
+    partialBundledLanguages: true,
   });
 
 export default i18n;
