@@ -46,6 +46,13 @@ export interface ResetPasswordRequest {
   token: string;
 }
 
+export interface NewPasswordRequest {
+  newPassword: string;
+  confirmNewPassword: string;
+  token: string;
+  agreedTerms: boolean;
+}
+
 export interface ResetPasswordResponse {
   message: string;
 }
@@ -178,6 +185,16 @@ export const authService = {
     data: ResetPasswordRequest,
   ): Promise<ResetPasswordResponse> => {
     const response = await apiClient.post(AUTH_ENDPOINT.RESET_PASSWORD, data);
+    return response.data;
+  },
+
+  newPassword: async (
+    data: NewPasswordRequest,
+  ): Promise<ResetPasswordResponse> => {
+    const response = await apiClient.post(
+      AUTH_ENDPOINT.SIGN_UP_RESET_PASSWORD,
+      data,
+    );
     return response.data;
   },
 

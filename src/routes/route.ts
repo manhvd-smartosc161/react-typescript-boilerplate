@@ -15,4 +15,5 @@ export default {
   USERS: '/users',
   ROLES_PERMISSION: '/roles-permission',
   ITEMS: '/items',
+  NEW_PASSWORD: '/reset-pass-old-user',
 };

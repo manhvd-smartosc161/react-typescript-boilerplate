@@ -19,7 +19,7 @@ export interface ControlledCheckBoxFieldProps<
   TFieldValues extends FieldValues = FieldValues,
 > {
   name: FieldPath<TFieldValues>;
-  label?: string;
+  label?: string | React.ReactNode;
   options?: CheckBoxOption[];
   helperText?: string;
   required?: boolean;

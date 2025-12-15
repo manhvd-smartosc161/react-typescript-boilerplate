@@ -8,7 +8,6 @@ export interface RegisterFormData {
   password: string;
   confirmPassword: string;
   name: string;
-  surname?: string;
   agreedTerms: boolean;
 }
 
@@ -28,4 +27,10 @@ export interface ValidateResetTokenRequest {
 export interface ValidateResetTokenResponse {
   valid: boolean;
   message?: string;
+}
+
+export interface NewPasswordFormData {
+  newPassword: string;
+  confirmPassword: string;
+  agreedTerms: boolean;
 }

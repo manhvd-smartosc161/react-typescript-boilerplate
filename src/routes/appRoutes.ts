@@ -19,6 +19,7 @@ const UserManagement = lazy(() => import('@src/pages/UserManagement'));
 const RolesPermission = lazy(() => import('@src/pages/RolesPermission'));
 const ItemManagement = lazy(() => import('@src/pages/ItemManagement'));
 const LeadDetail = lazy(() => import('@src/pages/LeadDetail'));
+const NewPassword = lazy(() => import('@src/pages/NewPassword'));
 
 export interface AppRoute {
   path: string;
@@ -155,5 +156,12 @@ export default [
     restricted: false,
     isPrivate: true,
     layout: 'main',
+  },
+  {
+    path: routes.NEW_PASSWORD,
+    component: NewPassword,
+    restricted: true,
+    isPrivate: false,
+    layout: 'auth',
   },
 ] as AppRoute[];
