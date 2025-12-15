@@ -8,6 +8,7 @@ import {
   StatsGridOrganism,
   ChartCardOrganism,
   TableOrganism,
+  HeadingAtom,
 } from '@src/components';
 import { PageHeaderOrganism } from '@src/components/organisms';
 import {
@@ -121,20 +122,39 @@ const Home: React.FC = () => {
       />
 
       <Box sx={{ mt: 3 }}>
-        <StatsGridOrganism stats={stats} />
+        {(currentUser?.role?.name === EUserRole.SUPPLIER &&
+          currentUser?.email === 'test_supplier_lotuss@yopmail.com') ||
+          (currentUser?.role?.name === EUserRole.BUYER ? (
+            <StatsGridOrganism stats={stats} />
+          ) : (
+            <>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <HeadingAtom level={3}>
+                  {tCommon('noDataToDisplay')}
+                </HeadingAtom>
+              </Box>
+            </>
+          ))}
 
         <StyledChartSection>
           <Grid container spacing={2}>
-            {currentUser?.role?.name === EUserRole.SUPPLIER && (
-              <Grid size={{ xs: 12 }}>
-                <ChartCardOrganism>
-                  <HighchartsReact
-                    highcharts={Highcharts}
-                    options={itemByCategoryChart}
-                  />
-                </ChartCardOrganism>
-              </Grid>
-            )}
+            {currentUser?.role?.name === EUserRole.SUPPLIER &&
+              currentUser?.email === 'test_supplier_lotuss@yopmail.com' && (
+                <Grid size={{ xs: 12 }}>
+                  <ChartCardOrganism>
+                    <HighchartsReact
+                      highcharts={Highcharts}
+                      options={itemByCategoryChart}
+                    />
+                  </ChartCardOrganism>
+                </Grid>
+              )}
             {currentUser?.role?.name === EUserRole.BUYER && (
               <Grid size={{ xs: 12 }}>
                 <ChartCardOrganism>
@@ -157,18 +177,19 @@ const Home: React.FC = () => {
             )}
           </Grid>
         </StyledChartSection>
-        {currentUser?.role?.name === EUserRole.SUPPLIER && (
-          <StyledTableSection>
-            <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
-              {t('dashboard.itemListLatest')}
-            </Typography>
-            <TableOrganism<ItemData>
-              columns={columns}
-              data={latestItems}
-              rowKey="id"
-            />
-          </StyledTableSection>
-        )}
+        {currentUser?.role?.name === EUserRole.SUPPLIER &&
+          currentUser?.email === 'test_supplier_lotuss@yopmail.com' && (
+            <StyledTableSection>
+              <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
+                {t('dashboard.itemListLatest')}
+              </Typography>
+              <TableOrganism<ItemData>
+                columns={columns}
+                data={latestItems}
+                rowKey="id"
+              />
+            </StyledTableSection>
+          )}
       </Box>
     </StyledPaper>
   );
